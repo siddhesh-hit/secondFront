@@ -1,9 +1,9 @@
 import DebateVideo from "../assets/debate/debate_video.png"
-import PDF from "../assets/debate/Frame.svg"
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getApiById } from "../../service/axiosInterceptors";
-import LoaderComponents from "../../pages/loader";
+import { getApiById } from "../services/axiosInterceptors";
+import LoaderComponents from "../components/LoaderComponents";
+
 const DebateDetails = () => {
     const [debate, setDebate] = useState([]);
     const [loader, setLoader] = useState(null);
@@ -69,7 +69,7 @@ const DebateDetails = () => {
                             <div className="col-lg-8">
                                 <table className="table-ligneww table table-bordered">
                                     <thead className="thead-light" />
-                                    <tbody>
+                                    {debate && (<tbody>
                                         <tr>
                                             <td
                                                 style={{
@@ -81,7 +81,7 @@ const DebateDetails = () => {
                                                 सदस्य
                                             </td>
                                             <td style={{ textAlign: "left" }}>
-                                                <span>दिलिप वाळसे-पाटील </span>
+                                                <span>{debate.speaker}</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -168,7 +168,7 @@ const DebateDetails = () => {
                                                 मंत्रालय
                                             </td>
                                             <td style={{ textAlign: "left" }}>
-                                                <span>अतारांकित प्रश्न</span>
+                                                <span>{debate.ministry_name}</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -182,7 +182,7 @@ const DebateDetails = () => {
                                                 पृष्ठ क्रमांक
                                             </td>
                                             <td style={{ textAlign: "left" }}>
-                                                <span>३९४२५ </span>
+                                                <span>{debate.question_no}</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -199,7 +199,7 @@ const DebateDetails = () => {
                                                 <span>विधी विधान </span>
                                             </td>
                                         </tr>
-                                    </tbody>
+                                    </tbody>)}
                                 </table>
                             </div>
                             <div className="col-lg-4">
