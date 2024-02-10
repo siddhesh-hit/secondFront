@@ -122,18 +122,20 @@ section.homepageback h1 {
 
 .boxes.row h6 {
     text-transform: capitalize;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 13px;
+    font-family: 'Poppins';
+    font-weight: 800;
     line-height: 1.5;
     letter-spacing: -0.02em;
     color: black;
     margin-bottom: 0px;
 }
 
-.boxes.row p {
+.boxes.row a {
     color: #000000B2;
-    font-size: 11px;
-    font-weight: 500;
+    font-family: 'Poppins';
+    font-size: 12px;
+    font-weight: 600;
     letter-spacing: -0.015em;
     margin-bottom: 0px;
     margin-top: 5px;
@@ -165,7 +167,9 @@ section.resourcesss h2 {
 
 .boxes1.row p {
     color: #798EA4;
-    font-size: 28px;
+    margin-top: 5px;
+    font-size: 25px;
+    font-family: 'Poppins';
     font-weight: 700;
     letter-spacing: 0em;
     margin-bottom: 0px;
@@ -180,6 +184,7 @@ section.resourcesss h2 {
 .boxes1.row h6 {
     color: #2B3545;
     font-size: 16px;
+    font-family: 'Poppins';
     font-weight: 700;
     letter-spacing: 0em;
     margin-bottom: 0px;
@@ -212,18 +217,20 @@ section.resourcesss .row {
 
 .membersss.row h6 {
     margin-bottom: 5px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
+    font-family: 'Poppins';
     letter-spacing: 0em;
     color: black;
-    text-align: center;
+    text-align: left;
 }
 
 .membersss.row p {
     color: black;
+    font-family: 'Poppins';
     margin-bottom: 0px;
     font-size: 12px;
-    text-align: center;
+    text-align: left;
     font-weight: 500;
     letter-spacing: 0em;
 }
@@ -256,11 +263,14 @@ section.resourcesss .row {
 .membersss11.row h6 {
     text-align: center;
     margin-bottom: 0px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
+    font-family: 'Poppins';
     line-height: 1.4;
     letter-spacing: 0em;
     color: #091D32;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 img.memberimage {
@@ -1267,9 +1277,9 @@ section.resourcesss.new11 .boxes1.row p {
 .newfooter {
     text-align: center;
     padding-top: 20px;
-    background: #cc7722;
+    background: #0077B6;
     padding-bottom: 20px;
-    border: 1px solid #cc7722;
+    border: 1px solid #0077B6;
 }
 
 .active.pagess.paginationnn {
