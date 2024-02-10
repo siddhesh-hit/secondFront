@@ -1,6 +1,31 @@
 import DebateVideo from "../assets/debate/debate_video.png"
-import PDF from "../assets/debate/Frame.svg"
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { getApiById } from "../services/axiosInterceptors";
+import LoaderComponents from "../components/LoaderComponents";
+
 const DebateDetails = () => {
+    const [debate, setDebate] = useState([]);
+    const [loader, setLoader] = useState(null);
+
+    const location = useLocation();
+    const id = location.search.split("=")[1];
+
+    const fetchData = async () => {
+        setLoader(true);
+        await getApiById("debate", id)
+            .then((res) => setDebate(res.data.data))
+            .catch((err) => console.log(err));
+        setLoader(false);
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    if (loader) {
+        return <LoaderComponents />;
+    }
     return (
         <div>
             <section className="debatedetails">
@@ -20,23 +45,23 @@ const DebateDetails = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    केज जिल्हा बीड तसेच लातूर जिल्ह्यातील निलंगा तालुक्‍यात अतिवृष्टीमुळे शेतीच्या झालेल्या नुकसानीची शेतकर्‍यांना नुकसानभरपाई मिळण्याबाबत.
-                                </td>
-                                <td>विधानसभा</td>
-                                <td>अर्थसंकल्पीय</td>
-                                <td>१७ मार्च २०११</td>
-                                <td>
-                                    <a
-                                        href="http://103.112.121.109:8000//media/%E0%A4%B5%E0%A4%BF%E0%A4%A7%E0%A4%BE%E0%A4%A8%E0%A4%B8%E0%A4%AD%E0%A4%BE/%E0%A5%A8%E0%A5%A6%E0%A5%A7%E0%A5%A7/%E0%A4%85%E0%A4%B0%E0%A5%8D%E0%A4%A5%E0%A4%B8%E0%A4%82%E0%A4%95%E0%A4%B2%E0%A5%8D%E0%A4%AA%E0%A5%80%E0%A4%AF/%E0%A5%AA/pdf/%E0%A5%A7%E0%A5%AB%E0%A5%AF_kramank_%E0%A5%AA_38_39.pdf"
-                                        target="_blank"
-                                        rel="noreferrer"
-                                    >
-                                        <img src={PDF} alt="" />
-                                    </a>
-                                </td>
-                            </tr>
+                            {debate ? (
+                                <tr>
+                                    <td>{debate.topic}</td>
+                                    <td>{debate.house}</td>
+                                    <td>{debate.session}</td>
+                                    <td>{debate.date}</td>
+
+                                    <td>
+                                        <Link to={"http://103.112.121.109:8000/" + debate.fileurl}>
+                                            <i className="fa fa-eye"></i>
+                                        </Link>
+                                        {/* &nbsp;पहा */}
+                                    </td>
+                                </tr>
+                            ) : (
+                                <></>
+                            )}
                         </tbody>
                     </table>
                     <section className="debatelogo">
@@ -44,7 +69,7 @@ const DebateDetails = () => {
                             <div className="col-lg-8">
                                 <table className="table-ligneww table table-bordered">
                                     <thead className="thead-light" />
-                                    <tbody>
+                                    {debate && (<tbody>
                                         <tr>
                                             <td
                                                 style={{
@@ -56,7 +81,7 @@ const DebateDetails = () => {
                                                 सदस्य
                                             </td>
                                             <td style={{ textAlign: "left" }}>
-                                                <span>दिलिप वाळसे-पाटील </span>
+                                                <span>{debate.speaker}</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -143,7 +168,7 @@ const DebateDetails = () => {
                                                 मंत्रालय
                                             </td>
                                             <td style={{ textAlign: "left" }}>
-                                                <span>अतारांकित प्रश्न</span>
+                                                <span>{debate.ministry_name}</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -157,7 +182,7 @@ const DebateDetails = () => {
                                                 पृष्ठ क्रमांक
                                             </td>
                                             <td style={{ textAlign: "left" }}>
-                                                <span>३९४२५ </span>
+                                                <span>{debate.question_no}</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -174,7 +199,7 @@ const DebateDetails = () => {
                                                 <span>विधी विधान </span>
                                             </td>
                                         </tr>
-                                    </tbody>
+                                    </tbody>)}
                                 </table>
                             </div>
                             <div className="col-lg-4">
