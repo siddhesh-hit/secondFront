@@ -9,6 +9,7 @@ import Sort from "../assets/debate/sort.svg";
 
 import { getApi } from "../services/axiosInterceptors";
 import { memberName } from "../data/memberName";
+import PopupHome from "./PopupHome";
 
 const Debate = () => {
   const [debate, setDebate] = useState([]);
@@ -276,19 +277,20 @@ const Debate = () => {
     };
     fetchData();
   }, []);
-
+  const [modalShow, setModalShow] = useState(true);
   return (
     <div>
+      <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
       <Container fluid className="debatepage">
         <Row>
           <Col lg={3}>
             <div className="filters">
               <div className="firstfilter">
-                <h3>Filters</h3>
+                <h3>फिल्टर</h3>
                 <h4>सदस्य</h4>
                 <ReactSearchAutocomplete
                   items={memberName}
-                  placeholder="Search Members"
+                  placeholder="सदस्य शोधा"
                   onSearch={handleOnSearch}
                   onSelect={handleOnSelect}
                 />
@@ -386,7 +388,7 @@ const Debate = () => {
                       <div className="filtercontent">
                         <Row className="daterange">
                           <Col lg={4}>
-                            <label>From</label>
+                            <label>पासून</label>
                             <input
                               className="form-control"
                               disabled
@@ -397,7 +399,7 @@ const Debate = () => {
                             />
                           </Col>
                           <Col lg={4}>
-                            <label>To</label>
+                            <label>प्रयंत</label>
                             <input
                               className="form-control"
                               disabled
@@ -408,7 +410,7 @@ const Debate = () => {
                             />
                           </Col>
                           <Col lg={4}>
-                            <button className="apply1">Apply</button>
+                            <button className="apply1">अप्लाय</button>
                           </Col>
                         </Row>
                       </div>
@@ -419,7 +421,7 @@ const Debate = () => {
               <hr />
               <div className="secondfilter">
                 <button className="advanced" onClick={toggleDivVisibility}>
-                  Advanced Filters
+                  ऍडव्हान्स फिल्टर
                   <div className="iconss">{isDivVisible ? "-" : "+"}</div>
                 </button>
                 {isDivVisible && (
@@ -539,10 +541,10 @@ const Debate = () => {
               </div>
               <div className="formbutton">
                 <button className="reset" onClick={handleReset}>
-                  Reset
+                  रिसेट
                 </button>
                 <button className="apply" onClick={handleSearch}>
-                  Apply
+                  अप्लाय
                 </button>
               </div>
             </div>
@@ -554,7 +556,7 @@ const Debate = () => {
                   type="text"
                   name="topic"
                   className="form-control"
-                  placeholder="Search Topic or Keywords"
+                  placeholder="विषय आणि कीवर्ड शोधा"
                   defaultValue={search.topic}
                   onChange={handleChange}
                 />
@@ -562,7 +564,7 @@ const Debate = () => {
                   <i className="fa fa-search" />
                 </button>
                 <button className="startover" onClick={handleStart}>
-                  Start Over
+                  प्रारंभ
                 </button>
               </div>
             </div>
@@ -571,9 +573,9 @@ const Debate = () => {
                 <Col lg={5}>
                   <div className="breadvrumbss-inner">
                     <div className="countdebate">
-                      <span>Home</span>
+                      <span> मुख्य पृष्ठ </span>
                       <img src={Arrow} alt="" />
-                      <span>Debate</span>
+                      <span>सभागृहांचे कार्यवृत्त</span>
                     </div>
                     <p> {debate?.count ? `[${debate?.count}]` : ""} Items</p>
                   </div>
@@ -591,10 +593,10 @@ const Debate = () => {
                       defaultValue={pageLimit}
                       onChange={handlePageLimit}
                     >
-                      <option value={10}>10 per page</option>
-                      <option value={20}>20 per page</option>
-                      <option value={30}>30 per page</option>
-                      <option value={40}>40 per page</option>
+                      <option value={10}>10 प्रति पृष्ठ</option>
+                      <option value={20}>20 प्रति पृष्ठ</option>
+                      <option value={30}>30 प्रति पृष्ठ</option>
+                      <option value={40}>40 प्रति पृष्ठ</option>
                     </select>
                     <span className="sorting">
                       <Link to="/">
