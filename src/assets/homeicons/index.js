@@ -1,0 +1,25 @@
+
+import legmem from "./legismember.svg"
+import debate from "./debate.svg"
+import sessioncalender from "./session.svg"
+import legis from "./legislation.svg"
+import budget from "./budget.svg"
+import election from "./election.svg"
+import gazette from "./gazette.svg"
+import gazettee from "./gazettee.svg"
+import publication from "./publication.svg"
+import media from "./media.svg"
+import judgments from "./judgement.svg"
+import imag1 from "./lib.svg"
+import imag2 from "./lib1.svg"
+import imag3 from "./lib2.svg"
+import imag4 from "./lib3.svg"
+import imag5 from "./lib4.svg"
+import imag6 from "./lib5.svg"
+import profilee from "./profilee.png"
+import profilee1 from "./profilee1.png"
+import profilee2 from "./profilee2.png"
+import logo from "./logo.svg"
+
+
+export { logo, profilee, profilee1, profilee2, imag1, imag2, imag3, imag4, imag5, imag6, legmem, debate, sessioncalender, legis, budget, election, gazette, gazettee, publication, media, judgments }
