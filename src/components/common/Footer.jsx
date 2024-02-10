@@ -9,36 +9,43 @@ const Footer = () => {
     return (
         <div>
             {/* <div className={`${location === '/' ? 'footer' : 'newfooter'}`}> */}
-            <div className={`${location === '/' ? 'footer' : location === '/Homepage2' ? 'otherColor12' : 'newfooter'}`}>
+            {/* <div className={`${location === '/' ? 'footer' : location === '/Homepage2' ? 'otherColor12' : 'newfooter'}`}> */}
+            <div className={`${location === '/' ? 'footer' :
+                location === '/Homepage2' ? 'otherColor12' :
+                    location === '/Homepage1' ? 'newfooter' :
+                        location === '/Debate' ? 'footer' :
+                            location === '/DebateDetails' ? 'footer' :
+                                'footer'  // Default value if none of the conditions are met
+                }`}>
                 <div className="firstfoot">
-                    <Link to="/">FAQs</Link>
-                    <Link to="/">Photo Gallery</Link>
+                    <Link to="/">सतत विचारले जाणारे प्रश्न</Link>
+                    <Link to="/">फोटो गॅलरी</Link>
                 </div>
                 <div className="secondfoot">
                     <Link to="/">
-                        Home
+                        मुख्यपृष्ठ
                     </Link>
                     <Link to="/AboutUs">
-                        About
+                        विधानमंडळ
                     </Link>
                     <Link to="/Library">
-                        Library
+                        ग्रंथालय
                     </Link>
                     <Link to="/">
-                        News
+                        बातम्या
                     </Link>
                     <Link to="/">
-                        Governor
+                        राज्यपाल
                     </Link>
                 </div>
                 <div className="thirdfooter">
-                    <Link to="/HelpDesk">Feedback</Link>
-                    <Link to="/">Help & support</Link>
-                    <Link to="/">Important Links</Link>
-                    <Link to="/">Terms of service</Link>
-                    <Link to="/">Sitemap</Link>
-                    <Link to="/">Notification</Link>
-                    <Link to="/">Vistors count 🐈</Link>
+                    <Link to="/HelpDesk">अभिप्राय</Link>
+                    <Link to="/">मदत आणि समर्थन</Link>
+                    <Link to="/">महत्वाचा दुवा</Link>
+                    <Link to="/">सेवा अटी</Link>
+                    <Link to="/">साइट मॅप</Link>
+                    <Link to="/">सूचना</Link>
+                    <Link to="/">अभ्यागतांची संख्या</Link>
                 </div>
             </div>
         </div>

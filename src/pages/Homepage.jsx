@@ -8,11 +8,11 @@ const Homepage = () => {
         <div>
 
             <section className='homepageback'>
-                <h1>A Comprehensive Knowledge Repository - Your Portal to Explore Legislative Discourse, <br />Election Narratives, and Civic Empowerment. Search and Discover Now!&quot;
+                <h1>एक सर्वसमावेशक ज्ञान भांडार - विधिमंडळ,निवडणूक,आणि नागरी सक्षमीकरण <br /> एक्सप्लोर करण्यासाठी तुमचे पोर्टल.
                 </h1>
                 <Row className='form-controlss'>
                     <Col lg={6}>
-                        <input className='form-control' placeholder='Enter the search keywords' />
+                        <input className='form-control' placeholder='शोध कीवर्ड प्रविष्ट करा' />
                         <div className='searchh'><i className="fa fa-search"></i></div>
                     </Col>
                 </Row>
@@ -22,8 +22,7 @@ const Homepage = () => {
                             <Link className='anchorlinks' to="/AboutUs">
                                 <Row className='membersss11'>
                                     <Col lg={8}>
-                                        <h6>About Maharashtra
-                                            Legislature</h6>
+                                        <h6>महाराष्ट्र विधिमंडळ</h6>
                                     </Col>
                                     <Col lg={4}>
                                         <img src={logo} />
@@ -35,8 +34,7 @@ const Homepage = () => {
                             <Link className='anchorlinks' to="/Library">
                                 <Row className='membersss11'>
                                     <Col lg={8}>
-                                        <h6>About Maharashtra
-                                            Legislature Library</h6>
+                                        <h6>विधानमंडळ ग्रंथालय</h6>
                                     </Col>
                                     <Col lg={4}>
                                         <img src={logo} />
@@ -48,8 +46,7 @@ const Homepage = () => {
                             <a className='anchorlinks' href="#">
                                 <Row className='membersss11'>
                                     <Col lg={8}>
-                                        <h6>Photos and media
-                                            Gallery</h6>
+                                        <h6>फोटो आणि व्हिडिओ गॅलरी</h6>
                                     </Col>
                                     <Col lg={4}>
                                         <img src={logo} />
@@ -61,30 +58,30 @@ const Homepage = () => {
                     <Col lg={7}>
                         <Row>
                             <Col lg={4}>
-                                <a href='#'>
+                                <Link to='/'>
                                     <Row className='boxes'>
                                         <Col lg={3}>
                                             <img src={legmem} />
                                         </Col>
                                         <Col lg={9}>
-                                            <h6>Legislative Members</h6>
-                                            <p>Council | Assembly</p>
+                                            <h6>विधिमंडळ सदस्य</h6>
+                                            <Link to="/Aboutus">विधानपरिषद | </Link><Link to="/"> विधानसभा</Link>
                                         </Col>
                                     </Row>
-                                </a>
+                                </Link>
                             </Col>
                             <Col lg={4}>
-                                <a href='#'>
+                                <Link to='/Debate'>
                                     <Row className='boxes'>
                                         <Col lg={3}>
                                             <img src={debate} />
                                         </Col>
                                         <Col lg={9}>
-                                            <h6>Debates</h6>
-                                            <p>House | Session | Year</p>
+                                            <h6>सभागृहांचे कार्यवृत्त</h6>
+                                            <Link to="/Debate">सभागृह | </Link><Link to="/Debate">अधिवेशन | </Link><Link to="/Debate">वर्ष</Link>
                                         </Col>
                                     </Row>
-                                </a>
+                                </Link>
                             </Col>
                             <Col lg={4}>
                                 <a href='#'>
@@ -93,128 +90,128 @@ const Homepage = () => {
                                             <img src={sessioncalender} />
                                         </Col>
                                         <Col lg={9}>
-                                            <h6>Session Calendar</h6>
-                                            <p>Council | Assembly</p>
+                                            <h6>सत्र दिनदर्शिका</h6>
+                                            <Link to="/">विधानपरिषद | </Link><Link>   विधान सभा    </Link>
                                         </Col>
                                     </Row>
                                 </a>
                             </Col>
                             <Col lg={4}>
-                                <a href='#'>
+                                <Link to='/'>
                                     <Row className='boxes'>
                                         <Col lg={3}>
                                             <img src={legis} />
                                         </Col>
                                         <Col lg={9}>
-                                            <h6>Legislation</h6>
-                                            <p>Acts | Bills | Rules</p>
+                                            <h6>विधिविधान</h6>
+                                            <Link to="/">कायदे | </Link><Link to="/">बिल | </Link><Link to="/">नियम</Link>
                                         </Col>
                                     </Row>
-                                </a>
+                                </Link>
                             </Col>
                             <Col lg={4}>
-                                <a href='#'>
+                                <Link to='/'>
                                     <Row className='boxes'>
                                         <Col lg={3}>
                                             <img src={budget} />
                                         </Col>
                                         <Col lg={9}>
-                                            <h6>Budget</h6>
-                                            <p>Year | Department </p>
+                                            <h6>अर्थसंकल्प </h6>
+                                            <Link to="/">वर्ष | </Link><Link to="/">विभाग</Link>
                                         </Col>
                                     </Row>
-                                </a>
+                                </Link>
                             </Col>
                             <Col lg={4}>
-                                <a href='#'>
+                                <Link to='/'>
                                     <Row className='boxes'>
                                         <Col lg={3}>
                                             <img src={election} />
                                         </Col>
                                         <Col lg={9}>
-                                            <h6>Election results</h6>
-                                            <p>Council | Assembly</p>
+                                            <h6>निवडणूक निकाल</h6>
+                                            <Link to="/">विधान परिषद | </Link><Link to="/">विधान सभा </Link>
                                         </Col>
                                     </Row>
-                                </a>
+                                </Link>
                             </Col>
                             <Col lg={4}>
-                                <a href='#'>
+                                <Link href='#'>
                                     <Row className='boxes'>
                                         <Col lg={3}>
                                             <img src={gazette} />
                                         </Col>
                                         <Col lg={9}>
-                                            <h6>Gazette (GOM)</h6>
-                                            <p>Part | Subject | Department</p>
+                                            <h6>राजपत्र ( महाराष्ट्रराज्य )</h6>
+                                            <Link to="/">भाग | </Link><Link to="/">विषय | </Link><Link to="/">विभाग</Link>
                                         </Col>
                                     </Row>
-                                </a>
+                                </Link>
                             </Col>
                             <Col lg={4}>
-                                <a href='#'>
+                                <Link href='#'>
                                     <Row className='boxes'>
                                         <Col lg={3}>
                                             <img src={publication} />
                                         </Col>
                                         <Col lg={9}>
-                                            <h6>Publication</h6>
-                                            <p>Scheme | Policy | Department</p>
+                                            <h6>प्रकाशने</h6>
+                                            <Link to="/">योजना | </Link><Link to="/">धोरण | </Link><Link to="/">विभाग</Link>
                                         </Col>
                                     </Row>
-                                </a>
+                                </Link>
                             </Col>
                             <Col lg={4}>
-                                <a href='#'>
+                                <Link href='#'>
                                     <Row className='boxes'>
                                         <Col lg={3}>
                                             <img src={media} />
                                         </Col>
                                         <Col lg={9}>
-                                            <h6>Media</h6>
-                                            <p>Video   |  Audio   |   Newspaper</p>
+                                            <h6>मीडिया</h6>
+                                            <Link to="/">ऑडिओ | </Link><Link to="/">व्हिडिओ | </Link><Link to="/">वृत्तपत्र</Link>
                                         </Col>
                                     </Row>
-                                </a>
+                                </Link>
                             </Col>
                             <Col lg={4}>
-                                <a href='#'>
+                                <Link href='#'>
                                     <Row className='boxes'>
                                         <Col lg={3}>
                                             <img src={legmem} />
                                         </Col>
                                         <Col lg={9}>
-                                            <h6>Legislative committee</h6>
-                                            <p>Type  |   Department    |   Name      </p>
+                                            <h6>समिती</h6>
+                                            <Link to="/">प्रकार | </Link><Link> विभाग | </Link><Link to="/"> नाव</Link>
                                         </Col>
                                     </Row>
-                                </a>
+                                </Link>
                             </Col>
                             <Col lg={4}>
-                                <a href='#'>
+                                <Link href='#'>
                                     <Row className='boxes'>
                                         <Col lg={3}>
                                             <img src={gazettee} />
                                         </Col>
                                         <Col lg={9}>
-                                            <h6>Gazetteers (GOM) </h6>
-                                            <p>Place  |   Topic     </p>
+                                            <h6>दर्शनिका ( महाराष्ट्रराज्य )</h6>
+                                            <Link to="/">ठिकाण  |</Link>  <Link to="/"> विषय</Link>
                                         </Col>
                                     </Row>
-                                </a>
+                                </Link>
                             </Col>
                             <Col lg={4}>
-                                <a href='#'>
+                                <Link href='#'>
                                     <Row className='boxes'>
                                         <Col lg={3}>
                                             <img src={judgments} />
                                         </Col>
                                         <Col lg={9}>
-                                            <h6>Judgments</h6>
-                                            <p>Court | Subject</p>
+                                            <h6>निर्णय</h6>
+                                            <Link to="/">कोर्ट  |</Link>  <Link to="/"> विषय</Link>
                                         </Col>
                                     </Row>
-                                </a>
+                                </Link>
                             </Col>
                         </Row>
                     </Col>
@@ -226,8 +223,8 @@ const Homepage = () => {
                                         <img src={profilee} />
                                     </Col>
                                     <Col lg={8}>
-                                        <h6>Shri. Ramesh Bais</h6>
-                                        <p>Hon. Governor </p>
+                                        <h6>श्री रमेश बैस</h6>
+                                        <p>माननीय राज्यपाल</p>
                                     </Col>
                                 </Row>
                             </a>
@@ -239,8 +236,8 @@ const Homepage = () => {
                                         <img src={profilee1} />
                                     </Col>
                                     <Col lg={8}>
-                                        <h6>Adv. Rahul Suresh Narvekar</h6>
-                                        <p>Hon. Speaker </p>
+                                        <h6>ॲड राहुल सुरेश नार्वेकर</h6>
+                                        <p>माननीय अध्यक्ष</p>
                                     </Col>
                                 </Row>
                             </a>
@@ -252,18 +249,18 @@ const Homepage = () => {
                                         <img src={profilee2} />
                                     </Col>
                                     <Col lg={8}>
-                                        <h6>Dr. Neelam Gorhe</h6>
-                                        <p>Hon. Deputy Chairman</p>
+                                        <h6>डॉ नीलम गोर्‍हे</h6>
+                                        <p>माननीय उपसभापती</p>
                                     </Col>
                                 </Row>
                             </a>
                         </Col>
                     </Col>
                 </Row>
-            </section>
+            </section >
             <section className='resourcesss'>
                 <Container>
-                    <h2>Explore digitalized resources in MLS library </h2>
+                    <h2>आतापर्यंत एमएलएस ग्रंथालयातील संसाधने, दस्तऐवज डिजीटलाइज्ड झाली आहे ते एक्सप्लोरे करा</h2>
                     <Row>
                         <Col lg={3}>
                             <Row className='boxes1'>
@@ -271,8 +268,8 @@ const Homepage = () => {
                                     <img src={imag1} />
                                 </Col>
                                 <Col lg={8}>
-                                    <h6>Debates</h6>
-                                    <p>405 million</p>
+                                    <h6>सभागृहांचे कार्यवृत्त</h6>
+                                    <p>405 दशलक्ष</p>
                                 </Col>
                             </Row>
                         </Col>
@@ -282,8 +279,8 @@ const Homepage = () => {
                                     <img src={imag2} />
                                 </Col>
                                 <Col lg={8}>
-                                    <h6>Articles</h6>
-                                    <p>440 million</p>
+                                    <h6>लेख</h6>
+                                    <p>405 दशलक्ष</p>
                                 </Col>
                             </Row>
                         </Col>
@@ -293,8 +290,8 @@ const Homepage = () => {
                                     <img src={imag3} />
                                 </Col>
                                 <Col lg={8}>
-                                    <h6>Bills & Acts</h6>
-                                    <p>25 million</p>
+                                    <h6>विधेयके आणि कायदे</h6>
+                                    <p>25 दशलक्ष</p>
                                 </Col>
                             </Row>
                         </Col>
@@ -306,8 +303,8 @@ const Homepage = () => {
                                     <img src={imag4} />
                                 </Col>
                                 <Col lg={8}>
-                                    <h6>Media files</h6>
-                                    <p>10 million</p>
+                                    <h6>माध्यम फाइल्स</h6>
+                                    <p>10 दशलक्ष</p>
                                 </Col>
                             </Row>
                         </Col>
@@ -317,8 +314,8 @@ const Homepage = () => {
                                     <img src={imag5} />
                                 </Col>
                                 <Col lg={8}>
-                                    <h6>Gazettes</h6>
-                                    <p>6 million</p>
+                                    <h6>राजपत्र</h6>
+                                    <p>6 दशलक्ष</p>
                                 </Col>
                             </Row>
                         </Col>
@@ -328,8 +325,8 @@ const Homepage = () => {
                                     <img src={imag6} />
                                 </Col>
                                 <Col lg={8}>
-                                    <h6>Other Reports</h6>
-                                    <p>30 million</p>
+                                    <h6>इतर अहवाल</h6>
+                                    <p>30 दशलक्ष</p>
                                 </Col>
                             </Row>
                         </Col>
@@ -337,7 +334,7 @@ const Homepage = () => {
                 </Container>
             </section>
 
-        </div>
+        </div >
     )
 }
 
