@@ -59,6 +59,7 @@ section.homepageback111 {
 
 section.homepageback h1 {
     font-size: 26px;
+    font-family: 'Poppins';
     font-weight: 700;
     letter-spacing: 0em;
     text-align: center;
@@ -157,7 +158,8 @@ section.resourcesss {
 }
 
 section.resourcesss h2 {
-    font-size: 28px;
+    font-size: 24px;
+    font-family: 'Poppins';
     font-weight: 700;
     line-height: 1.5;
     letter-spacing: 0em;
