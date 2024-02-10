@@ -12,19 +12,25 @@ const Header = () => {
 
     return (
         <div>
-            <div className={`${location === '/' ? 'blueColor topheader' : location === '/Homepage2' ? 'otherColor' : 'newheadercolor'}`}>
+            <div className={`${location === '/' ? 'blueColor topheader' :
+                location === '/Homepage2' ? 'otherColor' :
+                    location === '/Homepage1' ? 'newheadercolor' :
+                        location === '/Debate' ? 'topheader' :
+                            location === '/DebateDetail' ? 'newheadercolor' :
+                                'topheader'
+                }`}>
                 <Container fluid>
                     <Row>
                         <Col lg={12}>
                             <div className="topheaderright">
                                 <div className="contact-us">
                                     <Link to="/ContactUs">
-                                        <span>Contact us</span>
+                                        <span>आमच्याशी संपर्क साधा</span>
                                     </Link>
                                 </div>
                                 <Dropdown className='languagechanges'>
                                     <Dropdown.Toggle>
-                                        Language
+                                        भाषा
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
@@ -33,12 +39,12 @@ const Header = () => {
                                     </Dropdown.Menu>
                                 </Dropdown>
                                 <div className="font-size">
-                                    <button className="font-size-button">A+</button>
-                                    <button className="font-size-button" style={{ borderLeft: 'solid #121f29 2px', borderRight: 'solid #121f29 2px' }}>A</button>
-                                    <button className="font-size-button">A-</button>
+                                    <button className="font-size-button">अ+</button>
+                                    <button className="font-size-button" style={{ borderLeft: 'solid #121f29 2px', borderRight: 'solid #121f29 2px' }}>अ</button>
+                                    <button className="font-size-button">अ-</button>
                                 </div>
                                 <a href="signin">
-                                    <span>Sign In</span>
+                                    <span>साइन इन करा</span>
                                 </a>
                             </div>
                         </Col>

@@ -54,7 +54,7 @@ const Debate = () => {
                     <Col lg={3}>
                         <div className="filters">
                             <div className="firstfilter">
-                                <h3>Filters</h3>
+                                <h3>फिल्टर</h3>
                                 <h4>सदस्य</h4>
                                 <ReactSearchAutocomplete
                                     items={items}
@@ -67,9 +67,9 @@ const Debate = () => {
                                         <Accordion.Header>सभागृह</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
-                                                <div className="datacheck"><label>विधानपरिषद</label> <Form.Check aria-label="option 1" /></div>
-                                                <div className="datacheck"><label>विधानसभा</label>  <Form.Check aria-label="option 2" /></div>
-                                                <div className="datacheck1"><label>एकत्रित</label>  <Form.Check aria-label="option 3" /></div>
+                                                <div className="datacheck"><label>विधानपरिषद</label> <Form.Check type="radio" name="ancd" aria-label="option 1" /></div>
+                                                <div className="datacheck"><label>विधानसभा</label>  <Form.Check type="radio" name="ancd" aria-label="option 2" /></div>
+                                                <div className="datacheck1"><label>एकत्रित</label>  <Form.Check type="radio" name="ancd" aria-label="option 3" /></div>
                                             </div>
                                         </Accordion.Body>
                                     </Accordion.Item>
@@ -90,15 +90,15 @@ const Debate = () => {
                                             <div className="filtercontent">
                                                 <Row className="daterange">
                                                     <Col lg={4}>
-                                                        <label>From</label>
+                                                        <label>पासून</label>
                                                         <input className="form-control" disabled type="number" min={1987} max={2024} value={2011} />
                                                     </Col>
                                                     <Col lg={4}>
-                                                        <label>To</label>
+                                                        <label>पर्यंत</label>
                                                         <input className="form-control" disabled type="number" min={1987} max={2024} value={2011} />
                                                     </Col>
                                                     <Col lg={4}>
-                                                        <button className="apply1">Apply</button>
+                                                        <button className="apply1">अप्लाय </button>
                                                     </Col>
                                                 </Row>
 
@@ -110,7 +110,7 @@ const Debate = () => {
                             <hr />
                             <div className="secondfilter">
                                 <button className="advanced" onClick={toggleDivVisibility}>
-                                    Advanced Filters<div className="iconss">{isDivVisible ? '-' : '+'}</div>
+                                    ऍडव्हान्स फिल्टर <div className="iconss">{isDivVisible ? '-' : '+'}</div>
                                 </button>
                                 {
                                     isDivVisible &&
@@ -200,8 +200,8 @@ const Debate = () => {
                                 }
                             </div>
                             <div className="formbutton">
-                                <button className="reset">Reset</button>
-                                <button className="apply">Apply</button>
+                                <button className="reset">रिसेट</button>
+                                <button className="apply">अप्लाय </button>
                             </div>
                         </div>
                     </Col>
@@ -212,7 +212,7 @@ const Debate = () => {
                                 <button className="searchb">
                                     <i className="fa fa-search" />
                                 </button>
-                                <button className="startover">Start Over</button>
+                                <button className="startover">स्टार्ट पुन्हा</button>
                             </div>
                         </div>
                         <div className="breadvrumbss">
