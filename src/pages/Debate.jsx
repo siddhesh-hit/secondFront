@@ -193,7 +193,7 @@ const Debate = () => {
     let house = search.house === "एकत्रित" ? "विधानसभा" : search.house;
 
     await getApi(
-      `debate/fieldsperPage=${pageCount}&perLimit=${pageLimit}&topic=${search.topic}&members_name=${search.members_name}&house=${house}&session=${search.session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
+      `debate/fields?perPage=${pageCount}&perLimit=${pageLimit}&topic=${search.topic}&members_name=${search.members_name}&house=${house}&session=${search.session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
     )
       .then((res) => {
         if (res.data.success) {
