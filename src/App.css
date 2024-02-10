@@ -1272,7 +1272,15 @@ section.resourcesss.new11 .boxes1.row p {
     border: 1px solid #cc7722;
 }
 
+.active.pagess.paginationnn {
+    color: white;
+    background: rgba(204, 119, 34, 1);
+    border: 1px solid rgba(204, 119, 34, 1);
+}
 
+.pagess {
+    padding: 10px 20px;
+}
 
 
 
