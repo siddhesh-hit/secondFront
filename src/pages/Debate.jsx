@@ -574,7 +574,7 @@ const Debate = () => {
                       <img src={Arrow} alt="" />
                       <span>Debate</span>
                     </div>
-                    <p> {debate?.count ? `[${debate?.count}]` : ""}</p>
+                    <p> {debate?.count ? `[${debate?.count}]` : ""} Items</p>
                   </div>
                 </Col>
                 <Col lg={6}>
@@ -651,7 +651,7 @@ const Debate = () => {
             <div className="flex-tab">
               <div className="pagination">
                 <button
-                  className="right mr-1"
+                  className="right"
                   onClick={() => {
                     if (pageCount >= 10) {
                       setPageCount(pageCount - 10);

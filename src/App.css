@@ -1282,6 +1282,42 @@ section.resourcesss.new11 .boxes1.row p {
     padding: 10px 20px;
 }
 
+button.right {
+    padding: 10px 15px;
+    border: solid black 1px;
+    background: white;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+span.ellipsis {
+    padding: 5px 15px;
+    border: solid black 1px;
+    background: white;
+}
+
+button.left {
+    padding: 10px 15px;
+    border: solid black 1px;
+    background: white;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.paginationnn.pagess {
+    background: white;
+    border: solid black 1px;
+}
+
+.pagination {
+    margin-top: 40px;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+
+
 
 
 
