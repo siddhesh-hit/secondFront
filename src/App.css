@@ -1324,7 +1324,7 @@ button.left {
 .pagination {
     margin-top: 40px;
     justify-content: center;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 

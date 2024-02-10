@@ -138,6 +138,7 @@ const Debate = () => {
 
   const handlePageClick = (e, val) => {
     console.log("check", val);
+    console.log(Math.ceil(pageCount / pageLimit) + 1);
     setPageCount(val * 10);
     debateFetch();
   };
@@ -655,7 +656,6 @@ const Debate = () => {
                   onClick={() => {
                     if (pageCount >= 10) {
                       setPageCount(pageCount - 10);
-
                       debateFetch();
                     }
                   }}
@@ -670,15 +670,15 @@ const Debate = () => {
                       </span>
                     ) : (
                       <div
-                        onClick={(e) => handlePageClick(e, val)}
+                        // onClick={(e) => handlePageClick(e, val)}
                         className={`
-                    ${
-                      val === Math.ceil(pageCount / pageLimit) + 1
-                        ? "active pagess"
-                        : ""
-                    }
-                    paginationnn pagess
-                  `}
+                          ${
+                            val === Math.ceil(pageCount / pageLimit) + 1
+                              ? "active pagess"
+                              : ""
+                          }
+                          paginationnn pagess
+                        `}
                         key={index}
                       >
                         <span>{val}</span>
