@@ -314,7 +314,7 @@ const Debate = () => {
                 />
                 <Accordion
                   className="filsss"
-                  defaultActiveKey={["0", "1", "2"]}
+                  defaultActiveKey={["0"]}
                 >
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>सभागृह</Accordion.Header>
@@ -588,7 +588,7 @@ const Debate = () => {
             </div>
             <div className="breadvrumbss">
               <Row>
-                <Col lg={5}>
+                <Col lg={6}>
                   <div className="breadvrumbss-inner">
                     <div className="countdebate">
                       <span> मुख्य पृष्ठ </span>
@@ -692,10 +692,9 @@ const Debate = () => {
                       <div
                         // onClick={(e) => handlePageClick(e, val)}
                         className={`
-                          ${
-                            val === Math.ceil(pageCount / pageLimit) + 1
-                              ? "active pagess"
-                              : ""
+                          ${val === Math.ceil(pageCount / pageLimit) + 1
+                            ? "active pagess"
+                            : ""
                           }
                           paginationnn pagess
                         `}

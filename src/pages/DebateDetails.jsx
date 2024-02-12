@@ -5,6 +5,7 @@ import { getApiById } from "../services/axiosInterceptors";
 import LoaderComponents from "../components/LoaderComponents";
 import PDF from "../assets/debate/Frame.svg";
 import PopupHome from "./PopupHome";
+
 const DebateDetails = () => {
   const [debate, setDebate] = useState([]);
   const [modalShow, setModalShow] = useState(true);
