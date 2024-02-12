@@ -22,9 +22,14 @@ const DebateDetails = () => {
     setLoader(false);
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   if (loader) {
     return <LoaderComponents />;
   }
+
   return (
     <div>
       <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
