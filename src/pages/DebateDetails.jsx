@@ -23,7 +23,7 @@ const DebateDetails = () => {
         fetchData();
     }, []);
 
-    if (loader) {
+    if (loader) {   
         return <LoaderComponents />;
     }
     return (
