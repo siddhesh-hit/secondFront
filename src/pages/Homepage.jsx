@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
 import {
   logo,
   profilee,
@@ -22,9 +25,10 @@ import {
   media,
   judgments,
 } from "../assets/homeicons";
-import { Link } from "react-router-dom";
 
 const Homepage = () => {
+  const [search, setSearch] = useState([]);
+
   return (
     <div>
       <section className="homepageback">
@@ -37,10 +41,11 @@ const Homepage = () => {
             <input
               className="form-control"
               placeholder="शोध कीवर्ड प्रविष्ट करा"
+              onChange={(e) => setSearch(e.target.value)}
             />
-            <div className="searchh">
+            <Link to={`/SearchDetails?id=${search}`} className="searchh">
               <i className="fa fa-search"></i>
-            </div>
+            </Link>
           </Col>
         </Row>
         <Row className="maincontent">
