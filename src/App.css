@@ -1147,8 +1147,8 @@ button.accordion-button {
     border-color: #4e3431 !important;
 }
 
-.jiMOeR {
-    z-index: 9;
+.sc-dcJsrY.jiMOeR {
+    z-index: 9 !important;
 }
 
 .filters hr {
@@ -1293,6 +1293,42 @@ section.resourcesss.new11 .boxes1.row p {
 .pagess {
     padding: 10px 20px;
 }
+
+button.right {
+    padding: 10px 15px;
+    border: solid black 1px;
+    background: white;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+span.ellipsis {
+    padding: 5px 15px;
+    border: solid black 1px;
+    background: white;
+}
+
+button.left {
+    padding: 10px 15px;
+    border: solid black 1px;
+    background: white;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.paginationnn.pagess {
+    background: white;
+    border: solid black 1px;
+}
+
+.pagination {
+    margin-top: 40px;
+    justify-content: center;
+    /* cursor: pointer; */
+}
+
+
+
 
 
 
@@ -1446,4 +1482,10 @@ button.apply1 {
     padding: 4px 14px;
     line-height: 2;
     margin-top: 35px;
+}
+
+.eUeawN {
+    position: relative !important;
+    height: 46px;
+    z-index: 9 !important;
 }

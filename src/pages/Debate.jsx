@@ -9,12 +9,14 @@ import Sort from "../assets/debate/sort.svg";
 
 import { getApi } from "../services/axiosInterceptors";
 import { memberName } from "../data/memberName";
+import PopupHome from "./PopupHome";
 
 const Debate = () => {
   const [debate, setDebate] = useState([]);
   const [isDivVisible, setDivVisibility] = useState(false);
   const [pageCount, setPageCount] = useState(0);
   const [pageLimit, setPageLimit] = useState(10);
+  const [modalShow, setModalShow] = useState(true);
 
   const [search, setSearch] = useState({
     topic: "",
@@ -136,11 +138,12 @@ const Debate = () => {
     return displayedPages;
   };
 
-  const handlePageClick = (e, val) => {
-    console.log("check", val);
-    setPageCount(val * 10);
-    debateFetch();
-  };
+  // const handlePageClick = (e, val) => {
+  //   console.log("check", val);
+  //   console.log(Math.ceil(pageCount / pageLimit) + 1);
+  //   setPageCount(val * 10);
+  //   debateFetch();
+  // };
 
   const handlePageLimit = (e) => {
     let value = e.target.value;
@@ -180,6 +183,24 @@ const Debate = () => {
     debateFetch();
   };
 
+  const handleHitChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "method") {
+      let newValue = Object.keys(obj).find((key) => obj[key] === value);
+
+      setSearch((prev) => ({
+        ...prev,
+        [name]: newValue,
+      }));
+    } else {
+      setSearch((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
   const debateFetch = async () => {
     console.log(pageCount, pageLimit);
     await getApi(`debate?perPage=${pageCount}&perLimit=${pageLimit}`)
@@ -191,7 +212,7 @@ const Debate = () => {
     let house = search.house === "एकत्रित" ? "विधानसभा" : search.house;
 
     await getApi(
-      `debate/fieldsperPage=${pageCount}&perLimit=${pageLimit}&topic=${search.topic}&members_name=${search.members_name}&house=${house}&session=${search.session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
+      `debate/fields?perPage=${pageCount}&perLimit=${pageLimit}&topic=${search.topic}&members_name=${search.members_name}&house=${house}&session=${search.session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
     )
       .then((res) => {
         if (res.data.success) {
@@ -278,16 +299,17 @@ const Debate = () => {
 
   return (
     <div>
+      <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
       <Container fluid className="debatepage">
         <Row>
           <Col lg={3}>
             <div className="filters">
               <div className="firstfilter">
-                <h3>Filters</h3>
+                <h3>फिल्टर</h3>
                 <h4>सदस्य</h4>
                 <ReactSearchAutocomplete
                   items={memberName}
-                  placeholder="Search Members"
+                  placeholder="सदस्य शोधा"
                   onSearch={handleOnSearch}
                   onSelect={handleOnSelect}
                 />
@@ -306,7 +328,7 @@ const Debate = () => {
                             name="house"
                             checked={search.house === "विधानपरिषद"}
                             value={"विधानपरिषद"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                         <div className="datacheck">
@@ -316,7 +338,7 @@ const Debate = () => {
                             name="house"
                             checked={search.house === "विधानसभा"}
                             value={"विधानसभा"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                         <div className="datacheck1">
@@ -326,7 +348,7 @@ const Debate = () => {
                             name="house"
                             checked={search.house === "एकत्रित"}
                             value={"एकत्रित"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                       </div>
@@ -343,7 +365,7 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "सर्व"}
                             value={"सर्व"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                         <div className="datacheck">
@@ -353,7 +375,7 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "पावसाळी"}
                             value={"पावसाळी"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                         <div className="datacheck">
@@ -363,7 +385,7 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "अर्थसंकल्पीय"}
                             value={"अर्थसंकल्पीय"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                         <div className="datacheck1">
@@ -373,7 +395,7 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "विशेष"}
                             value={"विशेष"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                       </div>
@@ -385,7 +407,7 @@ const Debate = () => {
                       <div className="filtercontent">
                         <Row className="daterange">
                           <Col lg={4}>
-                            <label>From</label>
+                            <label>पासून</label>
                             <input
                               className="form-control"
                               disabled
@@ -396,7 +418,7 @@ const Debate = () => {
                             />
                           </Col>
                           <Col lg={4}>
-                            <label>To</label>
+                            <label>प्रयंत</label>
                             <input
                               className="form-control"
                               disabled
@@ -407,7 +429,7 @@ const Debate = () => {
                             />
                           </Col>
                           <Col lg={4}>
-                            <button className="apply1">Apply</button>
+                            <button className="apply1">अप्लाय</button>
                           </Col>
                         </Row>
                       </div>
@@ -418,7 +440,7 @@ const Debate = () => {
               <hr />
               <div className="secondfilter">
                 <button className="advanced" onClick={toggleDivVisibility}>
-                  Advanced Filters
+                  ऍडव्हान्स फिल्टर
                   <div className="iconss">{isDivVisible ? "-" : "+"}</div>
                 </button>
                 {isDivVisible && (
@@ -538,10 +560,10 @@ const Debate = () => {
               </div>
               <div className="formbutton">
                 <button className="reset" onClick={handleReset}>
-                  Reset
+                  रिसेट
                 </button>
                 <button className="apply" onClick={handleSearch}>
-                  Apply
+                  अप्लाय
                 </button>
               </div>
             </div>
@@ -553,7 +575,7 @@ const Debate = () => {
                   type="text"
                   name="topic"
                   className="form-control"
-                  placeholder="Search Topic or Keywords"
+                  placeholder="विषय आणि कीवर्ड शोधा"
                   defaultValue={search.topic}
                   onChange={handleChange}
                 />
@@ -561,7 +583,7 @@ const Debate = () => {
                   <i className="fa fa-search" />
                 </button>
                 <button className="startover" onClick={handleStart}>
-                  Start Over
+                  प्रारंभ
                 </button>
               </div>
             </div>
@@ -570,11 +592,11 @@ const Debate = () => {
                 <Col lg={5}>
                   <div className="breadvrumbss-inner">
                     <div className="countdebate">
-                      <span>Home</span>
+                      <span> मुख्य पृष्ठ </span>
                       <img src={Arrow} alt="" />
-                      <span>Debate</span>
+                      <span>सभागृहांचे कार्यवृत्त</span>
                     </div>
-                    <p> {debate?.count ? `[${debate?.count}]` : ""}</p>
+                    <p> {debate?.count ? `[${debate?.count}]` : ""} Items</p>
                   </div>
                 </Col>
                 <Col lg={6}>
@@ -590,10 +612,10 @@ const Debate = () => {
                       defaultValue={pageLimit}
                       onChange={handlePageLimit}
                     >
-                      <option value={10}>10 per page</option>
-                      <option value={20}>20 per page</option>
-                      <option value={30}>30 per page</option>
-                      <option value={40}>40 per page</option>
+                      <option value={10}>10 प्रति पृष्ठ</option>
+                      <option value={20}>20 प्रति पृष्ठ</option>
+                      <option value={30}>30 प्रति पृष्ठ</option>
+                      <option value={40}>40 प्रति पृष्ठ</option>
                     </select>
                     <span className="sorting">
                       <Link to="/">
@@ -651,11 +673,10 @@ const Debate = () => {
             <div className="flex-tab">
               <div className="pagination">
                 <button
-                  className="right mr-1"
+                  className="right"
                   onClick={() => {
                     if (pageCount >= 10) {
                       setPageCount(pageCount - 10);
-
                       debateFetch();
                     }
                   }}
@@ -670,15 +691,15 @@ const Debate = () => {
                       </span>
                     ) : (
                       <div
-                        onClick={(e) => handlePageClick(e, val)}
+                        // onClick={(e) => handlePageClick(e, val)}
                         className={`
-                    ${
-                      val === Math.ceil(pageCount / pageLimit) + 1
-                        ? "active pagess"
-                        : ""
-                    }
-                    paginationnn pagess
-                  `}
+                          ${
+                            val === Math.ceil(pageCount / pageLimit) + 1
+                              ? "active pagess"
+                              : ""
+                          }
+                          paginationnn pagess
+                        `}
                         key={index}
                       >
                         <span>{val}</span>
@@ -689,8 +710,9 @@ const Debate = () => {
                 <button
                   className="left"
                   onClick={() => {
-                    const maxPageCount =
-                      Math.floor(debate.count / pageLimit) * pageLimit + 1;
+                    const maxPageCount = Math.floor(debate.count / pageLimit);
+
+                    console.log(pageCount + pageLimit < maxPageCount);
                     if (pageCount + pageLimit < maxPageCount) {
                       setPageCount(pageCount + 10);
 
