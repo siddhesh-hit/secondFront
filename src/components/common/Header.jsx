@@ -18,21 +18,24 @@ const Header = () => {
     setLocation(window.location.pathname);
   }
 
+  const [search, setSearch] = useState(null);
+
   return (
     <div>
       <div
-        className={`${location === "/"
-          ? "blueColor topheader"
-          : location === "/Homepage2"
+        className={`${
+          location === "/"
+            ? "blueColor topheader"
+            : location === "/Homepage2"
             ? "otherColor"
             : location === "/Homepage1"
-              ? "newheadercolor"
-              : location === "/Debate"
-                ? "topheader"
-                : location === "/DebateDetail"
-                  ? "newheadercolor"
-                  : "topheader"
-          }`}
+            ? "newheadercolor"
+            : location === "/Debate"
+            ? "topheader"
+            : location === "/DebateDetail"
+            ? "newheadercolor"
+            : "topheader"
+        }`}
       >
         <Container fluid>
           <Row>
@@ -73,8 +76,8 @@ const Header = () => {
         </Container>
       </div>
       {location === "/" ||
-        location === "/Homepage1" ||
-        location === "/Homepage2" ? (
+      location === "/Homepage1" ||
+      location === "/Homepage2" ? (
         <div className="headerlogos">
           <Container fluid>
             <Row className="midhead one">
@@ -103,8 +106,11 @@ const Header = () => {
                         type="search"
                         placeholder="शोध कीवर्ड प्रविष्ट करा"
                         className="form-control"
+                        onChange={(e) => setSearch(e.target.value)}
                       />
-                      <i className="fa fa-search" aria-hidden="true"></i>
+                      <Link to={`/SearchDetails?id=${search}`}>
+                        <i className="fa fa-search" aria-hidden="true"></i>
+                      </Link>
                     </form>
                   </div>
                 </Col>
@@ -146,10 +152,12 @@ const Header = () => {
                             सदस्य
                           </Link>
                         </div>
-                        <Nav.Link className={`${location === "/Debate"
-                          ? "active"
-                          : ""
-                          }`} href="/Debate">
+                        <Nav.Link
+                          className={`${
+                            location === "/Debate" ? "active" : ""
+                          }`}
+                          href="/Debate"
+                        >
                           सभागृहांचे कार्यवृत्त
                         </Nav.Link>
                         <Nav.Link href="#action2">विधिविधान</Nav.Link>

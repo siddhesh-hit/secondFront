@@ -909,7 +909,7 @@ table.debate-light.table.table-bordered {
 }
 
 td.imagee img {
-    width: 30px;
+    width: 25px;
 }
 
 td.imagee .fa-eye {
@@ -1451,14 +1451,14 @@ select.secondfilers {
     margin-top: 5px;
     padding: 10px 15px;
     width: 100%;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     padding-right: 15px;
     padding-left: 15px;
     letter-spacing: 0em;
-    color: #aeadad;
+    color: #777777;
     background: #FBFBFB;
-    border: solid #D6E4EC 1px;
+    border: solid #b6b6b6 1px;
     border-radius: 10px;
 }
 
@@ -1499,35 +1499,12 @@ a.active.nav-link {
     font-weight: 600 !important;
 }
 
-.mobile-filter {
-    position: fixed;
-    top: 0;
-    left: -100%;
-    height: 100%;
-    width: 80%;
-    max-width: 300px;
-    /* Adjust the width as needed */
-    background-color: white;
-    overflow-y: auto;
-    transition: left 0.3s ease-in-out;
+.advancdeee select {
+    margin-bottom: 15px;
 }
 
-.mobile-filter-toggle {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background-color: #fff;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.mobile-filter-content {
-    padding: 20px;
-}
-
-@media screen and (max-width: 768px) {
-    .mobile-filter {
-        left: 0;
-    }
+.advancdeee {
+    margin-top: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
 }

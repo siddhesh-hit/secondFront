@@ -312,10 +312,7 @@ const Debate = () => {
                   onSearch={handleOnSearch}
                   onSelect={handleOnSelect}
                 />
-                <Accordion
-                  className="filsss"
-                  defaultActiveKey={["0"]}
-                >
+                <Accordion className="filsss" defaultActiveKey={["0"]}>
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>सभागृह</Accordion.Header>
                     <Accordion.Body>
@@ -443,117 +440,111 @@ const Debate = () => {
                   <div className="iconss">{isDivVisible ? "-" : "+"}</div>
                 </button>
                 {isDivVisible && (
-                  <div>
-                    <Accordion className="filsss1">
+                  <div className="advancdeee">
+                    <select
+                      className="secondfilers"
+                      value={obj[search.method]}
+                      name="method"
+                      onChange={handleChange}
+                    >
+                      <option hidden>निवडा कामकाजाची यादी </option>
+                      {methods?.map((item, index) => (
+                        <option key={index} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      className="secondfilers"
+                      value={search.method_type}
+                      name="method_type"
+                      onChange={handleChange}
+                    >
+                      <option hidden>निवडा प्रकार</option>
+                      {options?.method_type?.map((item, index) => (
+                        <option key={index} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      className="secondfilers"
+                      value={search.method_sub_type}
+                      name="method_sub_type"
+                      onChange={handleChange}
+                    >
+                      <option hidden>निवडा उपप्रकार</option>
+                      {options?.method_sub_type?.map((item, index) => (
+                        <option key={index} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      className="secondfilers"
+                      value={search.ministry_name}
+                      name="ministry_name"
+                      onChange={handleChange}
+                    >
+                      <option hidden>निवडा मंत्रालय</option>
+                      {options?.ministry_name?.map((item, index) => (
+                        <option key={index} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      className="secondfilers"
+                      value={search.volume}
+                      name="volume"
+                      onChange={handleChange}
+                    >
+                      <option hidden>निवडा खंड</option>
+                      {options?.volume?.map((item, index) => (
+                        <option key={index} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      className="secondfilers"
+                      value={search.kramank}
+                      name="kramank"
+                      onChange={handleChange}
+                    >
+                      <option hidden>निवडा क्रमांक</option>
+                      {options?.kramank?.map((item, index) => (
+                        <option key={index} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                    {/* <Accordion className="filsss1">
                       <Accordion.Item eventKey="2">
                         <Accordion.Header>आयुधे </Accordion.Header>
-                        <Accordion.Body>
-                          <select
-                            className="secondfilers"
-                            value={obj[search.method]}
-                            name="method"
-                            onChange={handleChange}
-                          >
-                            <option hidden>Select method</option>
-                            {methods?.map((item, index) => (
-                              <option key={index} value={item}>
-                                {item}
-                              </option>
-                            ))}
-                          </select>
-                        </Accordion.Body>
+                        <Accordion.Body></Accordion.Body>
                       </Accordion.Item>
                       <Accordion.Item eventKey="3">
                         <Accordion.Header>आयुधाचा प्रकार</Accordion.Header>
-                        <Accordion.Body>
-                          <select
-                            className="secondfilers"
-                            value={search.method_type}
-                            name="method_type"
-                            onChange={handleChange}
-                          >
-                            <option hidden>Select method type</option>
-                            {options?.method_type?.map((item, index) => (
-                              <option key={index} value={item}>
-                                {item}
-                              </option>
-                            ))}
-                          </select>
-                        </Accordion.Body>
+                        <Accordion.Body></Accordion.Body>
                       </Accordion.Item>
                       <Accordion.Item eventKey="4">
                         <Accordion.Header>आयुधाचा उपप्रकार</Accordion.Header>
-                        <Accordion.Body>
-                          <select
-                            className="secondfilers"
-                            value={search.method_sub_type}
-                            name="method_sub_type"
-                            onChange={handleChange}
-                          >
-                            <option hidden>Select method sub type</option>
-                            {options?.method_sub_type?.map((item, index) => (
-                              <option key={index} value={item}>
-                                {item}
-                              </option>
-                            ))}
-                          </select>
-                        </Accordion.Body>
+                        <Accordion.Body></Accordion.Body>
                       </Accordion.Item>
                       <Accordion.Item eventKey="5">
                         <Accordion.Header>मंत्रालय </Accordion.Header>
-                        <Accordion.Body>
-                          <select
-                            className="secondfilers"
-                            value={search.ministry_name}
-                            name="ministry_name"
-                            onChange={handleChange}
-                          >
-                            <option hidden>Select ministry name</option>
-                            {options?.ministry_name?.map((item, index) => (
-                              <option key={index} value={item}>
-                                {item}
-                              </option>
-                            ))}
-                          </select>
-                        </Accordion.Body>
+                        <Accordion.Body></Accordion.Body>
                       </Accordion.Item>
                       <Accordion.Item eventKey="0">
                         <Accordion.Header>खंड</Accordion.Header>
-                        <Accordion.Body>
-                          <select
-                            className="secondfilers"
-                            value={search.volume}
-                            name="volume"
-                            onChange={handleChange}
-                          >
-                            <option hidden>Select volume</option>
-                            {options?.volume?.map((item, index) => (
-                              <option key={index} value={item}>
-                                {item}
-                              </option>
-                            ))}
-                          </select>
-                        </Accordion.Body>
+                        <Accordion.Body></Accordion.Body>
                       </Accordion.Item>
                       <Accordion.Item eventKey="1">
                         <Accordion.Header>क्रमांक</Accordion.Header>
-                        <Accordion.Body>
-                          <select
-                            className="secondfilers"
-                            value={search.kramank}
-                            name="kramank"
-                            onChange={handleChange}
-                          >
-                            <option hidden>Select kramank</option>
-                            {options?.kramank?.map((item, index) => (
-                              <option key={index} value={item}>
-                                {item}
-                              </option>
-                            ))}
-                          </select>
-                        </Accordion.Body>
+                        <Accordion.Body></Accordion.Body>
                       </Accordion.Item>
-                    </Accordion>
+                    </Accordion> */}
                   </div>
                 )}
               </div>
@@ -641,7 +632,9 @@ const Debate = () => {
               <tbody>
                 {debate?.data?.map((item, index) => {
                   let name = item?.members_name.split(",");
+                  let twoEntry;
 
+                  name.length < 5 ? (twoEntry = true) : (twoEntry = false);
                   return (
                     <tr key={index}>
                       <td>{item.topic}</td>
@@ -649,7 +642,11 @@ const Debate = () => {
                       <td>{item.session}</td>
                       <td>{item.date}</td>
                       <td>
-                        <p>{name[0] + "...."}</p>
+                        <p>
+                          {twoEntry
+                            ? name[0] + "...."
+                            : name[0] + name[1] + "...."}
+                        </p>
                       </td>
                       <td className="imagee">
                         <Link to={`/DebateDetails?id=${item._id}`}>
@@ -692,9 +689,10 @@ const Debate = () => {
                       <div
                         // onClick={(e) => handlePageClick(e, val)}
                         className={`
-                          ${val === Math.ceil(pageCount / pageLimit) + 1
-                            ? "active pagess"
-                            : ""
+                          ${
+                            val === Math.ceil(pageCount / pageLimit) + 1
+                              ? "active pagess"
+                              : ""
                           }
                           paginationnn pagess
                         `}
