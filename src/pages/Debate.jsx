@@ -16,6 +16,7 @@ const Debate = () => {
   const [isDivVisible, setDivVisibility] = useState(false);
   const [pageCount, setPageCount] = useState(0);
   const [pageLimit, setPageLimit] = useState(10);
+  const [modalShow, setModalShow] = useState(true);
 
   const [search, setSearch] = useState({
     topic: "",
@@ -137,12 +138,12 @@ const Debate = () => {
     return displayedPages;
   };
 
-  const handlePageClick = (e, val) => {
-    console.log("check", val);
-    console.log(Math.ceil(pageCount / pageLimit) + 1);
-    setPageCount(val * 10);
-    debateFetch();
-  };
+  // const handlePageClick = (e, val) => {
+  //   console.log("check", val);
+  //   console.log(Math.ceil(pageCount / pageLimit) + 1);
+  //   setPageCount(val * 10);
+  //   debateFetch();
+  // };
 
   const handlePageLimit = (e) => {
     let value = e.target.value;
@@ -180,6 +181,24 @@ const Debate = () => {
       ministry_name: "",
     }));
     debateFetch();
+  };
+
+  const handleHitChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "method") {
+      let newValue = Object.keys(obj).find((key) => obj[key] === value);
+
+      setSearch((prev) => ({
+        ...prev,
+        [name]: newValue,
+      }));
+    } else {
+      setSearch((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const debateFetch = async () => {
@@ -277,7 +296,7 @@ const Debate = () => {
     };
     fetchData();
   }, []);
-  const [modalShow, setModalShow] = useState(true);
+
   return (
     <div>
       <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
@@ -309,7 +328,7 @@ const Debate = () => {
                             name="house"
                             checked={search.house === "विधानपरिषद"}
                             value={"विधानपरिषद"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                         <div className="datacheck">
@@ -319,7 +338,7 @@ const Debate = () => {
                             name="house"
                             checked={search.house === "विधानसभा"}
                             value={"विधानसभा"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                         <div className="datacheck1">
@@ -329,7 +348,7 @@ const Debate = () => {
                             name="house"
                             checked={search.house === "एकत्रित"}
                             value={"एकत्रित"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                       </div>
@@ -346,7 +365,7 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "सर्व"}
                             value={"सर्व"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                         <div className="datacheck">
@@ -356,7 +375,7 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "पावसाळी"}
                             value={"पावसाळी"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                         <div className="datacheck">
@@ -366,7 +385,7 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "अर्थसंकल्पीय"}
                             value={"अर्थसंकल्पीय"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                         <div className="datacheck1">
@@ -376,7 +395,7 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "विशेष"}
                             value={"विशेष"}
-                            onChange={handleChange}
+                            onChange={handleHitChange}
                           />
                         </div>
                       </div>
@@ -691,8 +710,9 @@ const Debate = () => {
                 <button
                   className="left"
                   onClick={() => {
-                    const maxPageCount =
-                      Math.floor(debate.count / pageLimit) * pageLimit + 1;
+                    const maxPageCount = Math.floor(debate.count / pageLimit);
+
+                    console.log(pageCount + pageLimit < maxPageCount);
                     if (pageCount + pageLimit < maxPageCount) {
                       setPageCount(pageCount + 10);
 
