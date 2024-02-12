@@ -21,38 +21,14 @@ const DebateDetails = () => {
     setLoader(false);
   };
 
-    if (loader) {   
-        return <LoaderComponents />;
-    }
-    return (
-        <div>
-            <section className="debatedetails">
-                <div className="container">
-                    <a className="gobackss" href="/">
-                        <i className="fa fa-angle-left" />
-                        Back
-                    </a>
-                    <table className="table-lightt table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>विषय</th>
-                                <th>सभागृह</th>
-                                <th>अधिवेशन</th>
-                                <th>तारीख</th>
-                                <th>PDF</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {debate ? (
-                                <tr>
-                                    <td>{debate.topic}</td>
-                                    <td>{debate.house}</td>
-                                    <td>{debate.session}</td>
-                                    <td>{debate.date}</td>
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   if (loader) {
     return <LoaderComponents />;
   }
+
   return (
     <div>
       <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
