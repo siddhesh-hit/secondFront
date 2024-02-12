@@ -186,33 +186,28 @@ const Debate = () => {
   const handleHitChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "method") {
-      let newValue = Object.keys(obj).find((key) => obj[key] === value);
-
-      setSearch((prev) => ({
-        ...prev,
-        [name]: newValue,
-      }));
-    } else {
-      setSearch((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    setSearch((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const debateFetch = async () => {
     console.log(pageCount, pageLimit);
-    await getApi(`debate?perPage=${pageCount}&perLimit=${pageLimit}`)
+    await getApi(
+      `debate?perPage=${pageCount}&perLimit=${pageLimit}&house=${search.house}`
+    )
       .then((res) => setDebate(res.data))
       .catch((err) => console.log(err));
   };
 
   const handleSearch = async () => {
-    let house = search.house === "एकत्रित" ? "विधानसभा" : search.house;
+    let house = search.house === "एकत्रित" ? "" : search.house;
+
+    let session = search.session === "सर्व" ? "" : search.session;
 
     await getApi(
-      `debate/fields?perPage=${pageCount}&perLimit=${pageLimit}&topic=${search.topic}&members_name=${search.members_name}&house=${house}&session=${search.session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
+      `debate/fields?perPage=${pageCount}&perLimit=${pageLimit}&topic=${search.topic}&members_name=${search.members_name}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
     )
       .then((res) => {
         if (res.data.success) {
@@ -223,8 +218,12 @@ const Debate = () => {
   };
 
   useEffect(() => {
-    debateFetch(); // Fetch data whenever pageLimit changes
-  }, [pageLimit]);
+    handleSearch();
+  }, [search.session, search.house, pageCount, pageLimit]);
+
+  useEffect(() => {
+    debateFetch();
+  }, [pageCount, pageLimit]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -299,7 +298,7 @@ const Debate = () => {
 
   return (
     <div>
-      <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
+      {/* <PopupHome show={modalShow} onHide={() => setModalShow(false)} /> */}
       <Container fluid className="debatepage">
         <Row>
           <Col lg={3}>
