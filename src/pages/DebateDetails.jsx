@@ -22,10 +22,6 @@ const DebateDetails = () => {
     setLoader(false);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   if (loader) {
     return <LoaderComponents />;
   }
