@@ -298,7 +298,7 @@ const Debate = () => {
 
   return (
     <div>
-      {/* <PopupHome show={modalShow} onHide={() => setModalShow(false)} /> */}
+      <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
       <Container fluid className="debatepage">
         <Row>
           <Col lg={3}>
