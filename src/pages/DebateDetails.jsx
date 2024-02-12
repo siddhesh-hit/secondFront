@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { getApiById } from "../services/axiosInterceptors";
 import LoaderComponents from "../components/LoaderComponents";
-
+import PDF from "../assets/debate/Frame.svg";
+import PopupHome from "./PopupHome";
 const DebateDetails = () => {
   const [debate, setDebate] = useState([]);
+  const [modalShow, setModalShow] = useState(true);
   const [loader, setLoader] = useState(null);
 
   const location = useLocation();
@@ -28,6 +30,7 @@ const DebateDetails = () => {
   }
   return (
     <div>
+      <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
       <section className="debatedetails">
         <div className="container">
           <a className="gobackss" href="/">
@@ -54,7 +57,7 @@ const DebateDetails = () => {
 
                   <td>
                     <Link to={"http://103.112.121.109:8000/" + debate.fileurl}>
-                      <i className="fa fa-eye"></i>
+                      <img src={PDF} alt="" />
                     </Link>
                     {/* &nbsp;पहा */}
                   </td>
