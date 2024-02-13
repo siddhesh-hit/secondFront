@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Row, Col, Accordion, Form } from "react-bootstrap";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { Link } from "react-router-dom";
@@ -10,11 +10,12 @@ import Sort from "../assets/debate/sort.svg";
 import { getApi } from "../services/axiosInterceptors";
 import { memberName } from "../data/memberName";
 import PopupHome from "./PopupHome";
+import PaginationComponent from "../components/Pagination";
 
 const Debate = () => {
   const [debate, setDebate] = useState([]);
   const [isDivVisible, setDivVisibility] = useState(false);
-  const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
   const [pageLimit, setPageLimit] = useState(10);
   const [modalShow, setModalShow] = useState(true);
 
@@ -75,10 +76,6 @@ const Debate = () => {
     }));
   };
 
-  const toggleDivVisibility = () => {
-    setDivVisibility(!isDivVisible);
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -95,61 +92,6 @@ const Debate = () => {
         [name]: value,
       }));
     }
-  };
-
-  const calculatePageNumbers = () => {
-    const totalPages = Math.ceil(debate.count / pageLimit);
-    const maxDisplayedPages = 5;
-    const displayedPages = [];
-
-    if (totalPages <= maxDisplayedPages) {
-      for (let i = 1; i <= totalPages; i++) {
-        displayedPages.push(i);
-      }
-    } else {
-      const halfMaxPages = Math.floor(maxDisplayedPages / 2);
-      let startPage = Math.max(1, pageCount / pageLimit - halfMaxPages);
-      let endPage = startPage + maxDisplayedPages - 1;
-
-      if (endPage > totalPages) {
-        endPage = totalPages;
-        startPage = Math.max(1, totalPages - maxDisplayedPages + 1);
-      }
-
-      if (startPage > 1) {
-        displayedPages.push(1);
-        if (startPage > 2) {
-          displayedPages.push("...");
-        }
-      }
-
-      for (let i = startPage; i <= endPage; i++) {
-        displayedPages.push(i);
-      }
-
-      if (endPage < totalPages) {
-        if (endPage < totalPages - 1) {
-          displayedPages.push("...");
-        }
-        displayedPages.push(totalPages);
-      }
-    }
-
-    return displayedPages;
-  };
-
-  // const handlePageClick = (e, val) => {
-  //   console.log("check", val);
-  //   console.log(Math.ceil(pageCount / pageLimit) + 1);
-  //   setPageCount(val * 10);
-  //   debateFetch();
-  // };
-
-  const handlePageLimit = (e) => {
-    let value = e.target.value;
-
-    setPageLimit(+value);
-    debateFetch();
   };
 
   const handleReset = () => {
@@ -183,19 +125,10 @@ const Debate = () => {
     debateFetch();
   };
 
-  const handleHitChange = (e) => {
-    const { name, value } = e.target;
-
-    setSearch((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const debateFetch = async () => {
-    console.log(pageCount, pageLimit);
+    // console.log(currentPage, pageLimit);
     await getApi(
-      `debate?perPage=${pageCount}&perLimit=${pageLimit}&house=${search.house}`
+      `debate?perPage=${currentPage}&perLimit=${pageLimit}&house=${search.house}`
     )
       .then((res) => setDebate(res.data))
       .catch((err) => console.log(err));
@@ -207,7 +140,7 @@ const Debate = () => {
     let session = search.session === "सर्व" ? "" : search.session;
 
     await getApi(
-      `debate/fields?perPage=${pageCount}&perLimit=${pageLimit}&topic=${search.topic}&members_name=${search.members_name}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
+      `debate/fields?perPage=${currentPage}&perLimit=${pageLimit}&topic=${search.topic}&members_name=${search.members_name}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
     )
       .then((res) => {
         if (res.data.success) {
@@ -219,11 +152,11 @@ const Debate = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [search.session, search.house, pageCount, pageLimit]);
+  }, [search.session, search.house, currentPage, pageLimit]);
 
   useEffect(() => {
     debateFetch();
-  }, [pageCount, pageLimit]);
+  }, [currentPage, pageLimit]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -324,7 +257,7 @@ const Debate = () => {
                             name="house"
                             checked={search.house === "विधानपरिषद"}
                             value={"विधानपरिषद"}
-                            onChange={handleHitChange}
+                            onChange={handleChange}
                           />
                         </div>
                         <div className="datacheck">
@@ -334,7 +267,7 @@ const Debate = () => {
                             name="house"
                             checked={search.house === "विधानसभा"}
                             value={"विधानसभा"}
-                            onChange={handleHitChange}
+                            onChange={handleChange}
                           />
                         </div>
                         <div className="datacheck1">
@@ -344,7 +277,7 @@ const Debate = () => {
                             name="house"
                             checked={search.house === "एकत्रित"}
                             value={"एकत्रित"}
-                            onChange={handleHitChange}
+                            onChange={handleChange}
                           />
                         </div>
                       </div>
@@ -361,7 +294,7 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "सर्व"}
                             value={"सर्व"}
-                            onChange={handleHitChange}
+                            onChange={handleChange}
                           />
                         </div>
                         <div className="datacheck">
@@ -371,7 +304,7 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "पावसाळी"}
                             value={"पावसाळी"}
-                            onChange={handleHitChange}
+                            onChange={handleChange}
                           />
                         </div>
                         <div className="datacheck">
@@ -381,7 +314,7 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "अर्थसंकल्पीय"}
                             value={"अर्थसंकल्पीय"}
-                            onChange={handleHitChange}
+                            onChange={handleChange}
                           />
                         </div>
                         <div className="datacheck1">
@@ -391,7 +324,7 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "विशेष"}
                             value={"विशेष"}
-                            onChange={handleHitChange}
+                            onChange={handleChange}
                           />
                         </div>
                       </div>
@@ -435,7 +368,10 @@ const Debate = () => {
               </div>
               <hr />
               <div className="secondfilter">
-                <button className="advanced" onClick={toggleDivVisibility}>
+                <button
+                  className="advanced"
+                  onClick={() => setDivVisibility(!isDivVisible)}
+                >
                   ऍडव्हान्स फिल्टर
                   <div className="iconss">{isDivVisible ? "-" : "+"}</div>
                 </button>
@@ -600,7 +536,7 @@ const Debate = () => {
                     <select
                       name="sabhaselection"
                       defaultValue={pageLimit}
-                      onChange={handlePageLimit}
+                      onChange={(e) => setPageLimit(+e.target.value)}
                     >
                       <option value={10}>10 प्रति पृष्ठ</option>
                       <option value={20}>20 प्रति पृष्ठ</option>
@@ -666,60 +602,12 @@ const Debate = () => {
               </tbody>
             </table>
 
-            <div className="flex-tab">
-              <div className="pagination">
-                <button
-                  className="right"
-                  onClick={() => {
-                    if (pageCount >= 10) {
-                      setPageCount(pageCount - 10);
-                      debateFetch();
-                    }
-                  }}
-                >
-                  ≪
-                </button>
-                {calculatePageNumbers().map((val, index) => (
-                  <React.Fragment key={index}>
-                    {val === "..." ? (
-                      <span className="ellipsis" key={index}>
-                        ...
-                      </span>
-                    ) : (
-                      <div
-                        // onClick={(e) => handlePageClick(e, val)}
-                        className={`
-                          ${
-                            val === Math.ceil(pageCount / pageLimit) + 1
-                              ? "active pagess"
-                              : ""
-                          }
-                          paginationnn pagess
-                        `}
-                        key={index}
-                      >
-                        <span>{val}</span>
-                      </div>
-                    )}
-                  </React.Fragment>
-                ))}
-                <button
-                  className="left"
-                  onClick={() => {
-                    const maxPageCount = Math.floor(debate.count / pageLimit);
-
-                    console.log(pageCount + pageLimit < maxPageCount);
-                    if (pageCount + pageLimit < maxPageCount) {
-                      setPageCount(pageCount + 10);
-
-                      debateFetch();
-                    }
-                  }}
-                >
-                  ≫
-                </button>
-              </div>
-            </div>
+            <PaginationComponent
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              pageLimit={pageLimit}
+              totalCount={debate?.count}
+            />
           </Col>
         </Row>
       </Container>
