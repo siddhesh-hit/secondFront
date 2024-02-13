@@ -18,6 +18,7 @@ const Debate = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageLimit, setPageLimit] = useState(10);
   const [modalShow, setModalShow] = useState(true);
+  const [sorted, setSorted] = useState(false);
 
   const [search, setSearch] = useState({
     topic: "",
@@ -125,6 +126,28 @@ const Debate = () => {
     debateFetch();
   };
 
+  const handleSort = () => {
+    // console.log(debate)
+
+    if (sorted) {
+      const newDebate = debate.data.sort((a, b) => b.topic.localeCompare(a.topic));
+      setDebate((prev) => ({
+        ...prev,
+        data: newDebate,
+      }))
+      setSorted(!sorted)
+
+    } else {
+      const newDebate = debate.data.sort((a, b) => a.topic.localeCompare(b.topic));
+      setDebate((prev) => ({
+        ...prev,
+        data: newDebate,
+      }))
+      setSorted(!sorted)
+    }
+
+  }
+
   const debateFetch = async () => {
     // console.log(currentPage, pageLimit);
     await getApi(
@@ -152,7 +175,7 @@ const Debate = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [search.session, search.house, currentPage, pageLimit]);
+  }, [search.session, search.house, search.members_name, currentPage, pageLimit]);
 
   useEffect(() => {
     debateFetch();
@@ -544,9 +567,9 @@ const Debate = () => {
                       <option value={40}>40 प्रति पृष्ठ</option>
                     </select>
                     <span className="sorting">
-                      <Link to="/">
+                      <button onClick={handleSort}>
                         <img src={Sort} alt="" />
-                      </Link>
+                      </button>
                     </span>
                   </div>
                 </Col>
