@@ -586,7 +586,7 @@ const Debate = () => {
                       <img src={Arrow} alt="" />
                       <span>सभागृहांचे कार्यवृत्त</span>
                     </div>
-                    <p> {debate?.count ? `[${debate?.count}]` : ""} Items</p>
+                    <p> {debate?.count ? `[${debate?.count}.परिणाम]` : ""}</p>
                   </div>
                 </Col>
                 <Col lg={6}>
@@ -689,10 +689,9 @@ const Debate = () => {
                       <div
                         // onClick={(e) => handlePageClick(e, val)}
                         className={`
-                          ${
-                            val === Math.ceil(pageCount / pageLimit) + 1
-                              ? "active pagess"
-                              : ""
+                          ${val === Math.ceil(pageCount / pageLimit) + 1
+                            ? "active pagess"
+                            : ""
                           }
                           paginationnn pagess
                         `}
