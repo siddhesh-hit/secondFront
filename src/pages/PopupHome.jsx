@@ -1,4 +1,3 @@
-import React from "react";
 import { Modal } from "react-bootstrap";
 
 const PopupHome = (props) => {
@@ -6,7 +5,7 @@ const PopupHome = (props) => {
     <div>
       <Modal
         {...props}
-        size="lg"
+        size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >

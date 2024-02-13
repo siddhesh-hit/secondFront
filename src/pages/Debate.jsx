@@ -383,7 +383,7 @@ const Debate = () => {
                       name="method"
                       onChange={handleChange}
                     >
-                      <option hidden>निवडा कामकाजाची यादी </option>
+                      <option hidden>कामकाजाची यादी निवडा</option>
                       {methods?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
@@ -396,7 +396,7 @@ const Debate = () => {
                       name="method_type"
                       onChange={handleChange}
                     >
-                      <option hidden>निवडा प्रकार</option>
+                      <option hidden>प्रकार निवडा</option>
                       {options?.method_type?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
@@ -409,7 +409,7 @@ const Debate = () => {
                       name="method_sub_type"
                       onChange={handleChange}
                     >
-                      <option hidden>निवडा उपप्रकार</option>
+                      <option hidden>उपप्रकार निवडा</option>
                       {options?.method_sub_type?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
@@ -422,7 +422,7 @@ const Debate = () => {
                       name="ministry_name"
                       onChange={handleChange}
                     >
-                      <option hidden>निवडा मंत्रालय</option>
+                      <option hidden>मंत्रालय निवडा</option>
                       {options?.ministry_name?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
@@ -435,7 +435,7 @@ const Debate = () => {
                       name="volume"
                       onChange={handleChange}
                     >
-                      <option hidden>निवडा खंड</option>
+                      <option hidden>खंड निवडा</option>
                       {options?.volume?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
@@ -448,7 +448,7 @@ const Debate = () => {
                       name="kramank"
                       onChange={handleChange}
                     >
-                      <option hidden>निवडा क्रमांक</option>
+                      <option hidden>क्रमांक निवडा</option>
                       {options?.kramank?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
@@ -509,7 +509,7 @@ const Debate = () => {
                   <i className="fa fa-search" />
                 </button>
                 <button className="startover" onClick={handleStart}>
-                  प्रारंभ
+                  रीसेट
                 </button>
               </div>
             </div>
@@ -522,7 +522,7 @@ const Debate = () => {
                       <img src={Arrow} alt="" />
                       <span>सभागृहांचे कार्यवृत्त</span>
                     </div>
-                    <p> {debate?.count ? `[${debate?.count}.परिणाम]` : ""}</p>
+                    <p> {debate?.count ? `[${debate?.count} परिणाम]` : ""}</p>
                   </div>
                 </Col>
                 <Col lg={6}>
