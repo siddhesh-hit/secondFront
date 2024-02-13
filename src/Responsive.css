@@ -136,4 +136,29 @@
     section.homepageback h1 {
         font-size: 15px;
     }
+
+    .debatepage.container-fluid .col-lg-3 {
+        width: 100%;
+    }
+
+    .debatepage.container-fluid .col-lg-9 {
+        width: 100%;
+    }
+
+    .debate-right {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .topheaderright a {
+        font-size: 11px;
+    }
+
+    .languagechanges.dropdown button {
+        font-size: 11px;
+    }
+
+    .font-size button {
+        font-size: 12px;
+    }
 }

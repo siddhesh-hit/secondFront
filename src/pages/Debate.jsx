@@ -18,6 +18,7 @@ const Debate = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageLimit, setPageLimit] = useState(10);
   const [modalShow, setModalShow] = useState(true);
+  const [sorted, setSorted] = useState(false);
 
   const [search, setSearch] = useState({
     topic: "",
@@ -125,6 +126,28 @@ const Debate = () => {
     debateFetch();
   };
 
+  const handleSort = () => {
+    // console.log(debate)
+
+    if (sorted) {
+      const newDebate = debate.data.sort((a, b) => b.topic.localeCompare(a.topic));
+      setDebate((prev) => ({
+        ...prev,
+        data: newDebate,
+      }))
+      setSorted(!sorted)
+
+    } else {
+      const newDebate = debate.data.sort((a, b) => a.topic.localeCompare(b.topic));
+      setDebate((prev) => ({
+        ...prev,
+        data: newDebate,
+      }))
+      setSorted(!sorted)
+    }
+
+  }
+
   const debateFetch = async () => {
     // console.log(currentPage, pageLimit);
     await getApi(
@@ -152,7 +175,7 @@ const Debate = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [search.session, search.house, currentPage, pageLimit]);
+  }, [search.session, search.house, search.members_name, currentPage, pageLimit]);
 
   useEffect(() => {
     debateFetch();
@@ -383,7 +406,7 @@ const Debate = () => {
                       name="method"
                       onChange={handleChange}
                     >
-                      <option hidden>निवडा कामकाजाची यादी </option>
+                      <option hidden>कामकाजाची यादी निवडा</option>
                       {methods?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
@@ -396,7 +419,7 @@ const Debate = () => {
                       name="method_type"
                       onChange={handleChange}
                     >
-                      <option hidden>निवडा प्रकार</option>
+                      <option hidden>प्रकार निवडा</option>
                       {options?.method_type?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
@@ -409,7 +432,7 @@ const Debate = () => {
                       name="method_sub_type"
                       onChange={handleChange}
                     >
-                      <option hidden>निवडा उपप्रकार</option>
+                      <option hidden>उपप्रकार निवडा</option>
                       {options?.method_sub_type?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
@@ -422,7 +445,7 @@ const Debate = () => {
                       name="ministry_name"
                       onChange={handleChange}
                     >
-                      <option hidden>निवडा मंत्रालय</option>
+                      <option hidden>मंत्रालय निवडा</option>
                       {options?.ministry_name?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
@@ -435,7 +458,7 @@ const Debate = () => {
                       name="volume"
                       onChange={handleChange}
                     >
-                      <option hidden>निवडा खंड</option>
+                      <option hidden>खंड निवडा</option>
                       {options?.volume?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
@@ -448,7 +471,7 @@ const Debate = () => {
                       name="kramank"
                       onChange={handleChange}
                     >
-                      <option hidden>निवडा क्रमांक</option>
+                      <option hidden>क्रमांक निवडा</option>
                       {options?.kramank?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
@@ -509,7 +532,7 @@ const Debate = () => {
                   <i className="fa fa-search" />
                 </button>
                 <button className="startover" onClick={handleStart}>
-                  प्रारंभ
+                  रीसेट
                 </button>
               </div>
             </div>
@@ -522,7 +545,7 @@ const Debate = () => {
                       <img src={Arrow} alt="" />
                       <span>सभागृहांचे कार्यवृत्त</span>
                     </div>
-                    <p> {debate?.count ? `[${debate?.count}]` : ""} Items</p>
+                    <p> {debate?.count ? `[${debate?.count} परिणाम]` : ""}</p>
                   </div>
                 </Col>
                 <Col lg={6}>
@@ -544,9 +567,9 @@ const Debate = () => {
                       <option value={40}>40 प्रति पृष्ठ</option>
                     </select>
                     <span className="sorting">
-                      <Link to="/">
+                      <button onClick={handleSort}>
                         <img src={Sort} alt="" />
-                      </Link>
+                      </button>
                     </span>
                   </div>
                 </Col>

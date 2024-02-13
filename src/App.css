@@ -1032,7 +1032,7 @@ span.sorting img {
     top: -2px;
 }
 
-span.sorting {
+span.sorting button {
     background: #ffffff;
     border: 1px solid #000000;
     padding: 11px;
@@ -1052,7 +1052,7 @@ span.sorting {
 
 .firstfilter h3 {
     color: #CC7722;
-    font-size: 21px;
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: 0em;
     margin-bottom: 30px;
@@ -1505,8 +1505,8 @@ a.active.nav-link {
 
 .advancdeee {
     margin-top: 25px;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 
@@ -1576,4 +1576,32 @@ a.active.nav-link {
 .pagination-container .pagination-item.disabled:hover {
     background-color: transparent;
     cursor: default;
+}
+
+.pagination {
+    cursor: pointer;
+}
+
+.debatepage.container-fluid .col-lg-3 {
+    width: 22%;
+}
+
+.debatepage.container-fluid .col-lg-9 {
+    width: 78%;
+}
+
+.smfkdnmk.modal-body p {
+    color: #4E3431;
+    font-family: 'Poppins';
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.9;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.closebutton.modal-header button {
+    opacity: 1;
+    color: #4E3431;
+    font-family: 'Poppins';
 }
