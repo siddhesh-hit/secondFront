@@ -14,39 +14,40 @@ function PaginationComponent({
     // Add the first page
     pagesToShow.push(0);
 
-    // If current page is close to the beginning
-    if (currentPage <= numPagesToShow) {
-      for (
-        let i = 1;
-        i <= currentPage + numPagesToShow && i < totalPages - 1;
-        i++
-      ) {
-        pagesToShow.push(i);
-      }
-      if (totalPages > currentPage + numPagesToShow + 1) {
+    if (totalPages <= numPagesToShow) {
+      // If total pages is less than the number of pages to show on each side plus 1
+      // for (let i = 1; i < totalPages - 1; i++) {
+      //   pagesToShow.push(i);
+      // }
+      return pagesToShow;
+    } else {
+      // If total pages is greater than the number of pages to show on each side plus 1
+      // Determine which pages to show based on the current page
+      if (currentPage <= numPagesToShow) {
+        for (let i = 1; i <= numPagesToShow * 2 + 1; i++) {
+          pagesToShow.push(i);
+        }
+        pagesToShow.push("...");
+      } else if (currentPage >= totalPages - numPagesToShow - 1) {
+        pagesToShow.push("...");
+        for (
+          let i = totalPages - numPagesToShow * 2 - 2;
+          i < totalPages - 1;
+          i++
+        ) {
+          pagesToShow.push(i);
+        }
+      } else {
+        pagesToShow.push("...");
+        for (
+          let i = currentPage - numPagesToShow;
+          i <= currentPage + numPagesToShow;
+          i++
+        ) {
+          pagesToShow.push(i);
+        }
         pagesToShow.push("...");
       }
-    }
-    // If current page is close to the end
-    else if (currentPage >= totalPages - numPagesToShow - 1) {
-      if (totalPages > currentPage - numPagesToShow) {
-        pagesToShow.push("...");
-      }
-      for (let i = totalPages - numPagesToShow - 1; i < totalPages - 1; i++) {
-        pagesToShow.push(i);
-      }
-    }
-    // If current page is in the middle
-    else {
-      pagesToShow.push("...");
-      for (
-        let i = currentPage - numPagesToShow;
-        i <= currentPage + numPagesToShow;
-        i++
-      ) {
-        pagesToShow.push(i);
-      }
-      pagesToShow.push("...");
     }
 
     // Add the last page
@@ -70,9 +71,7 @@ function PaginationComponent({
               setCurrentPage(typeof item === "number" ? item : currentPage + 1)
             }
             className={`${
-              typeof item === "number" && item === currentPage
-                ? "active pagess"
-                : ""
+              typeof item === "number" && item === currentPage ? "active " : ""
             } paginationnn pagess`}
           >
             <span>{typeof item === "number" ? item + 1 : item}</span>

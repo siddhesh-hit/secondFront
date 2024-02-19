@@ -1605,3 +1605,8 @@ a.active.nav-link {
     color: #4E3431;
     font-family: 'Poppins';
 }
+
+.mark,
+mark {
+    background-color: #ffc200 !important;
+}
