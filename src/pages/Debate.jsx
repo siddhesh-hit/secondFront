@@ -11,6 +11,7 @@ import { getApi } from "../services/axiosInterceptors";
 import { memberName } from "../data/memberName";
 import PopupHome from "./PopupHome";
 import PaginationComponent from "../components/Pagination";
+import HighlightSentence from "../components/HighlightSentence";
 
 const Debate = () => {
   const [debate, setDebate] = useState([]);
@@ -130,23 +131,25 @@ const Debate = () => {
     // console.log(debate)
 
     if (sorted) {
-      const newDebate = debate.data.sort((a, b) => b.topic.localeCompare(a.topic));
+      const newDebate = debate.data.sort((a, b) =>
+        b.topic.localeCompare(a.topic)
+      );
       setDebate((prev) => ({
         ...prev,
         data: newDebate,
-      }))
-      setSorted(!sorted)
-
+      }));
+      setSorted(!sorted);
     } else {
-      const newDebate = debate.data.sort((a, b) => a.topic.localeCompare(b.topic));
+      const newDebate = debate.data.sort((a, b) =>
+        a.topic.localeCompare(b.topic)
+      );
       setDebate((prev) => ({
         ...prev,
         data: newDebate,
-      }))
-      setSorted(!sorted)
+      }));
+      setSorted(!sorted);
     }
-
-  }
+  };
 
   const debateFetch = async () => {
     // console.log(currentPage, pageLimit);
@@ -175,7 +178,13 @@ const Debate = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [search.session, search.house, search.members_name, currentPage, pageLimit]);
+  }, [
+    search.session,
+    search.house,
+    search.members_name,
+    currentPage,
+    pageLimit,
+  ]);
 
   useEffect(() => {
     debateFetch();
@@ -478,32 +487,6 @@ const Debate = () => {
                         </option>
                       ))}
                     </select>
-                    {/* <Accordion className="filsss1">
-                      <Accordion.Item eventKey="2">
-                        <Accordion.Header>आयुधे </Accordion.Header>
-                        <Accordion.Body></Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="3">
-                        <Accordion.Header>आयुधाचा प्रकार</Accordion.Header>
-                        <Accordion.Body></Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="4">
-                        <Accordion.Header>आयुधाचा उपप्रकार</Accordion.Header>
-                        <Accordion.Body></Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="5">
-                        <Accordion.Header>मंत्रालय </Accordion.Header>
-                        <Accordion.Body></Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="0">
-                        <Accordion.Header>खंड</Accordion.Header>
-                        <Accordion.Body></Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="1">
-                        <Accordion.Header>क्रमांक</Accordion.Header>
-                        <Accordion.Body></Accordion.Body>
-                      </Accordion.Item>
-                    </Accordion> */}
                   </div>
                 )}
               </div>
@@ -545,7 +528,12 @@ const Debate = () => {
                       <img src={Arrow} alt="" />
                       <span>सभागृहांचे कार्यवृत्त</span>
                     </div>
-                    <p> {debate?.count ? `[${debate?.count} परिणाम]` : ""}</p>
+                    <p>
+                      {" "}
+                      {debate?.count
+                        ? `[${debate?.count} परिणाम]`
+                        : "[0 परिणाम]"}
+                    </p>
                   </div>
                 </Col>
                 <Col lg={6}>
@@ -594,17 +582,38 @@ const Debate = () => {
                   let twoEntry;
 
                   name.length < 5 ? (twoEntry = true) : (twoEntry = false);
+
                   return (
                     <tr key={index}>
-                      <td>{item.topic}</td>
-                      <td>{item.house}</td>
-                      <td>{item.session}</td>
+                      <td>
+                        <HighlightSentence
+                          data={item.topic}
+                          search={search?.topic}
+                        />
+                      </td>
+                      <td>
+                        <HighlightSentence
+                          data={item.house}
+                          search={search?.house}
+                        />
+                      </td>
+                      <td>
+                        <HighlightSentence
+                          data={item.session}
+                          search={search?.session}
+                        />
+                      </td>
                       <td>{item.date}</td>
                       <td>
                         <p>
-                          {twoEntry
-                            ? name[0] + "...."
-                            : name[0] + name[1] + "...."}
+                          <HighlightSentence
+                            data={
+                              twoEntry
+                                ? name[0] + "...."
+                                : name[0] + name[1] + "...."
+                            }
+                            search={search?.members_name}
+                          />
                         </p>
                       </td>
                       <td className="imagee">
