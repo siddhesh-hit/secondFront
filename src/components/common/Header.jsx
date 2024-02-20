@@ -11,7 +11,9 @@ import {
   Dropdown,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Header = () => {
+  const userReducer = useSelector(state => state.UserReducer)
   const [location, setLocation] = useState("/");
 
   if (window.location.pathname !== location) {
@@ -19,7 +21,7 @@ const Header = () => {
   }
 
   const [search, setSearch] = useState(null);
-
+  console.log(userReducer)
   return (
     <div>
       <div
