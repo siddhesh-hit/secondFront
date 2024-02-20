@@ -59,7 +59,7 @@ const Login = () => {
                     </span>
                   </div>
                 </div>
-                <a className="Forgot-Pass" href="/ForgotPass">
+                <a className="Forgot-Pass" href="/forget-password">
                   पासवर्ड विसरलात?
                 </a>
                 <button type="button" className="mt-3 btn btn-primary">
@@ -80,7 +80,7 @@ const Login = () => {
                 </div>
                 <p className="new_account">
                   खाते नाही?
-                  <a href="/SignupPortal">साइन अप करा</a>
+                  <a href="/register">साइन अप करा</a>
                 </p>
               </div>
             </div>

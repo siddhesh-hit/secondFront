@@ -9,14 +9,10 @@ body {
     overflow-x: hidden;
 }
 
-/* @font-face {
+@font-face {
     font-family: 'Sakal Marathi';
-    src: url(../src/assets/fonts/SakalMarathi-Normal.woff);
+    src: url(../src/assets/SakalMarathi.woff);
 }
-
-div {
-    font-family: 'Sakal Marathi';
-} */
 
 * {
     outline: none;
@@ -1627,17 +1623,15 @@ mark {
 
 .login-box {
     background: #fff;
+    border-radius: 10px;
     box-shadow: 0 0 4px 0 #00000040;
     margin-bottom: 70px;
     padding: 3% 6% 6%;
 }
 
 .login-box h3 {
-    font-family: Sakal Marathi;
-}
-
-.login-box h3 {
     font-size: 22px;
+    font-family: 'Sakal Marathi';
     font-weight: 600;
     letter-spacing: 1px;
     line-height: 39px;
@@ -1646,7 +1640,12 @@ mark {
 
 span.input-group-text {
     background: #fff;
-    border: none !important;
+}
+
+.input-group-text {
+    width: 45px;
+    font-size: 15px !important;
+    justify-content: center;
 }
 
 .login-box .input-group {
@@ -1658,32 +1657,33 @@ span.input-group-text {
 
 .form-control:focus {
     box-shadow: none !important;
+    border-color: #dee2e6 !important;
 }
 
 button.btn.btn-primary {
     background: #4E3431;
     border: none;
-    border-radius: 0;
-    font-family: Sakal Marathi;
+    border-radius: 10px;
+    font-family: 'Sakal Marathi';
     font-size: 18px;
     font-weight: 500;
     letter-spacing: 0;
-    line-height: 35px;
-    margin-top: 10%;
     width: 100%;
+    padding-top: 13px;
+    padding-bottom: 12px;
 }
 
 .Forgot-Pass {
     color: #4E3431;
-    font-family: Sakal Marathi;
-    font-size: 500;
+    font-family: 'Sakal Marathi';
+    font-weight: 600;
     font-size: 14px;
 }
 
 a.new_account {
     color: #000;
     display: block;
-    font-family: Sakal Marathi;
+    font-family: 'Sakal Marathi';
     font-size: 18px;
     font-weight: 500;
     letter-spacing: 0;
@@ -1713,9 +1713,8 @@ a.new_account span a {
 }
 
 .horizontal-line {
-    border-top: 1px solid #000;
     flex: 1 1;
-    margin: 0 40px;
+    margin: 0 20px;
 }
 
 .text {
@@ -1728,24 +1727,16 @@ a.new_account span a {
     background-color: #128807;
     border: none;
     color: #fff;
-    justify-content: space-between;
+    border-radius: 10px;
     padding: 10px 25px;
-}
-
-.container-fluid {
-    width: 100%;
 }
 
 button:focus:not(:focus-visible) {
     outline: 0;
 }
 
-::-webkit-scrollbar {
-    width: 1px;
-}
-
 .horizontal-line {
-    border: 2px solid #b3b6ba;
+    border: 1px solid #4e3431;
 }
 
 p.new_account a {
@@ -1755,4 +1746,74 @@ p.new_account a {
 
 p.new_account {
     text-align: center;
+    font-family: 'Sakal Marathi';
+    font-weight: 600;
+    margin-bottom: 0px;
+}
+
+button.mt-3.btn.btn-primary a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.hLCrav .rnc {
+    margin-bottom: 15px;
+}
+
+.row.registerpage .form-label {
+    font-family: 'Sakal Marathi';
+    font-weight: 500;
+}
+
+span.required {
+    color: red;
+    padding-left: 5px;
+}
+
+section.rajypallist {
+    padding-bottom: 30px;
+    padding-top: 30px;
+    background: #faf4f2;
+}
+
+table.table-rajyapal.table.table-bordered th {
+    background-color: #4e3431;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 15px;
+    text-transform: uppercase;
+    font-family: 'Sakal Marathi';
+}
+
+table.table-rajyapal.table.table-bordered td {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 20px;
+    padding: 15px;
+    font-family: 'Sakal Marathi';
+}
+
+section.rajypallist h3 {
+    font-family: 'Sakal Marathi';
+    font-size: 26px;
+    text-align: center;
+    color: #CC7722;
+    font-weight: 600;
+    margin-bottom: 25px;
+    margin-top: 15px;
 }

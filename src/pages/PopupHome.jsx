@@ -12,8 +12,7 @@ const PopupHome = (props) => {
         <Modal.Header className="closebutton" closeButton></Modal.Header>
         <Modal.Body className="smfkdnmk">
           <p>
-            हे पोर्टलचे बीटा आवृत्तीचे प्रतिनिधित्व करतो, ज्यामध्ये २०१३
-            पर्यंतची माहिती अद्यतनित केलेली आहे.
+            हे पोर्टल विकासाधीन ( under development ) आहे.  हि  बीटा आवृत्ती  असल्याकारणाने, पोर्टलमध्ये वापरलेली माहिती पूर्णतः तपासलेली  नाही  आहे
           </p>
         </Modal.Body>
         {/* <Modal.Footer>

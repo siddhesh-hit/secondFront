@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Homepage";
-// import Header from "./components/common/Header";
-// import Footer from "./components/common/Footer";
+import Header from "./components/common/Header";
+import Footer from "./components/common/Footer";
 import SearchDetails from "./pages/SearchDetails";
 import Library from "./pages/Library";
 import AboutUs from "./pages/AboutUs";
@@ -12,12 +12,18 @@ import Homepage1 from "./pages/Homepage1";
 import Debate from "./pages/Debate";
 import Homepage2 from "./pages/Homepage2";
 import Login from "./pages/Login";
+import PhoneLogin from "./pages/PhoneLogin";
+import VerifyOtp from "./pages/VerifyOtp";
+import ForgetPassword from "./pages/ForgetPassword";
+import Register from "./pages/Register";
+import RajyapalList from "./pages/RajyapalList";
+import Rajyapal from "./pages/Rajyapal";
 
 const Routesfile = () => {
   return (
     <div>
       <BrowserRouter>
-        {/* <Header /> */}
+        <Header />
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/Homepage1" element={<Homepage1 />} />
@@ -30,8 +36,14 @@ const Routesfile = () => {
           <Route path="/Debate" element={<Debate />} />
           <Route path="/Homepage2" element={<Homepage2 />} />
           <Route path="/Login" element={<Login />} />
+          <Route path="/phone-login" element={<PhoneLogin />} />
+          <Route path="/verify-otp" element={<VerifyOtp />} />
+          <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/rajyapal-list" element={<RajyapalList />} />
+          <Route path="/rajyapal" element={<Rajyapal />} />
         </Routes>
-        {/* <Footer /> */}
+        <Footer />
       </BrowserRouter>
     </div>
   );
