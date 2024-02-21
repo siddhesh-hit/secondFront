@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logo from "../assets/logo.png";
 import { postApi } from "../services/axiosInterceptors";
-import { userRegisterSchema } from "../validators/UserSchema";
+import { userRegisterValidation } from "../validators/UserSchema";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 const Register = () => {
@@ -27,10 +27,10 @@ const Register = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const validateUser = await userRegisterSchema.validate(userData, { abortEarly: false }).catch((e) => e)
+        const validateUser = await userRegisterValidation(userData)
         console.log()
-        if (validateUser.errors && validateUser.errors.length > 0) {
-            toast.error(validateUser.errors[0])
+        if (validateUser) {
+            toast.error(validateUser)
         } else {
             let obj = { ...userData }
             delete obj.confirmPassword

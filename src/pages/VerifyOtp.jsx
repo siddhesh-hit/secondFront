@@ -54,6 +54,7 @@ const VerifyOtp = () => {
                     }
                     let encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userdetails), SecretKey).toString();
                     localStorage.setItem("user", encryptedData)
+                    localStorage.removeItem("temp_email")
                     dispatch(setUserDetails({ ...userdetails }))
                     navigate("/")
 
