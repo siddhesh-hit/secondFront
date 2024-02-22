@@ -13,7 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 const Header = () => {
-  const userReducer = useSelector(state => state.UserReducer)
+  const userReducer = useSelector((state) => state.UserReducer);
   const [location, setLocation] = useState("/");
 
   if (window.location.pathname !== location) {
@@ -21,22 +21,23 @@ const Header = () => {
   }
 
   const [search, setSearch] = useState(null);
-  console.log(userReducer)
+  console.log(userReducer);
   return (
     <div>
       <div
-        className={`${location === "/"
-          ? "blueColor topheader"
-          : location === "/Homepage2"
+        className={`${
+          location === "/"
+            ? "blueColor topheader"
+            : location === "/Homepage2"
             ? "otherColor"
             : location === "/Homepage1"
-              ? "newheadercolor"
-              : location === "/Debate"
-                ? "topheader"
-                : location === "/DebateDetail"
-                  ? "newheadercolor"
-                  : "topheader"
-          }`}
+            ? "newheadercolor"
+            : location === "/Debate"
+            ? "topheader"
+            : location === "/DebateDetail"
+            ? "newheadercolor"
+            : "topheader"
+        }`}
       >
         <Container fluid>
           <Row>
@@ -77,8 +78,8 @@ const Header = () => {
         </Container>
       </div>
       {location === "/" ||
-        location === "/Homepage1" ||
-        location === "/Homepage2" ? (
+      location === "/Homepage1" ||
+      location === "/Homepage2" ? (
         <div className="headerlogos">
           <Container fluid>
             <Row className="midhead one">
@@ -154,8 +155,9 @@ const Header = () => {
                           </Link>
                         </div>
                         <Nav.Link
-                          className={`${location === "/Debate" ? "active" : ""
-                            }`}
+                          className={`${
+                            location === "/Debate" ? "active" : ""
+                          }`}
                           href="/Debate"
                         >
                           सभागृहांचे कार्यवृत्त
