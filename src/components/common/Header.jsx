@@ -17,70 +17,31 @@ import logo from "../../assets/logo.png";
 const Header = () => {
   const [location, setLocation] = useState("/");
   const [search, setSearch] = useState(null);
-  const [originalSizes, setOriginalSizes] = useState({});
-  const affectedElementsSelector = "p, h1, h2, h3, h4, h5, h6,a,span,button";
-
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   if (window.location.pathname !== location) {
     setLocation(window.location.pathname);
   }
 
-  const changeFontSize = (direction) => {
-    const affectedElements = document.querySelectorAll(
-      affectedElementsSelector
-    );
-
-    affectedElements.forEach((element) => {
-      const currentSize = parseInt(window.getComputedStyle(element).fontSize);
-      element.style.fontSize = `${currentSize + direction}px`;
-    });
-  };
-
-  const resetFontSize = () => {
-    const affectedElements = document.querySelectorAll(
-      affectedElementsSelector
-    );
-
-    affectedElements.forEach((element) => {
-      element.style.fontSize = originalSizes[element];
-    });
-  };
-
   const handleLanguage = (newLang) => {
     window.localStorage.setItem("lang", newLang);
     window.dispatchEvent(new CustomEvent("langChange"));
   };
-
-  useEffect(() => {
-    const affectedElements = document.querySelectorAll(
-      affectedElementsSelector
-    );
-
-    const sizes = {};
-    affectedElements.forEach((element) => {
-      sizes[element] = window.getComputedStyle(element).fontSize;
-    });
-
-    setOriginalSizes(sizes);
-  }, [affectedElementsSelector]);
-
   return (
     <div>
       <div
-        className={`${
-          location === "/"
-            ? "blueColor topheader"
-            : location === "/Homepage2"
+        className={`${location === "/"
+          ? "blueColor topheader"
+          : location === "/Homepage2"
             ? "otherColor"
             : location === "/Homepage1"
-            ? "newheadercolor"
-            : location === "/Debate"
-            ? "topheader"
-            : location === "/DebateDetail"
-            ? "newheadercolor"
-            : "topheader"
-        }`}
+              ? "newheadercolor"
+              : location === "/Debate"
+                ? "topheader"
+                : location === "/DebateDetail"
+                  ? "newheadercolor"
+                  : "topheader"
+          }`}
       >
         <Container fluid>
           <Row>
@@ -110,14 +71,8 @@ const Header = () => {
                   </Dropdown.Menu>
                 </Dropdown>
                 <div className="font-size">
+                  <button className="font-size-button">अ+</button>
                   <button
-                    onClick={() => changeFontSize(1)}
-                    className="font-size-button"
-                  >
-                    अ+
-                  </button>
-                  <button
-                    onClick={() => resetFontSize()}
                     className="font-size-button"
                     style={{
                       borderLeft: "solid #121f29 2px",
@@ -126,12 +81,7 @@ const Header = () => {
                   >
                     अ
                   </button>
-                  <button
-                    onClick={() => changeFontSize(-1)}
-                    className="font-size-button"
-                  >
-                    अ-
-                  </button>
+                  <button className="font-size-button">अ-</button>
                 </div>
                 <a href="/Login">
                   <span>साइन इन करा</span>
@@ -142,8 +92,8 @@ const Header = () => {
         </Container>
       </div>
       {location === "/" ||
-      location === "/Homepage1" ||
-      location === "/Homepage2" ? (
+        location === "/Homepage1" ||
+        location === "/Homepage2" ? (
         <div className="headerlogos">
           <Container fluid>
             <Row className="midhead one">
@@ -219,9 +169,8 @@ const Header = () => {
                           </Link>
                         </div>
                         <Nav.Link
-                          className={`${
-                            location === "/Debate" ? "active" : ""
-                          }`}
+                          className={`${location === "/Debate" ? "active" : ""
+                            }`}
                           href="/Debate"
                         >
                           सभागृहांचे कार्यवृत्त

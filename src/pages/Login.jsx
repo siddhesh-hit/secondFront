@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import logo from "../assets/logo.png";
+import Captcha from "demos-react-captcha";
 
 import { postApi } from "../services/axiosInterceptors";
 import { encrypt } from "../utils/encrypt";
@@ -57,8 +58,10 @@ const Login = () => {
           }
         });
     }
+  }
+  const onChange = (value) => {
+    console.log(value);
   };
-
   return (
     <div>
       <div className="container-fluid loginboxpage">
@@ -114,6 +117,11 @@ const Login = () => {
                     </span>
                   </div>
                 </div>
+                <Captcha
+                  onChange={onChange}
+                  placeholder="Enter captcha"
+                  length={10}
+                />
                 <a className="Forgot-Pass" href="/forgetpassword">
                   पासवर्ड विसरलात?
                 </a>
