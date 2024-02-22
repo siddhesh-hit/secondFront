@@ -13,10 +13,11 @@ import { userLoginValidation } from "../validators/UserSchema";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [userData, setuserData] = useState({
+  const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
+  const [captcha, setCaptcha] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const Login = () => {
   };
 
   const handleChange = (name, value) => {
-    setuserData((prev) => ({
+    setUserData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -37,31 +38,37 @@ const Login = () => {
     const validateUser = await userLoginValidation(userData);
     if (validateUser) {
       toast.error(validateUser);
-    } else {
-      await postApi("user/loginEmail", userData)
-        .then((res) => {
-          if (res.data.data.user_verfied) {
-            let enData = encrypt(res.data.data);
-            localStorage.setItem("userInfo", enData);
-            localStorage.removeItem("temp_email");
-            dispatch(login(enData));
-            navigate("/");
-          } else {
-            toast.error("User Does Not exist");
-            navigate("/register");
-          }
-        })
-        .catch((error) => {
-          console.log("error", error);
-          if (error.response && error.response.data.message) {
-            toast.error(error.response.data.message.replace(/^Error: |"/g, ""));
-          }
-        });
     }
-  }
-  const onChange = (value) => {
-    console.log(value);
+
+    if (!captcha) {
+      toast.error("Captcha is filled wrong");
+      return;
+    }
+
+    await postApi("user/loginEmail", userData)
+      .then((res) => {
+        if (res.data.data.user_verified) {
+          let enData = encrypt(res.data.data);
+          localStorage.setItem("userInfo", enData);
+          localStorage.removeItem("temp_email");
+          dispatch(login(enData));
+          navigate("/");
+        } else {
+          toast.error("User Does Not exist");
+          navigate("/Register");
+        }
+      })
+      .catch((error) => {
+        if (error.response && error.response.data.message) {
+          toast.error(error.response.data.message.replace(/^Error: |"/g, ""));
+        }
+      });
   };
+
+  const handleCaptchaChange = (value) => {
+    value ? setCaptcha(true) : setCaptcha(false);
+  };
+
   return (
     <div>
       <div className="container-fluid loginboxpage">
@@ -118,7 +125,8 @@ const Login = () => {
                   </div>
                 </div>
                 <Captcha
-                  onChange={onChange}
+                  onChange={handleCaptchaChange}
+                  // onRefresh={true}
                   placeholder="Enter captcha"
                   length={10}
                 />
@@ -147,7 +155,7 @@ const Login = () => {
                 </div>
                 <p className="new_account">
                   खाते नाही?
-                  <a href="/register">साइन अप करा</a>
+                  <a href="/Register">साइन अप करा</a>
                 </p>
               </div>
             </div>

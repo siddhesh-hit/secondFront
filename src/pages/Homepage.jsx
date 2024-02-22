@@ -21,17 +21,17 @@ import {
   media,
   judgments,
 } from "../assets/homeicons";
+import useLang from "../hooks/useLang";
+import { home } from "../data/constant";
 
 const Homepage = () => {
   const [search, setSearch] = useState([]);
+  const { lang, checkLang } = useLang();
 
   return (
     <div>
       <section className="homepageback">
-        <h1>
-          एक सर्वसमावेशक ज्ञान भांडार - विधिमंडळ,निवडणूक,आणि नागरी सक्षमीकरण{" "}
-          <br /> एक्सप्लोर करण्यासाठी तुमचे पोर्टल.
-        </h1>
+        <h1 style={{ whiteSpace: "pre-line" }}>{home[checkLang].header}</h1>
         <Row className="form-controlss">
           <Col lg={6}>
             <input
