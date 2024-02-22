@@ -18,6 +18,7 @@ import ForgetPassword from "./pages/ForgetPassword";
 import Register from "./pages/Register";
 import RajyapalList from "./pages/RajyapalList";
 import Rajyapal from "./pages/Rajyapal";
+import ResetPassword from "./pages/ResetPassword";
 import MantriParishad from "./pages/MantriParishad";
 import MembersAssembly from "./pages/MembersAssembly";
 
@@ -29,6 +30,7 @@ const Routesfile = () => {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/Homepage1" element={<Homepage1 />} />
+          <Route path="/resetPassword/:token" element={<ResetPassword />} />
           <Route path="/SearchDetails" element={<SearchDetails />} />
           <Route path="/Library" element={<Library />} />
           <Route path="/AboutUs" element={<AboutUs />} />
@@ -40,7 +42,7 @@ const Routesfile = () => {
           <Route path="/Login" element={<Login />} />
           <Route path="/phone-login" element={<PhoneLogin />} />
           <Route path="/verify-otp" element={<VerifyOtp />} />
-          <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/forgetpassword" element={<ForgetPassword />} />
           <Route path="/register" element={<Register />} />
           <Route path="/rajyapal-list" element={<RajyapalList />} />
           <Route path="/rajyapal" element={<Rajyapal />} />
