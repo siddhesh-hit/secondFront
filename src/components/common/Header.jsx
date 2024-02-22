@@ -1,5 +1,4 @@
-import { useState } from "react";
-import logo from "../../assets/logo.png";
+import { useEffect, useState } from "react";
 import {
   Container,
   Navbar,
@@ -12,9 +11,16 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+import logo from "../../assets/logo.png";
+
 const Header = () => {
-  const userReducer = useSelector(state => state.UserReducer)
   const [location, setLocation] = useState("/");
+  const [search, setSearch] = useState(null);
+  const [originalSizes, setOriginalSizes] = useState({});
+  const affectedElementsSelector = "p, h1, h2, h3, h4, h5, h6,a,span,button";
+
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   if (window.location.pathname !== location) {
     setLocation(window.location.pathname);
@@ -24,18 +30,19 @@ const Header = () => {
   return (
     <div>
       <div
-        className={`${location === "/"
-          ? "blueColor topheader"
-          : location === "/Homepage2"
+        className={`${
+          location === "/"
+            ? "blueColor topheader"
+            : location === "/Homepage2"
             ? "otherColor"
             : location === "/Homepage1"
-              ? "newheadercolor"
-              : location === "/Debate"
-                ? "topheader"
-                : location === "/DebateDetail"
-                  ? "newheadercolor"
-                  : "topheader"
-          }`}
+            ? "newheadercolor"
+            : location === "/Debate"
+            ? "topheader"
+            : location === "/DebateDetail"
+            ? "newheadercolor"
+            : "topheader"
+        }`}
       >
         <Container fluid>
           <Row>
@@ -50,8 +57,18 @@ const Header = () => {
                   <Dropdown.Toggle>भाषा</Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#">मराठी</Dropdown.Item>
-                    <Dropdown.Item href="#">English</Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => handleLanguage("mr")}
+                      href="#"
+                    >
+                      मराठी
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => handleLanguage("en")}
+                      href="#"
+                    >
+                      English
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
                 <div className="font-size">
@@ -76,8 +93,8 @@ const Header = () => {
         </Container>
       </div>
       {location === "/" ||
-        location === "/Homepage1" ||
-        location === "/Homepage2" ? (
+      location === "/Homepage1" ||
+      location === "/Homepage2" ? (
         <div className="headerlogos">
           <Container fluid>
             <Row className="midhead one">
@@ -153,8 +170,9 @@ const Header = () => {
                           </Link>
                         </div>
                         <Nav.Link
-                          className={`${location === "/Debate" ? "active" : ""
-                            }`}
+                          className={`${
+                            location === "/Debate" ? "active" : ""
+                          }`}
                           href="/Debate"
                         >
                           सभागृहांचे कार्यवृत्त
