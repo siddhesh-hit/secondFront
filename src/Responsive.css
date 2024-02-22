@@ -161,4 +161,12 @@
     .font-size button {
         font-size: 12px;
     }
+
+    .memberlistpage.container-fluid .col-lg-3 {
+        width: 100%;
+    }
+    
+    .memberlistpage.container-fluid .col-lg-9 {
+        width: 100%;
+    }
 }

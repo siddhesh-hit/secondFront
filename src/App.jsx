@@ -1,14 +1,15 @@
+import { ToastContainer } from "react-toastify";
 import "./App.css";
 import "./Responsive.css";
-import Routesfile from "./Routefiles";
-import { ToastContainer, toast } from 'react-toastify';
+import { RoutesData } from "./services/routesdata";
 import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
 
   return (
     <>
       <ToastContainer />
-      <Routesfile />
+      <RoutesData />
     </>
   );
 }

@@ -6,7 +6,7 @@ const RajyapalList = () => {
             <section className="rajypallist">
                 <Container>
                     <div className="aboutcontent mt-4"><h1>राज्यपालांची यादी<div className="hrline"></div></h1></div>
-                    <table className="table-rajyapal table table-bordered">
+                    <table className="table-rajyapal table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th style={{ borderRight: 'solid #dee2e6 1px' }}>अनुक्रमांक</th>
