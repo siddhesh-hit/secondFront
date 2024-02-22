@@ -1,11 +1,11 @@
 import "./App.css";
 import "./Responsive.css";
-import Routesfile from "./Routefiles";
+import { RoutesData } from "./services/routesdata";
 
 function App() {
   return (
     <>
-      <Routesfile />
+      <RoutesData/>
     </>
   );
 }

@@ -83,6 +83,7 @@ section.homepageback h1 {
 }
 
 .searchh {
+    text-decoration: none;
     position: absolute;
     top: 0px;
     border-radius: 100px;
@@ -422,7 +423,7 @@ img.loginbg {
 
 .topheaderright a {
     text-decoration: none;
-    font-family: 'Poppins';
+    font-family: 'Sakal Marathi';
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0px;
@@ -878,19 +879,21 @@ table.debate-light.table.table-bordered thead th {
     background-color: #4e3431;
     border: solid #4e3431 1px;
     color: #fff;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     padding: 15px;
+    font-family: 'Sakal Marathi';
     text-align: center;
     text-transform: uppercase;
 }
 
 table.debate-light.table.table-bordered td {
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 14px;
+    font-family: 'Sakal Marathi';
+    font-weight: 600;
     letter-spacing: 0;
-    line-height: 1.5;
-    padding: 15px;
+    line-height: normal;
+    padding: 10px 5px;
     border: solid #4e3431 1px;
 }
 
@@ -898,10 +901,6 @@ table.debate-light.table.table-bordered {
     margin-top: 15px;
     text-align: center;
     vertical-align: middle;
-}
-
-.debatepage.container-fluid {
-    background: #faf4f2;
 }
 
 td.imagee img {
@@ -1665,12 +1664,10 @@ button.btn.btn-primary {
     border: none;
     border-radius: 10px;
     font-family: 'Sakal Marathi';
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0;
     width: 100%;
-    padding-top: 13px;
-    padding-bottom: 12px;
 }
 
 .Forgot-Pass {
@@ -1808,7 +1805,7 @@ table.table-rajyapal.table.table-bordered td {
     font-family: 'Sakal Marathi';
 }
 
-section.rajypallist h3 {
+/* section.rajypallist h3 {
     font-family: 'Sakal Marathi';
     font-size: 26px;
     text-align: center;
@@ -1816,4 +1813,188 @@ section.rajypallist h3 {
     font-weight: 600;
     margin-bottom: 25px;
     margin-top: 15px;
+} */
+
+.first.row {
+    justify-content: center;
+}
+
+.rajyapalimg img {
+    width: 100%;
+}
+
+.rajyapalname h3 {
+    font-family: 'Sakal Marathi';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    color: #000000;
+    margin-top: 5px;
+}
+
+.rajyapalname p {
+    font-family: 'Sakal Marathi';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    color: #000000;
+    margin-bottom: 15px;
+}
+
+.second.row {
+    padding-top: 50px;
+    padding-bottom: 40px;
+    justify-content: space-around;
+}
+
+.panel-primary {
+    border: #CC7722 solid 1px;
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.panel-primary>.panel-heading {
+    color: #fff;
+    background-color: #CC7722;
+    border-color: #CC7722;
+}
+
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+table#tech-companies-1 th {
+    background-color: #4e3431;
+    border: none;
+    color: #fff;
+    padding: 15px;
+    text-transform: uppercase;
+    font-family: 'Sakal Marathi';
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.panel-body {
+    padding: 15px;
+}
+
+table#tech-companies-1 {
+    border: solid #4e3431 1px;
+}
+
+table#tech-companies-1 tr td {
+    border: solid 1px #4e3431;
+}
+
+span.member-tabless {
+    font-family: 'Sakal Marathi';
+    font-weight: 500;
+    font-size: 15px;
+}
+
+img.member_imgs{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+a.membernamee img {
+    margin-right: 10px;
+}
+
+a.membernamee {
+    text-decoration: none;
+    color: #000;
+}
+
+
+
+.assemblymember h3 {
+    background-color: #4E3431;
+    padding: 20px 15px 14px;
+    font-size: 15px;
+    color: white;
+    text-transform: capitalize;
+    font-family: 'Sakal Marathi';
+    text-align: center;
+    font-weight: 500;
+    letter-spacing: 0px;
+    margin-bottom: 0px;
+}
+
+.assemblymember ul li {
+    list-style: none;
+    background-color: white;
+    position: relative;
+}
+
+.assemblymember ul {
+    padding-left: 0px;
+}
+
+.assemblymember ul li a {
+    text-decoration: none;
+}
+
+.assemblymember li {
+    padding: 15px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 1px 0px;
+}
+
+.assemblymember {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 4px 0px;
+}
+
+.assemblymember ul a {
+    text-decoration: none;
+    color: #000;
+}
+
+.search h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-family: 'Sakal Marathi';
+}
+
+.search {
+    padding-bottom: 20px;
+}
+
+.memberleft.col-lg-3 i.fa.fa-chevron-right.icon-calender {
+    color: #d0782e;
+}
+
+.memberlistpage.container-fluid {
+    background: #faf4f2;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.memberlistpage.container-fluid .col-lg-3 {
+    width: 22%;
+}
+
+.memberlistpage.container-fluid .col-lg-9 {
+    width: 78%;
+}
+
+h3.chartdata {
+    font-family: 'Sakal Marathi';
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    text-align: center;
+    margin-bottom: 20px;
 }
