@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import logo from "../../assets/logo.png";
 import {
   Container,
   Navbar,
@@ -12,32 +11,20 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+import logo from "../../assets/logo.png";
+
 const Header = () => {
-  const userReducer = useSelector((state) => state.UserReducer);
   const [location, setLocation] = useState("/");
+  const [search, setSearch] = useState(null);
+  const [originalSizes, setOriginalSizes] = useState({});
+  const affectedElementsSelector = "p, h1, h2, h3, h4, h5, h6,a,span,button";
+
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   if (window.location.pathname !== location) {
     setLocation(window.location.pathname);
   }
-
-  const [search, setSearch] = useState(null);
-  console.log(userReducer);
-  const affectedElementsSelector = "p, h1, h2, h3, h4, h5, h6,a,span,button";
-
-  const [originalSizes, setOriginalSizes] = useState({});
-
-  useEffect(() => {
-    const affectedElements = document.querySelectorAll(
-      affectedElementsSelector
-    );
-
-    const sizes = {};
-    affectedElements.forEach((element) => {
-      sizes[element] = window.getComputedStyle(element).fontSize;
-    });
-
-    setOriginalSizes(sizes);
-  }, [affectedElementsSelector]);
 
   const changeFontSize = (direction) => {
     const affectedElements = document.querySelectorAll(
@@ -59,6 +46,25 @@ const Header = () => {
       element.style.fontSize = originalSizes[element];
     });
   };
+
+  const handleLanguage = (newLang) => {
+    window.localStorage.setItem("lang", newLang);
+    window.dispatchEvent(new CustomEvent("langChange"));
+  };
+
+  useEffect(() => {
+    const affectedElements = document.querySelectorAll(
+      affectedElementsSelector
+    );
+
+    const sizes = {};
+    affectedElements.forEach((element) => {
+      sizes[element] = window.getComputedStyle(element).fontSize;
+    });
+
+    setOriginalSizes(sizes);
+  }, [affectedElementsSelector]);
+
   return (
     <div>
       <div
@@ -89,8 +95,18 @@ const Header = () => {
                   <Dropdown.Toggle>भाषा</Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#">मराठी</Dropdown.Item>
-                    <Dropdown.Item href="#">English</Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => handleLanguage("mr")}
+                      href="#"
+                    >
+                      मराठी
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => handleLanguage("en")}
+                      href="#"
+                    >
+                      English
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
                 <div className="font-size">

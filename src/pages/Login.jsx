@@ -1,54 +1,49 @@
 import { useState } from "react";
-import { postApi } from "../services/axiosInterceptors";
 import { toast } from "react-toastify";
-import CryptoJS from "crypto-js";
-import { SecretKey } from "../services/config";
 import { useDispatch } from "react-redux";
-import { setUserDetails } from "../redux/reducers/UserReducer";
 import { useNavigate } from "react-router-dom";
+
 import logo from "../assets/logo.png";
+
+import { postApi } from "../services/axiosInterceptors";
+import { encrypt } from "../utils/encrypt";
+import { login } from "../redux/reducers/userReducer";
 import { userLoginValidation } from "../validators/UserSchema";
+
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [userData, setuserData] = useState({
+    email: "",
+    password: "",
+  });
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showPassword, setShowPassword] = useState(false);
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  const [userData, setuserData] = useState({
-    email: "shivam@mail.com",
-    password: "Shivam@123",
-  });
+
   const handleChange = (name, value) => {
     setuserData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validateUser = await userLoginValidation(userData);
-    console.log();
     if (validateUser) {
       toast.error(validateUser);
     } else {
       await postApi("user/loginEmail", userData)
-        .then((response) => {
-          console.log("response", response.data.data.email);
-          if (response.data.data.user_verfied) {
-            const userdetails = {
-              notificationId: response.data.data.notificationId,
-              _id: response.data.data._id,
-              role_taskId: response.data.data.role_taskId,
-              user_verfied: response.data.data.user_verfied,
-            };
-            let encryptedData = CryptoJS.AES.encrypt(
-              JSON.stringify(userdetails),
-              SecretKey
-            ).toString();
-            localStorage.setItem("user", encryptedData);
+        .then((res) => {
+          if (res.data.data.user_verfied) {
+            let enData = encrypt(res.data.data);
+            localStorage.setItem("userInfo", enData);
             localStorage.removeItem("temp_email");
-            dispatch(setUserDetails({ ...userdetails }));
+            dispatch(login(enData));
             navigate("/");
           } else {
             toast.error("User Does Not exist");
