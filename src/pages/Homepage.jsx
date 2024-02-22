@@ -3,10 +3,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import {
-  logo,
-  profilee,
-  profilee1,
-  profilee2,
   imag1,
   imag2,
   imag3,
@@ -49,7 +45,7 @@ const Homepage = () => {
           </Col>
         </Row>
         <Row className="maincontent">
-          <Col lg={2}>
+          {/* <Col lg={2}>
             <Col lg={12}>
               <Link className="anchorlinks" to="/AboutUs">
                 <Row className="membersss11">
@@ -86,8 +82,8 @@ const Homepage = () => {
                 </Row>
               </a>
             </Col>
-          </Col>
-          <Col lg={7}>
+          </Col> */}
+          <Col lg={8}>
             <Row>
               <Col lg={4}>
                 <Link to="/">
@@ -263,7 +259,7 @@ const Homepage = () => {
               </Col>
             </Row>
           </Col>
-          <Col lg={2}>
+          {/* <Col lg={2}>
             <Col lg={12}>
               <a className="anchorlinks" href="#">
                 <Row className="membersss">
@@ -303,7 +299,7 @@ const Homepage = () => {
                 </Row>
               </a>
             </Col>
-          </Col>
+          </Col> */}
         </Row>
       </section>
       <section className="resourcesss">

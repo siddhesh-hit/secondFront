@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Container,
   Navbar,
@@ -27,6 +27,62 @@ const Header = () => {
     window.localStorage.setItem("lang", newLang);
     window.dispatchEvent(new CustomEvent("langChange"));
   };
+
+let increaseFontFlag = true;
+let keepFontFlag = true;
+let decreaseFontFlag = true;
+let fontSize = 16;
+
+// Object to store the initial font size for each element
+const initialFontSizes = {};
+
+function increaseFont() {
+  if (increaseFontFlag) {
+    fontSize = fontSize + 1;
+    updateFontSize();
+    increaseFontFlag = false;
+  }
+}
+
+function keepFont() {
+  if (keepFontFlag) {
+    fontSize = 16; // Reset font size to default
+    updateFontSize();
+    keepFontFlag = false;
+  }
+}
+
+function decreaseFont() {
+  if (decreaseFontFlag) {
+    fontSize = fontSize - 1;
+    updateFontSize();
+    decreaseFontFlag = false;
+  }
+}
+
+function updateFontSize() {
+  document.body.style.fontSize = fontSize + "px";
+  console.log("Updating font size:", fontSize);
+
+  const allTextElements = document.querySelectorAll(
+    "p, span, div, h1, h2, h3, h4, h5, h6, a, li, td, th, label, button, input, textarea, b"
+  );
+
+  allTextElements.forEach((element) => {
+    // Check if the initial font size is already stored
+    if (!initialFontSizes[element]) {
+      // If not, store the initial font size
+      initialFontSizes[element] = parseFloat(window.getComputedStyle(element).fontSize);
+    }
+
+    // Increment or decrement the initial font size
+    const newFontSize = initialFontSizes[element] + (fontSize - 16); // Adjust for the default font size
+
+    // Set the updated font size for the element
+    element.style.fontSize = newFontSize + "px";
+  });
+}
+
   return (
     <div>
       <div
@@ -71,9 +127,10 @@ const Header = () => {
                   </Dropdown.Menu>
                 </Dropdown>
                 <div className="font-size">
-                  <button className="font-size-button">अ+</button>
+                  <button className="font-size-button" onClick={increaseFont}>अ+</button>
                   <button
                     className="font-size-button"
+                    onClick={keepFont}
                     style={{
                       borderLeft: "solid #121f29 2px",
                       borderRight: "solid #121f29 2px",
@@ -81,7 +138,7 @@ const Header = () => {
                   >
                     अ
                   </button>
-                  <button className="font-size-button">अ-</button>
+                  <button onClick={decreaseFont} className="font-size-button">अ-</button>
                 </div>
                 <a href="/Login">
                   <span>साइन इन करा</span>

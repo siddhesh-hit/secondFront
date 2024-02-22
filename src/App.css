@@ -110,7 +110,7 @@ section.homepageback h1 {
 }
 
 .maincontent.row {
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -1668,6 +1668,8 @@ button.btn.btn-primary {
     font-weight: 500;
     letter-spacing: 0;
     width: 100%;
+    padding-top: 12px;
+    padding-bottom: 10px;
 }
 
 .Forgot-Pass {
@@ -1901,7 +1903,7 @@ span.member-tabless {
     font-size: 15px;
 }
 
-img.member_imgs{
+img.member_imgs {
     width: 50px;
     height: 50px;
     object-fit: cover;
