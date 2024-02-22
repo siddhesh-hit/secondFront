@@ -19,6 +19,8 @@ import Register from "./pages/Register";
 import RajyapalList from "./pages/RajyapalList";
 import Rajyapal from "./pages/Rajyapal";
 import ResetPassword from "./pages/ResetPassword";
+import MantriParishad from "./pages/MantriParishad";
+import MembersAssembly from "./pages/MembersAssembly";
 
 const Routesfile = () => {
   return (
@@ -44,6 +46,8 @@ const Routesfile = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/rajyapal-list" element={<RajyapalList />} />
           <Route path="/rajyapal" element={<Rajyapal />} />
+          <Route path="/mantri-parishad" element={<MantriParishad />} />
+          <Route path="/members-assembly" element={<MembersAssembly />} />
         </Routes>
         <Footer />
       </BrowserRouter>

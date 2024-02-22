@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
 import {
   Container,
@@ -22,6 +22,43 @@ const Header = () => {
 
   const [search, setSearch] = useState(null);
   console.log(userReducer);
+  const affectedElementsSelector = "p, h1, h2, h3, h4, h5, h6,a,span,button";
+
+  const [originalSizes, setOriginalSizes] = useState({});
+
+  useEffect(() => {
+    const affectedElements = document.querySelectorAll(
+      affectedElementsSelector
+    );
+
+    const sizes = {};
+    affectedElements.forEach((element) => {
+      sizes[element] = window.getComputedStyle(element).fontSize;
+    });
+
+    setOriginalSizes(sizes);
+  }, [affectedElementsSelector]);
+
+  const changeFontSize = (direction) => {
+    const affectedElements = document.querySelectorAll(
+      affectedElementsSelector
+    );
+
+    affectedElements.forEach((element) => {
+      const currentSize = parseInt(window.getComputedStyle(element).fontSize);
+      element.style.fontSize = `${currentSize + direction}px`;
+    });
+  };
+
+  const resetFontSize = () => {
+    const affectedElements = document.querySelectorAll(
+      affectedElementsSelector
+    );
+
+    affectedElements.forEach((element) => {
+      element.style.fontSize = originalSizes[element];
+    });
+  };
   return (
     <div>
       <div
@@ -57,8 +94,14 @@ const Header = () => {
                   </Dropdown.Menu>
                 </Dropdown>
                 <div className="font-size">
-                  <button className="font-size-button">अ+</button>
                   <button
+                    onClick={() => changeFontSize(1)}
+                    className="font-size-button"
+                  >
+                    अ+
+                  </button>
+                  <button
+                    onClick={() => resetFontSize()}
                     className="font-size-button"
                     style={{
                       borderLeft: "solid #121f29 2px",
@@ -67,7 +110,12 @@ const Header = () => {
                   >
                     अ
                   </button>
-                  <button className="font-size-button">अ-</button>
+                  <button
+                    onClick={() => changeFontSize(-1)}
+                    className="font-size-button"
+                  >
+                    अ-
+                  </button>
                 </div>
                 <a href="/Login">
                   <span>साइन इन करा</span>
