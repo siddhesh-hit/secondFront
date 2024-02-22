@@ -14,6 +14,8 @@ import Rajyapal from "../pages/Rajyapal";
 import RajyapalList from "../pages/RajyapalList";
 import Register from "../pages/Register";
 import SearchDetails from "../pages/SearchDetails";
+import VerifyOtp from "../pages/VerifyOtp";
+import ResetPassword from "../pages/ResetPassword";
 
 export const routes = [
   {
@@ -22,7 +24,7 @@ export const routes = [
     element: <Homepage />,
   },
   {
-    path: "/register",
+    path: "/Register",
     exact: true,
     element: <Register />,
   },
@@ -36,6 +38,8 @@ export const routes = [
     exact: true,
     element: <PhoneLogin />,
   },
+  { path: "/verify-otp", exact: true, element: <VerifyOtp /> },
+  { path: "/resetPassword/:token", exact: true, element: <ResetPassword /> },
   {
     path: "/forgetpassword",
     exact: true,
