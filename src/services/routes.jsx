@@ -38,7 +38,7 @@ export const routes = [
     element: <PhoneLogin />,
   },
   {
-    path: "/forget-password",
+    path: "/forgetpassword",
     exact: true,
     element: <ForgetPassword />,
   },
