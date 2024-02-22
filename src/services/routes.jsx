@@ -15,7 +15,6 @@ import RajyapalList from "../pages/RajyapalList";
 import Register from "../pages/Register";
 import SearchDetails from "../pages/SearchDetails";
 
-
 export const routes = [
   {
     path: "/",

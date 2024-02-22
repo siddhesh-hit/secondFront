@@ -1,33 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import CryptoJS from "crypto-js";
-import { SecretKey } from "../../services/config";
-var initialState = {};
-if (localStorage.getItem("user")) {
-  // Decrypt
-  var bytes = CryptoJS.AES.decrypt(localStorage.getItem("user"), SecretKey);
-  var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-  console.log("decryptedData", decryptedData)
-  initialState = decryptedData
-}
-export const UserInfo = createSlice({
-  name: "UserInfo",
-  initialState: initialState,
+import { authState } from "../initalState";
+
+export const userInfo = createSlice({
+  name: "auth",
+  initialState: authState,
   reducers: {
-    setUserDetails: (state, action) => {
-      return {
-        ...state,
-        ...action.payload,
-      };
+    login(state, action) {
+      state.isAuthenticated = true;
+      state.user = action.payload;
     },
-    Logout: (state, action) => {
-      state._id = null;
-      state.user_verfied = false;
-      localStorage.removeItem("user");
+    logout(state, action) {
+      state.isAuthenticated = false;
+      state.user = {};
+      localStorage.removeItem("userInfo");
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setUserDetails, Logout } = UserInfo.actions;
+export const { login, logout } = userInfo.actions;
 
-export default UserInfo.reducer;
+export default userInfo.reducer;
