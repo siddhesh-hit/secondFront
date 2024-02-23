@@ -1,15 +1,20 @@
 import { useState } from 'react'
 import { Link } from "react-router-dom"
+import useLang from "../../hooks/useLang";
+import { footer } from "../../data/constant";
+import facebook from "../../assets/social/facebook.png";
+import twitter from "../../assets/social/twitter.png";
+import linkdein from "../../assets/social/linkedin.png";
+import instagram from "../../assets/social/instagram.png";
 const Footer = () => {
     const [location, setLocation] = useState('/')
+    const { lang, checkLang } = useLang();
 
     if (window.location.pathname !== location) {
         setLocation(window.location.pathname)
     }
     return (
         <div>
-            {/* <div className={`${location === '/' ? 'footer' : 'newfooter'}`}> */}
-            {/* <div className={`${location === '/' ? 'footer' : location === '/Homepage2' ? 'otherColor12' : 'newfooter'}`}> */}
             <div className={`${location === '/' ? 'footer' :
                 location === '/Homepage2' ? 'otherColor12' :
                     location === '/Homepage1' ? 'newfooter' :
@@ -18,34 +23,48 @@ const Footer = () => {
                                 'footer'  // Default value if none of the conditions are met
                 }`}>
                 <div className="firstfoot">
-                    <Link to="/">सतत विचारले जाणारे प्रश्न</Link>
-                    <Link to="/">फोटो गॅलरी</Link>
+                    <Link to="/">{footer[checkLang].title}</Link>
+                    <Link to="/">{footer[checkLang].title1}</Link>
                 </div>
                 <div className="secondfoot">
                     <Link to="/">
-                        मुख्यपृष्ठ
+                        {footer[checkLang].title2}
                     </Link>
                     <Link to="/AboutUs">
-                        विधानमंडळ
+                        {footer[checkLang].title3}
                     </Link>
                     <Link to="/Library">
-                        ग्रंथालय
+                        {footer[checkLang].title4}
                     </Link>
                     <Link to="/">
-                        बातम्या
+                        {footer[checkLang].title5}
                     </Link>
                     <Link to="/">
-                        राज्यपाल
+                        {footer[checkLang].title6}
                     </Link>
                 </div>
                 <div className="thirdfooter">
-                    <Link to="/HelpDesk">अभिप्राय</Link>
-                    <Link to="/">मदत आणि समर्थन</Link>
-                    <Link to="/">महत्वाचा दुवा</Link>
-                    <Link to="/">सेवा अटी</Link>
-                    <Link to="/">साइट मॅप</Link>
-                    <Link to="/">सूचना</Link>
-                    <Link to="/">अभ्यागतांची संख्या</Link>
+                    <Link to="/Feedback">{footer[checkLang].title7}</Link>
+                    <Link to="/HelpDesk">{footer[checkLang].title8}</Link>
+                    <Link to="/">{footer[checkLang].title9}</Link>
+                    <Link to="/">{footer[checkLang].title10}</Link>
+                    <Link to="/">{footer[checkLang].title11}</Link>
+                    <Link to="/">{footer[checkLang].title12}</Link>
+                    <Link to="/">{footer[checkLang].title13}</Link>
+                </div>
+                <div className='sociallinks'>
+                    <Link to="https://facebook.com/">
+                        <img src={facebook} alt="facebook" />
+                    </Link>
+                    <Link to="https://twitter.com">
+                        <img src={twitter} alt="twitter" />
+                    </Link>
+                    <Link to="https://www.instagram.com/">
+                        <img src={instagram} alt="instagram" />
+                    </Link>
+                    <Link to="https://in.linkedin.com/">
+                        <img src={linkdein} alt="linkdein" />
+                    </Link>
                 </div>
             </div>
         </div>

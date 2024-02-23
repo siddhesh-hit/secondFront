@@ -16,6 +16,8 @@ import Register from "../pages/Register";
 import SearchDetails from "../pages/SearchDetails";
 import VerifyOtp from "../pages/VerifyOtp";
 import ResetPassword from "../pages/ResetPassword";
+import AllLinks from "../pages/AllLinks";
+import Feedback from "../pages/Feedback";
 
 export const routes = [
   {
@@ -99,5 +101,15 @@ export const routes = [
     path: "/mantri-parishad",
     exact: true,
     element: <MantriParishad />,
+  },
+  {
+    path: "/all-links",
+    exact: true,
+    element: <AllLinks />,
+  },
+  {
+    path: "/Feedback",
+    exact: true,
+    element: <Feedback />,
   },
 ];

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   Navbar,
@@ -18,11 +18,13 @@ import logo from "../../assets/logo.png";
 import { logout } from "../../redux/reducers/userReducer";
 import { decrypt } from "../../utils/encrypt";
 import { postApi } from "../../services/axiosInterceptors";
+import useLang from "../../hooks/useLang";
+import { home, header } from "../../data/constant";
 
 const Header = () => {
   const [search, setSearch] = useState(null);
   const [userInfo, setUserInfo] = useState({});
-
+  const { lang, checkLang } = useLang();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const location = useLocation().pathname;
@@ -32,60 +34,6 @@ const Header = () => {
     window.dispatchEvent(new CustomEvent("langChange"));
   };
 
-let increaseFontFlag = true;
-let keepFontFlag = true;
-let decreaseFontFlag = true;
-let fontSize = 16;
-
-// Object to store the initial font size for each element
-const initialFontSizes = {};
-
-function increaseFont() {
-  if (increaseFontFlag) {
-    fontSize = fontSize + 1;
-    updateFontSize();
-    increaseFontFlag = false;
-  }
-}
-
-function keepFont() {
-  if (keepFontFlag) {
-    fontSize = 16; // Reset font size to default
-    updateFontSize();
-    keepFontFlag = false;
-  }
-}
-
-function decreaseFont() {
-  if (decreaseFontFlag) {
-    fontSize = fontSize - 1;
-    updateFontSize();
-    decreaseFontFlag = false;
-  }
-}
-
-function updateFontSize() {
-  document.body.style.fontSize = fontSize + "px";
-  console.log("Updating font size:", fontSize);
-
-  const allTextElements = document.querySelectorAll(
-    "p, span, div, h1, h2, h3, h4, h5, h6, a, li, td, th, label, button, input, textarea, b"
-  );
-
-  allTextElements.forEach((element) => {
-    // Check if the initial font size is already stored
-    if (!initialFontSizes[element]) {
-      // If not, store the initial font size
-      initialFontSizes[element] = parseFloat(window.getComputedStyle(element).fontSize);
-    }
-
-    // Increment or decrement the initial font size
-    const newFontSize = initialFontSizes[element] + (fontSize - 16); // Adjust for the default font size
-
-    // Set the updated font size for the element
-    element.style.fontSize = newFontSize + "px";
-  });
-}
 
 
   const handleLogout = async () => {
@@ -110,19 +58,18 @@ function updateFontSize() {
   return (
     <div>
       <div
-        className={`${
-          location === "/"
-            ? "blueColor topheader"
-            : location === "/Homepage2"
+        className={`${location === "/"
+          ? "blueColor topheader"
+          : location === "/Homepage2"
             ? "otherColor"
             : location === "/Homepage1"
-            ? "newheadercolor"
-            : location === "/Debate"
-            ? "topheader"
-            : location === "/DebateDetail"
-            ? "newheadercolor"
-            : "topheader"
-        }`}
+              ? "newheadercolor"
+              : location === "/Debate"
+                ? "topheader"
+                : location === "/DebateDetail"
+                  ? "newheadercolor"
+                  : "topheader"
+          }`}
       >
         <Container fluid>
           <Row>
@@ -130,11 +77,11 @@ function updateFontSize() {
               <div className="topheaderright">
                 <div className="contact-us">
                   <Link to="/ContactUs">
-                    <span>आमच्याशी संपर्क साधा</span>
+                    <span>{header[checkLang].contact}</span>
                   </Link>
                 </div>
                 <Dropdown className="languagechanges">
-                  <Dropdown.Toggle>भाषा</Dropdown.Toggle>
+                  <Dropdown.Toggle>{header[checkLang].language}</Dropdown.Toggle>
 
                   <Dropdown.Menu>
                     <Dropdown.Item
@@ -152,10 +99,9 @@ function updateFontSize() {
                   </Dropdown.Menu>
                 </Dropdown>
                 <div className="font-size">
-                  <button className="font-size-button" onClick={increaseFont}>अ+</button>
+                  <button className="font-size-button">अ+</button>
                   <button
                     className="font-size-button"
-                    onClick={keepFont}
                     style={{
                       borderLeft: "solid #121f29 2px",
                       borderRight: "solid #121f29 2px",
@@ -163,13 +109,13 @@ function updateFontSize() {
                   >
                     अ
                   </button>
-                  <button onClick={decreaseFont} className="font-size-button">अ-</button>
+                  <button className="font-size-button">अ-</button>
                 </div>
                 <a href="/Login">
                   {isAuthenticated ? (
                     <button onClick={handleLogout}>साइन आउट करा</button>
                   ) : (
-                    <span>साइन इन करा</span>
+                    <span>{header[checkLang].login}</span>
                   )}
                 </a>
               </div>
@@ -178,8 +124,8 @@ function updateFontSize() {
         </Container>
       </div>
       {location === "/" ||
-      location === "/Homepage1" ||
-      location === "/Homepage2" ? (
+        location === "/Homepage1" ||
+        location === "/Homepage2" ? (
         <div className="headerlogos">
           <Container fluid>
             <Row className="midhead one">
@@ -206,7 +152,7 @@ function updateFontSize() {
                     <form>
                       <input
                         type="search"
-                        placeholder="शोध कीवर्ड प्रविष्ट करा"
+                        placeholder={home[checkLang].searchPlaceHolder}
                         className="form-control"
                         onChange={(e) => setSearch(e.target.value)}
                       />
@@ -255,23 +201,22 @@ function updateFontSize() {
                           </Link>
                         </div>
                         <Nav.Link
-                          className={`${
-                            location === "/Debate" ? "active" : ""
-                          }`}
+                          className={`${location === "/Debate" ? "active" : ""
+                            }`}
                           href="/Debate"
                         >
                           सभागृहांचे कार्यवृत्त
                         </Nav.Link>
-                        <Nav.Link href="#action2">विधिविधान</Nav.Link>
-                        <Nav.Link href="#action2">अर्थसंकल्प </Nav.Link>
+                        <Nav.Link href="#action2">{header[checkLang].Legislation}</Nav.Link>
+                        <Nav.Link href="#action2">{header[checkLang].Budget} </Nav.Link>
                         <div>
                           <Link className="nav-link" to="/Library">
-                            निवडणूक निकाल
+                            {header[checkLang].Elections}
                           </Link>
                         </div>
                         <div>
                           <Link className="nav-link" to="/Library">
-                            राजपत्र
+                            {header[checkLang].Gazette}
                           </Link>
                         </div>
                         <NavDropdown
