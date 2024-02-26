@@ -46,7 +46,7 @@ const DebateDetails = () => {
                 <th>सभागृह</th>
                 <th>अधिवेशन</th>
                 <th>तारीख</th>
-                <th>PDF</th>
+                <th>तपशील</th>
               </tr>
             </thead>
             <tbody>

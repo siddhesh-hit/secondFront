@@ -1,25 +1,608 @@
 import news1 from "../../src/assets/Rectangle 6607.jpg";
+import {
+  imag1,
+  imag2,
+  imag3,
+  imag4,
+  imag5,
+  imag6,
+  legmem,
+  debate,
+  sessioncalender,
+  legis,
+  budget,
+  election,
+  gazette,
+  gazettee,
+  publication,
+  media,
+  judgments,
+} from "../assets/homeicons";
+
+const header = {
+  marathi: {
+    contact: `आमच्याशी संपर्क साधा`,
+    language: `भाषा`,
+    login: `साइन इन करा`,
+    member: `सदस्य`,
+    Gazette: `राजपत्र`,
+    Debate: `सभागृहांचे कार्यवृत्त`,
+    Elections: `निवडणूक निकाल`,
+    Budget: `अर्थसंकल्प`,
+    Legislation: `विधिविधान`,
+  },
+  english: {
+    contact: `Contact Us`,
+    language: `Language`,
+    login: `Sign In`,
+    member: `Member`,
+    Gazette: `Gazette`,
+    Debate: `Debate`,
+    Elections: `Election results`,
+    Budget: `Budget`,
+    Legislation: `Legislation`,
+  }
+}
 
 const home = {
   marathi: {
     header: `एक सर्वसमावेशक ज्ञान भांडार - विधिमंडळ प्रवचन,निवडणूक कथा, आणि नागरी सक्षमीकरण \n एक्सप्लोर करण्यासाठी तुमचे पोर्टल.आता शोधा!`,
     searchPlaceHolder: `शोध कीवर्ड प्रविष्ट करा`,
+    legislature: `विधिमंडळ सदस्य`,
+    hometitle: `आतापर्यंत एमएलएस ग्रंथालयातील संसाधने, दस्तऐवज डिजीटलाइज्ड झाली आहे ते एक्सप्लोरे करा`,
+    nav: [
+      {
+        icon: legmem,
+        title: `विधिमंडळ सदस्य`,
+        childtext: [
+          {
+            name: `विधानपरिषद`,
+            link: `/Aboutus`
+          },
+          {
+            name: `विधानपरिषद`,
+          }
+        ]
+      },
+      {
+        icon: debate,
+        title: `सभागृहांचे कार्यवृत्त`,
+        childtext: [
+          {
+            name: `सभागृह`,
+            link: `/Debate`,
+          },
+          {
+            name: `अधिवेशन`,
+          },
+          {
+            name: ` वर्ष`,
+          }
+        ]
+      },
+      {
+        icon: sessioncalender,
+        title: `सत्र दिनदर्शिका`,
+        childtext: [
+          {
+            name: `विधानपरिषद`,
+          },
+          {
+            name: `विधानसभा`,
+          }
+        ]
+      },
+      {
+        icon: legis,
+        title: `विधिविधान`,
+        childtext: [
+          {
+            name: `कायदे`,
+          },
+          {
+            name: `बिल`,
+          },
+          {
+            name: `नियम`,
+          }
+        ]
+      },
+      {
+        icon: budget,
+        title: `अर्थसंकल्प`,
+        childtext: [
+          {
+            name: `वर्ष`,
+          },
+          {
+            name: `विभाग`,
+          }
+        ]
+      },
+      {
+        icon: election,
+        title: `निवडणूक निकाल`,
+        childtext: [
+          {
+            name: `विधानपरिषद`,
+          },
+          {
+            name: `विधानसभा`,
+          }
+        ]
+      },
+      {
+        icon: gazette,
+        title: `राजपत्र ( महाराष्ट्र राज्य )`,
+        childtext: [
+          {
+            name: `भाग`,
+          },
+          {
+            name: `विषय`,
+          },
+          {
+            name: `विभाग`
+          }
+        ]
+      },
+      {
+        icon: publication,
+        title: `प्रकाशने`,
+        childtext: [
+          {
+            name: `योजना`,
+          },
+          {
+            name: `धोरण`,
+          },
+          {
+            name: `विभाग`
+          }
+        ]
+      },
+      {
+        icon: media,
+        title: `मीडिया`,
+        childtext: [
+          {
+            name: `ऑडिओ`,
+          },
+          {
+            name: `व्हिडिओ`,
+          },
+          {
+            name: `वृत्तपत्र`
+          }
+        ]
+      },
+      {
+        icon: legis,
+        title: `विधिमंडळ समिती`,
+        childtext: [
+          {
+            name: `प्रकार`,
+          },
+          {
+            name: `नाव`,
+          }
+        ]
+      },
+      {
+        icon: gazettee,
+        title: `दर्शनिका ( महाराष्ट्र राज्य )`,
+        childtext: [
+          {
+            name: `ठिकाण`,
+          },
+          {
+            name: `विषय`,
+          }
+        ]
+      },
+      {
+        icon: judgments,
+        title: `निर्णय`,
+        childtext: [
+          {
+            name: `कोर्ट`,
+          },
+          {
+            name: `विषय`,
+          }
+        ]
+      }
+    ],
+    homebottom: [
+      {
+        icon: imag1,
+        title: `लेख`,
+        subtitle: `405 दशलक्ष`,
+      },
+      {
+        icon: imag2,
+        title: `विधेयके आणि कायदे`,
+        subtitle: `405 दशलक्ष`,
+      },
+      {
+        icon: imag3,
+        title: `माध्यम फाइल्स`,
+        subtitle: `405 दशलक्ष`,
+      },
+      {
+        icon: imag4,
+        title: `राजपत्र`,
+        subtitle: `405 दशलक्ष`,
+      },
+      {
+        icon: imag5,
+        title: `इतर अहवाल`,
+        subtitle: `405 दशलक्ष`,
+      },
+      {
+        icon: imag6,
+        title: `इतर अहवाल`,
+        subtitle: `405 दशलक्ष`,
+      }
+    ]
   },
   english: {
     header: `A Comprehensive Knowledge Repository - Your Portal to Explore Legislative Discourse \n Election Narratives, and Civic Empowerment. Search and Discover Now!"`,
     searchPlaceHolder: `Enter the search keywords`,
+    legislature: `Legislature Members`,
+    nav: [
+      {
+        icon: legmem,
+        title: `Legislature Members`,
+        childtext: [
+          {
+            name: `Council`,
+          },
+          {
+            name: `Assembly`,
+          }
+        ]
+      },
+      {
+        icon: debate,
+        title: `Debates`,
+        childtext: [
+          {
+            name: `House`,
+          },
+          {
+            name: `Session`,
+          },
+          {
+            name: `Year`,
+          }
+        ]
+      },
+      {
+        icon: sessioncalender,
+        title: `Session Calendar`,
+        childtext: [
+          {
+            name: `Council`,
+          },
+          {
+            name: `Assembly`,
+          }
+        ]
+      },
+      {
+        icon: legis,
+        title: `Legislation`,
+        childtext: [
+          {
+            name: `Acts`,
+          },
+          {
+            name: `Bills`,
+          },
+          {
+            name: `Rules`,
+          }
+        ]
+      },
+      {
+        icon: budget,
+        title: `Budget`,
+        childtext: [
+          {
+            name: `Year`,
+          },
+          {
+            name: `Department`,
+          }
+        ]
+      },
+      {
+        icon: election,
+        title: `Election results`,
+        childtext: [
+          {
+            name: `Council`,
+          },
+          {
+            name: `Assembly`,
+          }
+        ]
+      },
+      {
+        icon: gazette,
+        title: `Gazette (GOM)`,
+        childtext: [
+          {
+            name: `Part`,
+          },
+          {
+            name: `Subject`,
+          },
+          {
+            name: `Department`
+          }
+        ]
+      },
+      {
+        icon: publication,
+        title: `Publication`,
+        childtext: [
+          {
+            name: `Scheme`,
+          },
+          {
+            name: `Policy`,
+          },
+          {
+            name: `Department`
+          }
+        ]
+      },
+      {
+        icon: media,
+        title: `Media`,
+        childtext: [
+          {
+            name: `Video`,
+          },
+          {
+            name: `Audio`,
+          },
+          {
+            name: `Newspaper`
+          }
+        ]
+      },
+      {
+        icon: legis,
+        title: `Legislative committee`,
+        childtext: [
+          {
+            name: `Type`,
+          },
+          {
+            name: `Department`,
+          },
+          {
+            name: `Name`,
+          }
+        ]
+      },
+      {
+        icon: gazettee,
+        title: `Gazetteers (GOM)`,
+        childtext: [
+          {
+            name: `Place`,
+          },
+          {
+            name: `Topic`,
+          }
+        ]
+      },
+      {
+        icon: judgments,
+        title: `Judgments`,
+        childtext: [
+          {
+            name: `Court`,
+          },
+          {
+            name: `Subject`,
+          }
+        ]
+      }
+    ],
+    hometitle: `Explore the resources, documents that have been digitized so far in the MLS library`,
+    homebottom: [
+      {
+        icon: imag1,
+        title: `Debates`,
+        subtitle: `405 million`,
+      },
+      {
+        icon: imag2,
+        title: `Articles`,
+        subtitle: `440 million`,
+      },
+      {
+        icon: imag3,
+        title: `Bills & Acts`,
+        subtitle: `25 million`,
+      },
+      {
+        icon: imag4,
+        title: `Media files`,
+        subtitle: `10 million`,
+      },
+      {
+        icon: imag5,
+        title: `Gazettes`,
+        subtitle: `6 million`,
+      },
+      {
+        icon: imag6,
+        title: `Other Reports`,
+        subtitle: `30 million`,
+      }
+    ]
   },
 };
 
-const homeLink = [
-  "http://mls.org.in/",
-  "https:// gr.maharashtra.gov.in",
-  "https:// gr.maharashtra.gov.in",
-  "https:// beams.mahakosh.gov.in",
-  "https:// directorate.marathi.gov.in",
-  "https://eci.gov.in/",
-  "https://main.sci.govin/",
-];
+// const homeLink = [
+//   "http://mls.org.in/",
+//   "https:// gr.maharashtra.gov.in",
+//   "https:// gr.maharashtra.gov.in",
+//   "https:// beams.mahakosh.gov.in",
+//   "https:// directorate.marathi.gov.in",
+//   "https://eci.gov.in/",
+//   "https://main.sci.govin/",
+// ];
+
+const homeLink = {
+  marathi: {
+    title: `इतर महत्वाचा दुवा`,
+    title1: `सर्व लिंक`,
+    title2: `मुख्य पृष्ठ`,
+    button: `पुढे वाचा`
+  },
+  english: {
+    title: `Other Important Link`,
+    title1: `All Links`,
+    title2: `Home`,
+    button: `Read More`
+  }
+}
+
+const feedback = {
+  marathi: {
+    title: `मुख्यपृष्ठ`,
+    title1: `अभिप्राय`,
+    title2: `आम्हाला संदेश पाठवा`,
+    title3: `आपल्या मौल्यवान सूचनांसह आम्हाला संदेश पाठवा`,
+    form1: `तुमचे पुर्ण नाव`,
+    form2: `तुमचा ईमेल पत्ता`,
+    form3: `तुमचा विषय`,
+    form4: `आपला अभिप्राय`,
+    submit: `प्रस्तुत करणे`,
+    select: `कृपया विषय निवडा`,
+    select1: `विधानमंडळ`,
+    select2: `विधानपरिषद`,
+    select3: `विधानसभा`,
+    select4: `सत्र दिनदर्शिका`,
+    select5: `ग्रंथालय`,
+    select6: `इतर`,
+    address: `महाराष्ट्र विधान, विधान भवन, बॅकबे रेक्लमेशन, विधान भवन मार्ग, मुंबई - ४०० ०३२.`,
+    addresstitle: `पत्ता`,
+    telephone: `दूरध्वनी क्रमांक`,
+    email: `ई-मेल`,
+  },
+  english: {
+    title: `Home`,
+    title1: `Feedback`,
+    title2: `Send us a Message`,
+    title3: `Send us a message with valuable suggestion`,
+    form1: `Your Full Name`,
+    form2: `Your Email-id`,
+    form3: `Your Subject`,
+    form4: `Your Feedback`,
+    submit: `Submit`,
+    select: `Please select Subject`,
+    select1: `Vidhan Mandal`,
+    select2: `Council`,
+    select3: `Assembly`,
+    select4: `Session Calender`,
+    select5: `Library`,
+    select6: `Other`,
+    address: `Maharashtra Vidhan Sabha, Vidhan Bhawan, Backbay Reclamation, Vidhan Bhavan Marg, Mumbai - 400 032.`,
+    addresstitle: `Address`,
+    telephone: `Telephone No`,
+    email: `Email`,
+  }
+}
+
+const helpdesk = {
+  marathi: {
+    title: `मुख्यपृष्ठ`,
+    title1: `मदत कक्ष`,
+    title3: `तुमची क्वेरी येथे पाठवा, आमचे कार्यकारी तुम्हाला मदत करतील`,
+    form1: `तुमचे पुर्ण नाव`,
+    form2: `तुमचा ईमेल पत्ता`,
+    form3: `तुमचा दूरध्वनी क्रमांक`,
+    form4: `तुमचा पत्ता`,
+    form5: `तुमचा संदेश येथे`,
+    submit: `प्रस्तुत करणे`,
+    select: `कृपया विषय निवडा`,
+    select1: `विधानमंडळ`,
+    select2: `विधानपरिषद`,
+    select3: `विधानसभा`,
+    select4: `सत्र दिनदर्शिका`,
+    select5: `ग्रंथालय`,
+    select6: `इतर`,
+    address: `महाराष्ट्र विधान, विधान भवन, बॅकबे रेक्लमेशन, विधान भवन मार्ग, मुंबई - ४०० ०३२.`,
+    addresstitle: `पत्ता`,
+    telephone: `दूरध्वनी क्रमांक`,
+    email: `ई-मेल`,
+  },
+  english: {
+    title: `Home`,
+    title1: `Help Desk`,
+    title3: `Send your query here, our executive will help you`,
+    form1: `Your Full Name`,
+    form2: `Your Email-id`,
+    form3: `Your Telephone Number`,
+    form4: `Your Address`,
+    form5: `Your Message Here`,
+    submit: `Submit`,
+    select: `Please select Subject`,
+    select1: `Vidhan Mandal`,
+    select2: `Council`,
+    select3: `Assembly`,
+    select4: `Session Calender`,
+    select5: `Library`,
+    select6: `Other`,
+    address: `Maharashtra Vidhan Sabha, Vidhan Bhawan, Backbay Reclamation, Vidhan Bhavan Marg, Mumbai - 400 032.`,
+    addresstitle: `Address`,
+    telephone: `Telephone No`,
+    email: `Email`,
+  }
+}
+
+const footer = {
+  marathi: {
+    title: `सतत विचारले जाणारे प्रश्न`,
+    title1: `फोटो गॅलरी`,
+    title2: `मुख्यपृष्ठ`,
+    title3: `विधानमंडळ`,
+    title4: `ग्रंथालय`,
+    title5: `बातम्या`,
+    title6: `राज्यपाल`,
+    title7: `अभिप्राय`,
+    title8: `मदत आणि समर्थन`,
+    title9: `महत्वाचा दुवा`,
+    title10: `सेवा अटी`,
+    title11: `साइट मॅप`,
+    title12: `सूचना`,
+    title13: `अभ्यागतांची संख्या`,
+  },
+  english: {
+    title: `FAQs`,
+    title1: `Photo Gallery`,
+    title2: `Home`,
+    title3: `About`,
+    title4: `Library`,
+    title5: `News`,
+    title6: `Governor`,
+    title7: `Feedback`,
+    title8: `Help & support`,
+    title9: `Important Links`,
+    title10: `Terms of service`,
+    title11: `Sitemap`,
+    title12: `Notification`,
+    title13: `Vistors count `,
+  }
+}
 
 const aboutUs = {
   marathi: {
@@ -647,16 +1230,21 @@ const assemblyDebate = {
 
 const councilDebate = {
   marathi: {
-    title: "विधानपरिषद सभागृहांचे कार्यवृत्त",
+    home: `मुख्य पृष्ठ`,
+    title: "सभागृहांचे कार्यवृत्त",
     titleselect: "विधानपरिषद",
     titleselect1: "अर्थसंकल्पीय",
+    filter: `फिल्टर`,
+    adfilter: `ऍडव्हान्स फिल्टर`,
     button1: "अर्ज करा",
-    button2: "कमी पर्याय",
+    button2: "रीसेट",
+    button3: "रीसेट",
     button2op: "अधिक पर्याय दाखवा",
     link1: "मुख्यपृष्ठ",
     link2: "सभागृहांचे कार्यवृत्त",
     link3: "विधानपरिषद सभागृहांचे कार्यवृत्त",
-    search: "शोध कीवर्ड प्रविष्ट करा",
+    search: "विषय आणि कीवर्ड शोधा",
+    search1: "सदस्य शोधा",
     fields: {
       field1: "अधिवेशन  निवडा:",
       field2: "वर्ष:",
@@ -691,6 +1279,8 @@ const councilDebate = {
       house: " सभागृह",
       session: "अधिवेशन ",
       date: " तारीख",
+      member: `सदस्य`,
+      action: `तपशील`,
       volume: "खंड",
       kramank: "क्रमांक",
       method: "वादाचा प्रकार",
@@ -715,16 +1305,21 @@ const councilDebate = {
     },
   },
   english: {
-    title: "Debates Of Legislative Assembly",
+    home: `Home`,
+    title: "Debates",
     titleselect: "Legislative Assembly",
     titleselect1: "Budgetary",
+    filter: `Filter`,
+    adfilter: `Advanced Filter`,
     button1: "Apply",
-    button2: "Less Options",
+    button2: "Reset",
+    button3: "Less Options",
     button2op: "Show More",
     link1: "Home",
     link2: "Debate",
     link3: "Debates Of Legislative Assembly",
-    search: "Enter a Search Keyword",
+    search: "Search for topics and keywords",
+    search1: "Search members",
     fields: {
       field1: "Select Session:",
       field2: "Year:",
@@ -758,6 +1353,8 @@ const councilDebate = {
       house: "House",
       session: "Session",
       date: "Date",
+      member: `Member`,
+      action: `Details`,
       volume: "Volume",
       kramank: "No.",
       method: "Device",
@@ -783,8 +1380,12 @@ const councilDebate = {
 };
 
 export {
+  header,
   home,
   homeLink,
+  feedback,
+  helpdesk,
+  footer,
   aboutUs,
   slider,
   governor,

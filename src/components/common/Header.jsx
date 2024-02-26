@@ -18,11 +18,13 @@ import logo from "../../assets/logo.png";
 import { logout } from "../../redux/reducers/userReducer";
 import { decrypt } from "../../utils/encrypt";
 import { postApi } from "../../services/axiosInterceptors";
+import useLang from "../../hooks/useLang";
+import { home, header } from "../../data/constant";
 
 const Header = () => {
   const [search, setSearch] = useState(null);
   const [userInfo, setUserInfo] = useState({});
-
+  const { lang, checkLang } = useLang();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const location = useLocation().pathname;
@@ -31,6 +33,8 @@ const Header = () => {
     window.localStorage.setItem("lang", newLang);
     window.dispatchEvent(new CustomEvent("langChange"));
   };
+
+
 
   const handleLogout = async () => {
     await postApi("user/logout", {})
@@ -54,19 +58,18 @@ const Header = () => {
   return (
     <div>
       <div
-        className={`${
-          location === "/"
-            ? "blueColor topheader"
-            : location === "/Homepage2"
+        className={`${location === "/"
+          ? "blueColor topheader"
+          : location === "/Homepage2"
             ? "otherColor"
             : location === "/Homepage1"
-            ? "newheadercolor"
-            : location === "/Debate"
-            ? "topheader"
-            : location === "/DebateDetail"
-            ? "newheadercolor"
-            : "topheader"
-        }`}
+              ? "newheadercolor"
+              : location === "/Debate"
+                ? "topheader"
+                : location === "/DebateDetail"
+                  ? "newheadercolor"
+                  : "topheader"
+          }`}
       >
         <Container fluid>
           <Row>
@@ -74,11 +77,11 @@ const Header = () => {
               <div className="topheaderright">
                 <div className="contact-us">
                   <Link to="/ContactUs">
-                    <span>आमच्याशी संपर्क साधा</span>
+                    <span>{header[checkLang].contact}</span>
                   </Link>
                 </div>
                 <Dropdown className="languagechanges">
-                  <Dropdown.Toggle>भाषा</Dropdown.Toggle>
+                  <Dropdown.Toggle>{header[checkLang].language}</Dropdown.Toggle>
 
                   <Dropdown.Menu>
                     <Dropdown.Item
@@ -112,7 +115,7 @@ const Header = () => {
                   {isAuthenticated ? (
                     <button onClick={handleLogout}>साइन आउट करा</button>
                   ) : (
-                    <span>साइन इन करा</span>
+                    <span>{header[checkLang].login}</span>
                   )}
                 </a>
               </div>
@@ -121,8 +124,8 @@ const Header = () => {
         </Container>
       </div>
       {location === "/" ||
-      location === "/Homepage1" ||
-      location === "/Homepage2" ? (
+        location === "/Homepage1" ||
+        location === "/Homepage2" ? (
         <div className="headerlogos">
           <Container fluid>
             <Row className="midhead one">
@@ -149,7 +152,7 @@ const Header = () => {
                     <form>
                       <input
                         type="search"
-                        placeholder="शोध कीवर्ड प्रविष्ट करा"
+                        placeholder={home[checkLang].searchPlaceHolder}
                         className="form-control"
                         onChange={(e) => setSearch(e.target.value)}
                       />
@@ -192,29 +195,51 @@ const Header = () => {
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                       <Nav className="justify-content-end  flex-grow-1 pe-5">
+                        <NavDropdown
+                          title="विधिमंडळ  "
+                          id={`offcanvasNavbarDropdown-expand-${expand}`}
+                        >
+                          <NavDropdown.Item href="#action4">
+                            राज्यपाल
+                          </NavDropdown.Item>
+                          <NavDropdown.Item href="#action5">
+                            विधानपरिषद
+                          </NavDropdown.Item>
+                          <NavDropdown.Item href="#action5">
+                            विधानसभा
+                          </NavDropdown.Item>
+                          <NavDropdown.Item href="#action5">
+                            विधानमंडळ सचिव
+                          </NavDropdown.Item>
+                          <NavDropdown.Item href="#action5">
+                            मंत्रीमंडळ
+                          </NavDropdown.Item>
+                          <NavDropdown.Item href="#action5">
+                            विधानमंडळ ग्रंथालय
+                          </NavDropdown.Item>
+                        </NavDropdown>
                         <div>
                           <Link className="nav-link" to="/">
-                            सदस्य
+                            {header[checkLang].member}
                           </Link>
                         </div>
                         <Nav.Link
-                          className={`${
-                            location === "/Debate" ? "active" : ""
-                          }`}
+                          className={`${location === "/Debate" ? "active" : ""
+                            }`}
                           href="/Debate"
                         >
-                          सभागृहांचे कार्यवृत्त
+                          {header[checkLang].Debate}
                         </Nav.Link>
-                        <Nav.Link href="#action2">विधिविधान</Nav.Link>
-                        <Nav.Link href="#action2">अर्थसंकल्प </Nav.Link>
+                        <Nav.Link href="#action2">{header[checkLang].Legislation}</Nav.Link>
+                        <Nav.Link href="#action2">{header[checkLang].Budget} </Nav.Link>
                         <div>
                           <Link className="nav-link" to="/Library">
-                            निवडणूक निकाल
+                            {header[checkLang].Elections}
                           </Link>
                         </div>
                         <div>
                           <Link className="nav-link" to="/Library">
-                            राजपत्र
+                            {header[checkLang].Gazette}
                           </Link>
                         </div>
                         <NavDropdown

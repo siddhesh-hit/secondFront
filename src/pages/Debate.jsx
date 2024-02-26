@@ -12,6 +12,8 @@ import { memberName } from "../data/memberName";
 import PopupHome from "./PopupHome";
 import PaginationComponent from "../components/Pagination";
 import HighlightSentence from "../components/HighlightSentence";
+import useLang from "../hooks/useLang";
+import { councilDebate } from "../data/constant";
 
 const Debate = () => {
   const [debate, setDebate] = useState([]);
@@ -20,6 +22,7 @@ const Debate = () => {
   const [pageLimit, setPageLimit] = useState(10);
   const [modalShow, setModalShow] = useState(true);
   const [sorted, setSorted] = useState(false);
+  const { lang, checkLang } = useLang();
 
   const [search, setSearch] = useState({
     topic: "",
@@ -269,17 +272,17 @@ const Debate = () => {
           <Col lg={3}>
             <div className="filters">
               <div className="firstfilter">
-                <h3>फिल्टर</h3>
-                <h4>सदस्य</h4>
+                <h3>{councilDebate[checkLang].filter}</h3>
+                <h4>{councilDebate[checkLang].tableBody.member}</h4>
                 <ReactSearchAutocomplete
                   items={memberName}
-                  placeholder="सदस्य शोधा"
+                  placeholder={councilDebate[checkLang].search1}
                   onSearch={handleOnSearch}
                   onSelect={handleOnSelect}
                 />
                 <Accordion className="filsss" defaultActiveKey={["0"]}>
                   <Accordion.Item eventKey="0">
-                    <Accordion.Header>सभागृह</Accordion.Header>
+                    <Accordion.Header>{councilDebate[checkLang].tableBody.house}</Accordion.Header>
                     <Accordion.Body>
                       <div className="filtercontent">
                         <div className="datacheck">
@@ -316,7 +319,7 @@ const Debate = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                   <Accordion.Item eventKey="1">
-                    <Accordion.Header>अधिवेशन</Accordion.Header>
+                    <Accordion.Header>{councilDebate[checkLang].tableBody.session}</Accordion.Header>
                     <Accordion.Body>
                       <div className="filtercontent">
                         <div className="datacheck">
@@ -363,7 +366,7 @@ const Debate = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                   <Accordion.Item eventKey="2">
-                    <Accordion.Header>तारीख</Accordion.Header>
+                    <Accordion.Header>{councilDebate[checkLang].tableBody.date}</Accordion.Header>
                     <Accordion.Body>
                       <div className="filtercontent">
                         <Row className="daterange">
@@ -390,7 +393,7 @@ const Debate = () => {
                             />
                           </Col>
                           <Col lg={4}>
-                            <button className="apply1">अप्लाय</button>
+                            <button className="apply1">{councilDebate[checkLang].button1}</button>
                           </Col>
                         </Row>
                       </div>
@@ -404,7 +407,7 @@ const Debate = () => {
                   className="advanced"
                   onClick={() => setDivVisibility(!isDivVisible)}
                 >
-                  ऍडव्हान्स फिल्टर
+                  {councilDebate[checkLang].adfilter}
                   <div className="iconss">{isDivVisible ? "-" : "+"}</div>
                 </button>
                 {isDivVisible && (
@@ -492,10 +495,10 @@ const Debate = () => {
               </div>
               <div className="formbutton">
                 <button className="reset" onClick={handleReset}>
-                  रिसेट
+                  {councilDebate[checkLang].button2}
                 </button>
                 <button className="apply" onClick={handleSearch}>
-                  अप्लाय
+                  {councilDebate[checkLang].button1}
                 </button>
               </div>
             </div>
@@ -507,7 +510,7 @@ const Debate = () => {
                   type="text"
                   name="topic"
                   className="form-control"
-                  placeholder="विषय आणि कीवर्ड शोधा"
+                  placeholder={councilDebate[checkLang].search}
                   defaultValue={search.topic}
                   onChange={handleChange}
                 />
@@ -515,7 +518,7 @@ const Debate = () => {
                   <i className="fa fa-search" />
                 </button>
                 <button className="startover" onClick={handleStart}>
-                  रीसेट
+                  {councilDebate[checkLang].button2}
                 </button>
               </div>
             </div>
@@ -524,9 +527,9 @@ const Debate = () => {
                 <Col lg={6}>
                   <div className="breadvrumbss-inner">
                     <div className="countdebate">
-                      <span> मुख्य पृष्ठ </span>
+                      <span>{councilDebate[checkLang].home}</span>
                       <img src={Arrow} alt="" />
-                      <span>सभागृहांचे कार्यवृत्त</span>
+                      <span>{councilDebate[checkLang].title}</span>
                     </div>
                     <p>
                       {" "}
@@ -567,13 +570,13 @@ const Debate = () => {
               <thead>
                 <tr>
                   <th style={{ width: "30%", borderRight: "solid white 1px" }}>
-                    विषय
+                    {councilDebate[checkLang].tableBody.topic}
                   </th>
-                  <th style={{ borderRight: "solid white 1px" }}>सभागृह</th>
-                  <th style={{ borderRight: "solid white 1px" }}>अधिवेशन</th>
-                  <th style={{ borderRight: "solid white 1px" }}>तारीख</th>
-                  <th style={{ borderRight: "solid white 1px" }}>सदस्य</th>
-                  <th>तपशील</th>
+                  <th style={{ borderRight: "solid white 1px" }}>{councilDebate[checkLang].tableBody.house}</th>
+                  <th style={{ borderRight: "solid white 1px" }}>{councilDebate[checkLang].tableBody.session}</th>
+                  <th style={{ borderRight: "solid white 1px" }}>{councilDebate[checkLang].tableBody.date}</th>
+                  <th style={{ borderRight: "solid white 1px" }}>{councilDebate[checkLang].tableBody.member}</th>
+                  <th>{councilDebate[checkLang].tableBody.action}</th>
                 </tr>
               </thead>
               <tbody>
