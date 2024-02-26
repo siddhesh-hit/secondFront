@@ -26,6 +26,7 @@ const header = {
     login: `साइन इन करा`,
     member: `सदस्य`,
     Gazette: `राजपत्र`,
+    Debate: `सभागृहांचे कार्यवृत्त`,
     Elections: `निवडणूक निकाल`,
     Budget: `अर्थसंकल्प`,
     Legislation: `विधिविधान`,
@@ -36,6 +37,7 @@ const header = {
     login: `Sign In`,
     member: `Member`,
     Gazette: `Gazette`,
+    Debate: `Debate`,
     Elections: `Election results`,
     Budget: `Budget`,
     Legislation: `Legislation`,
@@ -1229,7 +1231,7 @@ const assemblyDebate = {
 const councilDebate = {
   marathi: {
     home: `मुख्य पृष्ठ`,
-    title: "विधानपरिषद सभागृहांचे कार्यवृत्त",
+    title: "सभागृहांचे कार्यवृत्त",
     titleselect: "विधानपरिषद",
     titleselect1: "अर्थसंकल्पीय",
     filter: `फिल्टर`,
@@ -1304,7 +1306,7 @@ const councilDebate = {
   },
   english: {
     home: `Home`,
-    title: "Debates Of Legislative Assembly",
+    title: "Debates",
     titleselect: "Legislative Assembly",
     titleselect1: "Budgetary",
     filter: `Filter`,

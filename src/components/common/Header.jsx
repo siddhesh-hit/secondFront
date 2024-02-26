@@ -195,9 +195,32 @@ const Header = () => {
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                       <Nav className="justify-content-end  flex-grow-1 pe-5">
+                        <NavDropdown
+                          title="विधिमंडळ  "
+                          id={`offcanvasNavbarDropdown-expand-${expand}`}
+                        >
+                          <NavDropdown.Item href="#action4">
+                            राज्यपाल
+                          </NavDropdown.Item>
+                          <NavDropdown.Item href="#action5">
+                            विधानपरिषद
+                          </NavDropdown.Item>
+                          <NavDropdown.Item href="#action5">
+                            विधानसभा
+                          </NavDropdown.Item>
+                          <NavDropdown.Item href="#action5">
+                            विधानमंडळ सचिव
+                          </NavDropdown.Item>
+                          <NavDropdown.Item href="#action5">
+                            मंत्रीमंडळ
+                          </NavDropdown.Item>
+                          <NavDropdown.Item href="#action5">
+                            विधानमंडळ ग्रंथालय
+                          </NavDropdown.Item>
+                        </NavDropdown>
                         <div>
                           <Link className="nav-link" to="/">
-                            सदस्य
+                            {header[checkLang].member}
                           </Link>
                         </div>
                         <Nav.Link
@@ -205,7 +228,7 @@ const Header = () => {
                             }`}
                           href="/Debate"
                         >
-                          सभागृहांचे कार्यवृत्त
+                          {header[checkLang].Debate}
                         </Nav.Link>
                         <Nav.Link href="#action2">{header[checkLang].Legislation}</Nav.Link>
                         <Nav.Link href="#action2">{header[checkLang].Budget} </Nav.Link>

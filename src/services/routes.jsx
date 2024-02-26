@@ -18,6 +18,9 @@ import VerifyOtp from "../pages/VerifyOtp";
 import ResetPassword from "../pages/ResetPassword";
 import AllLinks from "../pages/AllLinks";
 import Feedback from "../pages/Feedback";
+import MemberAssemblyDetails from "../pages/MemberAssemblyDetails";
+import MembersCouncil from "../pages/MembersCouncil";
+import MemberCouncilDetails from "../pages/MemberCouncilDetails";
 
 export const routes = [
   {
@@ -111,5 +114,20 @@ export const routes = [
     path: "/Feedback",
     exact: true,
     element: <Feedback />,
+  },
+  {
+    path: "/member-assembly-details",
+    exact: true,
+    element: <MemberAssemblyDetails />,
+  },
+  {
+    path: "/member-council",
+    exact: true,
+    element: <MembersCouncil />,
+  },
+  {
+    path: "/member-council-details",
+    exact: true,
+    element: <MemberCouncilDetails />,
   },
 ];

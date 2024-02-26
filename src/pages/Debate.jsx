@@ -273,7 +273,7 @@ const Debate = () => {
             <div className="filters">
               <div className="firstfilter">
                 <h3>{councilDebate[checkLang].filter}</h3>
-                <h4>सदस्य</h4>
+                <h4>{councilDebate[checkLang].tableBody.member}</h4>
                 <ReactSearchAutocomplete
                   items={memberName}
                   placeholder={councilDebate[checkLang].search1}
@@ -282,7 +282,7 @@ const Debate = () => {
                 />
                 <Accordion className="filsss" defaultActiveKey={["0"]}>
                   <Accordion.Item eventKey="0">
-                    <Accordion.Header>{councilDebate[checkLang].tableBody.member}</Accordion.Header>
+                    <Accordion.Header>{councilDebate[checkLang].tableBody.house}</Accordion.Header>
                     <Accordion.Body>
                       <div className="filtercontent">
                         <div className="datacheck">
@@ -529,7 +529,7 @@ const Debate = () => {
                     <div className="countdebate">
                       <span>{councilDebate[checkLang].home}</span>
                       <img src={Arrow} alt="" />
-                      <span>सभागृहांचे कार्यवृत्त</span>
+                      <span>{councilDebate[checkLang].title}</span>
                     </div>
                     <p>
                       {" "}

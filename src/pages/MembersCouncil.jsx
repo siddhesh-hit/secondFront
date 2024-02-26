@@ -3,7 +3,7 @@ import { Container, Row, Col, Accordion, Form } from "react-bootstrap";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { Link } from "react-router-dom";
 
-import Graph from "../assets/graphs.svg";
+import Graph from "../assets/membercouncil.svg";
 import Arrow from "../assets/debate/arrow.svg";
 import Sort from "../assets/debate/sort.svg";
 
@@ -12,17 +12,15 @@ import { memberName } from "../data/memberName";
 import PopupHome from "./PopupHome";
 import PaginationComponent from "../components/Pagination";
 import HighlightSentence from "../components/HighlightSentence";
-import { councilMember } from "../data/constant";
 import useLang from "../hooks/useLang";
 
-const MembersAssembly = () => {
+const MembersCouncil = () => {
     const [debate, setDebate] = useState([]);
     const [isDivVisible, setDivVisibility] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
     const [pageLimit, setPageLimit] = useState(10);
     const [modalShow, setModalShow] = useState(true);
     const [sorted, setSorted] = useState(false);
-    const { lang, checkLang } = useLang();
 
     const [search, setSearch] = useState({
         topic: "",
@@ -543,6 +541,7 @@ const MembersAssembly = () => {
                                             <th style={{ borderRight: "solid white 1px" }}>नाव</th>
                                             <th style={{ borderRight: "solid white 1px" }}>मतदारसंघ</th>
                                             <th style={{ borderRight: "solid white 1px" }}>राजकीय पक्ष</th>
+                                            <th>कार्यकाल</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -561,7 +560,7 @@ const MembersAssembly = () => {
                                                         />
                                                     </td>
                                                     <td>
-                                                        <Link to="/member-assembly-details" className="membernamee">
+                                                        <Link to="/member-council-details" className="membernamee">
                                                             <img
                                                                 src="https://mlsdemo.sblcorp.com/img/member/photo/eknath-shinde.jpeg"
                                                                 alt="user"
@@ -574,6 +573,7 @@ const MembersAssembly = () => {
                                                         ५२- नागपूर दक्षिण पश्चिम
                                                     </td>
                                                     <td>शिवसेना</td>
+                                                    <td>14/05/2022 - 13/05/2026</td>
                                                 </tr>
                                             );
                                         })}
@@ -589,7 +589,7 @@ const MembersAssembly = () => {
                             </Col>
                             <Col lg={4}>
                                 <div className="assemblymember mb-2">
-                                    <h3 style={{ background: '#000088' }}>सांख्यिकीय विश्लेषण <br/>प्रातिनिधिक</h3>
+                                    <h3 style={{ background: '#000088' }}>सांख्यिकीय विश्लेषण <br />प्रातिनिधिक</h3>
                                 </div>
                                 <img className="w-100" src={Graph} alt="" />
                             </Col>
@@ -601,4 +601,4 @@ const MembersAssembly = () => {
     );
 };
 
-export default MembersAssembly;
+export default MembersCouncil;
