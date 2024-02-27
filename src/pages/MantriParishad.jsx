@@ -4,6 +4,7 @@ import Devendra from "../assets/mantri/D_CM.jpg"
 import Ajith from "../assets/mantri/ajitpawar.jpg"
 
 const MantriParishad = () => {
+
     return (
         <div>
             <section className="rajypallist">

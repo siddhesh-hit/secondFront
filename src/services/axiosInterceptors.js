@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  // baseURL: "http://localhost:8484/api/v1/",
-  baseURL: "https://mlsapi.sblcorp.com/api/v1/",
+  baseURL: "http://localhost:8484/api/v1/",
+  // baseURL: "https://mlsapi.sblcorp.com/api/v1/",
   withCredentials: true,
 });
 
@@ -35,5 +35,6 @@ const putApi = (url, id, data) => {
 const deleteApi = (url, id) => {
   return axiosInstance.delete(`${url}/${id}`);
 };
+const ImageUrl = "https://mlsapi.sblcorp.com/";
 
-export { getApi, getApiById, postApi, putApi, deleteApi };
+export { getApi, getApiById, postApi, putApi, deleteApi, ImageUrl };
