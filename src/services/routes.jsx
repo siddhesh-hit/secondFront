@@ -16,6 +16,11 @@ import Register from "../pages/Register";
 import SearchDetails from "../pages/SearchDetails";
 import VerifyOtp from "../pages/VerifyOtp";
 import ResetPassword from "../pages/ResetPassword";
+import AllLinks from "../pages/AllLinks";
+import Feedback from "../pages/Feedback";
+import MemberAssemblyDetails from "../pages/MemberAssemblyDetails";
+import MembersCouncil from "../pages/MembersCouncil";
+import MemberCouncilDetails from "../pages/MemberCouncilDetails";
 
 export const routes = [
   {
@@ -99,5 +104,30 @@ export const routes = [
     path: "/mantri-parishad",
     exact: true,
     element: <MantriParishad />,
+  },
+  {
+    path: "/all-links",
+    exact: true,
+    element: <AllLinks />,
+  },
+  {
+    path: "/Feedback",
+    exact: true,
+    element: <Feedback />,
+  },
+  {
+    path: "/member-assembly-details/:id",
+    exact: true,
+    element: <MemberAssemblyDetails />,
+  },
+  {
+    path: "/member-council",
+    exact: true,
+    element: <MembersCouncil />,
+  },
+  {
+    path: "/member-council-details/:id",
+    exact: true,
+    element: <MemberCouncilDetails />,
   },
 ];

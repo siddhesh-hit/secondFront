@@ -3,7 +3,7 @@ import { Container, Row, Col, Accordion, Form } from "react-bootstrap";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { Link } from "react-router-dom";
 
-import Graph from "../assets/graphs.svg";
+import Graph from "../assets/membercouncil.svg";
 import Arrow from "../assets/debate/arrow.svg";
 import Sort from "../assets/debate/sort.svg";
 
@@ -12,10 +12,9 @@ import { memberName } from "../data/memberName";
 import PopupHome from "./PopupHome";
 import PaginationComponent from "../components/Pagination";
 import HighlightSentence from "../components/HighlightSentence";
-import { councilMember } from "../data/constant";
 import useLang from "../hooks/useLang";
 
-const MembersAssembly = () => {
+const MembersCouncil = () => {
     const [debate, setDebate] = useState([]);
     const [isDivVisible, setDivVisibility] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
@@ -222,7 +221,6 @@ const MembersAssembly = () => {
         currentPage,
         pageLimit,]);
 
-    console.log("debate", debate)
     return (
         <div>
             <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
@@ -247,14 +245,14 @@ const MembersAssembly = () => {
                                                     onSelect={handleOnSelect}
                                                 />
                                                 {/* <ReactSearchAutocomplete
-                                                    className="mb-3"
-                                                    items={debate.length > 0 ? debate.map((item) => {
-                                                        return { name: item.basic_info.name }
-                                                    }) : memberName}
-                                                    placeholder="पदनाव"
-                                                    onSearch={handleOnSearch}
-                                                    onSelect={handleOnSelect}
-                                                /> */}
+                                                className="mb-3"
+                                                items={debate.length > 0 ? debate.map((item) => {
+                                                    return { name: item.basic_info.name }
+                                                }) : memberName}
+                                                placeholder="पदनाव"
+                                                onSearch={handleOnSearch}
+                                                onSelect={handleOnSelect}
+                                            /> */}
                                             </div>
                                         </Accordion.Body>
                                     </Accordion.Item>
@@ -554,4 +552,4 @@ const MembersAssembly = () => {
     );
 };
 
-export default MembersAssembly;
+export default MembersCouncil;
