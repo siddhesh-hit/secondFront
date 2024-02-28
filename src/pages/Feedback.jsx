@@ -1,10 +1,50 @@
+import { useState } from "react";
 import { Col, Container, Form, FormSelect, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import { toast } from "react-toastify";
 import { feedback } from "../data/constant"
 import useLang from "../hooks/useLang"
 import Arrow from "../assets/debate/arrow.svg";
+import { FeedBackValidation } from "../validators/HelpDesk-FeedBack-Validator";
+import { postApi } from "../services/axiosInterceptors";
 const Feedback = () => {
     const { lang, checkLang } = useLang();
+    const [userData, setuserData] = useState({
+        full_name: "",
+        email: "",
+        subject: "",
+        feedback: "",
+    });
+    const handleChange = (name, value) => {
+        setuserData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const validateUser = await FeedBackValidation(userData);
+        console.log();
+        if (validateUser) {
+            toast.error(validateUser);
+        } else {
+            let obj = { ...userData };
+
+            await postApi("feedback", obj)
+                .then((response) => {
+                    console.log("response", response.data.success)
+                    if (response.data.success) {
+                        toast.success(response.data.message);
+                    } else {
+                        toast.error(response.data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.log("error", error);
+
+                });
+        }
+    };
     return (
         <div>
             <section className="commonbg">
@@ -37,19 +77,19 @@ const Feedback = () => {
                                     <Col lg={6}>
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Label>{feedback[checkLang].form1} <span>*</span></Form.Label>
-                                            <Form.Control type="text" placeholder={feedback[checkLang].form1} />
+                                            <Form.Control type="text" placeholder={feedback[checkLang].form1} onChange={(e) => handleChange("full_name", e.target.value)} />
                                         </Form.Group>
                                     </Col>
                                     <Col lg={6}>
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Label>{feedback[checkLang].form2} <span>*</span></Form.Label>
-                                            <Form.Control type="email" placeholder={feedback[checkLang].form2} />
+                                            <Form.Control type="email" placeholder={feedback[checkLang].form2} onChange={(e) => handleChange("email", e.target.value)} />
                                         </Form.Group>
                                     </Col>
                                     <Col lg={6}>
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Label>{feedback[checkLang].form3}</Form.Label>
-                                            <FormSelect>
+                                            <FormSelect onChange={(e) => handleChange("subject", e.target.value)}>
                                                 <option value={feedback[checkLang].select}>{feedback[checkLang].select}</option>
                                                 <option value={feedback[checkLang].select1}>{feedback[checkLang].select1}</option>
                                                 <option value={feedback[checkLang].select2}>{feedback[checkLang].select2}</option>
@@ -63,11 +103,11 @@ const Feedback = () => {
                                     <Col lg={6}>
                                         <Form.Group className="mb-3" controlId="formBasicEmail">
                                             <Form.Label>{feedback[checkLang].form4}</Form.Label>
-                                            <Form.Control style={{ height: 'initial' }} as="textarea" rows={6} placeholder={feedback[checkLang].form4} />
+                                            <Form.Control style={{ height: 'initial' }} onChange={(e) => handleChange("feedback", e.target.value)} as="textarea" rows={6} placeholder={feedback[checkLang].form4} />
                                         </Form.Group>
                                     </Col>
                                 </Row>
-                                <button className="form-submit">{feedback[checkLang].submit}</button>
+                                <button className="form-submit" onClick={handleSubmit}>{feedback[checkLang].submit}</button>
                             </div>
                         </Col>
                     </Row>

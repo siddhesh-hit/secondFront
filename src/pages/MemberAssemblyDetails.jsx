@@ -1,15 +1,42 @@
 import { Col, Container, Row, Tab, Tabs } from "react-bootstrap"
-
+import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Arrow from "../assets/debate/arrow.svg";
 import print from "../assets/print.svg"
 import download from "../assets/download.svg"
-
 import useLang from "../hooks/useLang"
-import { Link } from "react-router-dom";
 import MemberAssemblyProfile from "./MemberAssemblyProfile";
+import { ImageUrl, getApi, getApiById } from "../services/axiosInterceptors";
+import PaginationComponent from "../components/Pagination";
+
 
 const MemberAssemblyDetails = () => {
+    const [current, setCurrent] = useState({});
+    const [Debate, setDebate] = useState({
+        data: [],
+        count: 0,
+
+    });
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageLimit, setPageLimit] = useState(10);
     const { lang, checkLang } = useLang();
+    const { id } = useParams()
+    const fetchDataById = async () => {
+        await getApiById("member", id)
+            .then((res) => setCurrent(res.data.data))
+            .catch((err) => console.log(err));
+    }
+    const fetchDebateById = async (name) => {
+        await getApi(`debate?member_name=${name}&perPage=${currentPage}&perLimit=${pageLimit}`)
+            .then((res) => setDebate({ data: res.data.data, count: res.data.count }))
+            .catch((err) => console.log(err));
+    }
+    useEffect(() => {
+        fetchDataById();
+    }, [id]);
+    useEffect(() => {
+        current.basic_info && current.basic_info.name && fetchDebateById(current.basic_info.name);
+    }, [current, currentPage]);
     return (
         <div className="memberassemdetails">
             <Container>
@@ -41,26 +68,24 @@ const MemberAssemblyDetails = () => {
                             <div className="basic-information">
                                 <Row>
                                     <Col lg={3} className="memberproifleimg">
-                                        <MemberAssemblyProfile />
+                                        <MemberAssemblyProfile name={current?.basic_info?.name} memberprofile={ImageUrl + current?.basic_info?.profile?.destination + "/" + current?.basic_info?.profile?.filename} />
                                     </Col>
                                     <Col lg={6}>
                                         <div className="basic-info-data">
-                                            <p>मतदारसंघ : <span>५२- नागपूर दक्षिण पश्चिम</span></p>
-                                            <p>राजकीय पक्ष	:  <span>भारतीय जनता पक्ष</span></p>
-                                            <p>जन्म तारीख  : <span>1970-07-22</span></p>
-                                            <p>जन्म स्थान	: <span>नागपूर</span></p>
-                                            <p>शिक्षण  : <span>एलएल.बी. (नागपूर विद्यापीठ तृतीय मेरिट), एम.बी.ए., डिप्लोमा इन प्रोजेक्ट मॅनेजमेंट, डी.एस.ई. बर्लिन, जर्मनी</span></p>
-                                            <p>छंद  :<span> वाचन, संगीत (हिंदी सिनेमातील गाणी ऐकणे), क्रिकेट व कविता लेखन</span></p>
-                                            <p>वैवाहिक स्थिती	:  <span>विवाहित, अमृता फडणवीस</span></p>
-                                            <p>अपत्ये	:  <span>१</span></p>
-                                            <p>ज्ञात भाषा	:  <span>मराठी, हिंदी व इंग्रजी</span></p>
-                                            <p>व्यवसाय	:  <span>-</span></p>
+                                            <p>मतदारसंघ : <span>{current?.basic_info?.constituency + " " + current?.basic_info?.district}</span></p>
+                                            <p>राजकीय पक्ष	:  <span>{current?.basic_info?.party}</span></p>
+                                            <p>जन्म तारीख  : <span>{current?.basic_info?.date_of_birth}</span></p>
+                                            <p>जन्म स्थान	: <span>{current?.basic_info?.place_of_birth}</span></p>
+                                            <p>शिक्षण  : <span>{current?.basic_info?.education}</span></p>
+                                            <p>छंद  :<span> {current?.basic_info?.hobby}</span></p>
+                                            <p>वैवाहिक स्थिती	:  <span> {current?.basic_info?.marital_status}</span></p>
+                                            <p>अपत्ये	:  <span> {current?.basic_info?.children}</span></p>
+                                            <p>ज्ञात भाषा	:  <span> {current?.basic_info?.language}</span></p>
+                                            <p>व्यवसाय	:  <span> {current?.basic_info?.business}</span></p>
                                             <p>सध्याचा पत्ता :</p>
-                                            <h6>२७६-रावसाहेब फडणवीस पार्कसमोर, धरमपेठ, नागपूर.
-                                                दूरध्वनी : (०७१२) २५३३४४६</h6>
+                                            <h6> {current?.basic_info?.address}</h6>
                                             <p>कायमचा पत्ता :</p>
-                                            <h6>खोली क्रमांक ४०२, मॅजेस्टिक आमदार निवास, मुंबई.
-                                                दूरध्वनी : (०२२) २२०२१५८५</h6>
+                                            <h6> {current?.basic_info?.foreign_migration}</h6>
                                         </div>
                                     </Col >
                                 </Row >
@@ -70,7 +95,7 @@ const MemberAssemblyDetails = () => {
                             <div className="basic-information">
                                 <Row>
                                     <Col lg={3} className="memberproifleimg">
-                                        <MemberAssemblyProfile />
+                                        <MemberAssemblyProfile name={current?.basic_info?.name} memberprofile={ImageUrl + current?.basic_info?.profile?.destination + "/" + current?.basic_info?.profile?.filename} />
                                     </Col>
                                     <Col lg={6}>
                                         <div className="political-travel">
@@ -101,18 +126,18 @@ const MemberAssemblyDetails = () => {
                             <div className="electiondata">
                                 <Row>
                                     <Col lg={3} className="memberproifleimg">
-                                        <MemberAssemblyProfile />
+                                        <MemberAssemblyProfile name={current?.basic_info?.name} memberprofile={ImageUrl + current?.basic_info?.profile?.destination + "/" + current?.basic_info?.profile?.filename} />
                                     </Col>
                                     <Col lg={9}>
                                         <div className="dataofelec">
                                             <h3>निवडणूक निकाल</h3>
-                                            <p>५२ - नागपूर - दक्षिण (पश्चिम)</p>
+                                            <p>{current?.election_data?.constituency + " "}</p>
                                             <Row className="counting">
                                                 <Col lg={4}>
-                                                    <p>• <b>एकूण मतदार :</b> ३,५१,०२१</p>
+                                                    <p>• <b>एकूण मतदार :</b>{current?.election_data?.total_electorate + " "}</p>
                                                 </Col>
                                                 <Col lg={4}>
-                                                    <p>• <b>एकूण मतदार :</b> ३,५१,०२१</p>
+                                                    <p>• <b>एकूण वैध मतदान :</b>{current?.election_data?.total_valid_voting + " "}</p>
                                                 </Col>
                                             </Row>
                                         </div>
@@ -127,36 +152,17 @@ const MemberAssemblyDetails = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>फडणवीस, देवेंद्र गंगाधरराव</td>
-                                                    <td>८९,२५८</td>
-                                                    <td>भारतीय जनता पक्ष</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>फडणवीस, देवेंद्र गंगाधरराव</td>
-                                                    <td>८९,२५८</td>
-                                                    <td>भारतीय जनता पक्ष</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>फडणवीस, देवेंद्र गंगाधरराव</td>
-                                                    <td>८९,२५८</td>
-                                                    <td>भारतीय जनता पक्ष</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>फडणवीस, देवेंद्र गंगाधरराव</td>
-                                                    <td>८९,२५८</td>
-                                                    <td>भारतीय जनता पक्ष</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td>फडणवीस, देवेंद्र गंगाधरराव</td>
-                                                    <td>८९,२५८</td>
-                                                    <td>भारतीय जनता पक्ष</td>
-                                                </tr>
+                                                {current?.election_data?.member_election_result.length > 0 && current?.election_data?.member_election_result?.map((item, index) => (
+                                                    <tr>
+                                                        <td>{index + 1}</td>
+                                                        <td>{item?.candidate_name}</td>
+                                                        <td>{item?.votes}</td>
+                                                        <td>{item?.party}</td>
+                                                    </tr>
+                                                ))
+                                                }
+
+
                                             </tbody>
                                         </table>
 
@@ -168,103 +174,50 @@ const MemberAssemblyDetails = () => {
                             <div className="debatetalked">
                                 <Row>
                                     <Col lg={3} className="memberproifleimg">
-                                        <MemberAssemblyProfile />
+                                        <MemberAssemblyProfile name={current?.basic_info?.name} memberprofile={ImageUrl + current?.basic_info?.profile?.destination + "/" + current?.basic_info?.profile?.filename} />
                                     </Col>
                                     <Col lg={9}>
                                         <table className="table-lightt table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th style={{ borderRight: "solid white 1px" }}>विषय</th>
-                                                    <th style={{ borderRight: "solid white 1px" }}>सभागृह</th>
-                                                    <th style={{ borderRight: "solid white 1px" }}>अधिवेशन</th>
-                                                    <th style={{ borderRight: "solid white 1px" }}>तारीख</th>
+                                                    <th >क्रमांक</th>
+                                                    <th >विषय</th>
+                                                    <th >सभागृह</th>
+                                                    <th >अधिवेशन</th>
+                                                    <th >तारीख</th>
                                                     <th>तपशील</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>केज जिल्हा बीड तसेच लातूर जिल्ह्यातील निलंगा तालुक्‍यात ...</td>
-                                                    <td>विधानसभा 12</td>
-                                                    <td>बजेट (सामान्य)</td>
-                                                    <td>18 मार्च 2011</td>
-                                                    <td>
-                                                        <i className="fa fa-eye"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>केज जिल्हा बीड तसेच लातूर जिल्ह्यातील निलंगा तालुक्‍यात ...</td>
-                                                    <td>विधानसभा 12</td>
-                                                    <td>बजेट (सामान्य)</td>
-                                                    <td>18 मार्च 2011</td>
-                                                    <td>
-                                                        <i className="fa fa-eye"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>केज जिल्हा बीड तसेच लातूर जिल्ह्यातील निलंगा तालुक्‍यात ...</td>
-                                                    <td>विधानसभा 12</td>
-                                                    <td>बजेट (सामान्य)</td>
-                                                    <td>18 मार्च 2011</td>
-                                                    <td>
-                                                        <i className="fa fa-eye"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>केज जिल्हा बीड तसेच लातूर जिल्ह्यातील निलंगा तालुक्‍यात ...</td>
-                                                    <td>विधानसभा 12</td>
-                                                    <td>बजेट (सामान्य)</td>
-                                                    <td>18 मार्च 2011</td>
-                                                    <td>
-                                                        <i className="fa fa-eye"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>केज जिल्हा बीड तसेच लातूर जिल्ह्यातील निलंगा तालुक्‍यात ...</td>
-                                                    <td>विधानसभा 12</td>
-                                                    <td>बजेट (सामान्य)</td>
-                                                    <td>18 मार्च 2011</td>
-                                                    <td>
-                                                        <i className="fa fa-eye"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>केज जिल्हा बीड तसेच लातूर जिल्ह्यातील निलंगा तालुक्‍यात ...</td>
-                                                    <td>विधानसभा 12</td>
-                                                    <td>बजेट (सामान्य)</td>
-                                                    <td>18 मार्च 2011</td>
-                                                    <td>
-                                                        <i className="fa fa-eye"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>केज जिल्हा बीड तसेच लातूर जिल्ह्यातील निलंगा तालुक्‍यात ...</td>
-                                                    <td>विधानसभा 12</td>
-                                                    <td>बजेट (सामान्य)</td>
-                                                    <td>18 मार्च 2011</td>
-                                                    <td>
-                                                        <i className="fa fa-eye"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>केज जिल्हा बीड तसेच लातूर जिल्ह्यातील निलंगा तालुक्‍यात ...</td>
-                                                    <td>विधानसभा 12</td>
-                                                    <td>बजेट (सामान्य)</td>
-                                                    <td>18 मार्च 2011</td>
-                                                    <td>
-                                                        <i className="fa fa-eye"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>केज जिल्हा बीड तसेच लातूर जिल्ह्यातील निलंगा तालुक्‍यात ...</td>
-                                                    <td>विधानसभा 12</td>
-                                                    <td>बजेट (सामान्य)</td>
-                                                    <td>18 मार्च 2011</td>
-                                                    <td>
-                                                        <i className="fa fa-eye"></i>
-                                                    </td>
-                                                </tr>
+                                                {Debate?.data?.length > 0 && Debate?.data?.map((item, index) => (
+                                                    <tr>
+                                                        <td>{index + 1}</td>
+                                                        <td>{item?.topic}</td>
+                                                        <td>{item?.house}</td>
+                                                        <td>{item?.session}</td>
+                                                        <td>{item?.date}</td>
+                                                        <td>
+
+
+                                                            <Link to={`/DebateDetails?id=${item._id}`}><span> <i className="fa fa-eye"></i></span></Link>
+
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                                }
+
+
                                             </tbody>
                                         </table>
+                                        {Debate?.data?.length > 0 && (
+                                            <PaginationComponent
+                                                currentPage={currentPage}
+                                                setCurrentPage={setCurrentPage}
+                                                pageLimit={pageLimit}
+                                                totalCount={Debate?.count}
+                                            />
+                                        )
+                                        }
 
                                     </Col>
                                 </Row>
