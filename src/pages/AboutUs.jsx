@@ -1,73 +1,68 @@
+import { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import About1 from "../assets/Aboutus/Mandal.jpg";
-import About2 from "../assets/Aboutus/mandaltwo.jpg";
-import About3 from "../assets/Aboutus/mandalthree.jpg";
-
-const sections = [
-  {
-    title: "प्रास्ताविक",
-    content:
-      "महाराष्ट्र विधिमंडळाला देशात आगळी-वेगळी अशी प्रतिष्ठा लाभली आहे. अनेकविध क्षेत्रांत देशपातळीवर नेतृत्व देणारे नेते या विधिमंडळाने राष्ट्राला दिले आहेत. या नेत्यांनी संसदीय लोकशाही आणि सत्तेच्या विकेंद्रीकरणाद्वारा सबळ प्रशासनाचा वस्तुपाठ इतरांना घालून दिला आहे आणि त्यायोगे अनेक उत्तम परंपरा,संकेत ब आदर्श निर्माण केले आहेत. भूतपूर्व मुंबई प्रांताच्या लेजिस्लेटिव्ह कौन्सिलची पहिली बैठक दिनांक २२ जानेवारी १८६२ रोजी मुंबई येथील टाऊन हॉलच्या दरबार हॉलमध्ये भरली होती. मुंबई प्रांताचे तत्कालीन गव्हर्नर सर जॉर्ज रसेल क्लार्क हे त्या बैठकीच्या अध्यक्षस्थानी होते.",
-    image: About1,
-  },
-  {
-    title: "पूर्वइतिहास",
-    content:
-      "महाराष्ट्र विधिमंडळाला देशात आगळी-वेगळी अशी प्रतिष्ठा लाभली आहे. अनेकविध क्षेत्रांत देशपातळीवर नेतृत्व देणारे नेते या विधिमंडळाने राष्ट्राला दिले आहेत. या नेत्यांनी संसदीय लोकशाही आणि सत्तेच्या विकेंद्रीकरणाद्वारा सबळ प्रशासनाचा वस्तुपाठ इतरांना घालून दिला आहे आणि त्यायोगे अनेक उत्तम परंपरा,संकेत ब आदर्श निर्माण केले आहेत. भूतपूर्व मुंबई प्रांताच्या लेजिस्लेटिव्ह कौन्सिलची पहिली बैठक दिनांक २२ जानेवारी १८६२ रोजी मुंबई येथील टाऊन हॉलच्या दरबार हॉलमध्ये भरली होती. मुंबई प्रांताचे तत्कालीन गव्हर्नर सर जॉर्ज रसेल क्लार्क हे त्या बैठकीच्या अध्यक्षस्थानी होते.",
-    image: About2,
-  },
-
-  {
-    title: "विधानपरिषद मार्गदर्शिका",
-    content:
-      "विधानपरिषदेचे पहिले अधिवेशन :- १९३५ च्या कायद्यानुसार जुले १९३७ मध्ये विधानपरिषद राज्यात अस्तित्त्वात आली आणि सदुसष्ठ वर्षांपूवी, २० जुलै १९३७ रोजी पुणे येथील कौन्सिल हॉलमध्ये दुपारी दोन बाजता विधानपरिषदेची पहिली बैठक झाली. गेल्या सदुसष्ठ वर्षात परिषदेची १७९ अधिवेशने झाली. त्यातील चौदा अधिवेशने पुण्याच्या कौन्सिल हॉलमध्ये, ४२ अधिवेशने नागपूरच्या कौन्सिल हॉलमध्ये आणि १२३ अधिवेशने मुंबई येथे झाली. मुंबईतील १२३ अधिवेशनापैकी ७२ अधिवेशने जुन्या विधान भवनात आणि ५१ अधिवेशने नव्या विधान भवनात झाली. १९५५ पर्यंत परिषदेचे पावसाळी अधिवेशन पुणे येथे भरत होते. नंतर ते खंडित झाले. त्यानंतर नागपूर करारामध्ये नमूद केल्यानुसार १९६० पासून सामान्यतः ऑक्टोबर-नोव्हेंबरमध्ये हिवाळी अधिवेशन दरवषी नागपूर येथे भरु लागले.",
-    image: About3,
-  },
-];
-
+import { ImageUrl, getApi } from "../services/axiosInterceptors";
+import useLang from "../hooks/useLang";
+import { Link } from "react-router-dom";
+import { aboutUs } from "../data/constant";
 const AboutUs = () => {
+  const [newData, setNewData] = useState({});
+  const { lang, checkLang } = useLang();
+  const fetchData = async () => {
+    try {
+      await getApi("mandal/active").then((res) => {
+        setNewData(res.data.data);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="aboutuspage">
       <Container>
         <Col lg={12}>
           <div className="aboutcontent">
             <h1>
-              विधानमंडळ<div className="hrline"></div>
+              {aboutUs[checkLang].title}<div className="hrline"></div>
             </h1>
           </div>
         </Col>
-        {sections.map((section, index) => (
-          <div key={index}>
-            <Row
-              className={`${
-                index % 2 === 0 ? "reverse aboutcontent1" : "aboutcontent2"
-              }`}
-            >
-              <Col lg={6}>
-                <div
-                  className={`${
-                    index % 2 === 0
+        {
+          Object.keys(newData).length > 0 &&
+          newData[checkLang]["about_us"].map((section, index) => (
+            <div key={index}>
+              <Row
+                className={`${index % 2 === 0 ? "reverse aboutcontent1" : "aboutcontent2"
+                  }`}
+              >
+                <Col lg={6}>
+                  <div
+                    className={`${index % 2 === 0
                       ? "aboutvidhan aboutcontent1"
                       : "aboutvidhan aboutcontent2"
-                  }`}
-                >
-                  <h1>
-                    {section.title}
-                    <div className="hrline"></div>
-                  </h1>
-                  <p>{section.content}</p>
-                  <button type="button" className="pdf-btn">
-                    पीडीएफ पहा <i className="fa fa-eye"></i>
-                  </button>
-                </div>
-              </Col>
-              <Col lg={6}>
-                <img src={section.image} className="w-100" alt="about" />
-              </Col>
-            </Row>
-            {index < sections.length - 1 && <hr className="lineabcd" />}
-          </div>
-        ))}
+                      }`}
+                  >
+                    <h1>
+                      {section.title}
+                      <div className="hrline"></div>
+                    </h1>
+                    <p dangerouslySetInnerHTML={{ __html: section.description }}></p>
+                    <Link target="_blank" to={ImageUrl + newData.mandal_image[index]["documents"]["destination"] + "/" + newData.mandal_image[index]["documents"]["filename"]} type="button" className="pdf-btn">
+                      {aboutUs[checkLang].view} <i className="fa fa-eye"></i>
+                    </Link>
+                  </div>
+                </Col>
+                <Col lg={6}>
+                  <img src={ImageUrl + newData.mandal_image[index]["image"]["destination"] + "/" + newData.mandal_image[index]["image"]["filename"]} className="w-100" alt="about" />
+                </Col>
+              </Row>
+              {index < newData[checkLang]["about_us"].length - 1 && <hr className="lineabcd" />}
+            </div>
+          ))
+        }
       </Container>
     </div>
   );
