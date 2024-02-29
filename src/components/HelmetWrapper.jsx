@@ -1,24 +1,26 @@
 // HelmetWrapper.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { setSEOData, selectSEOData } from '../redux/reducers/seoReducer';
+import { setSEOData } from '../redux/reducers/seoReducer';
 import { getApi } from '../services/axiosInterceptors';
 
 const HelmetWrapper = () => {
+    const [Loading, setLoader] = useState(false);
     const dispatch = useDispatch();
     const location = useLocation();
     console.log("location", location.pathname)
     const seoData = useSelector((state) => state.seo);
 
     const fetchData = async () => {
-        await getApi(`seo/page?page=${location.pathname}`)
+        setLoader(true);
+        await getApi(`seo/page?page=${location.pathname === "/" ? "/" : location.pathname.replace(/\//g, '')}`)
             .then((response) => {
-                console.log("response", response.data.data)
+                setLoader(false);
                 dispatch(setSEOData(response.data.data));
             })
-            .catch((error) => console.log(error));
+            .catch((error) => setLoader(false));
         // Update Redux state with the fetched SEO data
     };
     // Simulate fetching SEO data on component mount and whenever the location changes
@@ -26,14 +28,13 @@ const HelmetWrapper = () => {
         fetchData();
     }, [location.pathname]);
     console.log("seoData", seoData)
-    return (
-        <Helmet>
-            <title>{seoData?.title || 'Default Title'}</title>
-            <meta name="description" content={seoData?.description || 'Default Description'} />
-            {/* Add other meta tags as needed */}
+    return !Loading && (<Helmet>
+        <title>{seoData?.data?.title || 'Default Title'}</title>
+        <meta name="description" content={seoData?.data?.description || 'Default Description'} />
+        {/* Add other meta tags as needed */}
 
-        </Helmet>
-    );
+    </Helmet>)
+
 };
 
 export default HelmetWrapper;

@@ -3,10 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const seoSlice = createSlice({
     name: 'seo',
-    initialState: {},
+    initialState: {
+        data: {},
+    },
     reducers: {
         setSEOData: (state, action) => {
-            state = action.payload;
+            state.data = action.payload;
         },
     },
 });
