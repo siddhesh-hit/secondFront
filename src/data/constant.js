@@ -22,7 +22,7 @@ import {
 const header = {
   marathi: {
     contact: `आमच्याशी संपर्क साधा`,
-    language: `भाषा`,
+    language: `English`,
     legislature: `विधिमंडळ `,
     governor: `राज्यपाल`,
     legislativecouncil: `विधानपरिषद`,
@@ -33,6 +33,7 @@ const header = {
     various: `विविध`,
     gallery: `गॅलरी`,
     notice: `महत्वाचा सूचना`,
+    logout: "साइन आउट करा",
     login: `साइन इन करा`,
     member: `सदस्य`,
     Gazette: `राजपत्र`,
@@ -43,7 +44,8 @@ const header = {
   },
   english: {
     contact: `Contact Us`,
-    language: `Language`,
+    language: `मराठी`,
+    logout: "Sign out",
     legislature: `Legislature `,
     governor: `Governor`,
     legislativecouncil: `Legislative Council`,
@@ -61,8 +63,8 @@ const header = {
     Elections: `Election results`,
     Budget: `Budget`,
     Legislation: `Legislation`,
-  }
-}
+  },
+};
 
 const home = {
   marathi: {
@@ -82,8 +84,8 @@ const home = {
           {
             name: `विधानसभा`,
             link: `/LegislativeAssembly`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: debate,
@@ -100,8 +102,8 @@ const home = {
           {
             name: ` वर्ष`,
             link: `/Debate`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: sessioncalender,
@@ -114,8 +116,8 @@ const home = {
           {
             name: `विधानसभा`,
             link: `/SessionCalender`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: legis,
@@ -132,8 +134,8 @@ const home = {
           {
             name: `नियम`,
             link: `/LegislationsBills`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: budget,
@@ -146,8 +148,8 @@ const home = {
           {
             name: `विभाग`,
             link: `/Budgetyear`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: election,
@@ -160,8 +162,8 @@ const home = {
           {
             name: `विधानसभा`,
             link: `/Electionresult`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: gazette,
@@ -178,8 +180,8 @@ const home = {
           {
             name: `विभाग`,
             link: `/Gazette`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: publication,
@@ -193,9 +195,9 @@ const home = {
             name: `धोरण`,
           },
           {
-            name: `विभाग`
-          }
-        ]
+            name: `विभाग`,
+          },
+        ],
       },
       {
         icon: media,
@@ -208,9 +210,9 @@ const home = {
             name: `व्हिडिओ`,
           },
           {
-            name: `वृत्तपत्र`
-          }
-        ]
+            name: `वृत्तपत्र`,
+          },
+        ],
       },
       {
         icon: legis,
@@ -221,8 +223,8 @@ const home = {
           },
           {
             name: `नाव`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: gazettee,
@@ -235,8 +237,8 @@ const home = {
           {
             name: `विषय`,
             link: `/Gazetteers`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: judgments,
@@ -249,9 +251,9 @@ const home = {
           {
             name: `विषय`,
             link: `/Judgments`,
-          }
-        ]
-      }
+          },
+        ],
+      },
     ],
     homebottom: [
       {
@@ -283,8 +285,8 @@ const home = {
         icon: imag6,
         title: `इतर अहवाल`,
         subtitle: `405 दशलक्ष`,
-      }
-    ]
+      },
+    ],
   },
   english: {
     header: `A Comprehensive Knowledge Repository - Your Portal to Explore Legislative Discourse \n Election Narratives, and Civic Empowerment. Search and Discover Now!"`,
@@ -302,8 +304,8 @@ const home = {
           {
             name: `Assembly`,
             link: `LegislativeAssembly`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: debate,
@@ -320,8 +322,8 @@ const home = {
           {
             name: `Year`,
             link: `Debate`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: sessioncalender,
@@ -334,8 +336,8 @@ const home = {
           {
             name: `Assembly`,
             link: `/SessionCalender`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: legis,
@@ -352,8 +354,8 @@ const home = {
           {
             name: `Rules`,
             link: `/LegislationsBills`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: budget,
@@ -366,8 +368,8 @@ const home = {
           {
             name: `Department`,
             link: `/Budgetyear`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: election,
@@ -380,8 +382,8 @@ const home = {
           {
             name: `Assembly`,
             link: `/Electionresult`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: gazette,
@@ -398,8 +400,8 @@ const home = {
           {
             name: `Department`,
             link: `/Gazette`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: publication,
@@ -416,8 +418,8 @@ const home = {
           {
             name: `Department`,
             link: `/Publications`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: media,
@@ -430,9 +432,9 @@ const home = {
             name: `Audio`,
           },
           {
-            name: `Newspaper`
-          }
-        ]
+            name: `Newspaper`,
+          },
+        ],
       },
       {
         icon: legis,
@@ -446,8 +448,8 @@ const home = {
           },
           {
             name: `Name`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: gazettee,
@@ -460,8 +462,8 @@ const home = {
           {
             name: `Topic`,
             link: `/Gazetteers`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: judgments,
@@ -474,9 +476,9 @@ const home = {
           {
             name: `Subject`,
             link: `/Judgments`,
-          }
-        ]
-      }
+          },
+        ],
+      },
     ],
     hometitle: `Explore the resources, documents that have been digitized so far in the MLS library`,
     homebottom: [
@@ -509,8 +511,8 @@ const home = {
         icon: imag6,
         title: `Other Reports`,
         subtitle: `30 million`,
-      }
-    ]
+      },
+    ],
   },
 };
 
@@ -532,8 +534,8 @@ const library = {
     title4: "Library Committee",
     title5: "Library Rules",
     title6: "Contact",
-  }
-}
+  },
+};
 
 // const homeLink = [
 //   "http://mls.org.in/",
@@ -550,15 +552,15 @@ const homeLink = {
     title: `इतर महत्वाचा दुवा`,
     title1: `सर्व लिंक`,
     title2: `मुख्य पृष्ठ`,
-    button: `पुढे वाचा`
+    button: `पुढे वाचा`,
   },
   english: {
     title: `Other Important Link`,
     title1: `All Links`,
     title2: `Home`,
-    button: `Read More`
-  }
-}
+    button: `Read More`,
+  },
+};
 
 const feedback = {
   marathi: {
@@ -604,8 +606,8 @@ const feedback = {
     addresstitle: `Address`,
     telephone: `Telephone No`,
     email: `Email`,
-  }
-}
+  },
+};
 
 const helpdesk = {
   marathi: {
@@ -651,8 +653,8 @@ const helpdesk = {
     addresstitle: `Address`,
     telephone: `Telephone No`,
     email: `Email`,
-  }
-}
+  },
+};
 
 const footer = {
   marathi: {
@@ -686,8 +688,8 @@ const footer = {
     title11: `Sitemap`,
     title12: `Notification`,
     title13: `Vistors count `,
-  }
-}
+  },
+};
 
 const aboutUs = {
   marathi: {
@@ -1487,8 +1489,8 @@ const judgment = {
     searchtitle: `Find the court title`,
     court: `Court`,
     justice: `The name of justice`,
-  }
-}
+  },
+};
 
 const gazetteers = {
   marathi: {
@@ -1508,8 +1510,8 @@ const gazetteers = {
     apply: `Apply`,
     comingsoon: `Coming Soon`,
     searchtitle: `Find the title of the page`,
-  }
-}
+  },
+};
 
 const publications = {
   marathi: {
@@ -1529,8 +1531,8 @@ const publications = {
     apply: `Apply`,
     comingsoon: `Coming Soon`,
     searchtitle: `Find the title of the publication`,
-  }
-}
+  },
+};
 
 const gazetteess = {
   marathi: {
@@ -1550,8 +1552,8 @@ const gazetteess = {
     apply: `Apply`,
     comingsoon: `Coming Soon`,
     searchtitle: `Find the title of the gazette`,
-  }
-}
+  },
+};
 
 const electionresult = {
   marathi: {
@@ -1571,8 +1573,8 @@ const electionresult = {
     apply: `Apply`,
     comingsoon: `Coming Soon`,
     searchtitle: `Find the Title of the Election Result`,
-  }
-}
+  },
+};
 const budgetyear = {
   marathi: {
     home: `मुख्य पृष्ठ`,
@@ -1597,8 +1599,8 @@ const budgetyear = {
     apply: `Apply`,
     comingsoon: `Coming Soon`,
     searchtitle: `Find the title of the budget`,
-  }
-}
+  },
+};
 const legislationsbills = {
   marathi: {
     home: `मुख्य पृष्ठ`,
@@ -1629,8 +1631,8 @@ const legislationsbills = {
     apply: `Apply`,
     comingsoon: `Coming Soon`,
     searchtitle: `Find the title of the bill`,
-  }
-}
+  },
+};
 export {
   header,
   home,

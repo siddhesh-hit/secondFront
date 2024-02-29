@@ -168,8 +168,22 @@ const Debate = () => {
 
     let session = search.session === "सर्व" ? "" : search.session;
 
+    console.log(encodeURIComponent(search.topic));
+
     await getApi(
-      `debate/fields?perPage=${currentPage}&perLimit=${pageLimit}&topic=${search.topic}&members_name=${search.members_name}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
+      `debate/fields?perPage=${encodeURIComponent(
+        currentPage
+      )}&perLimit=${pageLimit}&topic=${encodeURIComponent(
+        search.topic
+      )}&members_name=${
+        search.members_name
+      }&house=${house}&session=${session}&volume=${search.volume}&kramank=${
+        search.kramank
+      }&method=${search.method}&method_type=${
+        search.method_type
+      }&method_sub_type=${search.method_sub_type}&ministry_name=${
+        search.ministry_name
+      }`
     )
       .then((res) => {
         if (res.data.success) {
