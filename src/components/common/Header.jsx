@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   Navbar,
@@ -11,38 +11,40 @@ import {
 } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import logo from "../../assets/logo.png";
 
 import { logout } from "../../redux/reducers/userReducer";
 import { decrypt } from "../../utils/encrypt";
-import { postApi, getApi, getApiById } from "../../services/axiosInterceptors";
+import { postApi, getApiById } from "../../services/axiosInterceptors";
 import useLang from "../../hooks/useLang";
 import { home, header } from "../../data/constant";
 
 const Header = () => {
   const [notification, setNotification] = useState([]);
-  const [notificationOpen, setNotificationOpen] = useState(false);
   const [search, setSearch] = useState(null);
   const [userInfo, setUserInfo] = useState({});
+
   const { lang, checkLang } = useLang();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const location = useLocation().pathname;
+  const dispatch = useDispatch();
+
   const handleLanguage = (newLang) => {
+    console.log(newLang);
+
     window.localStorage.setItem("lang", newLang);
     window.dispatchEvent(new CustomEvent("langChange"));
   };
-
-
 
   const handleLogout = async () => {
     await postApi("user/logout", {})
       .then((res) => {
         if (res.data.success) {
-          logout();
-          window.location.href = "/";
+          dispatch(logout());
+          window.location.href = "/Login";
         }
       })
       .catch((err) => {
@@ -50,86 +52,77 @@ const Header = () => {
         toast.error("Something went wrong");
       });
   };
+
   const fetchData = async (id) => {
     await getApiById("notification", id)
       .then((res) => setNotification([...res.data.data.global]))
       .catch((err) => console.log(err));
   };
+
   useEffect(() => {
     if (user && Object.keys(user).length > 0) {
       setUserInfo(JSON.parse(decrypt(user)));
     }
   }, []);
+
   useEffect(() => {
     userInfo.notificationId && fetchData(userInfo.notificationId);
-  }, [userInfo])
-  console.log("notification", notification)
+  }, [userInfo]);
+
   return (
     <div>
       <div
-        className={`${location === "/"
-          ? "blueColor topheader"
-          : location === "/Homepage2"
+        className={`${
+          location === "/"
+            ? "blueColor topheader"
+            : location === "/Homepage2"
             ? "otherColor"
             : location === "/Homepage1"
-              ? "newheadercolor"
-              : location === "/Debate"
-                ? "topheader"
-                : location === "/DebateDetail"
-                  ? "newheadercolor"
-                  : "topheader"
-          }`}
+            ? "newheadercolor"
+            : location === "/Debate"
+            ? "topheader"
+            : location === "/DebateDetail"
+            ? "newheadercolor"
+            : "topheader"
+        }`}
       >
         <Container fluid>
           <Row>
             <Col lg={12}>
               <div className="topheaderright">
+                {isAuthenticated && (
+                  <Dropdown className="languagechanges">
+                    <Dropdown.Toggle>
+                      <i className="fa fa-bell"></i>
+                      <span className="badge badge-warning navbar-badge">
+                        {notification.length}
+                      </span>
+                    </Dropdown.Toggle>
 
-                {/* Icon */}
-
-
-                {/* Notifications */}
-                <Dropdown className="languagechanges">
-                  <Dropdown.Toggle><i className="fa fa-bell"></i>
-                    <span className="badge badge-warning navbar-badge" >{notification.length}</span></Dropdown.Toggle>
-
-                  <Dropdown.Menu>
-                    {
-                      notification.length > 0 &&
-                      notification.map((item, index, array) => (
-                        <Dropdown.Item key={index}
-                          href="#"
-                        >
-                          {item[checkLang]["message"]}
-                        </Dropdown.Item>
-                      ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-                {/* End  Notifications */}
+                    <Dropdown.Menu>
+                      {notification.length > 0 &&
+                        notification.map((item, index) => (
+                          <Dropdown.Item key={index} href="#">
+                            {item[checkLang]["message"]}
+                          </Dropdown.Item>
+                        ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
 
                 <div className="contact-us">
                   <Link to="/ContactUs">
                     <span>{header[checkLang].contact}</span>
                   </Link>
                 </div>
-                <Dropdown className="languagechanges">
-                  <Dropdown.Toggle>{header[checkLang].language}</Dropdown.Toggle>
 
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      onClick={() => handleLanguage("mr")}
-                      href="#"
-                    >
-                      मराठी
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() => handleLanguage("en")}
-                      href="#"
-                    >
-                      English
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <button
+                  className="languagechanges mx-2"
+                  onClick={() => handleLanguage(lang === "mr" ? "en" : "mr")}
+                >
+                  {header[checkLang].language}
+                </button>
+
                 <div className="font-size">
                   <button className="font-size-button">अ+</button>
                   <button
@@ -143,21 +136,23 @@ const Header = () => {
                   </button>
                   <button className="font-size-button">अ-</button>
                 </div>
-                <a href="/Login">
+                <>
                   {isAuthenticated ? (
-                    <button onClick={handleLogout}>साइन आउट करा</button>
+                    <button onClick={handleLogout}>
+                      {header[checkLang].logout}
+                    </button>
                   ) : (
-                    <span>{header[checkLang].login}</span>
+                    <a href="/Login">{header[checkLang].login}</a>
                   )}
-                </a>
+                </>
               </div>
             </Col>
           </Row>
         </Container>
       </div>
       {location === "/" ||
-        location === "/Homepage1" ||
-        location === "/Homepage2" ? (
+      location === "/Homepage1" ||
+      location === "/Homepage2" ? (
         <div className="headerlogos">
           <Container fluid>
             <Row className="midhead one">
@@ -256,14 +251,19 @@ const Header = () => {
                           </Link>
                         </div>
                         <Nav.Link
-                          className={`${location === "/Debate" ? "active" : ""
-                            }`}
+                          className={`${
+                            location === "/Debate" ? "active" : ""
+                          }`}
                           href="/Debate"
                         >
                           {header[checkLang].Debate}
                         </Nav.Link>
-                        <Nav.Link href="#action2">{header[checkLang].Legislation}</Nav.Link>
-                        <Nav.Link href="#action2">{header[checkLang].Budget} </Nav.Link>
+                        <Nav.Link href="#action2">
+                          {header[checkLang].Legislation}
+                        </Nav.Link>
+                        <Nav.Link href="#action2">
+                          {header[checkLang].Budget}{" "}
+                        </Nav.Link>
                         <div>
                           <Link className="nav-link" to="/Library">
                             {header[checkLang].Elections}
