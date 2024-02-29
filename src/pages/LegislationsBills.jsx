@@ -4,8 +4,12 @@ import { Container, Row, Col, Accordion, Form } from "react-bootstrap";
 import Arrow from "../assets/debate/arrow.svg";
 import Sort from "../assets/debate/sort.svg";
 
+import useLang from "../hooks/useLang";
+import { legislationsbills } from "../data/constant";
+
 const LegislationsBills = () => {
     const [isDivVisible, setDivVisibility] = useState(false);
+    const { checkLang } = useLang();
     return (
         <div>
             <Container fluid className="debatepage">
@@ -13,10 +17,10 @@ const LegislationsBills = () => {
                     <Col lg={3}>
                         <div className="filters">
                             <div className="firstfilter">
-                                <h3>Filter</h3>
+                                <h3>{legislationsbills[checkLang].filter}</h3>
                                 <Accordion className="filsss" defaultActiveKey={["0"]}>
                                     <Accordion.Item eventKey="0">
-                                        <Accordion.Header>सभागृह</Accordion.Header>
+                                        <Accordion.Header>{legislationsbills[checkLang].hall}</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
                                                 <div className="datacheck">
@@ -47,7 +51,7 @@ const LegislationsBills = () => {
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="1">
-                                        <Accordion.Header>बिल प्रकार</Accordion.Header>
+                                        <Accordion.Header>{legislationsbills[checkLang].bill}</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
                                                 <div className="datacheck">
@@ -86,7 +90,7 @@ const LegislationsBills = () => {
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="2">
-                                        <Accordion.Header>बिल स्थिती</Accordion.Header>
+                                        <Accordion.Header>{legislationsbills[checkLang].billstatus}</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
                                                 <div className="datacheck">
@@ -125,7 +129,7 @@ const LegislationsBills = () => {
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="3">
-                                        <Accordion.Header>तारीख</Accordion.Header>
+                                        <Accordion.Header>{legislationsbills[checkLang].date}</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
                                                 <div className="datacheck">
@@ -171,7 +175,7 @@ const LegislationsBills = () => {
                                     className="advanced"
                                     onClick={() => setDivVisibility(!isDivVisible)}
                                 >
-                                    Advanced Filter
+                                    {legislationsbills[checkLang].advfilter}
                                     <div className="iconss">{isDivVisible ? "-" : "+"}</div>
                                 </button>
                                 {isDivVisible && (
@@ -190,10 +194,10 @@ const LegislationsBills = () => {
                             </div>
                             <div className="formbutton">
                                 <button className="reset">
-                                    Reset
+                                    {legislationsbills[checkLang].reset}
                                 </button>
                                 <button className="apply">
-                                    Apply
+                                    {legislationsbills[checkLang].apply}
                                 </button>
                             </div>
                         </div>
@@ -204,14 +208,14 @@ const LegislationsBills = () => {
                                 <input
                                     type="text"
                                     name="topic"
-                                    placeholder="विधेयकाचे शीर्षक शोधा"
+                                    placeholder={legislationsbills[checkLang].searchtitle}
                                     className="form-control"
                                 />
                                 <button className="searchb">
                                     <i className="fa fa-search" />
                                 </button>
                                 <button className="startover">
-                                    Reset
+                                    {legislationsbills[checkLang].reset}
                                 </button>
                             </div>
                         </div>
@@ -220,9 +224,9 @@ const LegislationsBills = () => {
                                 <Col lg={6}>
                                     <div className="breadvrumbss-inner">
                                         <div className="countdebate">
-                                            <span>Home</span>
+                                            <span>{legislationsbills[checkLang].home}</span>
                                             <img src={Arrow} alt="" />
-                                            <span>title</span>
+                                            <span>{legislationsbills[checkLang].title}</span>
                                         </div>
                                         <p>
                                             [0 परिणाम]
@@ -256,7 +260,7 @@ const LegislationsBills = () => {
                         </div>
                         <div className="comingsoon">
                             <h3>
-                                लवकरच येत आहे
+                                {legislationsbills[checkLang].comingsoon}
                             </h3>
                         </div>
                     </Col>

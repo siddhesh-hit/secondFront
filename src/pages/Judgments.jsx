@@ -4,8 +4,12 @@ import { Container, Row, Col, Accordion, Form } from "react-bootstrap";
 import Arrow from "../assets/debate/arrow.svg";
 import Sort from "../assets/debate/sort.svg";
 
+import useLang from "../hooks/useLang";
+import { judgment } from "../data/constant";
+
 const Judgments = () => {
     const [isDivVisible, setDivVisibility] = useState(false);
+    const { checkLang } = useLang();
     return (
         <div>
             <Container fluid className="debatepage">
@@ -13,10 +17,10 @@ const Judgments = () => {
                     <Col lg={3}>
                         <div className="filters">
                             <div className="firstfilter">
-                                <h3>Filter</h3>
+                                <h3>{judgment[checkLang].filter}</h3>
                                 <Accordion className="filsss" defaultActiveKey={["0"]}>
                                     <Accordion.Item eventKey="0">
-                                        <Accordion.Header>first</Accordion.Header>
+                                        <Accordion.Header>{judgment[checkLang].court}</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
                                                 <div className="datacheck">
@@ -27,27 +31,11 @@ const Judgments = () => {
                                                         value={"विधानपरिषद"}
                                                     />
                                                 </div>
-                                                <div className="datacheck">
-                                                    <label>विधानसभा</label>
-                                                    <Form.Check
-                                                        aria-label="option 2"
-                                                        name="house"
-                                                        value={"विधानसभा"}
-                                                    />
-                                                </div>
-                                                <div className="datacheck1">
-                                                    <label>एकत्रित</label>
-                                                    <Form.Check
-                                                        aria-label="option 3"
-                                                        name="house"
-                                                        value={"एकत्रित"}
-                                                    />
-                                                </div>
                                             </div>
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="1">
-                                        <Accordion.Header>Session</Accordion.Header>
+                                        <Accordion.Header>{judgment[checkLang].justice}</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
                                                 <div className="datacheck">
@@ -56,30 +44,6 @@ const Judgments = () => {
                                                         aria-label="option 4"
                                                         name="session"
                                                         value={"सर्व"}
-                                                    />
-                                                </div>
-                                                <div className="datacheck">
-                                                    <label>पावसाळी</label>
-                                                    <Form.Check
-                                                        aria-label="option 5"
-                                                        name="session"
-                                                        value={"पावसाळी"}
-                                                    />
-                                                </div>
-                                                <div className="datacheck">
-                                                    <label>अर्थसंकल्पीय</label>
-                                                    <Form.Check
-                                                        aria-label="option 6"
-                                                        name="session"
-                                                        value={"अर्थसंकल्पीय"}
-                                                    />
-                                                </div>
-                                                <div className="datacheck1">
-                                                    <label>विशेष</label>
-                                                    <Form.Check
-                                                        aria-label="option 7"
-                                                        name="session"
-                                                        value={"विशेष"}
                                                     />
                                                 </div>
                                             </div>
@@ -93,7 +57,7 @@ const Judgments = () => {
                                     className="advanced"
                                     onClick={() => setDivVisibility(!isDivVisible)}
                                 >
-                                    Advanced Filter
+                                    {judgment[checkLang].advfilter}
                                     <div className="iconss">{isDivVisible ? "-" : "+"}</div>
                                 </button>
                                 {isDivVisible && (
@@ -112,10 +76,10 @@ const Judgments = () => {
                             </div>
                             <div className="formbutton">
                                 <button className="reset">
-                                    Reset
+                                    {judgment[checkLang].reset}
                                 </button>
                                 <button className="apply">
-                                    Apply
+                                    {judgment[checkLang].apply}
                                 </button>
                             </div>
                         </div>
@@ -126,14 +90,14 @@ const Judgments = () => {
                                 <input
                                     type="text"
                                     name="topic"
-                                    placeholder="न्यायालयाचे शीर्षक शोधा"
+                                    placeholder={judgment[checkLang].searchtitle}
                                     className="form-control"
                                 />
                                 <button className="searchb">
                                     <i className="fa fa-search" />
                                 </button>
                                 <button className="startover">
-                                    Reset
+                                    {judgment[checkLang].reset}
                                 </button>
                             </div>
                         </div>
@@ -142,9 +106,9 @@ const Judgments = () => {
                                 <Col lg={6}>
                                     <div className="breadvrumbss-inner">
                                         <div className="countdebate">
-                                            <span>Home</span>
+                                            <span> {judgment[checkLang].home} </span>
                                             <img src={Arrow} alt="" />
-                                            <span>title</span>
+                                            <span>{judgment[checkLang].title}</span>
                                         </div>
                                         <p>
                                             [0 परिणाम]
@@ -153,12 +117,6 @@ const Judgments = () => {
                                 </Col>
                                 <Col lg={6}>
                                     <div className="debate-right">
-                                        <select name="sabhaselection">
-                                            <option value="विधानसभा  12th">विधानसभा 12th</option>
-                                            <option value="विधानसभा  11th">विधानसभा 11th</option>
-                                            <option value="विधानसभा  10th">विधानसभा 10th</option>
-                                            <option value="विधानसभा  09th">विधानसभा 09th</option>
-                                        </select>
                                         <select
                                             name="sabhaselection"
                                         >
@@ -178,7 +136,7 @@ const Judgments = () => {
                         </div>
                         <div className="comingsoon">
                             <h3>
-                                लवकरच येत आहे
+                                {judgment[checkLang].comingsoon}
                             </h3>
                         </div>
                     </Col>

@@ -1443,7 +1443,174 @@ const councilDebate = {
     },
   },
 };
+const judgment = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `निर्णय`,
+    reset: `प्रारंभ`,
+    filter: `फिल्टर`,
+    advfilter: `प्रगत फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `न्यायालयाचे शीर्षक शोधा`,
+    court: `कोर्ट`,
+    justice: `न्यायाचे नाव`,
+  },
+  english: {
+    home: `Home`,
+    title: `Judgement`,
+    reset: `Reset`,
+    filter: `Filter`,
+    advfilter: `Advanced Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the court title`,
+    court: `Court`,
+    justice: `The name of justice`,
+  }
+}
 
+const gazetteers = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `दर्शनिका`,
+    reset: `प्रारंभ`,
+    filter: `फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `दर्शनिकाचे शीर्षक शोधा`,
+  },
+  english: {
+    home: `Home`,
+    title: `Darshanika`,
+    reset: `Reset`,
+    filter: `Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the title of the page`,
+  }
+}
+
+const publications = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `प्रकाशने`,
+    reset: `प्रारंभ`,
+    filter: `फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `प्रकाशनाचे शीर्षक शोधा`,
+  },
+  english: {
+    home: `Home`,
+    title: `Publications`,
+    reset: `Reset`,
+    filter: `Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the title of the publication`,
+  }
+}
+
+const gazetteess = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `राजपत्र`,
+    reset: `प्रारंभ`,
+    filter: `फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `राजपत्राचे शीर्षक शोधा`,
+  },
+  english: {
+    home: `Home`,
+    title: `Gazette`,
+    reset: `Reset`,
+    filter: `Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the title of the gazette`,
+  }
+}
+
+const electionresult = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `निवडणूक निकाल`,
+    reset: `प्रारंभ`,
+    filter: `फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `निवडणूक निकालाचे शीर्षक शोधा`,
+  },
+  english: {
+    home: `Home`,
+    title: `Election Result`,
+    reset: `Reset`,
+    filter: `Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the Title of the Election Result`,
+  }
+}
+const budgetyear = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `अर्थसंकल्प`,
+    reset: `प्रारंभ`,
+    date: `तारीख`,
+    day: `दिवस निवडा`,
+    filter: `फिल्टर`,
+    advfilter: `प्रगत फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `बजेटचे शीर्षक शोधा`,
+  },
+  english: {
+    home: `Home`,
+    title: `Budget`,
+    reset: `Reset`,
+    date: `Date`,
+    day: `Select the day`,
+    filter: `Filter`,
+    advfilter: `Advanced Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the title of the budget`,
+  }
+}
+const legislationsbills = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `विधिविधान`,
+    reset: `प्रारंभ`,
+    hall: `सभागृह`,
+    bill: `बिल प्रकार`,
+    billstatus: `बिल स्थिती`,
+    date: `तारीख`,
+    day: `दिवस निवडा`,
+    filter: `फिल्टर`,
+    advfilter: `प्रगत फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `विधेयकाचे शीर्षक शोधा`,
+  },
+  english: {
+    home: `Home`,
+    title: `Legislation`,
+    reset: `Reset`,
+    hall: `Hall`,
+    bill: `Bill type`,
+    billstatus: `Bill status`,
+    date: `Date`,
+    day: `Select the day`,
+    filter: `Filter`,
+    advfilter: `Advanced Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the title of the bill`,
+  }
+}
 export {
   header,
   home,
@@ -1463,4 +1630,11 @@ export {
   combinedDebate,
   assemblyDebate,
   councilDebate,
+  judgment,
+  gazetteers,
+  publications,
+  gazetteess,
+  electionresult,
+  budgetyear,
+  legislationsbills,
 };

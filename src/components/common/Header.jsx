@@ -52,7 +52,7 @@ const Header = () => {
   };
   const fetchData = async (id) => {
     await getApiById("notification", id)
-      .then((res) => setNotification([...res.data.data.user_specific, ...res.data.data.global]))
+      .then((res) => setNotification([...res.data.data.global]))
       .catch((err) => console.log(err));
   };
   useEffect(() => {
@@ -89,28 +89,22 @@ const Header = () => {
 
 
                 {/* Notifications */}
-                <ul className="navbar-nav ml-auto">
-                  <li className="nav-item dropdown">
-                    <a className="nav-link" onMouseEnter={() => setNotificationOpen(!notificationOpen)} data-toggle="dropdown" href="#">
-                      <i className="far fa-bell"></i>
-                      <span className="badge badge-warning navbar-badge" >{notification.length}</span>
-                    </a>
-                    <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right notouifi" style={{ maxWidth: '100%', minWidth: '300px', background: 'white' }}>
+                <Dropdown className="languagechanges">
+                  <Dropdown.Toggle><i className="fa fa-bell"></i>
+                    <span className="badge badge-warning navbar-badge" >{notification.length}</span></Dropdown.Toggle>
 
-                      <a href="#" className="dropdown-item">
-                        {
-                          notification.length > 0 &&
-                          notification.map((item, index, array) => (
-                            <React.Fragment key={index}>
-                              <i className="fas fa-envelope mr-2"></i>  {item[checkLang]["message"]}
-                              <span className="float-right text-muted text-sm">3 mins</span>
-                            </React.Fragment>
-                          ))}
-
-                      </a>
-                    </div>
-                  </li>
-                </ul>
+                  <Dropdown.Menu>
+                    {
+                      notification.length > 0 &&
+                      notification.map((item, index, array) => (
+                        <Dropdown.Item key={index}
+                          href="#"
+                        >
+                          {item[checkLang]["message"]}
+                        </Dropdown.Item>
+                      ))}
+                  </Dropdown.Menu>
+                </Dropdown>
                 {/* End  Notifications */}
 
                 <div className="contact-us">

@@ -1,21 +1,20 @@
-import { useState } from "react";
 import { Container, Row, Col, Accordion, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import Arrow from "../assets/debate/arrow.svg";
 
 const SessionCalender = () => {
-    const [isDivVisible, setDivVisibility] = useState(false);
     return (
         <div>
             <Container fluid className="debatepage">
                 <Row>
                     <Col lg={3}>
                         <div className="filters">
-                            <div className="firstfilter">
+                            <div className="firstfilter mb-4">
                                 <h3>Filter</h3>
-                                <Accordion className="filsss" defaultActiveKey={["0"]}>
+                                <Accordion className="filsss" defaultActiveKey={["0", "1", "2"]} alwaysOpen>
                                     <Accordion.Item eventKey="0">
-                                        <Accordion.Header>first</Accordion.Header>
+                                        <Accordion.Header>सभागृह</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
                                                 <div className="datacheck">
@@ -46,7 +45,7 @@ const SessionCalender = () => {
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="1">
-                                        <Accordion.Header>Session</Accordion.Header>
+                                        <Accordion.Header>सत्र</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
                                                 <div className="datacheck">
@@ -88,7 +87,7 @@ const SessionCalender = () => {
                                         <Accordion.Header>Year Select</Accordion.Header>
                                         <Accordion.Body>
                                             <select
-                                                className="form-control"
+                                                className="secondfilers"
                                                 name="kramank"
                                             >
                                                 <option>Select Year</option>
@@ -106,22 +105,14 @@ const SessionCalender = () => {
                                                         <label>पासून</label>
                                                         <input
                                                             className="form-control"
-                                                            disabled
-                                                            type="number"
-                                                            min={1987}
-                                                            max={2024}
-                                                            value={2011}
+                                                            type="date"
                                                         />
                                                     </Col>
                                                     <Col lg={12}>
                                                         <label>प्रयंत</label>
                                                         <input
                                                             className="form-control"
-                                                            disabled
-                                                            type="number"
-                                                            min={1987}
-                                                            max={2024}
-                                                            value={2011}
+                                                            type="date"
                                                         />
                                                     </Col>
                                                 </Row>
@@ -129,38 +120,6 @@ const SessionCalender = () => {
                                         </Accordion.Body>
                                     </Accordion.Item>
                                 </Accordion>
-                            </div>
-                            <hr />
-                            <div className="secondfilter">
-                                <button
-                                    className="advanced"
-                                    onClick={() => setDivVisibility(!isDivVisible)}
-                                >
-                                    Advanced Filter
-                                    <div className="iconss">{isDivVisible ? "-" : "+"}</div>
-                                </button>
-                                {isDivVisible && (
-                                    <div className="advancdeee">
-                                        <select
-                                            className="secondfilers"
-                                            name="kramank"
-                                        >
-                                            <option hidden>क्रमांक निवडा</option>
-                                            <option>
-                                                test
-                                            </option>
-                                        </select>
-                                        <select
-                                            className="secondfilers"
-                                            name="kramank"
-                                        >
-                                            <option hidden>क्रमांक निवडा</option>
-                                            <option>
-                                                test
-                                            </option>
-                                        </select>
-                                    </div>
-                                )}
                             </div>
                             <div className="formbutton">
                                 <button className="reset">
@@ -178,7 +137,7 @@ const SessionCalender = () => {
                                 <input
                                     type="text"
                                     name="topic"
-                                    placeholder="न्यायालयाचे शीर्षक शोधा"
+                                    placeholder="विषय आणि कीवर्ड शोधा"
                                     className="form-control"
                                 />
                                 <button className="searchb">
@@ -194,9 +153,9 @@ const SessionCalender = () => {
                                 <Col lg={6}>
                                     <div className="breadvrumbss-inner">
                                         <div className="countdebate">
-                                            <span>Home</span>
+                                            <Link to="/"><span>मुख्यपृष्ठ</span></Link>
                                             <img src={Arrow} alt="" />
-                                            <span>Session Calender</span>
+                                            <span>सत्र दिनदर्शिका</span>
                                         </div>
                                         <p>
                                             [0 results]
@@ -205,11 +164,42 @@ const SessionCalender = () => {
                                 </Col>
                             </Row>
                         </div>
-                        <div className="comingsoon">
-                            <h3>
-                                लवकरच येत आहे
-                            </h3>
-                        </div>
+                        <table className="debate-light table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style={{ borderRight: "solid white 1px" }}>क्रमांक</th>
+                                    <th style={{ borderRight: "solid white 1px" }}> विषय</th>
+                                    <th style={{ borderRight: "solid white 1px" }}>सभागृह </th>
+                                    <th style={{ borderRight: "solid white 1px" }}> अधिवेशन</th>
+                                    <th style={{ borderRight: "solid white 1px" }}>तपशील</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span>
+                                            1
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            विधानसभा
+                                        </span>
+                                    </td>
+                                    <td>२२ मार्च २०११</td>
+                                    <td>
+                                        <p><span>पुरके श्री. वसंत बापट श्री. गिरीष....</span></p>
+                                    </td>
+                                    <td className="imagee">
+                                        <a
+                                            href="#"
+                                            target="_blank" rel="noreferrer">
+                                            <img src="/src/assets/debate/Frame.svg" alt="" />
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </Col>
                 </Row>
             </Container>
