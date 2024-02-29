@@ -223,30 +223,30 @@ const Header = () => {
                     <Offcanvas.Body>
                       <Nav className="justify-content-end  flex-grow-1 pe-5">
                         <NavDropdown
-                          title="विधिमंडळ  "
+                          title={header[checkLang].legislature}
                           id={`offcanvasNavbarDropdown-expand-${expand}`}
                         >
                           <NavDropdown.Item href="rajyapal">
-                            राज्यपाल
+                            {header[checkLang].governor}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="LegislativeCouncil">
-                            विधानपरिषद
+                            {header[checkLang].legislativecouncil}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="LegislativeAssembly">
-                            विधानसभा
+                            {header[checkLang].legislativeassembly}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="#action5">
-                            विधानमंडळ सचिव
+                            {header[checkLang].minister}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="/mantri-parishad">
-                            मंत्रीमंडळ
+                            {header[checkLang].councilminis}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="Library">
-                            विधानमंडळ ग्रंथालय
+                            {header[checkLang].legislativelibrary}
                           </NavDropdown.Item>
                         </NavDropdown>
                         <div>
-                          <Link className="nav-link" to="/">
+                          <Link className="nav-link" to="/members-assembly">
                             {header[checkLang].member}
                           </Link>
                         </div>
@@ -264,25 +264,27 @@ const Header = () => {
                         <Nav.Link href="#action2">
                           {header[checkLang].Budget}{" "}
                         </Nav.Link>
+                        <Nav.Link href="/LegislationsBills">{header[checkLang].Legislation}</Nav.Link>
+                        <Nav.Link href="/Budgetyear">{header[checkLang].Budget} </Nav.Link>
                         <div>
-                          <Link className="nav-link" to="/Library">
+                          <Link className="nav-link" to="/Electionresult">
                             {header[checkLang].Elections}
                           </Link>
                         </div>
                         <div>
-                          <Link className="nav-link" to="/Library">
+                          <Link className="nav-link" to="/Gazette">
                             {header[checkLang].Gazette}
                           </Link>
                         </div>
                         <NavDropdown
-                          title="विविध "
+                          title={header[checkLang].various}
                           id={`offcanvasNavbarDropdown-expand-${expand}`}
                         >
-                          <NavDropdown.Item href="gallery">
-                            गॅलरी
+                          <NavDropdown.Item href="/gallery">
+                            {header[checkLang].gallery}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="#action5">
-                            महत्वाचा सूचना
+                            {header[checkLang].notice}
                           </NavDropdown.Item>
                         </NavDropdown>
                       </Nav>
