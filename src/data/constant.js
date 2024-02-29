@@ -57,10 +57,11 @@ const home = {
         childtext: [
           {
             name: `विधानपरिषद`,
-            link: `/Aboutus`
+            link: `/LegislativeCouncil`,
           },
           {
-            name: `विधानपरिषद`,
+            name: `विधानसभा`,
+            link: `/LegislativeAssembly`,
           }
         ]
       },
@@ -74,9 +75,11 @@ const home = {
           },
           {
             name: `अधिवेशन`,
+            link: `/Debate`,
           },
           {
             name: ` वर्ष`,
+            link: `/Debate`,
           }
         ]
       },
@@ -86,9 +89,11 @@ const home = {
         childtext: [
           {
             name: `विधानपरिषद`,
+            link: `/SessionCalender`,
           },
           {
             name: `विधानसभा`,
+            link: `/SessionCalender`,
           }
         ]
       },
@@ -98,12 +103,15 @@ const home = {
         childtext: [
           {
             name: `कायदे`,
+            link: `/LegislationsBills`,
           },
           {
             name: `बिल`,
+            link: `/LegislationsBills`,
           },
           {
             name: `नियम`,
+            link: `/LegislationsBills`,
           }
         ]
       },
@@ -113,9 +121,11 @@ const home = {
         childtext: [
           {
             name: `वर्ष`,
+            link: `/Budgetyear`,
           },
           {
             name: `विभाग`,
+            link: `/Budgetyear`,
           }
         ]
       },
@@ -125,9 +135,11 @@ const home = {
         childtext: [
           {
             name: `विधानपरिषद`,
+            link: `/Electionresult`,
           },
           {
             name: `विधानसभा`,
+            link: `/Electionresult`,
           }
         ]
       },
@@ -137,12 +149,15 @@ const home = {
         childtext: [
           {
             name: `भाग`,
+            link: `/Gazette`,
           },
           {
             name: `विषय`,
+            link: `/Gazette`,
           },
           {
-            name: `विभाग`
+            name: `विभाग`,
+            link: `/Gazette`,
           }
         ]
       },
@@ -152,6 +167,7 @@ const home = {
         childtext: [
           {
             name: `योजना`,
+            link: `/Publications`,
           },
           {
             name: `धोरण`,
@@ -194,9 +210,11 @@ const home = {
         childtext: [
           {
             name: `ठिकाण`,
+            link: `/Gazetteers`,
           },
           {
             name: `विषय`,
+            link: `/Gazetteers`,
           }
         ]
       },
@@ -206,9 +224,11 @@ const home = {
         childtext: [
           {
             name: `कोर्ट`,
+            link: `/Judgments`,
           },
           {
             name: `विषय`,
+            link: `/Judgments`,
           }
         ]
       }
@@ -257,9 +277,11 @@ const home = {
         childtext: [
           {
             name: `Council`,
+            link: `LegislativeCouncil`,
           },
           {
             name: `Assembly`,
+            link: `LegislativeAssembly`,
           }
         ]
       },
@@ -269,12 +291,15 @@ const home = {
         childtext: [
           {
             name: `House`,
+            link: `Debate`,
           },
           {
             name: `Session`,
+            link: `Debate`,
           },
           {
             name: `Year`,
+            link: `Debate`,
           }
         ]
       },
@@ -284,9 +309,11 @@ const home = {
         childtext: [
           {
             name: `Council`,
+            link: `/SessionCalender`,
           },
           {
             name: `Assembly`,
+            link: `/SessionCalender`,
           }
         ]
       },
@@ -296,12 +323,15 @@ const home = {
         childtext: [
           {
             name: `Acts`,
+            link: `/LegislationsBills`,
           },
           {
             name: `Bills`,
+            link: `/LegislationsBills`,
           },
           {
             name: `Rules`,
+            link: `/LegislationsBills`,
           }
         ]
       },
@@ -311,9 +341,11 @@ const home = {
         childtext: [
           {
             name: `Year`,
+            link: `/Budgetyear`,
           },
           {
             name: `Department`,
+            link: `/Budgetyear`,
           }
         ]
       },
@@ -323,9 +355,11 @@ const home = {
         childtext: [
           {
             name: `Council`,
+            link: `/Electionresult`,
           },
           {
             name: `Assembly`,
+            link: `/Electionresult`,
           }
         ]
       },
@@ -335,12 +369,15 @@ const home = {
         childtext: [
           {
             name: `Part`,
+            link: `/Gazette`,
           },
           {
             name: `Subject`,
+            link: `/Gazette`,
           },
           {
-            name: `Department`
+            name: `Department`,
+            link: `/Gazette`,
           }
         ]
       },
@@ -350,12 +387,15 @@ const home = {
         childtext: [
           {
             name: `Scheme`,
+            link: `/Publications`,
           },
           {
             name: `Policy`,
+            link: `/Publications`,
           },
           {
-            name: `Department`
+            name: `Department`,
+            link: `/Publications`,
           }
         ]
       },
@@ -395,9 +435,11 @@ const home = {
         childtext: [
           {
             name: `Place`,
+            link: `/Gazetteers`,
           },
           {
             name: `Topic`,
+            link: `/Gazetteers`,
           }
         ]
       },
@@ -407,9 +449,11 @@ const home = {
         childtext: [
           {
             name: `Court`,
+            link: `/Judgments`,
           },
           {
             name: `Subject`,
+            link: `/Judgments`,
           }
         ]
       }
@@ -449,6 +493,27 @@ const home = {
     ]
   },
 };
+
+const library = {
+  marathi: {
+    title: `विधानमंडळ ग्रंथालय`,
+    title1: `ग्रंथालय साहित्य संग्रह`,
+    title2: `ग्रंथालयचे कार्य`,
+    title3: `ग्रंथालय आज्ञावली`,
+    title4: "ग्रंथालय समिती",
+    title5: "ग्रंथालय नियम",
+    title6: "संपर्क",
+  },
+  english: {
+    title: `Library`,
+    title1: `Library literature collection`,
+    title2: `Library work`,
+    title3: "Ordered the library",
+    title4: "Library Committee",
+    title5: "Library Rules",
+    title6: "Contact",
+  }
+}
 
 // const homeLink = [
 //   "http://mls.org.in/",
@@ -1378,10 +1443,178 @@ const councilDebate = {
     },
   },
 };
+const judgment = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `निर्णय`,
+    reset: `प्रारंभ`,
+    filter: `फिल्टर`,
+    advfilter: `प्रगत फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `न्यायालयाचे शीर्षक शोधा`,
+    court: `कोर्ट`,
+    justice: `न्यायाचे नाव`,
+  },
+  english: {
+    home: `Home`,
+    title: `Judgement`,
+    reset: `Reset`,
+    filter: `Filter`,
+    advfilter: `Advanced Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the court title`,
+    court: `Court`,
+    justice: `The name of justice`,
+  }
+}
 
+const gazetteers = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `दर्शनिका`,
+    reset: `प्रारंभ`,
+    filter: `फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `दर्शनिकाचे शीर्षक शोधा`,
+  },
+  english: {
+    home: `Home`,
+    title: `Darshanika`,
+    reset: `Reset`,
+    filter: `Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the title of the page`,
+  }
+}
+
+const publications = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `प्रकाशने`,
+    reset: `प्रारंभ`,
+    filter: `फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `प्रकाशनाचे शीर्षक शोधा`,
+  },
+  english: {
+    home: `Home`,
+    title: `Publications`,
+    reset: `Reset`,
+    filter: `Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the title of the publication`,
+  }
+}
+
+const gazetteess = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `राजपत्र`,
+    reset: `प्रारंभ`,
+    filter: `फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `राजपत्राचे शीर्षक शोधा`,
+  },
+  english: {
+    home: `Home`,
+    title: `Gazette`,
+    reset: `Reset`,
+    filter: `Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the title of the gazette`,
+  }
+}
+
+const electionresult = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `निवडणूक निकाल`,
+    reset: `प्रारंभ`,
+    filter: `फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `निवडणूक निकालाचे शीर्षक शोधा`,
+  },
+  english: {
+    home: `Home`,
+    title: `Election Result`,
+    reset: `Reset`,
+    filter: `Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the Title of the Election Result`,
+  }
+}
+const budgetyear = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `अर्थसंकल्प`,
+    reset: `प्रारंभ`,
+    date: `तारीख`,
+    day: `दिवस निवडा`,
+    filter: `फिल्टर`,
+    advfilter: `प्रगत फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `बजेटचे शीर्षक शोधा`,
+  },
+  english: {
+    home: `Home`,
+    title: `Budget`,
+    reset: `Reset`,
+    date: `Date`,
+    day: `Select the day`,
+    filter: `Filter`,
+    advfilter: `Advanced Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the title of the budget`,
+  }
+}
+const legislationsbills = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `विधिविधान`,
+    reset: `प्रारंभ`,
+    hall: `सभागृह`,
+    bill: `बिल प्रकार`,
+    billstatus: `बिल स्थिती`,
+    date: `तारीख`,
+    day: `दिवस निवडा`,
+    filter: `फिल्टर`,
+    advfilter: `प्रगत फिल्टर`,
+    apply: `लागू करा`,
+    comingsoon: `लवकरच येत आहे`,
+    searchtitle: `विधेयकाचे शीर्षक शोधा`,
+  },
+  english: {
+    home: `Home`,
+    title: `Legislation`,
+    reset: `Reset`,
+    hall: `Hall`,
+    bill: `Bill type`,
+    billstatus: `Bill status`,
+    date: `Date`,
+    day: `Select the day`,
+    filter: `Filter`,
+    advfilter: `Advanced Filter`,
+    apply: `Apply`,
+    comingsoon: `Coming Soon`,
+    searchtitle: `Find the title of the bill`,
+  }
+}
 export {
   header,
   home,
+  library,
   homeLink,
   feedback,
   helpdesk,
@@ -1397,4 +1630,11 @@ export {
   combinedDebate,
   assemblyDebate,
   councilDebate,
+  judgment,
+  gazetteers,
+  publications,
+  gazetteess,
+  electionresult,
+  budgetyear,
+  legislationsbills,
 };

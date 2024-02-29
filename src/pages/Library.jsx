@@ -1,7 +1,32 @@
-import { Container, Row, Col } from "react-bootstrap"
-import libanner from "../assets/library/library.png"
-
+import { useEffect, useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import libanner from "../assets/library/library.png";
+import samplePDF1 from "../assets/Documents/02- Library Collection.pdf";
+import samplePDF2 from "../assets/Documents/03- Library Work.pdf";
+import samplePDF3 from "../assets/Documents/04- Library Software.pdf";
+import samplePDF4 from "../assets/Documents/05- Library Committee.pdf";
+import samplePDF5 from "../assets/Documents/06- Library Rules.pdf";
+import samplePDF6 from "../assets/Documents/Library Contact.pdf";
+import useLang from "../hooks/useLang";
+import { getApi } from "../services/axiosInterceptors";
+import { library } from "../data/constant";
 const Library = () => {
+    const [newData, setNewData] = useState({});
+    const { lang, checkLang } = useLang();
+
+    const fetchData = async () => {
+        try {
+            const res = await getApi(`library?isActive=${true}`);
+            setNewData(res.data.data[0]);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
         <div className="librarypage">
             <Container fluid style={{ padding: '0px' }}>
@@ -11,33 +36,30 @@ const Library = () => {
             </Container>
             <Container>
                 <Row>
-                    <Col lg={3} >
+                    <Col lg={3}>
                         <div className="librarysidebar">
-                            <h3>विधानमंडळ ग्रंथालय</h3>
+                            <h3>{library[checkLang].title}</h3>
                             <ul>
-                                <a href=""><li>ग्रंथालय साहित्य संग्रह<i className="fa fa-chevron-right icon-calender"></i></li></a>
-                                <a href=""><li>ग्रंथालयचे कार्य<i className="fa fa-chevron-right icon-calender"></i></li></a>
-                                <a href=""><li>ग्रंथालय आज्ञावली<i className="fa fa-chevron-right icon-calender"></i></li></a>
-                                <a href=""><li>ग्रंथालय समिती<i className="fa fa-chevron-right icon-calender"></i></li></a>
-                                <a href=""><li>ग्रंथालय नियम<i className="fa fa-chevron-right icon-calender"></i></li></a>
-                                <a href=""><li>संपर्क<i className="fa fa-chevron-right icon-calender"></i></li></a>
-                            </ul >
-                        </div >
-                    </Col >
-                    <Col lg={9}>
-                        <div className="librarycontent">
-                            <h1>विधानमंडळ ग्रंथालय</h1>
-                            <hr />
-                            <p className="library">
-                                सध्या विधानसभेचे 288 सदस्य थेट एकल मतदारसंघातून निवडले जातात. महाराष्ट्र विधान परिषद (महाराष्ट्र विधान परिषद) चे सदस्य अप्रत्यक्षपणे इलेक्टोरल कॉलेजद्वारे निवडले जातात. महाराष्ट्र विधानसभा किंवा महाराष्ट्र विधान सभा ही भारताच्या महाराष्ट्र राज्याच्या विधानसभेचे कनिष्ठ सभागृह आहे. सध्या विधानसभेचे 288 सदस्य थेट एकल मतदारसंघातून निवडले जातात. महाराष्ट्र विधान परिषद (महाराष्ट्र विधान परिषद) चे सदस्य अप्रत्यक्षपणे इलेक्टोरल कॉलेजद्वारे निवडले जातात.सध्या विधानसभेचे 288 सदस्य थेट एकल मतदारसंघातून निवडले जातात. महाराष्ट्र विधान परिषद (महाराष्ट्र विधान परिषद) चे सदस्य अप्रत्यक्षपणे इलेक्टोरल कॉलेजद्वारे निवडले जातात. महाराष्ट्र विधानसभा किंवा महाराष्ट्र विधान सभा ही भारताच्या महाराष्ट्र राज्याच्या विधानसभेचे कनिष्ठ सभागृह आहे. सध्या विधानसभेचे 288 सदस्य थेट एकल मतदारसंघातून निवडले जातात. महाराष्ट्र विधान परिषद (महाराष्ट्र विधान परिषद) चे सदस्य अप्रत्यक्षपणे इलेक्टोरल कॉलेजद्वारे निवडले जातात.सध्या विधानसभेचे 288 सदस्य थेट एकल मतदारसंघातून निवडले जातात. महाराष्ट्र विधान परिषद (महाराष्ट्र विधान परिषद) चे सदस्य अप्रत्यक्षपणे इलेक्टोरल कॉलेजद्वारे निवडले जातात. महाराष्ट्र विधानसभा किंवा महाराष्ट्र विधान सभा ही भारताच्या महाराष्ट्र राज्याच्या विधानसभेचे कनिष्ठ सभागृह आहे. सध्या विधानसभेचे 288 सदस्य थेट एकल मतदारसंघातून निवडले जातात. महाराष्ट्र विधान परिषद (महाराष्ट्र विधान परिषद) चे सदस्य अप्रत्यक्षपणे इलेक्टोरल कॉलेजद्वारे निवडले जातात.महाराष्ट्र विधान परिषद (महाराष्ट्र विधान परिषद) चे सदस्य अप्रत्यक्षपणे इलेक्टोरल कॉलेजद्वारे निवडले जातात. महाराष्ट्र विधानसभा किंवा महाराष्ट्र विधान सभा ही भारताच्या महाराष्ट्र राज्याच्या विधानसभेचे कनिष्ठ सभागृह आहे.
-                                फोटो आणि व्हिडिओ गॅलरी
-                            </p>
+                                <a href={samplePDF1} target="_blank" rel="noreferrer"><li>{library[checkLang].title1}<i className="fa fa-chevron-right icon-calender"></i></li></a>
+                                <a href={samplePDF2} target="_blank" rel="noreferrer"><li>{library[checkLang].title2}<i className="fa fa-chevron-right icon-calender"></i></li></a>
+                                <a href={samplePDF3} target="_blank" rel="noreferrer"><li>{library[checkLang].title3}<i className="fa fa-chevron-right icon-calender"></i></li></a>
+                                <a href={samplePDF4} target="_blank" rel="noreferrer"><li>{library[checkLang].title4}<i className="fa fa-chevron-right icon-calender"></i></li></a>
+                                <a href={samplePDF5} target="_blank" rel="noreferrer"><li>{library[checkLang].title5}<i className="fa fa-chevron-right icon-calender"></i></li></a>
+                                <a href={samplePDF6} target="_blank" rel="noreferrer"><li>{library[checkLang].title6}<i className="fa fa-chevron-right icon-calender"></i></li></a>
+                            </ul>
                         </div>
                     </Col>
-                </Row >
-            </Container >
+                    <Col lg={9}>
+                        <div className="librarycontent">
+                            <h1>{library[checkLang].title}</h1>
+                            <hr />
+                            <p className="library" dangerouslySetInnerHTML={{ __html: newData[checkLang]?.description }} ></p>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
         </div >
-    )
-}
+    );
+};
 
-export default Library
+export default Library;
