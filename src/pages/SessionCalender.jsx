@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Accordion, Form } from "react-bootstrap";
+import { Container, Row, Col, Accordion, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import Arrow from "../assets/debate/arrow.svg";
-import useLang from "../hooks/useLang";
-import { getApi } from "../services/axiosInterceptors";
+import useLang from "../hooks/useLang"; 1
+import { ImageUrl, getApi } from "../services/axiosInterceptors";
+import { Link } from "react-router-dom";
 
 const SessionCalender = () => {
     const [isDivVisible, setDivVisibility] = useState(false);
@@ -15,24 +16,16 @@ const SessionCalender = () => {
 
     const [search, setSearch] = useState({
         topic: "",
-        members_name: "",
         house: "विधानसभा",
         session: "",
-        party: "",
-        constituency: "",
-        surname: "",
-        district: "",
-        gender: "",
-        ministry_name: "",
+        year: "",
+
     });
 
     const [options, setOptions] = useState({
-        party: "",
-        constituency: "",
-        surname: "",
-        district: "",
-        gender: "",
-        ministry_name: "",
+        session: [],
+        houses: [],
+        year: [],
     });
 
     let obj = {
@@ -46,18 +39,6 @@ const SessionCalender = () => {
         devices: "आयुधे",
         proceeding: "संसदीय कामकाज पद्धती",
     };
-
-    let surnames = [
-        "विधिविधान",
-        "अर्थसंकल्पीय आयुधे",
-        "आयुधे",
-        "विधिविधान",
-        "इतर",
-        "संसदीय कामकाज पद्धती",
-        "अर्थसंकल्पीय आयुधे",
-        "आयुधे",
-        "संसदीय कामकाज पद्धती",
-    ];
 
     const handleOnSearch = (string, results) => {
         console.log({ string, results });
@@ -133,7 +114,7 @@ const SessionCalender = () => {
         // console.log(currentPage, pageLimit);
         let house = search.house === "एकत्रित" ? "" : search.house === "विधानसभा" ? "Assembly" : search.house === "विधानपरिषद" ? "Council" : "";
         await getApi(
-            `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}`
+            `session?perPage=${currentPage}&perLimit=${pageLimit}&houses=${house}&topic_name=${search.topic}&session=${search.session}&year=${search.year}`
         )
             .then((res) => setDebate(res.data.data))
             .catch((err) => console.log(err));
@@ -144,65 +125,65 @@ const SessionCalender = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            await getApi("member/option?id=basic_info.party")
+            await getApi("session/option?id=" + checkLang + ".session")
                 .then((res) => {
                     if (res.data.success) {
                         setOptions((prev) => ({
                             ...prev,
-                            party: res.data.data,
+                            session: res.data.data,
                         }));
                     }
                 })
                 .catch((err) => console.log(err));
 
-            await getApi("member/option?id=basic_info.constituency")
+            await getApi("session/option?id=houses")
                 .then((res) => {
                     if (res.data.success) {
                         setOptions((prev) => ({
                             ...prev,
-                            constituency: res.data.data,
+                            houses: res.data.data,
                         }));
                     }
                 })
                 .catch((err) => console.log(err));
 
-            await getApi("member/option?id=basic_info.surname")
+            await getApi("session/option?id=year")
                 .then((res) => {
                     if (res.data.success) {
                         setOptions((prev) => ({
                             ...prev,
-                            surname: res.data.data,
+                            year: res.data.data,
                         }));
                     }
                 })
                 .catch((err) => console.log(err));
 
-            await getApi("member/option?id=basic_info.district")
-                .then((res) => {
-                    if (res.data.success) {
-                        setOptions((prev) => ({
-                            ...prev,
-                            district: res.data.data,
-                        }));
-                    }
-                })
-                .catch((err) => console.log(err));
+            // await getApi("session/option?id=basic_info.district")
+            //     .then((res) => {
+            //         if (res.data.success) {
+            //             setOptions((prev) => ({
+            //                 ...prev,
+            //                 district: res.data.data,
+            //             }));
+            //         }
+            //     })
+            //     .catch((err) => console.log(err));
 
-            await getApi("member/option?id=basic_info.gender")
-                .then((res) => {
-                    if (res.data.success) {
-                        setOptions((prev) => ({
-                            ...prev,
-                            gender: res.data.data,
-                        }));
-                    }
-                })
-                .catch((err) => console.log(err));
+            // await getApi("session/option?id=basic_info.gender")
+            //     .then((res) => {
+            //         if (res.data.success) {
+            //             setOptions((prev) => ({
+            //                 ...prev,
+            //                 gender: res.data.data,
+            //             }));
+            //         }
+            //     })
+            //     .catch((err) => console.log(err));
 
 
         };
         fetchData();
-    }, []);
+    }, [checkLang]);
     useEffect(() => {
         debateFetch();
     }, [
@@ -223,20 +204,24 @@ const SessionCalender = () => {
                                         <Accordion.Header>सभागृह</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
-                                                <div className="datacheck">
-                                                    <label>विधानपरिषद</label>
+                                                <div className="datacheck1">
+                                                    <label>विधानसभा</label>
                                                     <Form.Check
                                                         aria-label="option 1"
                                                         name="house"
-                                                        value={"विधानपरिषद"}
+                                                        value="विधानसभा"
+                                                        onChange={handleChange}
+                                                        checked={search.house === "विधानसभा"}
                                                     />
                                                 </div>
-                                                <div className="datacheck">
-                                                    <label>विधानसभा</label>
+                                                <div className="datacheck1">
+                                                    <label>विधानपरिषद</label>
                                                     <Form.Check
                                                         aria-label="option 2"
                                                         name="house"
-                                                        value={"विधानसभा"}
+                                                        value="विधानपरिषद"
+                                                        onChange={handleChange}
+                                                        checked={search.house === "विधानपरिषद"}
                                                     />
                                                 </div>
                                                 <div className="datacheck1">
@@ -244,49 +229,35 @@ const SessionCalender = () => {
                                                     <Form.Check
                                                         aria-label="option 3"
                                                         name="house"
-                                                        value={"एकत्रित"}
+                                                        value="एकत्रित"
+                                                        onChange={handleChange}
+                                                        checked={search.house === "एकत्रित"}
                                                     />
                                                 </div>
                                             </div>
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="1">
-                                        <Accordion.Header>सत्र</Accordion.Header>
+                                        <Accordion.Header>अधिवेशन</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
-                                                <div className="datacheck">
-                                                    <label>सर्व</label>
-                                                    <Form.Check
-                                                        aria-label="option 4"
-                                                        name="session"
-                                                        value={"सर्व"}
-                                                    />
-                                                </div>
-                                                <div className="datacheck">
-                                                    <label>पावसाळी</label>
-                                                    <Form.Check
-                                                        aria-label="option 5"
-                                                        name="session"
-                                                        value={"पावसाळी"}
-                                                    />
-                                                </div>
-                                                <div className="datacheck">
-                                                    <label>अर्थसंकल्पीय</label>
-                                                    <Form.Check
-                                                        aria-label="option 6"
-                                                        name="session"
-                                                        value={"अर्थसंकल्पीय"}
-                                                    />
-                                                </div>
-                                                <div className="datacheck1">
-                                                    <label>विशेष</label>
-                                                    <Form.Check
-                                                        aria-label="option 7"
-                                                        name="session"
-                                                        value={"विशेष"}
-                                                    />
-                                                </div>
+                                                {options?.session?.map((item, index) => (
+                                                    <>
+                                                        <div className="datacheck1">
+                                                            <label>  {item}</label>
+                                                            <Form.Check
+                                                                aria-label="option 7"
+                                                                name="session"
+                                                                value={item}
+                                                                onChange={handleChange}
+                                                            />
+                                                        </div>
+                                                    </>
+
+                                                ))}
                                             </div>
+
+
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="2">
@@ -294,11 +265,15 @@ const SessionCalender = () => {
                                         <Accordion.Body>
                                             <select
                                                 className="secondfilers"
-                                                name="kramank"
+                                                name="year"
+                                                onChange={handleChange}
+                                                value={search.year}
+
                                             >
-                                                <option>Select Year</option>
-                                                <option>2011</option>
-                                                <option>2012 </option>
+                                                <option hide value="">Select Year</option>
+                                                {options?.year?.map((item, index) => (
+                                                    <option value={item}>{item}</option>
+                                                ))}
                                             </select>
                                         </Accordion.Body>
                                     </Accordion.Item>
@@ -343,10 +318,12 @@ const SessionCalender = () => {
                                 <input
                                     type="text"
                                     name="topic"
-                                    placeholder="विषय आणि कीवर्ड शोधा"
                                     className="form-control"
+                                    placeholder="विषय आणि कीवर्ड शोधा"
+                                    defaultValue={search.topic}
+                                    onChange={handleChange}
                                 />
-                                <button className="searchb">
+                                <button onClick={debateFetch} className="searchb">
                                     <i className="fa fa-search" />
                                 </button>
                                 <button className="startover">
@@ -381,29 +358,51 @@ const SessionCalender = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <span>
-                                            1
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span>
-                                            विधानसभा
-                                        </span>
-                                    </td>
-                                    <td>२२ मार्च २०११</td>
-                                    <td>
-                                        <p><span>पुरके श्री. वसंत बापट श्री. गिरीष....</span></p>
-                                    </td>
-                                    <td className="imagee">
-                                        <a
-                                            href="#"
-                                            target="_blank" rel="noreferrer">
-                                            <img src="/src/assets/debate/Frame.svg" alt="" />
-                                        </a>
-                                    </td>
-                                </tr>
+                                {
+                                    debate?.map((item, index) => (
+                                        <tr key={index}>
+                                            <td>
+                                                <span>
+                                                    {index + 1}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span>
+                                                    {item?.topic_name}
+                                                </span>
+                                            </td>
+                                            <td>{item?.houses}</td>
+                                            <td>
+                                                <p><span>{item[checkLang]["session"]}</span></p>
+                                            </td>
+                                            <td className="imagee">
+                                                {item.documents.length > 0 ? item.documents.map((doc, index) => {
+                                                    console.log(doc)
+                                                    return (
+                                                        <a
+                                                            href={ImageUrl + doc?.document.destination + '/' + doc?.document.filename}
+                                                            target="_blank" rel="noreferrer">
+                                                            <OverlayTrigger
+                                                                delay={{ hide: 450, show: 300 }}
+                                                                overlay={(props) => (
+                                                                    <Tooltip {...props}>{doc?.title}</Tooltip>
+                                                                )}
+
+                                                                placement="top"
+                                                            >
+                                                                <img src="/src/assets/debate/Frame.svg" alt="" />
+
+                                                            </OverlayTrigger>
+                                                        </a>
+                                                    )
+                                                }
+                                                ) : <></>}
+                                            </td>
+
+                                        </tr>
+                                    ))
+                                }
+
                             </tbody>
                         </table>
                     </Col>
