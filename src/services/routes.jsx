@@ -127,7 +127,7 @@ export const routes = [
     element: <Feedback />,
   },
   {
-    path: "/member-assembly-details",
+    path: "/member-assembly-details/:id",
     exact: true,
     element: <MemberAssemblyDetails />,
   },
@@ -137,7 +137,7 @@ export const routes = [
     element: <MembersCouncil />,
   },
   {
-    path: "/member-council-details",
+    path: "/member-council-details/:id",
     exact: true,
     element: <MemberCouncilDetails />,
   },

@@ -7,7 +7,7 @@ import Graph from "../assets/membercouncil.svg";
 import Arrow from "../assets/debate/arrow.svg";
 import Sort from "../assets/debate/sort.svg";
 
-import { getApi } from "../services/axiosInterceptors";
+import { ImageUrl, getApi } from "../services/axiosInterceptors";
 import { memberName } from "../data/memberName";
 import PopupHome from "./PopupHome";
 import PaginationComponent from "../components/Pagination";
@@ -21,26 +21,27 @@ const MembersCouncil = () => {
     const [pageLimit, setPageLimit] = useState(10);
     const [modalShow, setModalShow] = useState(true);
     const [sorted, setSorted] = useState(false);
+    const { lang, checkLang } = useLang();
 
     const [search, setSearch] = useState({
         topic: "",
         members_name: "",
         house: "विधानसभा",
         session: "",
-        volume: "",
-        kramank: "",
-        method: "",
-        method_type: "",
-        method_sub_type: "",
+        party: "",
+        constituency: "",
+        surname: "",
+        district: "",
+        gender: "",
         ministry_name: "",
     });
 
     const [options, setOptions] = useState({
-        volume: "",
-        kramank: "",
-        method: "",
-        method_type: "",
-        method_sub_type: "",
+        party: "",
+        constituency: "",
+        surname: "",
+        district: "",
+        gender: "",
         ministry_name: "",
     });
 
@@ -50,13 +51,13 @@ const MembersCouncil = () => {
         device: "आयुधे",
         legisl: "विधिविधान",
         other: "इतर",
-        method: "संसदीय कामकाज पद्धती",
+        surname: "संसदीय कामकाज पद्धती",
         budget_s: "अर्थसंकल्पीय आयुधे",
         devices: "आयुधे",
         proceeding: "संसदीय कामकाज पद्धती",
     };
 
-    let methods = [
+    let surnames = [
         "विधिविधान",
         "अर्थसंकल्पीय आयुधे",
         "आयुधे",
@@ -69,7 +70,8 @@ const MembersCouncil = () => {
     ];
 
     const handleOnSearch = (string, results) => {
-        console.log(string, results);
+        console.log({ string, results });
+
     };
 
     const handleOnSelect = (item) => {
@@ -81,34 +83,25 @@ const MembersCouncil = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        setSearch((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
 
-        if (name === "method") {
-            let newValue = Object.keys(obj).find((key) => obj[key] === value);
-
-            setSearch((prev) => ({
-                ...prev,
-                [name]: newValue,
-            }));
-        } else {
-            setSearch((prev) => ({
-                ...prev,
-                [name]: value,
-            }));
-        }
     };
 
     const handleReset = () => {
         setSearch((prev) => ({
             ...prev,
-            volume: "",
-            kramank: "",
-            method: "",
-            method_type: "",
-            method_sub_type: "",
+            party: "",
+            constituency: "",
+            surname: "",
+            district: "",
+            gender: "",
             ministry_name: "",
         }));
 
-        handleSearch();
+        debateFetch();
     };
 
     const handleStart = () => {
@@ -118,11 +111,11 @@ const MembersCouncil = () => {
             members_name: "",
             house: "विधानसभा",
             session: "",
-            volume: "",
-            kramank: "",
-            method: "",
-            method_type: "",
-            method_sub_type: "",
+            party: "",
+            constituency: "",
+            surname: "",
+            district: "",
+            gender: "",
             ministry_name: "",
         }));
         debateFetch();
@@ -135,132 +128,98 @@ const MembersCouncil = () => {
             const newDebate = debate.data.sort((a, b) =>
                 b.topic.localeCompare(a.topic)
             );
-            setDebate((prev) => ({
-                ...prev,
-                data: newDebate,
-            }));
+            setDebate(newDebate);
             setSorted(!sorted);
         } else {
             const newDebate = debate.data.sort((a, b) =>
                 a.topic.localeCompare(b.topic)
             );
-            setDebate((prev) => ({
-                ...prev,
-                data: newDebate,
-            }));
+            setDebate(newDebate);
             setSorted(!sorted);
         }
     };
 
     const debateFetch = async () => {
         // console.log(currentPage, pageLimit);
+        let house = search.house === "एकत्रित" ? "" : search.house === "विधानसभा" ? "Assembly" : search.house === "विधानपरिषद" ? "Council" : "";
         await getApi(
-            `debate?perPage=${currentPage}&perLimit=${pageLimit}&house=${search.house}`
+            `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}`
         )
-            .then((res) => setDebate(res.data))
+            .then((res) => setDebate(res.data.data))
             .catch((err) => console.log(err));
     };
 
-    const handleSearch = async () => {
-        let house = search.house === "एकत्रित" ? "" : search.house;
 
-        let session = search.session === "सर्व" ? "" : search.session;
 
-        await getApi(
-            `debate/fields?perPage=${currentPage}&perLimit=${pageLimit}&topic=${search.topic}&members_name=${search.members_name}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
-        )
-            .then((res) => {
-                if (res.data.success) {
-                    setDebate(res.data);
-                }
-            })
-            .catch((err) => console.log(err));
-    };
-
-    useEffect(() => {
-        handleSearch();
-    }, [
-        search.session,
-        search.house,
-        search.members_name,
-        currentPage,
-        pageLimit,
-    ]);
-
-    useEffect(() => {
-        debateFetch();
-    }, [currentPage, pageLimit]);
 
     useEffect(() => {
         const fetchData = async () => {
-            await getApi("debate/option?id=volume")
+            await getApi("member/option?id=basic_info.party")
                 .then((res) => {
                     if (res.data.success) {
                         setOptions((prev) => ({
                             ...prev,
-                            volume: res.data.data,
+                            party: res.data.data,
                         }));
                     }
                 })
                 .catch((err) => console.log(err));
 
-            await getApi("debate/option?id=kramank")
+            await getApi("member/option?id=basic_info.constituency")
                 .then((res) => {
                     if (res.data.success) {
                         setOptions((prev) => ({
                             ...prev,
-                            kramank: res.data.data,
+                            constituency: res.data.data,
                         }));
                     }
                 })
                 .catch((err) => console.log(err));
 
-            await getApi("debate/option?id=method")
+            await getApi("member/option?id=basic_info.surname")
                 .then((res) => {
                     if (res.data.success) {
                         setOptions((prev) => ({
                             ...prev,
-                            method: res.data.data,
+                            surname: res.data.data,
                         }));
                     }
                 })
                 .catch((err) => console.log(err));
 
-            await getApi("debate/option?id=method_type")
+            await getApi("member/option?id=basic_info.district")
                 .then((res) => {
                     if (res.data.success) {
                         setOptions((prev) => ({
                             ...prev,
-                            method_type: res.data.data,
+                            district: res.data.data,
                         }));
                     }
                 })
                 .catch((err) => console.log(err));
 
-            await getApi("debate/option?id=method_sub_type")
+            await getApi("member/option?id=basic_info.gender")
                 .then((res) => {
                     if (res.data.success) {
                         setOptions((prev) => ({
                             ...prev,
-                            method_sub_type: res.data.data,
+                            gender: res.data.data,
                         }));
                     }
                 })
                 .catch((err) => console.log(err));
 
-            await getApi("debate/option?id=ministry_name")
-                .then((res) => {
-                    if (res.data.success) {
-                        setOptions((prev) => ({
-                            ...prev,
-                            ministry_name: res.data.data,
-                        }));
-                    }
-                })
-                .catch((err) => console.log(err));
+
         };
         fetchData();
     }, []);
+    useEffect(() => {
+        debateFetch();
+    }, [
+        search.members_name,
+        search.house,
+        currentPage,
+        pageLimit,]);
 
     return (
         <div>
@@ -278,18 +237,22 @@ const MembersCouncil = () => {
                                             <div className="filtercontent">
                                                 <ReactSearchAutocomplete
                                                     className="mb-3 mt-2"
-                                                    items={memberName}
+                                                    items={debate.length > 0 ? debate.map((item) => {
+                                                        return { name: item.basic_info.name }
+                                                    }) : memberName}
                                                     placeholder="सदस्य शोधा"
                                                     onSearch={handleOnSearch}
                                                     onSelect={handleOnSelect}
                                                 />
-                                                <ReactSearchAutocomplete
-                                                    className="mb-3"
-                                                    items={memberName}
-                                                    placeholder="पदनाव"
-                                                    onSearch={handleOnSearch}
-                                                    onSelect={handleOnSelect}
-                                                />
+                                                {/* <ReactSearchAutocomplete
+                                                className="mb-3"
+                                                items={debate.length > 0 ? debate.map((item) => {
+                                                    return { name: item.basic_info.name }
+                                                }) : memberName}
+                                                placeholder="पदनाव"
+                                                onSearch={handleOnSearch}
+                                                onSelect={handleOnSelect}
+                                            /> */}
                                             </div>
                                         </Accordion.Body>
                                     </Accordion.Item>
@@ -379,12 +342,12 @@ const MembersCouncil = () => {
                                     <div className="advancdeee">
                                         <select
                                             className="secondfilers"
-                                            value={obj[search.method]}
-                                            name="method"
+                                            value={search.party}
+                                            name="party"
                                             onChange={handleChange}
                                         >
-                                            <option hidden>कामकाजाची यादी निवडा</option>
-                                            {methods?.map((item, index) => (
+                                            <option hidden>पक्षनिहाय</option>
+                                            {options?.party?.map((item, index) => (
                                                 <option key={index} value={item}>
                                                     {item}
                                                 </option>
@@ -392,12 +355,12 @@ const MembersCouncil = () => {
                                         </select>
                                         <select
                                             className="secondfilers"
-                                            value={search.method_type}
-                                            name="method_type"
+                                            value={search.constituency}
+                                            name="constituency"
                                             onChange={handleChange}
                                         >
-                                            <option hidden>प्रकार निवडा</option>
-                                            {options?.method_type?.map((item, index) => (
+                                            <option hidden>मतदारसंघनिहाय</option>
+                                            {options?.constituency?.map((item, index) => (
                                                 <option key={index} value={item}>
                                                     {item}
                                                 </option>
@@ -405,12 +368,12 @@ const MembersCouncil = () => {
                                         </select>
                                         <select
                                             className="secondfilers"
-                                            value={search.method_sub_type}
-                                            name="method_sub_type"
+                                            value={search.surname}
+                                            name="surname"
                                             onChange={handleChange}
                                         >
-                                            <option hidden>उपप्रकार निवडा</option>
-                                            {options?.method_sub_type?.map((item, index) => (
+                                            <option hidden>आडनावानुसार</option>
+                                            {options?.surname?.map((item, index) => (
                                                 <option key={index} value={item}>
                                                     {item}
                                                 </option>
@@ -418,12 +381,12 @@ const MembersCouncil = () => {
                                         </select>
                                         <select
                                             className="secondfilers"
-                                            value={search.ministry_name}
-                                            name="ministry_name"
+                                            value={search.district}
+                                            name="district"
                                             onChange={handleChange}
                                         >
-                                            <option hidden>मंत्रालय निवडा</option>
-                                            {options?.ministry_name?.map((item, index) => (
+                                            <option hidden>जिल्हानिहाय</option>
+                                            {options?.district?.map((item, index) => (
                                                 <option key={index} value={item}>
                                                     {item}
                                                 </option>
@@ -431,30 +394,19 @@ const MembersCouncil = () => {
                                         </select>
                                         <select
                                             className="secondfilers"
-                                            value={search.volume}
-                                            name="volume"
+                                            value={search.gender}
+                                            name="gender"
                                             onChange={handleChange}
                                         >
-                                            <option hidden>खंड निवडा</option>
-                                            {options?.volume?.map((item, index) => (
+                                            <option hidden>लिंगनिहाय</option>
+                                            {options?.gender?.map((item, index) => (
                                                 <option key={index} value={item}>
                                                     {item}
                                                 </option>
                                             ))}
                                         </select>
-                                        <select
-                                            className="secondfilers"
-                                            value={search.kramank}
-                                            name="kramank"
-                                            onChange={handleChange}
-                                        >
-                                            <option hidden>क्रमांक निवडा</option>
-                                            {options?.kramank?.map((item, index) => (
-                                                <option key={index} value={item}>
-                                                    {item}
-                                                </option>
-                                            ))}
-                                        </select>
+
+
                                     </div>
                                 )}
                             </div>
@@ -462,7 +414,7 @@ const MembersCouncil = () => {
                                 <button className="reset" onClick={handleReset}>
                                     रीसेट
                                 </button>
-                                <button className="apply" onClick={handleSearch}>
+                                <button className="apply" onClick={debateFetch}>
                                     अप्लाय
                                 </button>
                             </div>
@@ -479,7 +431,7 @@ const MembersCouncil = () => {
                                     defaultValue={search.topic}
                                     onChange={handleChange}
                                 />
-                                <button className="searchb" onClick={handleSearch}>
+                                <button className="searchb" onClick={debateFetch}>
                                     <i className="fa fa-search" />
                                 </button>
                                 <button className="startover" onClick={handleStart}>
@@ -541,12 +493,12 @@ const MembersCouncil = () => {
                                             <th style={{ borderRight: "solid white 1px" }}>नाव</th>
                                             <th style={{ borderRight: "solid white 1px" }}>मतदारसंघ</th>
                                             <th style={{ borderRight: "solid white 1px" }}>राजकीय पक्ष</th>
-                                            <th>कार्यकाल</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {debate?.data?.map((item, index) => {
-                                            let name = item?.members_name.split(",");
+                                        {debate.length > 0 && debate.map((item, index) => {
+                                            let name = item?.basic_info?.name.split(",");
+                                            console.log("name", name)
                                             let twoEntry;
 
                                             name.length < 5 ? (twoEntry = true) : (twoEntry = false);
@@ -560,20 +512,19 @@ const MembersCouncil = () => {
                                                         />
                                                     </td>
                                                     <td>
-                                                        <Link to="/member-council-details" className="membernamee">
+                                                        <Link to={`/member-assembly-details/${item?._id}`} className="membernamee">
                                                             <img
-                                                                src="https://mlsdemo.sblcorp.com/img/member/photo/eknath-shinde.jpeg"
+                                                                src={ImageUrl + item?.basic_info?.profile?.destination + "/" + item?.basic_info?.profile?.filename}
                                                                 alt="user"
                                                                 className="member_imgs"
                                                             />
-                                                            एकनाथ संभाजी शिंदे
+                                                            {name[0]}
                                                         </Link>
                                                     </td>
                                                     <td>
-                                                        ५२- नागपूर दक्षिण पश्चिम
+                                                        {item?.basic_info?.constituency + " " + item?.basic_info?.district}
                                                     </td>
-                                                    <td>शिवसेना</td>
-                                                    <td>14/05/2022 - 13/05/2026</td>
+                                                    <td>{item?.basic_info?.party}</td>
                                                 </tr>
                                             );
                                         })}

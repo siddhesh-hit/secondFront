@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Navbar,
@@ -17,18 +17,19 @@ import logo from "../../assets/logo.png";
 
 import { logout } from "../../redux/reducers/userReducer";
 import { decrypt } from "../../utils/encrypt";
-import { postApi } from "../../services/axiosInterceptors";
+import { postApi, getApi, getApiById } from "../../services/axiosInterceptors";
 import useLang from "../../hooks/useLang";
 import { home, header } from "../../data/constant";
 
 const Header = () => {
+  const [notification, setNotification] = useState([]);
+  const [notificationOpen, setNotificationOpen] = useState(false);
   const [search, setSearch] = useState(null);
   const [userInfo, setUserInfo] = useState({});
   const { lang, checkLang } = useLang();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const location = useLocation().pathname;
-
   const handleLanguage = (newLang) => {
     window.localStorage.setItem("lang", newLang);
     window.dispatchEvent(new CustomEvent("langChange"));
@@ -49,12 +50,20 @@ const Header = () => {
         toast.error("Something went wrong");
       });
   };
-
+  const fetchData = async (id) => {
+    await getApiById("notification", id)
+      .then((res) => setNotification([...res.data.data.user_specific, ...res.data.data.global]))
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     if (user && Object.keys(user).length > 0) {
       setUserInfo(JSON.parse(decrypt(user)));
     }
   }, []);
+  useEffect(() => {
+    userInfo.notificationId && fetchData(userInfo.notificationId);
+  }, [userInfo])
+  console.log("notification", notification)
   return (
     <div>
       <div
@@ -75,6 +84,35 @@ const Header = () => {
           <Row>
             <Col lg={12}>
               <div className="topheaderright">
+
+                {/* Icon */}
+
+
+                {/* Notifications */}
+                <ul className="navbar-nav ml-auto">
+                  <li className="nav-item dropdown">
+                    <a className="nav-link" onMouseEnter={() => setNotificationOpen(!notificationOpen)} data-toggle="dropdown" href="#">
+                      <i className="far fa-bell"></i>
+                      <span className="badge badge-warning navbar-badge" >{notification.length}</span>
+                    </a>
+                    <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right notouifi" style={{ maxWidth: '100%', minWidth: '300px', background: 'white' }}>
+
+                      <a href="#" className="dropdown-item">
+                        {
+                          notification.length > 0 &&
+                          notification.map((item, index, array) => (
+                            <React.Fragment key={index}>
+                              <i className="fas fa-envelope mr-2"></i>  {item[checkLang]["message"]}
+                              <span className="float-right text-muted text-sm">3 mins</span>
+                            </React.Fragment>
+                          ))}
+
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+                {/* End  Notifications */}
+
                 <div className="contact-us">
                   <Link to="/ContactUs">
                     <span>{header[checkLang].contact}</span>

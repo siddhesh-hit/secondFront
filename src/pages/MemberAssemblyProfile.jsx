@@ -4,7 +4,8 @@ import twitter from "../assets/social/twitter.png";
 import linkdein from "../assets/social/linkedin.png";
 import instagram from "../assets/social/instagram.png";
 
-const MemberAssemblyProfile = () => {
+const MemberAssemblyProfile = (props) => {
+
     return (
         <div>
             <div className="imgprofile">
@@ -12,9 +13,9 @@ const MemberAssemblyProfile = () => {
                 <div className="top right"></div>
                 <div className="bottom right"></div>
                 <div className="bottom left"></div>
-                <img src={memberprofile} className="w-100" />
+                <img src={props.memberprofile ? props.memberprofile : ""} className="w-100" />
             </div>
-            <h2>फडणवीस श्री. देवेंद्र गंगाधरराव</h2>
+            <h2>{props.name}</h2>
             <div className="socialss">
                 <img src={facebook} alt="" />
                 <img src={twitter} alt="" />
