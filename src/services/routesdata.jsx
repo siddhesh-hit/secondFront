@@ -10,6 +10,7 @@ import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 
 import { routes } from "./routes";
+import HelmetWrapper from "../components/HelmetWrapper";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -39,6 +40,7 @@ function RoutesData() {
   return (
     <>
       <Router>
+        <HelmetWrapper />
         <Layout>
           <Routes>
             {routes.map((route) => (
