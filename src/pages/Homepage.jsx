@@ -30,31 +30,29 @@ const Homepage = () => {
             <Row>
               {home[checkLang].nav.map((item, index) => (
                 <Col lg={4} key={index}>
-                  <Link to="/">
-                    <Row className="boxes">
-                      <Col lg={3}>
-                        <img src={item.icon} />
-                      </Col>
-                      <Col lg={9}>
-                        <h6>{item.title}</h6>
-                        {item?.childtext && item?.childtext?.map((it, ind) => {
-                          let bool
-                          if (ind === item.childtext.length - 1) {
-                            bool = true
-                          }
-                          else {
-                            bool = false
-                          }
-                          return (
-                            <Link to={it.link} key={ind}>
-                              <>{it.name}</>
-                              {bool ? <span></span> : <span>|</span>}
-                            </Link>
-                          )
-                        })}
-                      </Col>
-                    </Row>
-                  </Link>
+                  <Row className="boxes">
+                    <Col lg={3}>
+                      <img src={item.icon} />
+                    </Col>
+                    <Col lg={9}>
+                      <h6>{item.title}</h6>
+                      {item?.childtext && item?.childtext?.map((it, ind) => {
+                        let bool
+                        if (ind === item.childtext.length - 1) {
+                          bool = true
+                        }
+                        else {
+                          bool = false
+                        }
+                        return (
+                          <Link to={it.link} key={ind}>
+                            <>{it.name}</>
+                            {bool ? <span></span> : <span>|</span>}
+                          </Link>
+                        )
+                      })}
+                    </Col>
+                  </Row>
                 </Col>
               ))}
             </Row>

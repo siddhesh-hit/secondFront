@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   Navbar,
@@ -17,16 +17,15 @@ import logo from "../../assets/logo.png";
 
 import { logout } from "../../redux/reducers/userReducer";
 import { decrypt } from "../../utils/encrypt";
-import { postApi, getApi, getApiById } from "../../services/axiosInterceptors";
+import { postApi, getApiById } from "../../services/axiosInterceptors";
 import useLang from "../../hooks/useLang";
 import { home, header } from "../../data/constant";
 
 const Header = () => {
   const [notification, setNotification] = useState([]);
-  const [notificationOpen, setNotificationOpen] = useState(false);
   const [search, setSearch] = useState(null);
   const [userInfo, setUserInfo] = useState({});
-  const { lang, checkLang } = useLang();
+  const { checkLang } = useLang();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const location = useLocation().pathname;
@@ -96,7 +95,7 @@ const Header = () => {
                   <Dropdown.Menu>
                     {
                       notification.length > 0 &&
-                      notification.map((item, index, array) => (
+                      notification.map((item, index) => (
                         <Dropdown.Item key={index}
                           href="#"
                         >
@@ -228,30 +227,30 @@ const Header = () => {
                     <Offcanvas.Body>
                       <Nav className="justify-content-end  flex-grow-1 pe-5">
                         <NavDropdown
-                          title="विधिमंडळ  "
+                          title={header[checkLang].legislature}
                           id={`offcanvasNavbarDropdown-expand-${expand}`}
                         >
                           <NavDropdown.Item href="rajyapal">
-                            राज्यपाल
+                            {header[checkLang].governor}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="LegislativeCouncil">
-                            विधानपरिषद
+                            {header[checkLang].legislativecouncil}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="LegislativeAssembly">
-                            विधानसभा
+                            {header[checkLang].legislativeassembly}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="#action5">
-                            विधानमंडळ सचिव
+                            {header[checkLang].minister}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="/mantri-parishad">
-                            मंत्रीमंडळ
+                            {header[checkLang].councilminis}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="Library">
-                            विधानमंडळ ग्रंथालय
+                            {header[checkLang].legislativelibrary}
                           </NavDropdown.Item>
                         </NavDropdown>
                         <div>
-                          <Link className="nav-link" to="/">
+                          <Link className="nav-link" to="/members-assembly">
                             {header[checkLang].member}
                           </Link>
                         </div>
@@ -262,27 +261,27 @@ const Header = () => {
                         >
                           {header[checkLang].Debate}
                         </Nav.Link>
-                        <Nav.Link href="#action2">{header[checkLang].Legislation}</Nav.Link>
-                        <Nav.Link href="#action2">{header[checkLang].Budget} </Nav.Link>
+                        <Nav.Link href="/LegislationsBills">{header[checkLang].Legislation}</Nav.Link>
+                        <Nav.Link href="/Budgetyear">{header[checkLang].Budget} </Nav.Link>
                         <div>
-                          <Link className="nav-link" to="/Library">
+                          <Link className="nav-link" to="/Electionresult">
                             {header[checkLang].Elections}
                           </Link>
                         </div>
                         <div>
-                          <Link className="nav-link" to="/Library">
+                          <Link className="nav-link" to="/Gazette">
                             {header[checkLang].Gazette}
                           </Link>
                         </div>
                         <NavDropdown
-                          title="विविध "
+                          title={header[checkLang].various}
                           id={`offcanvasNavbarDropdown-expand-${expand}`}
                         >
-                          <NavDropdown.Item href="gallery">
-                            गॅलरी
+                          <NavDropdown.Item href="/gallery">
+                            {header[checkLang].gallery}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="#action5">
-                            महत्वाचा सूचना
+                            {header[checkLang].notice}
                           </NavDropdown.Item>
                         </NavDropdown>
                       </Nav>

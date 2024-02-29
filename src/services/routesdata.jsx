@@ -35,7 +35,6 @@ const Layout = ({ children }) => {
 
 function RoutesData() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
-
   return (
     <>
       <Router>

@@ -26,7 +26,7 @@ const MembersCouncil = () => {
     const [search, setSearch] = useState({
         topic: "",
         members_name: "",
-        house: "विधानसभा",
+        house: "विधानपरिषद",
         session: "",
         party: "",
         constituency: "",
@@ -505,14 +505,9 @@ const MembersCouncil = () => {
 
                                             return (
                                                 <tr key={index}>
+                                                    <td>{index + 1}</td>
                                                     <td>
-                                                        <HighlightSentence
-                                                            data={"1"}
-                                                            search={search?.house}
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <Link to={`/member-assembly-details/${item?._id}`} className="membernamee">
+                                                        <Link to={`/member-council-details/${item?._id}`} className="membernamee">
                                                             <img
                                                                 src={ImageUrl + item?.basic_info?.profile?.destination + "/" + item?.basic_info?.profile?.filename}
                                                                 alt="user"

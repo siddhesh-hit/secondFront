@@ -1,16 +1,19 @@
+import { useState, useEffect } from "react";
 import { Col, Container, Row, Tab, Tabs } from "react-bootstrap"
 import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+
 import Arrow from "../assets/debate/arrow.svg";
 import print from "../assets/print.svg"
 import download from "../assets/download.svg"
 import useLang from "../hooks/useLang"
 import MemberAssemblyProfile from "./MemberAssemblyProfile";
+
 import { ImageUrl, getApi, getApiById } from "../services/axiosInterceptors";
 import PaginationComponent from "../components/Pagination";
 
 
 const MemberAssemblyDetails = () => {
+
     const [current, setCurrent] = useState({});
     const [Debate, setDebate] = useState({
         data: [],
@@ -19,24 +22,30 @@ const MemberAssemblyDetails = () => {
     });
     const [currentPage, setCurrentPage] = useState(0);
     const [pageLimit, setPageLimit] = useState(10);
+
     const { lang, checkLang } = useLang();
     const { id } = useParams()
+
     const fetchDataById = async () => {
         await getApiById("member", id)
             .then((res) => setCurrent(res.data.data))
             .catch((err) => console.log(err));
     }
+
     const fetchDebateById = async (name) => {
-        await getApi(`debate?member_name=${name}&perPage=${currentPage}&perLimit=${pageLimit}`)
+        await getApi(`debate/fields?members_name=${name}&perPage=${currentPage}&perLimit=${pageLimit}`)
             .then((res) => setDebate({ data: res.data.data, count: res.data.count }))
             .catch((err) => console.log(err));
     }
+
     useEffect(() => {
         fetchDataById();
     }, [id]);
+
     useEffect(() => {
         current.basic_info && current.basic_info.name && fetchDebateById(current.basic_info.name);
     }, [current, currentPage]);
+
     return (
         <div className="memberassemdetails">
             <Container>
@@ -100,22 +109,9 @@ const MemberAssemblyDetails = () => {
                                     <Col lg={6}>
                                         <div className="political-travel">
                                             <ul>
-                                                <li>
-                                                    कार्यकारी सदस्य, रामभाऊ म्हाळगी प्रबोधिनी (युनायटेड नेशन्सद्वारा मान्यता प्राप्त संस्था); उपाध्यक्ष, दि सेंट्रल हिंदू
-                                                    मिलिटरी एज्युकेशन सोसायटी, नाशिक (भोसला मिलिटरी स्कूल); उपाध्यक्ष, राष्ट्रीय अपंग कल्याण संस्था; अध्यक्ष, नागपूर जिल्हा
-                                                    बास्केट बॉल संघटना
-                                                </li>
-                                                <li>१९८७ पासून सामाजिक कार्याला सुरुवात; अखिल भारतीय विद्यार्थी परिषदेचे कार्य; राष्ट्रीय स्वयंसेवक संघाचे स्वयंसेवक, विविध
-                                                    उपक्रमात सहभाग;</li>
-                                                <li>१९८९ वॉर्ड अध्यक्ष, भारतीय जनता पक्ष, धरमपेठ वॉर्ड, नागपूर;</li>
-                                                <li>१९९० प्रसिद्धी प्रमुख, भाजप नागपूर (पश्‍चिम);</li>
-                                                <li>१९९२-९५ अध्यक्ष, भाजप युवा मोर्चा नागपूर शहर;</li>
-                                                <li>१९९५- २००४ उपाध्यक्ष, महाराष्ट्र प्रदेश भारतीय जनता युवा मार्चा;</li>
-                                                <li>२००४-२००९ राष्ट्रीय उपाध्यक्ष, भारतीय जनता युवा मोर्चा;</li>
-                                                <li>२००९ भाजप विदर्भ निवडणूक प्रमुख, १९९२ व १९९७ नागपूर मनपा सदस्य, १९९७ महापौर, महानगरपालिका, नागपूर;</li>
-                                                <li>१९९८ मेअर इन कौन्सिल पद्धतीअंतर्गत महाराष्ट्रातील प्रथम महापौर म्हणून निवड;</li>
-                                                <li>१९९९-२००४, २००४-२००९ सदस्य, महाराष्ट्र विधानसभा; सदस्य, विधानमंडळ नियम समिती, सार्वजनिक उपक्रम समिती, विनंती अर्ज समिती, गृहनिर्माण व नगरविकास स्थायी समिती; सदस्य, महाराष्ट्र जीवन प्राधिकरण समिती; सदस्य, कार्यकारी परिषद डॉ. पंजाबराव देशमुख कृषी विद्यापीठ; ओ.बी.सी. नॉन क्रिमीलेअर प्रमाणपत्राची उत्पन्न मर्यादा वाढविण्यासाठी विशेष व यशस्वी प्रयत्न; राष्ट्रकुल संसदीय मंडळ महाराष्ट्र शाखेच्यावतीने सन २००३ या वर्षाचा महाराष्ट्र विधानसभेतील उत्कृष्ट संसदपटू पुरस्कार प्राप्त; उत्कृष्ट वक्‍ता म्हणून राष्ट्रीय पुरस्कार प्राप्त; रोटरी क्लबचा मोस्ट चॅलेजिंग युथ अॅवार्ड प्रापत; हिंदू लॉं. विषयात नागपूर विद्यापीठाचा बी.के. बोस अवॉर्ड प्राप्त; राज्य व राष्ट्रीय स्तरावरील अनेक पुरस्कारांनी सन्मानीत; यशदा, पुणे येथे अर्बन फायनान्सिंग विषयावर व्याख्याने दिली; </li>
-                                                <li>ऑक्टोबर २००९ मध्ये महाराष्ट्र विधानसभेवर फेरनिवड. लेखन व प्रकाशन : विधानमंडळ सदस्यांना अर्थसंकल्प समजून घेणे सुलभ व्हावे यासाठी उपयुक्त असणारे पुस्तक अर्थसंकल्प म्हणजे नेमके काय, २००५ या पुस्तकाचे लेखन व प्रकाशन, २०१० मध्ये या पुस्तकाच्या दुसऱ्या आवृत्तीचे प्रकाशन</li>
+                                                {current?.political_journey?.map((item, index) => (
+                                                    <li key={index}>{item?.date}; {item?.title}</li>
+                                                ))}
                                             </ul>
                                         </div>
                                     </Col >

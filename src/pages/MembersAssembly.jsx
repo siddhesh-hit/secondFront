@@ -46,33 +46,8 @@ const MembersAssembly = () => {
         ministry_name: "",
     });
 
-    let obj = {
-        Legislatio: "विधिविधान",
-        budget: "अर्थसंकल्पीय आयुधे",
-        device: "आयुधे",
-        legisl: "विधिविधान",
-        other: "इतर",
-        surname: "संसदीय कामकाज पद्धती",
-        budget_s: "अर्थसंकल्पीय आयुधे",
-        devices: "आयुधे",
-        proceeding: "संसदीय कामकाज पद्धती",
-    };
-
-    let surnames = [
-        "विधिविधान",
-        "अर्थसंकल्पीय आयुधे",
-        "आयुधे",
-        "विधिविधान",
-        "इतर",
-        "संसदीय कामकाज पद्धती",
-        "अर्थसंकल्पीय आयुधे",
-        "आयुधे",
-        "संसदीय कामकाज पद्धती",
-    ];
-
     const handleOnSearch = (string, results) => {
         console.log({ string, results });
-
     };
 
     const handleOnSelect = (item) => {
@@ -88,7 +63,6 @@ const MembersAssembly = () => {
             ...prev,
             [name]: value,
         }));
-
     };
 
     const handleReset = () => {
@@ -101,7 +75,6 @@ const MembersAssembly = () => {
             gender: "",
             ministry_name: "",
         }));
-
         debateFetch();
     };
 
@@ -123,8 +96,6 @@ const MembersAssembly = () => {
     };
 
     const handleSort = () => {
-        // console.log(debate)
-
         if (sorted) {
             const newDebate = debate.data.sort((a, b) =>
                 b.topic.localeCompare(a.topic)
@@ -141,7 +112,6 @@ const MembersAssembly = () => {
     };
 
     const debateFetch = async () => {
-        // console.log(currentPage, pageLimit);
         let house = search.house === "एकत्रित" ? "" : search.house === "विधानसभा" ? "Assembly" : search.house === "विधानपरिषद" ? "Council" : "";
         await getApi(
             `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}`
@@ -149,9 +119,6 @@ const MembersAssembly = () => {
             .then((res) => setDebate(res.data.data))
             .catch((err) => console.log(err));
     };
-
-
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -214,6 +181,7 @@ const MembersAssembly = () => {
         };
         fetchData();
     }, []);
+
     useEffect(() => {
         debateFetch();
     }, [
@@ -222,7 +190,6 @@ const MembersAssembly = () => {
         currentPage,
         pageLimit,]);
 
-    console.log("debate", debate)
     return (
         <div>
             <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
@@ -452,8 +419,8 @@ const MembersAssembly = () => {
                                         </div>
                                         <p>
                                             {" "}
-                                            {debate?.count
-                                                ? `[${debate?.count} परिणाम]`
+                                            {debate?.length
+                                                ? `[${debate?.length} परिणाम]`
                                                 : "[0 परिणाम]"}
                                         </p>
                                     </div>

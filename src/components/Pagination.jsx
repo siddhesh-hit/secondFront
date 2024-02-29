@@ -4,7 +4,11 @@ function PaginationComponent({
   totalCount = 10,
   pageLimit = 10,
 }) {
+
+
   const totalPages = Math.ceil(totalCount / pageLimit);
+
+  console.log(totalPages)
 
   // Function to determine which page numbers to display
   const getPageNumbersToShow = () => {
@@ -16,9 +20,9 @@ function PaginationComponent({
 
     if (totalPages <= numPagesToShow) {
       // If total pages is less than the number of pages to show on each side plus 1
-      // for (let i = 1; i < totalPages - 1; i++) {
-      //   pagesToShow.push(i);
-      // }
+      for (let i = 1; i < totalPages; i++) {
+        pagesToShow.push(i);
+      }
       return pagesToShow;
     } else {
       // If total pages is greater than the number of pages to show on each side plus 1
@@ -70,9 +74,8 @@ function PaginationComponent({
             onClick={() =>
               setCurrentPage(typeof item === "number" ? item : currentPage + 1)
             }
-            className={`${
-              typeof item === "number" && item === currentPage ? "active " : ""
-            } paginationnn pagess`}
+            className={`${typeof item === "number" && item === currentPage ? "active " : ""
+              } paginationnn pagess`}
           >
             <span>{typeof item === "number" ? item + 1 : item}</span>
           </div>
