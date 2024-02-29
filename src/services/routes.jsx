@@ -21,6 +21,17 @@ import Feedback from "../pages/Feedback";
 import MemberAssemblyDetails from "../pages/MemberAssemblyDetails";
 import MembersCouncil from "../pages/MembersCouncil";
 import MemberCouncilDetails from "../pages/MemberCouncilDetails";
+import Gallery from "../components/Gallery";
+import LegislativeAssembly from "../pages/LegislativeAssembly";
+import LegislativeCouncil from "../pages/LegislativeCouncil";
+import Judgments from "../pages/Judgments";
+import SessionCalender from "../pages/SessionCalender";
+import Gazetteers from "../pages/Gazetteers";
+import Publications from "../pages/Publications";
+import Gazette from "../pages/Gazette";
+import Electionresult from "../pages/ElectionResult";
+import Budgetyear from "../pages/BudgetYear";
+import LegislationsBills from "../pages/LegislationsBills";
 
 export const routes = [
   {
@@ -129,5 +140,60 @@ export const routes = [
     path: "/member-council-details/:id",
     exact: true,
     element: <MemberCouncilDetails />,
+  },
+  {
+    path: "/gallery",
+    exact: true,
+    element: <Gallery />,
+  },
+  {
+    path: "/LegislativeAssembly",
+    exact: true,
+    element: <LegislativeAssembly />,
+  },
+  {
+    path: "/LegislativeCouncil",
+    exact: true,
+    element: <LegislativeCouncil />,
+  },
+  {
+    path: "/Judgments",
+    exact: true,
+    element: <Judgments />,
+  },
+  {
+    path: "/SessionCalender",
+    exact: true,
+    element: <SessionCalender />,
+  },
+  {
+    path: "/Gazetteers",
+    exact: true,
+    element: <Gazetteers />,
+  },
+  {
+    path: "/Publications",
+    exact: true,
+    element: <Publications />,
+  },
+  {
+    path: "/Gazette",
+    exact: true,
+    element: <Gazette />,
+  },
+  {
+    path: "/Electionresult",
+    exact: true,
+    element: <Electionresult />,
+  },
+  {
+    path: "/Budgetyear",
+    exact: true,
+    element: <Budgetyear />,
+  },
+  {
+    path: "/LegislationsBills",
+    exact: true,
+    element: <LegislationsBills />,
   },
 ];
