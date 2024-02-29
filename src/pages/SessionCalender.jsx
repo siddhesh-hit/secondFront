@@ -64,51 +64,19 @@ const SessionCalender = () => {
     const handleReset = () => {
         setSearch((prev) => ({
             ...prev,
-            party: "",
-            constituency: "",
-            surname: "",
-            district: "",
-            gender: "",
-            ministry_name: "",
-        }));
-
-        debateFetch();
-    };
-
-    const handleStart = () => {
-        setSearch((prev) => ({
-            ...prev,
             topic: "",
-            members_name: "",
             house: "विधानसभा",
             session: "",
-            party: "",
-            constituency: "",
-            surname: "",
-            district: "",
-            gender: "",
-            ministry_name: "",
+            year: "",
+
         }));
+
         debateFetch();
     };
 
-    const handleSort = () => {
-        // console.log(debate)
 
-        if (sorted) {
-            const newDebate = debate.data.sort((a, b) =>
-                b.topic.localeCompare(a.topic)
-            );
-            setDebate(newDebate);
-            setSorted(!sorted);
-        } else {
-            const newDebate = debate.data.sort((a, b) =>
-                a.topic.localeCompare(b.topic)
-            );
-            setDebate(newDebate);
-            setSorted(!sorted);
-        }
-    };
+
+
 
     const debateFetch = async () => {
         // console.log(currentPage, pageLimit);
@@ -158,36 +126,12 @@ const SessionCalender = () => {
                 })
                 .catch((err) => console.log(err));
 
-            // await getApi("session/option?id=basic_info.district")
-            //     .then((res) => {
-            //         if (res.data.success) {
-            //             setOptions((prev) => ({
-            //                 ...prev,
-            //                 district: res.data.data,
-            //             }));
-            //         }
-            //     })
-            //     .catch((err) => console.log(err));
-
-            // await getApi("session/option?id=basic_info.gender")
-            //     .then((res) => {
-            //         if (res.data.success) {
-            //             setOptions((prev) => ({
-            //                 ...prev,
-            //                 gender: res.data.data,
-            //             }));
-            //         }
-            //     })
-            //     .catch((err) => console.log(err));
-
-
         };
         fetchData();
     }, [checkLang]);
     useEffect(() => {
         debateFetch();
     }, [
-        search.members_name,
         search.house,
         currentPage,
         pageLimit,]);
@@ -303,7 +247,9 @@ const SessionCalender = () => {
                                 </Accordion>
                             </div>
                             <div className="formbutton">
-                                <button className="reset">
+                                <button className="reset"
+                                    onClick={handleReset}
+                                >
                                     Reset
                                 </button>
                                 <button className="apply">
@@ -326,7 +272,7 @@ const SessionCalender = () => {
                                 <button onClick={debateFetch} className="searchb">
                                     <i className="fa fa-search" />
                                 </button>
-                                <button className="startover">
+                                <button onClick={handleReset} className="startover">
                                     Reset
                                 </button>
                             </div>
