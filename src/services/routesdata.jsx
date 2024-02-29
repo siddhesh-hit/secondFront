@@ -15,15 +15,17 @@ import HelmetWrapper from "../components/HelmetWrapper";
 const Layout = ({ children }) => {
   const location = useLocation();
   const noHeaderFooterPaths = [
-    "/Login",
-    "/Register",
+    "/login",
+    "/register",
     "/phone-login",
     "/verify-otp",
     "/resetPassword",
     "/forgetpassword",
   ];
 
-  const showHeaderFooter = !noHeaderFooterPaths.includes(location.pathname);
+  const showHeaderFooter = !noHeaderFooterPaths.includes(
+    location.pathname.toLowerCase()
+  );
   console.log(showHeaderFooter);
   return (
     <>
