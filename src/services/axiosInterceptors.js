@@ -36,4 +36,6 @@ const deleteApi = (url, id) => {
   return axiosInstance.delete(`${url}/${id}`);
 };
 
-export { getApi, getApiById, postApi, putApi, deleteApi };
+const ImageUrl = "https://mlsapi.sblcorp.com/";
+
+export { getApi, getApiById, postApi, putApi, deleteApi, ImageUrl };

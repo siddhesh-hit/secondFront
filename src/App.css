@@ -705,16 +705,16 @@ p.library {
     font-weight: 500;
 }
 
-button.pdf-btn .fa {
+a.pdf-btn .fa {
     margin-left: 10px;
     position: relative;
     top: 1px;
 }
 
-button.pdf-btn {
+a.pdf-btn {
     background: #4e3431;
     align-items: center;
-    display: flex;
+    text-decoration: none;
     margin-top: 20px;
     padding: 15px 40px;
     border: aliceblue;
@@ -2374,4 +2374,142 @@ ul.mb-3.nav.nav-tabs {
 .imgprofile {
     position: relative;
     padding: 3px;
+}
+
+.legislative-assembly {
+    background-image: url(/src/assets/members.svg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.left-sidebar-assembly {
+    box-shadow: 0px 1px 4px 1px #00000040;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.right-side-assembly {
+    box-shadow: 0px 1px 4px 1px #00000040;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.legislative-assembly-content.container-fluid {
+    padding: 0px 40px;
+}
+
+.left-sidebar-assembly p {
+    font-size: 15px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-family: 'Sakal Marathi';
+}
+
+h2.bio-head {
+    display: inline-block;
+    font-family: 'Sakal Marathi';
+    font-size: 18px;
+    font-weight: 700;
+    color: #4e3431;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.importantnotes h6 {
+    font-size: 12px;
+    padding-bottom: 3px;
+    font-family: 'Sakal Marathi';
+    line-height: 1.7;
+    font-weight: 500;
+}
+
+.left-sidebar-assembly img {
+    border-radius: 5px;
+}
+
+h4.subtitle-name {
+    font-size: 16px;
+    font-family: 'Sakal Marathi';
+    font-weight: 500;
+}
+
+.linkcouncil a {
+    color: black;
+    font-size: 14px;
+}
+
+.linkcouncil {
+    margin-bottom: 10px;
+}
+
+h3.political-groups {
+    padding-top: 15px;
+    font-family: 'Sakal Marathi';
+    font-size: 18px;
+    font-weight: 700;
+    color: #4e3431;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.assembly-member-profile.row {
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.box-bottom-text {
+    background-color: #2c6747;
+    padding: 10px 10px;
+    text-align: center;
+}
+
+.img-boxing {
+    border: 1px solid grey;
+    background: white;
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+h3.nameHead {
+    color: white;
+    font-family: 'Sakal Marathi';
+    font-size: 13px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+}
+
+p.name-info {
+    color: white;
+    font-family: 'Sakal Marathi';
+    font-size: 13px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+}
+
+p.name-info p {
+    margin-bottom: 0px;
+}
+
+.centerdiv .row {
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.comingsoon h3 {
+    font-family: 'Sakal Marathi';
+    font-size: 60px;
+    font-weight: 500;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+.comingsoon {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

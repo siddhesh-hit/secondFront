@@ -199,22 +199,22 @@ const Header = () => {
                           title="विधिमंडळ  "
                           id={`offcanvasNavbarDropdown-expand-${expand}`}
                         >
-                          <NavDropdown.Item href="#action4">
+                          <NavDropdown.Item href="rajyapal">
                             राज्यपाल
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="#action5">
+                          <NavDropdown.Item href="LegislativeCouncil">
                             विधानपरिषद
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="#action5">
+                          <NavDropdown.Item href="LegislativeAssembly">
                             विधानसभा
                           </NavDropdown.Item>
                           <NavDropdown.Item href="#action5">
                             विधानमंडळ सचिव
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="#action5">
+                          <NavDropdown.Item href="/mantri-parishad">
                             मंत्रीमंडळ
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="#action5">
+                          <NavDropdown.Item href="Library">
                             विधानमंडळ ग्रंथालय
                           </NavDropdown.Item>
                         </NavDropdown>
@@ -246,7 +246,7 @@ const Header = () => {
                           title="विविध "
                           id={`offcanvasNavbarDropdown-expand-${expand}`}
                         >
-                          <NavDropdown.Item href="#action4">
+                          <NavDropdown.Item href="gallery">
                             गॅलरी
                           </NavDropdown.Item>
                           <NavDropdown.Item href="#action5">
