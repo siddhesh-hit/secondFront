@@ -71,20 +71,19 @@ const Header = () => {
 
   return (
     <div>
-      <div
-        className={`${
-          location === "/"
-            ? "blueColor topheader"
-            : location === "/Homepage2"
+      <div id="toplocation"
+        className={`${location === "/"
+          ? "blueColor topheader"
+          : location === "/Homepage2"
             ? "otherColor"
             : location === "/Homepage1"
-            ? "newheadercolor"
-            : location === "/Debate"
-            ? "topheader"
-            : location === "/DebateDetail"
-            ? "newheadercolor"
-            : "topheader"
-        }`}
+              ? "newheadercolor"
+              : location === "/Debate"
+                ? "topheader"
+                : location === "/DebateDetail"
+                  ? "newheadercolor"
+                  : "topheader"
+          }`}
       >
         <Container fluid>
           <Row>
@@ -151,8 +150,8 @@ const Header = () => {
         </Container>
       </div>
       {location === "/" ||
-      location === "/Homepage1" ||
-      location === "/Homepage2" ? (
+        location === "/Homepage1" ||
+        location === "/Homepage2" ? (
         <div className="headerlogos">
           <Container fluid>
             <Row className="midhead one">
@@ -226,7 +225,7 @@ const Header = () => {
                           title={header[checkLang].legislature}
                           id={`offcanvasNavbarDropdown-expand-${expand}`}
                         >
-                          <NavDropdown.Item href="rajyapal">
+                          <NavDropdown.Item href="Governer">
                             {header[checkLang].governor}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="LegislativeCouncil">
@@ -251,21 +250,18 @@ const Header = () => {
                           </Link>
                         </div>
                         <Nav.Link
-                          className={`${
-                            location === "/Debate" ? "active" : ""
-                          }`}
+                          className={`${location === "/Debate" ? "active" : ""
+                            }`}
                           href="/Debate"
                         >
                           {header[checkLang].Debate}
                         </Nav.Link>
-                        <Nav.Link href="#action2">
+                        <Nav.Link href="/LegislationsBills">
                           {header[checkLang].Legislation}
                         </Nav.Link>
-                        <Nav.Link href="#action2">
-                          {header[checkLang].Budget}{" "}
+                        <Nav.Link href="/Budgetyear">
+                          {header[checkLang].Budget}
                         </Nav.Link>
-                        <Nav.Link href="/LegislationsBills">{header[checkLang].Legislation}</Nav.Link>
-                        <Nav.Link href="/Budgetyear">{header[checkLang].Budget} </Nav.Link>
                         <div>
                           <Link className="nav-link" to="/Electionresult">
                             {header[checkLang].Elections}

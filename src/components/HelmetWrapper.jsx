@@ -9,15 +9,22 @@ const HelmetWrapper = () => {
   const [Loading, setLoader] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
+  console.log("location", location.pathname);
   const seoData = useSelector((state) => state.seo);
+  const element = document.getElementById("toplocation");
 
+  if (element) {
+    element.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest",
+    });
+  }
   const fetchData = async () => {
     setLoader(true);
     await getApi(
       `seo/page?page=${
-        location.pathname === "/"
-          ? "HomePage"
-          : location.pathname.replace(/\//g, "")
+        location.pathname === "/" ? "/" : location.pathname.replace(/\//g, "")
       }`
     )
       .then((response) => {
@@ -25,24 +32,22 @@ const HelmetWrapper = () => {
         dispatch(setSEOData(response.data.data));
       })
       .catch((error) => setLoader(false));
+    // Update Redux state with the fetched SEO data
   };
-
+  // Simulate fetching SEO data on component mount and whenever the location changes
   useEffect(() => {
     fetchData();
   }, [location.pathname]);
-
+  console.log("seoData", seoData);
   return (
     !Loading && (
       <Helmet>
-        <title>{seoData?.data?.title || "MLS"}</title>
+        <title>{seoData?.data?.title || "Default Title"}</title>
         <meta
           name="description"
           content={seoData?.data?.description || "Default Description"}
         />
-        <meta
-          name="keywords"
-          content={seoData?.data?.keywords || "Default keywords"}
-        />
+        {/* Add other meta tags as needed */}
       </Helmet>
     )
   );

@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Accordion, Form } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Accordion,
+  Form,
+  Offcanvas,
+  Button,
+} from "react-bootstrap";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { Link } from "react-router-dom";
 
@@ -18,12 +26,25 @@ import useLang from "../hooks/useLang";
 const MembersAssembly = () => {
   const [debate, setDebate] = useState([]);
   const [isDivVisible, setDivVisibility] = useState(false);
+  const [isDivVisible1, setDivVisibility1] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageLimit, setPageLimit] = useState(10);
   const [modalShow, setModalShow] = useState(true);
   const [sorted, setSorted] = useState(false);
   const { lang, checkLang } = useLang();
 
+  const [search, setSearch] = useState({
+    topic: "",
+    members_name: "",
+    house: "विधानसभा",
+    session: "",
+    party: "",
+    constituency: "",
+    surname: "",
+    district: "",
+    gender: "",
+    ministry_name: "",
+  });
   const [search, setSearch] = useState({
     topic: "",
     members_name: "",
@@ -45,7 +66,18 @@ const MembersAssembly = () => {
     gender: "",
     ministry_name: "",
   });
+  const [options, setOptions] = useState({
+    party: "",
+    constituency: "",
+    surname: "",
+    district: "",
+    gender: "",
+    ministry_name: "",
+  });
 
+  const handleOnSearch = (string, results) => {
+    console.log({ string, results });
+  };
   const handleOnSearch = (string, results) => {
     console.log({ string, results });
   };
@@ -56,7 +88,20 @@ const MembersAssembly = () => {
       members_name: item.name,
     }));
   };
+  const handleOnSelect = (item) => {
+    setSearch((prev) => ({
+      ...prev,
+      members_name: item.name,
+    }));
+  };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSearch((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSearch((prev) => ({
@@ -77,7 +122,35 @@ const MembersAssembly = () => {
     }));
     debateFetch();
   };
+  const handleReset = () => {
+    setSearch((prev) => ({
+      ...prev,
+      party: "",
+      constituency: "",
+      surname: "",
+      district: "",
+      gender: "",
+      ministry_name: "",
+    }));
+    debateFetch();
+  };
 
+  const handleStart = () => {
+    setSearch((prev) => ({
+      ...prev,
+      topic: "",
+      members_name: "",
+      house: "विधानसभा",
+      session: "",
+      party: "",
+      constituency: "",
+      surname: "",
+      district: "",
+      gender: "",
+      ministry_name: "",
+    }));
+    debateFetch();
+  };
   const handleStart = () => {
     setSearch((prev) => ({
       ...prev,
@@ -110,7 +183,37 @@ const MembersAssembly = () => {
       setSorted(!sorted);
     }
   };
+  const handleSort = () => {
+    if (sorted) {
+      const newDebate = debate.data.sort((a, b) =>
+        b.topic.localeCompare(a.topic)
+      );
+      setDebate(newDebate);
+      setSorted(!sorted);
+    } else {
+      const newDebate = debate.data.sort((a, b) =>
+        a.topic.localeCompare(b.topic)
+      );
+      setDebate(newDebate);
+      setSorted(!sorted);
+    }
+  };
 
+  const debateFetch = async () => {
+    let house =
+      search.house === "एकत्रित"
+        ? ""
+        : search.house === "विधानसभा"
+        ? "Assembly"
+        : search.house === "विधानपरिषद"
+        ? "Council"
+        : "";
+    await getApi(
+      `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}`
+    )
+      .then((res) => setDebate(res.data.data))
+      .catch((err) => console.log(err));
+  };
   const debateFetch = async () => {
     let house =
       search.house === "एकत्रित"
@@ -139,7 +242,29 @@ const MembersAssembly = () => {
           }
         })
         .catch((err) => console.log(err));
+  useEffect(() => {
+    const fetchData = async () => {
+      await getApi("member/option?id=basic_info.party")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              party: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
 
+      await getApi("member/option?id=basic_info.constituency")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              constituency: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
       await getApi("member/option?id=basic_info.constituency")
         .then((res) => {
           if (res.data.success) {
@@ -161,7 +286,27 @@ const MembersAssembly = () => {
           }
         })
         .catch((err) => console.log(err));
+      await getApi("member/option?id=basic_info.surname")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              surname: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
 
+      await getApi("member/option?id=basic_info.district")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              district: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
       await getApi("member/option?id=basic_info.district")
         .then((res) => {
           if (res.data.success) {
@@ -186,7 +331,23 @@ const MembersAssembly = () => {
     };
     fetchData();
   }, []);
+      await getApi("member/option?id=basic_info.gender")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              gender: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchData();
+  }, []);
 
+  useEffect(() => {
+    debateFetch();
+  }, [search.members_name, search.house, currentPage, pageLimit]);
   useEffect(() => {
     debateFetch();
   }, [search.members_name, search.house, currentPage, pageLimit]);
@@ -197,6 +358,249 @@ const MembersAssembly = () => {
       <Container fluid className="memberlistpage">
         <Row>
           <Col lg={3}>
+            <div className="filters">
+              <div className="firstfilter">
+                <h3>फिल्टर</h3>
+                <Accordion className="filsss" defaultActiveKey={["0"]}>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>सदस्य</Accordion.Header>
+                    <Accordion.Body>
+                      <div className="filtercontent">
+                        <ReactSearchAutocomplete
+                          className="mb-3 mt-2"
+                          items={
+                            debate.length > 0
+                              ? debate.map((item) => {
+                                  return { name: item.basic_info.name };
+                                })
+                              : memberName
+                          }
+                          placeholder="सदस्य शोधा"
+                          onSearch={handleOnSearch}
+                          onSelect={handleOnSelect}
+                        />
+                        {/* <ReactSearchAutocomplete
+  return (
+    <div>
+      <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
+      <Container fluid className="memberlistpage">
+        <Row>
+          <Col lg={3} className="d-lg-none mb-3">
+            <Button onClick={() => setDivVisibility(true)}>
+              <i className="fa fa-bars mx-1"></i> फिल्टर उघडा
+            </Button>
+          </Col>
+          <Offcanvas
+            className="filtermobile"
+            show={isDivVisible}
+            onHide={() => setDivVisibility(false)}
+          >
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>फिल्टर</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <div className="filters">
+                <div className="firstfilter">
+                  <h3>फिल्टर</h3>
+                  <Accordion className="filsss" defaultActiveKey={["0"]}>
+                    <Accordion.Item eventKey="0">
+                      <Accordion.Header>सदस्य</Accordion.Header>
+                      <Accordion.Body>
+                        <div className="filtercontent">
+                          <ReactSearchAutocomplete
+                            className="mb-3 mt-2"
+                            items={
+                              debate.length > 0
+                                ? debate.map((item) => {
+                                    return { name: item.basic_info.name };
+                                  })
+                                : memberName
+                            }
+                            placeholder="सदस्य शोधा"
+                            onSearch={handleOnSearch}
+                            onSelect={handleOnSelect}
+                          />
+                          {/* <ReactSearchAutocomplete
+                                                    className="mb-3"
+                                                    items={debate.length > 0 ? debate.map((item) => {
+                                                        return { name: item.basic_info.name }
+                                                    }) : memberName}
+                                                    placeholder="पदनाव"
+                                                    onSearch={handleOnSearch}
+                                                    onSelect={handleOnSelect}
+                                                /> */}
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="1">
+                      <Accordion.Header>सभागृह</Accordion.Header>
+                      <Accordion.Body>
+                        <div className="filtercontent">
+                          <div className="datacheck">
+                            <label>विधानपरिषद</label>
+                            <Form.Check
+                              aria-label="option 1"
+                              name="house"
+                              checked={search.house === "विधानपरिषद"}
+                              value={"विधानपरिषद"}
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="datacheck">
+                            <label>विधानसभा</label>
+                            <Form.Check
+                              aria-label="option 2"
+                              name="house"
+                              checked={search.house === "विधानसभा"}
+                              value={"विधानसभा"}
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="datacheck1">
+                            <label>एकत्रित</label>
+                            <Form.Check
+                              aria-label="option 3"
+                              name="house"
+                              checked={search.house === "एकत्रित"}
+                              value={"एकत्रित"}
+                              onChange={handleChange}
+                            />
+                          </div>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="2">
+                      <Accordion.Header>तारीख</Accordion.Header>
+                      <Accordion.Body>
+                        <div className="filtercontent">
+                          <Row className="daterange">
+                            <Col lg={4}>
+                              <label>पासून</label>
+                              <input
+                                className="form-control"
+                                disabled
+                                type="number"
+                                min={1987}
+                                max={2024}
+                                value={2011}
+                              />
+                            </Col>
+                            <Col lg={4}>
+                              <label>प्रयंत</label>
+                              <input
+                                className="form-control"
+                                disabled
+                                type="number"
+                                min={1987}
+                                max={2024}
+                                value={2011}
+                              />
+                            </Col>
+                            <Col lg={4}>
+                              <button className="apply1">अप्लाय</button>
+                            </Col>
+                          </Row>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                </div>
+                <hr />
+                <div className="secondfilter">
+                  <button
+                    className="advanced"
+                    onClick={() => setDivVisibility1(!isDivVisible1)}
+                  >
+                    ऍडव्हान्स फिल्टर
+                    <div className="iconss">{isDivVisible1 ? "-" : "+"}</div>
+                  </button>
+                  {isDivVisible1 && (
+                    <div className="advancdeee">
+                      <label>पक्षनिहाय</label>
+                      <select
+                        className="secondfilers"
+                        value={search.party}
+                        name="party"
+                        onChange={handleChange}
+                      >
+                        <option hidden>पक्षनिहाय</option>
+                        {options?.party?.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                      <label>मतदारसंघनिहाय</label>
+                      <select
+                        className="secondfilers"
+                        value={search.constituency}
+                        name="constituency"
+                        onChange={handleChange}
+                      >
+                        <option hidden>मतदारसंघनिहाय</option>
+                        {options?.constituency?.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                      <label>आडनावानुसार</label>
+                      <select
+                        className="secondfilers"
+                        value={search.surname}
+                        name="surname"
+                        onChange={handleChange}
+                      >
+                        <option hidden>आडनावानुसार</option>
+                        {options?.surname?.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                      <label>जिल्हानिहाय</label>
+                      <select
+                        className="secondfilers"
+                        value={search.district}
+                        name="district"
+                        onChange={handleChange}
+                      >
+                        <option hidden>जिल्हानिहाय</option>
+                        {options?.district?.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                      <label>लिंगनिहाय</label>
+                      <select
+                        className="secondfilers"
+                        value={search.gender}
+                        name="gender"
+                        onChange={handleChange}
+                      >
+                        <option hidden>लिंगनिहाय</option>
+                        {options?.gender?.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                </div>
+                <div className="formbutton">
+                  <button className="reset" onClick={handleReset}>
+                    रीसेट
+                  </button>
+                  <button className="apply" onClick={debateFetch}>
+                    अप्लाय
+                  </button>
+                </div>
+              </div>
+            </Offcanvas.Body>
+          </Offcanvas>
+          <Col lg={3} className="d-none d-lg-block">
             <div className="filters">
               <div className="firstfilter">
                 <h3>फिल्टर</h3>
@@ -307,13 +711,14 @@ const MembersAssembly = () => {
               <div className="secondfilter">
                 <button
                   className="advanced"
-                  onClick={() => setDivVisibility(!isDivVisible)}
+                  onClick={() => setDivVisibility1(!isDivVisible1)}
                 >
                   ऍडव्हान्स फिल्टर
-                  <div className="iconss">{isDivVisible ? "-" : "+"}</div>
+                  <div className="iconss">{isDivVisible1 ? "-" : "+"}</div>
                 </button>
-                {isDivVisible && (
+                {isDivVisible1 && (
                   <div className="advancdeee">
+                    <label>पक्षनिहाय</label>
                     <select
                       className="secondfilers"
                       value={search.party}
@@ -327,6 +732,7 @@ const MembersAssembly = () => {
                         </option>
                       ))}
                     </select>
+                    <label>मतदारसंघनिहाय</label>
                     <select
                       className="secondfilers"
                       value={search.constituency}
@@ -340,6 +746,7 @@ const MembersAssembly = () => {
                         </option>
                       ))}
                     </select>
+                    <label>आडनावानुसार</label>
                     <select
                       className="secondfilers"
                       value={search.surname}
@@ -353,6 +760,7 @@ const MembersAssembly = () => {
                         </option>
                       ))}
                     </select>
+                    <label>जिल्हानिहाय</label>
                     <select
                       className="secondfilers"
                       value={search.district}
@@ -366,6 +774,7 @@ const MembersAssembly = () => {
                         </option>
                       ))}
                     </select>
+                    <label>लिंगनिहाय</label>
                     <select
                       className="secondfilers"
                       value={search.gender}
@@ -457,7 +866,7 @@ const MembersAssembly = () => {
             </div>
             <Row className="data-graphs">
               <Col lg={8}>
-                <table className="debate-light table table-bordered">
+                <table className="debate-light table table-bordered responsive-table">
                   <thead>
                     <tr>
                       <th style={{ borderRight: "solid white 1px" }}>
@@ -484,14 +893,8 @@ const MembersAssembly = () => {
                           : (twoEntry = false);
 
                         return (
-                          <tr key={index + 1}>
-                            <td>
-                              {/* <HighlightSentence
-                                data={"1"}
-                                search={search?.house}
-                              /> */}
-                              {index + 1}
-                            </td>
+                          <tr key={index}>
+                            <td>{index + 1}</td>
                             <td>
                               <Link
                                 to={`/member-assembly-details/${item?._id}`}
