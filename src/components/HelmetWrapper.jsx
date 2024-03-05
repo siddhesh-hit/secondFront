@@ -12,7 +12,11 @@ const HelmetWrapper = () => {
     const location = useLocation();
     console.log("location", location.pathname)
     const seoData = useSelector((state) => state.seo);
+    const element = document.getElementById("toplocation");
 
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+    }
     const fetchData = async () => {
         setLoader(true);
         await getApi(`seo/page?page=${location.pathname === "/" ? "/" : location.pathname.replace(/\//g, '')}`)

@@ -10,8 +10,8 @@ import Login from "../pages/Login";
 import MantriParishad from "../pages/MantriParishad";
 import MembersAssembly from "../pages/MembersAssembly";
 import PhoneLogin from "../pages/PhoneLogin";
-import Rajyapal from "../pages/Rajyapal";
-import RajyapalList from "../pages/RajyapalList";
+import Governer from "../pages/Governer";
+import GovernerList from "../pages/GovernerList";
 import Register from "../pages/Register";
 import SearchDetails from "../pages/SearchDetails";
 import VerifyOtp from "../pages/VerifyOtp";
@@ -32,6 +32,7 @@ import Gazette from "../pages/Gazette";
 import Electionresult from "../pages/ElectionResult";
 import Budgetyear from "../pages/BudgetYear";
 import LegislationsBills from "../pages/LegislationsBills";
+import Faq from "../pages/Faq";
 
 export const routes = [
   {
@@ -77,14 +78,14 @@ export const routes = [
     element: <DebateDetails />,
   },
   {
-    path: "/rajyapal",
+    path: "/Governer",
     exact: true,
-    element: <Rajyapal />,
+    element: <Governer />,
   },
   {
-    path: "/rajyapal-list",
+    path: "/GovernerList",
     exact: true,
-    element: <RajyapalList />,
+    element: <GovernerList />,
   },
   {
     path: "/SearchDetails",
@@ -195,5 +196,10 @@ export const routes = [
     path: "/LegislationsBills",
     exact: true,
     element: <LegislationsBills />,
+  },
+  {
+    path: "/Faq",
+    exact: true,
+    element: <Faq />,
   },
 ];

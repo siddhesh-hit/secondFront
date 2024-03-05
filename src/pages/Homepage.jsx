@@ -4,16 +4,20 @@ import { Link } from "react-router-dom";
 
 import useLang from "../hooks/useLang";
 import { home, homeLink } from "../data/constant";
-
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 const Homepage = () => {
   const [search, setSearch] = useState([]);
   const { lang, checkLang } = useLang();
+  AOS.init();
 
   return (
     <div>
       <section className="homepageback">
-        <h1 style={{ whiteSpace: "pre-line" }}>{home[checkLang].header}</h1>
-        <Row className="form-controlss">
+        <h1 data-aos="fade-up"
+          data-aos-duration="3000" style={{ whiteSpace: "pre-line" }}>{home[checkLang].header}</h1>
+        <Row data-aos="fade-up"
+          data-aos-duration="3000" className="form-controlss">
           <Col lg={6}>
             <input
               className="form-control"
