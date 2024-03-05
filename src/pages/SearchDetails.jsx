@@ -53,7 +53,7 @@ const SearchDetails = () => {
         <div className="container">
           <div className="row sub_cat">
             <div className="col-lg-12 table-responsive">
-              <table className="table table-bordered mytable">
+              <table className="table table-bordered mytable responsive-table">
                 <thead>
                   <tr>
                     <th

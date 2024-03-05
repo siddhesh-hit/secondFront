@@ -34,38 +34,36 @@ const Footer = () => {
   return (
     <div>
       <div
-        className={`${
-          location === "/"
+        className={`${location === "/"
             ? "footer"
             : location === "/Homepage2"
-            ? "otherColor12"
-            : location === "/Homepage1"
-            ? "newfooter"
-            : location === "/Debate"
-            ? "footer"
-            : location === "/DebateDetails"
-            ? "footer"
-            : "footer" // Default value if none of the conditions are met
-        }`}
+              ? "otherColor12"
+              : location === "/Homepage1"
+                ? "newfooter"
+                : location === "/Debate"
+                  ? "footer"
+                  : location === "/DebateDetails"
+                    ? "footer"
+                    : "footer" // Default value if none of the conditions are met
+          }`}
       >
         <div className="firstfoot">
-          <Link to="/">{footer[checkLang].title}</Link>
-          <Link to="/">{footer[checkLang].title1}</Link>
+          <Link to="/Faq">{footer[checkLang].title}</Link>
+          <Link to="/Gallery">{footer[checkLang].title1}</Link>
         </div>
         <div className="secondfoot">
           <Link to="/">{footer[checkLang].title2}</Link>
           <Link to="/AboutUs">{footer[checkLang].title3}</Link>
           <Link to="/Library">{footer[checkLang].title4}</Link>
-          <Link to="/">{footer[checkLang].title5}</Link>
-          <Link to="/">{footer[checkLang].title6}</Link>
+          <Link to="/News">{footer[checkLang].title5}</Link>
+          <Link to="/Governer">{footer[checkLang].title6}</Link>
         </div>
         <div className="thirdfooter">
           <Link to="/Feedback">{footer[checkLang].title7}</Link>
           <Link to="/HelpDesk">{footer[checkLang].title8}</Link>
-          <Link to="/">{footer[checkLang].title9}</Link>
+          <Link to="/all-links">{footer[checkLang].title9}</Link>
           <Link to="/">{footer[checkLang].title10}</Link>
           <Link to="/">{footer[checkLang].title11}</Link>
-          <Link to="/">{footer[checkLang].title12}</Link>
           <span style={{ color: "white" }}>
             {footer[checkLang].title13} : {count}
           </span>

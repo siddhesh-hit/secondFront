@@ -35,11 +35,11 @@ const DebateDetails = () => {
       <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
       <section className="debatedetails">
         <div className="container">
-          <a className="gobackss" href="/">
+          <a className="gobackss" href="/Debate">
             <i className="fa fa-angle-left" />
             Back
           </a>
-          <table className="table-lightt table table-bordered">
+          <table className="table-lightt table table-bordered responsive-table">
             <thead>
               <tr>
                 <th>विषय</th>
@@ -72,7 +72,7 @@ const DebateDetails = () => {
           <section className="debatelogo">
             <div className="row">
               <div className="col-lg-8">
-                <table className="table-ligneww table table-bordered">
+                <table className="table-ligneww table table-bordered responsive-table">
                   <thead className="thead-light" />
                   {debate && (
                     <tbody>

@@ -79,11 +79,11 @@ const home = {
         childtext: [
           {
             name: `विधानपरिषद`,
-            link: `/LegislativeCouncil`,
+            link: `/member-council`,
           },
           {
             name: `विधानसभा`,
-            link: `/LegislativeAssembly`,
+            link: `/members-assembly`,
           },
         ],
       },
