@@ -46,7 +46,27 @@ const MembersAssembly = () => {
     gender: "",
     ministry_name: "",
   });
+  const [search, setSearch] = useState({
+    topic: "",
+    members_name: "",
+    house: "विधानसभा",
+    session: "",
+    party: "",
+    constituency: "",
+    surname: "",
+    district: "",
+    gender: "",
+    ministry_name: "",
+  });
 
+  const [options, setOptions] = useState({
+    party: "",
+    constituency: "",
+    surname: "",
+    district: "",
+    gender: "",
+    ministry_name: "",
+  });
   const [options, setOptions] = useState({
     party: "",
     constituency: "",
@@ -59,7 +79,16 @@ const MembersAssembly = () => {
   const handleOnSearch = (string, results) => {
     console.log({ string, results });
   };
+  const handleOnSearch = (string, results) => {
+    console.log({ string, results });
+  };
 
+  const handleOnSelect = (item) => {
+    setSearch((prev) => ({
+      ...prev,
+      members_name: item.name,
+    }));
+  };
   const handleOnSelect = (item) => {
     setSearch((prev) => ({
       ...prev,
@@ -74,7 +103,26 @@ const MembersAssembly = () => {
       [name]: value,
     }));
   };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSearch((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
+  const handleReset = () => {
+    setSearch((prev) => ({
+      ...prev,
+      party: "",
+      constituency: "",
+      surname: "",
+      district: "",
+      gender: "",
+      ministry_name: "",
+    }));
+    debateFetch();
+  };
   const handleReset = () => {
     setSearch((prev) => ({
       ...prev,
@@ -104,7 +152,38 @@ const MembersAssembly = () => {
     }));
     debateFetch();
   };
+  const handleStart = () => {
+    setSearch((prev) => ({
+      ...prev,
+      topic: "",
+      members_name: "",
+      house: "विधानसभा",
+      session: "",
+      party: "",
+      constituency: "",
+      surname: "",
+      district: "",
+      gender: "",
+      ministry_name: "",
+    }));
+    debateFetch();
+  };
 
+  const handleSort = () => {
+    if (sorted) {
+      const newDebate = debate.data.sort((a, b) =>
+        b.topic.localeCompare(a.topic)
+      );
+      setDebate(newDebate);
+      setSorted(!sorted);
+    } else {
+      const newDebate = debate.data.sort((a, b) =>
+        a.topic.localeCompare(b.topic)
+      );
+      setDebate(newDebate);
+      setSorted(!sorted);
+    }
+  };
   const handleSort = () => {
     if (sorted) {
       const newDebate = debate.data.sort((a, b) =>
@@ -139,7 +218,34 @@ const MembersAssembly = () => {
       .catch((err) => console.log(err));
 
   };
+  const debateFetch = async () => {
+    let house =
+      search.house === "एकत्रित"
+        ? ""
+        : search.house === "विधानसभा"
+        ? "Assembly"
+        : search.house === "विधानपरिषद"
+        ? "Council"
+        : "";
+    await getApi(
+      `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}`
+    )
+      .then((res) => setDebate(res.data.data))
+      .catch((err) => console.log(err));
+  };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      await getApi("member/option?id=basic_info.party")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              party: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
   useEffect(() => {
     const fetchData = async () => {
       await getApi("member/option?id=basic_info.party")
@@ -163,6 +269,16 @@ const MembersAssembly = () => {
           }
         })
         .catch((err) => console.log(err));
+      await getApi("member/option?id=basic_info.constituency")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              constituency: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
 
       await getApi("member/option?id=basic_info.surname")
         .then((res) => {
@@ -174,7 +290,27 @@ const MembersAssembly = () => {
           }
         })
         .catch((err) => console.log(err));
+      await getApi("member/option?id=basic_info.surname")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              surname: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
 
+      await getApi("member/option?id=basic_info.district")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              district: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
       await getApi("member/option?id=basic_info.district")
         .then((res) => {
           if (res.data.success) {
@@ -199,11 +335,55 @@ const MembersAssembly = () => {
     };
     fetchData();
   }, []);
+      await getApi("member/option?id=basic_info.gender")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              gender: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     debateFetch();
   }, [search.members_name, search.house, currentPage, pageLimit]);
+  useEffect(() => {
+    debateFetch();
+  }, [search.members_name, search.house, currentPage, pageLimit]);
 
+  return (
+    <div>
+      <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
+      <Container fluid className="memberlistpage">
+        <Row>
+          <Col lg={3}>
+            <div className="filters">
+              <div className="firstfilter">
+                <h3>फिल्टर</h3>
+                <Accordion className="filsss" defaultActiveKey={["0"]}>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>सदस्य</Accordion.Header>
+                    <Accordion.Body>
+                      <div className="filtercontent">
+                        <ReactSearchAutocomplete
+                          className="mb-3 mt-2"
+                          items={
+                            debate.length > 0
+                              ? debate.map((item) => {
+                                  return { name: item.basic_info.name };
+                                })
+                              : memberName
+                          }
+                          placeholder="सदस्य शोधा"
+                          onSearch={handleOnSearch}
+                          onSelect={handleOnSelect}
+                        />
+                        {/* <ReactSearchAutocomplete
   return (
     <div>
       <PopupHome show={modalShow} onHide={() => setModalShow(false)} />

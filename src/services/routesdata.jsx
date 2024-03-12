@@ -4,7 +4,6 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
@@ -37,7 +36,6 @@ const Layout = ({ children }) => {
 };
 
 function RoutesData() {
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
   return (
     <>
       <Router>

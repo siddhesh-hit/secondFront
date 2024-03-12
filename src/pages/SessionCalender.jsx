@@ -5,7 +5,6 @@ import useLang from "../hooks/useLang"; 1
 import { ImageUrl, getApi } from "../services/axiosInterceptors";
 import { Link } from "react-router-dom";
 import { sessioncal } from "../data/constant";
-
 const SessionCalender = () => {
     const [isDivVisible, setDivVisibility] = useState(false);
     const [debate, setDebate] = useState([]);
@@ -14,21 +13,17 @@ const SessionCalender = () => {
     const [modalShow, setModalShow] = useState(true);
     const [sorted, setSorted] = useState(false);
     const { lang, checkLang } = useLang();
-
     const [search, setSearch] = useState({
         topic: "",
         house: "विधानसभा",
         session: "",
         year: "",
-
     });
-
     const [options, setOptions] = useState({
         session: [],
         houses: [],
         year: [],
     });
-
     let obj = {
         Legislatio: "विधिविधान",
         budget: "अर्थसंकल्पीय आयुधे",
@@ -40,28 +35,22 @@ const SessionCalender = () => {
         devices: "आयुधे",
         proceeding: "संसदीय कामकाज पद्धती",
     };
-
     const handleOnSearch = (string, results) => {
         console.log({ string, results });
-
     };
-
     const handleOnSelect = (item) => {
         setSearch((prev) => ({
             ...prev,
             members_name: item.name,
         }));
     };
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setSearch((prev) => ({
             ...prev,
             [name]: value,
         }));
-
     };
-
     const handleReset = () => {
         setSearch((prev) => ({
             ...prev,
@@ -72,10 +61,8 @@ const SessionCalender = () => {
             gender: "",
             ministry_name: "",
         }));
-
         debateFetch();
     };
-
     const handleStart = () => {
         setSearch((prev) => ({
             ...prev,
@@ -92,10 +79,8 @@ const SessionCalender = () => {
         }));
         debateFetch();
     };
-
     const handleSort = () => {
         // console.log(debate)
-
         if (sorted) {
             const newDebate = debate.data.sort((a, b) =>
                 b.topic.localeCompare(a.topic)
@@ -110,7 +95,6 @@ const SessionCalender = () => {
             setSorted(!sorted);
         }
     };
-
     const debateFetch = async () => {
         // console.log(currentPage, pageLimit);
         let house = search.house === "एकत्रित" ? "" : search.house === "विधानसभा" ? "Assembly" : search.house === "विधानपरिषद" ? "Council" : "";
@@ -120,10 +104,6 @@ const SessionCalender = () => {
             .then((res) => setDebate(res.data.data))
             .catch((err) => console.log(err));
     };
-
-
-
-
     useEffect(() => {
         const fetchData = async () => {
             await getApi("session/option?id=" + checkLang + ".session")
@@ -136,7 +116,6 @@ const SessionCalender = () => {
                     }
                 })
                 .catch((err) => console.log(err));
-
             await getApi("session/option?id=houses")
                 .then((res) => {
                     if (res.data.success) {
@@ -147,7 +126,6 @@ const SessionCalender = () => {
                     }
                 })
                 .catch((err) => console.log(err));
-
             await getApi("session/option?id=year")
                 .then((res) => {
                     if (res.data.success) {
@@ -158,7 +136,6 @@ const SessionCalender = () => {
                     }
                 })
                 .catch((err) => console.log(err));
-
             // await getApi("session/option?id=basic_info.district")
             //     .then((res) => {
             //         if (res.data.success) {
@@ -169,7 +146,6 @@ const SessionCalender = () => {
             //         }
             //     })
             //     .catch((err) => console.log(err));
-
             // await getApi("session/option?id=basic_info.gender")
             //     .then((res) => {
             //         if (res.data.success) {
@@ -180,8 +156,6 @@ const SessionCalender = () => {
             //         }
             //     })
             //     .catch((err) => console.log(err));
-
-
         };
         fetchData();
     }, [checkLang]);
@@ -254,11 +228,8 @@ const SessionCalender = () => {
                                                             />
                                                         </div>
                                                     </>
-
                                                 ))}
                                             </div>
-
-
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="2">
@@ -269,7 +240,6 @@ const SessionCalender = () => {
                                                 name="year"
                                                 onChange={handleChange}
                                                 value={search.year}
-
                                             >
                                                 <option disabled value="">Select Year</option>
                                                 {options?.year?.map((item, index) => (
@@ -390,11 +360,9 @@ const SessionCalender = () => {
                                                                 overlay={(props) => (
                                                                     <Tooltip {...props}>{doc?.title}</Tooltip>
                                                                 )}
-
                                                                 placement="top"
                                                             >
                                                                 <img src="/src/assets/debate/Frame.svg" alt="" />
-
                                                             </OverlayTrigger>
                                                         </a>
                                                     )
@@ -404,7 +372,6 @@ const SessionCalender = () => {
                                         </tr>
                                     ))
                                 }
-
                             </tbody>
                         </table>
                     </Col>
@@ -413,5 +380,4 @@ const SessionCalender = () => {
         </div>
     );
 };
-
 export default SessionCalender;
