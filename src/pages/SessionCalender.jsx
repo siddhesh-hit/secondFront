@@ -4,7 +4,7 @@ import Arrow from "../assets/debate/arrow.svg";
 import useLang from "../hooks/useLang"; 1
 import { ImageUrl, getApi } from "../services/axiosInterceptors";
 import { Link } from "react-router-dom";
-
+import { sessioncal } from "../data/constant";
 const SessionCalender = () => {
     const [isDivVisible, setDivVisibility] = useState(false);
     const [debate, setDebate] = useState([]);
@@ -13,21 +13,17 @@ const SessionCalender = () => {
     const [modalShow, setModalShow] = useState(true);
     const [sorted, setSorted] = useState(false);
     const { lang, checkLang } = useLang();
-
     const [search, setSearch] = useState({
         topic: "",
         house: "विधानसभा",
         session: "",
         year: "",
-
     });
-
     const [options, setOptions] = useState({
         session: [],
         houses: [],
         year: [],
     });
-
     let obj = {
         Legislatio: "विधिविधान",
         budget: "अर्थसंकल्पीय आयुधे",
@@ -39,29 +35,35 @@ const SessionCalender = () => {
         devices: "आयुधे",
         proceeding: "संसदीय कामकाज पद्धती",
     };
-
     const handleOnSearch = (string, results) => {
         console.log({ string, results });
-
     };
-
     const handleOnSelect = (item) => {
         setSearch((prev) => ({
             ...prev,
             members_name: item.name,
         }));
     };
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setSearch((prev) => ({
             ...prev,
             [name]: value,
         }));
-
     };
-
     const handleReset = () => {
+        setSearch((prev) => ({
+            ...prev,
+            party: "",
+            constituency: "",
+            surname: "",
+            district: "",
+            gender: "",
+            ministry_name: "",
+        }));
+        debateFetch();
+    };
+    const handleStart = () => {
         setSearch((prev) => ({
             ...prev,
             topic: "",
@@ -73,11 +75,22 @@ const SessionCalender = () => {
 
         debateFetch();
     };
-
-
-
-
-
+    const handleSort = () => {
+        // console.log(debate)
+        if (sorted) {
+            const newDebate = debate.data.sort((a, b) =>
+                b.topic.localeCompare(a.topic)
+            );
+            setDebate(newDebate);
+            setSorted(!sorted);
+        } else {
+            const newDebate = debate.data.sort((a, b) =>
+                a.topic.localeCompare(b.topic)
+            );
+            setDebate(newDebate);
+            setSorted(!sorted);
+        }
+    };
     const debateFetch = async () => {
         // console.log(currentPage, pageLimit);
         let house = search.house === "एकत्रित" ? "" : search.house === "विधानसभा" ? "Assembly" : search.house === "विधानपरिषद" ? "Council" : "";
@@ -87,10 +100,6 @@ const SessionCalender = () => {
             .then((res) => setDebate(res.data.data))
             .catch((err) => console.log(err));
     };
-
-
-
-
     useEffect(() => {
         const fetchData = async () => {
             await getApi("session/option?id=" + checkLang + ".session")
@@ -103,7 +112,6 @@ const SessionCalender = () => {
                     }
                 })
                 .catch((err) => console.log(err));
-
             await getApi("session/option?id=houses")
                 .then((res) => {
                     if (res.data.success) {
@@ -114,7 +122,6 @@ const SessionCalender = () => {
                     }
                 })
                 .catch((err) => console.log(err));
-
             await getApi("session/option?id=year")
                 .then((res) => {
                     if (res.data.success) {
@@ -125,7 +132,26 @@ const SessionCalender = () => {
                     }
                 })
                 .catch((err) => console.log(err));
-
+            // await getApi("session/option?id=basic_info.district")
+            //     .then((res) => {
+            //         if (res.data.success) {
+            //             setOptions((prev) => ({
+            //                 ...prev,
+            //                 district: res.data.data,
+            //             }));
+            //         }
+            //     })
+            //     .catch((err) => console.log(err));
+            // await getApi("session/option?id=basic_info.gender")
+            //     .then((res) => {
+            //         if (res.data.success) {
+            //             setOptions((prev) => ({
+            //                 ...prev,
+            //                 gender: res.data.data,
+            //             }));
+            //         }
+            //     })
+            //     .catch((err) => console.log(err));
         };
         fetchData();
     }, [checkLang]);
@@ -145,7 +171,7 @@ const SessionCalender = () => {
                                 <h3>Filter</h3>
                                 <Accordion className="filsss" defaultActiveKey={["0", "1", "2"]} alwaysOpen>
                                     <Accordion.Item eventKey="0">
-                                        <Accordion.Header>सभागृह</Accordion.Header>
+                                        <Accordion.Header>{sessioncal[checkLang].filter}</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
                                                 <div className="datacheck1">
@@ -182,7 +208,7 @@ const SessionCalender = () => {
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="1">
-                                        <Accordion.Header>अधिवेशन</Accordion.Header>
+                                        <Accordion.Header>{sessioncal[checkLang].session}</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
                                                 {options?.session?.map((item, index) => (
@@ -197,24 +223,20 @@ const SessionCalender = () => {
                                                             />
                                                         </div>
                                                     </>
-
                                                 ))}
                                             </div>
-
-
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="2">
-                                        <Accordion.Header>Year Select</Accordion.Header>
+                                        <Accordion.Header>{sessioncal[checkLang].year}</Accordion.Header>
                                         <Accordion.Body>
                                             <select
                                                 className="secondfilers"
                                                 name="year"
                                                 onChange={handleChange}
                                                 value={search.year}
-
                                             >
-                                                <option hide value="">Select Year</option>
+                                                <option disabled value="">Select Year</option>
                                                 {options?.year?.map((item, index) => (
                                                     <option value={item}>{item}</option>
                                                 ))}
@@ -222,7 +244,7 @@ const SessionCalender = () => {
                                         </Accordion.Body>
                                     </Accordion.Item>
                                     <Accordion.Item eventKey="3">
-                                        <Accordion.Header>Date Range</Accordion.Header>
+                                        <Accordion.Header>{sessioncal[checkLang].date}</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="filtercontent">
                                                 <Row className="daterange">
@@ -247,13 +269,11 @@ const SessionCalender = () => {
                                 </Accordion>
                             </div>
                             <div className="formbutton">
-                                <button className="reset"
-                                    onClick={handleReset}
-                                >
-                                    Reset
+                                <button className="reset">
+                                    {sessioncal[checkLang].reset}
                                 </button>
                                 <button className="apply">
-                                    Apply
+                                    {sessioncal[checkLang].apply}
                                 </button>
                             </div>
                         </div>
@@ -265,15 +285,15 @@ const SessionCalender = () => {
                                     type="text"
                                     name="topic"
                                     className="form-control"
-                                    placeholder="विषय आणि कीवर्ड शोधा"
+                                    placeholder={sessioncal[checkLang].search}
                                     defaultValue={search.topic}
                                     onChange={handleChange}
                                 />
                                 <button onClick={debateFetch} className="searchb">
                                     <i className="fa fa-search" />
                                 </button>
-                                <button onClick={handleReset} className="startover">
-                                    Reset
+                                <button className="startover">
+                                    {sessioncal[checkLang].reset}
                                 </button>
                             </div>
                         </div>
@@ -282,12 +302,12 @@ const SessionCalender = () => {
                                 <Col lg={6}>
                                     <div className="breadvrumbss-inner">
                                         <div className="countdebate">
-                                            <Link to="/"><span>मुख्यपृष्ठ</span></Link>
+                                            <Link to="/"><span>{sessioncal[checkLang].home}</span></Link>
                                             <img src={Arrow} alt="" />
-                                            <span>सत्र दिनदर्शिका</span>
+                                            <span>{sessioncal[checkLang].title}</span>
                                         </div>
                                         <p>
-                                            [0 results]
+                                            [03 परिणाम]
                                         </p>
                                     </div>
                                 </Col>
@@ -296,11 +316,12 @@ const SessionCalender = () => {
                         <table className="debate-light table table-bordered">
                             <thead>
                                 <tr>
-                                    <th style={{ borderRight: "solid white 1px" }}>क्रमांक</th>
-                                    <th style={{ borderRight: "solid white 1px" }}> विषय</th>
-                                    <th style={{ borderRight: "solid white 1px" }}>सभागृह </th>
-                                    <th style={{ borderRight: "solid white 1px" }}> अधिवेशन</th>
-                                    <th style={{ borderRight: "solid white 1px" }}>तपशील</th>
+                                    <th style={{ borderRight: "solid white 1px" }}>{sessioncal[checkLang].srno}</th>
+                                    <th style={{ borderRight: "solid white 1px" }}> {sessioncal[checkLang].topic}</th>
+                                    <th style={{ borderRight: "solid white 1px" }}>{sessioncal[checkLang].filter} </th>
+                                    <th style={{ borderRight: "solid white 1px" }}> {sessioncal[checkLang].session}</th>
+                                    <th style={{ borderRight: "solid white 1px" }}>{sessioncal[checkLang].datee}</th>
+                                    <th style={{ borderRight: "solid white 1px" }}>{sessioncal[checkLang].details}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -321,11 +342,12 @@ const SessionCalender = () => {
                                             <td>
                                                 <p><span>{item[checkLang]["session"]}</span></p>
                                             </td>
+                                            <td>{item.date}</td>
                                             <td className="imagee">
                                                 {item.documents.length > 0 ? item.documents.map((doc, index) => {
                                                     console.log(doc)
                                                     return (
-                                                        <a
+                                                        <a key={index}
                                                             href={ImageUrl + doc?.document.destination + '/' + doc?.document.filename}
                                                             target="_blank" rel="noreferrer">
                                                             <OverlayTrigger
@@ -333,22 +355,18 @@ const SessionCalender = () => {
                                                                 overlay={(props) => (
                                                                     <Tooltip {...props}>{doc?.title}</Tooltip>
                                                                 )}
-
                                                                 placement="top"
                                                             >
                                                                 <img src="/src/assets/debate/Frame.svg" alt="" />
-
                                                             </OverlayTrigger>
                                                         </a>
                                                     )
                                                 }
                                                 ) : <></>}
                                             </td>
-
                                         </tr>
                                     ))
                                 }
-
                             </tbody>
                         </table>
                     </Col>
@@ -357,5 +375,4 @@ const SessionCalender = () => {
         </div>
     );
 };
-
 export default SessionCalender;

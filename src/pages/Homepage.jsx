@@ -1,24 +1,36 @@
 import { useState } from "react";
+import { ReactTransliterate } from "react-transliterate";
+import "react-transliterate/dist/index.css";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import useLang from "../hooks/useLang";
 import { home, homeLink } from "../data/constant";
-
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 const Homepage = () => {
+  const [text, setText] = useState("");
   const [search, setSearch] = useState([]);
   const { lang, checkLang } = useLang();
+  AOS.init();
 
   return (
     <div>
       <section className="homepageback">
-        <h1 style={{ whiteSpace: "pre-line" }}>{home[checkLang].header}</h1>
-        <Row className="form-controlss">
+        <h1 data-aos="fade-up"
+          data-aos-duration="3000" style={{ whiteSpace: "pre-line" }}>{home[checkLang].header}</h1>
+        <Row data-aos="fade-up"
+          data-aos-duration="3000" className="form-controlss">
           <Col lg={6}>
-            <input
-              className="form-control"
+            <ReactTransliterate
+              renderComponent={(props) => <input className="form-control" {...props} />}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
               placeholder={home[checkLang].searchPlaceHolder}
-              onChange={(e) => setSearch(e.target.value)}
+              onChangeText={(text) => {
+                setSearch(text);
+              }}
+              lang="hi"
             />
             <Link to={`/SearchDetails?id=${search}`} className="searchh">
               <i className="fa fa-search"></i>
@@ -30,31 +42,29 @@ const Homepage = () => {
             <Row>
               {home[checkLang].nav.map((item, index) => (
                 <Col lg={4} key={index}>
-                  <Link to="/">
-                    <Row className="boxes">
-                      <Col lg={3}>
-                        <img src={item.icon} />
-                      </Col>
-                      <Col lg={9}>
-                        <h6>{item.title}</h6>
-                        {item?.childtext && item?.childtext?.map((it, ind) => {
-                          let bool
-                          if (ind === item.childtext.length - 1) {
-                            bool = true
-                          }
-                          else {
-                            bool = false
-                          }
-                          return (
-                            <Link to={it.link} key={ind}>
-                              <>{it.name}</>
-                              {bool ? <span></span> : <span>|</span>}
-                            </Link>
-                          )
-                        })}
-                      </Col>
-                    </Row>
-                  </Link>
+                  <Row className="boxes">
+                    <Col lg={3}>
+                      <img src={item.icon} />
+                    </Col>
+                    <Col lg={9}>
+                      <h6>{item.title}</h6>
+                      {item?.childtext && item?.childtext?.map((it, ind) => {
+                        let bool
+                        if (ind === item.childtext.length - 1) {
+                          bool = true
+                        }
+                        else {
+                          bool = false
+                        }
+                        return (
+                          <Link to={it.link} key={ind}>
+                            <>{it.name}</>
+                            {bool ? <span></span> : <span>|</span>}
+                          </Link>
+                        )
+                      })}
+                    </Col>
+                  </Row>
                 </Col>
               ))}
             </Row>

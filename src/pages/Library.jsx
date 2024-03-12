@@ -8,7 +8,7 @@ import samplePDF4 from "../assets/Documents/05- Library Committee.pdf";
 import samplePDF5 from "../assets/Documents/06- Library Rules.pdf";
 import samplePDF6 from "../assets/Documents/Library Contact.pdf";
 import useLang from "../hooks/useLang";
-import { getApi } from "../services/axiosInterceptors";
+import { ImageUrl, getApi } from "../services/axiosInterceptors";
 import { library } from "../data/constant";
 const Library = () => {
     const [newData, setNewData] = useState({});
@@ -27,10 +27,12 @@ const Library = () => {
         fetchData();
     }, []);
 
+
     return (
         <div className="librarypage">
             <Container fluid style={{ padding: '0px' }}>
                 <div className="librarybanner">
+                    {/* <img src={ImageUrl + newData?.banner["destination"] + "/" + newData?.banner?.filename} className="w-100" alt="about" /> */}
                     <img src={libanner} className="w-100" alt="library" />
                 </div>
             </Container>

@@ -4,7 +4,11 @@ import { postApi } from "../services/axiosInterceptors";
 import { userRegisterValidation } from "../validators/UserSchema";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { header, register } from "../data/constant";
+import useLang from "../hooks/useLang";
+
 const Register = () => {
+  const { lang, checkLang } = useLang();
   const navigate = useNavigate();
   const eighteenYearsAgo = new Date();
   eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
@@ -59,9 +63,21 @@ const Register = () => {
         });
     }
   };
+  const handleLanguage = (newLang) => {
+    console.log(newLang);
+
+    window.localStorage.setItem("lang", newLang);
+    window.dispatchEvent(new CustomEvent("langChange"));
+  };
   return (
     <div>
       <div className="container-fluid loginboxpage">
+        <button
+          className="languagechanges loginn mx-2"
+          onClick={() => handleLanguage(lang === "mr" ? "en" : "mr")}
+        >
+          {header[checkLang].language}
+        </button>
         <a href="/">
           <img src={logo} alt="logo" className="loginbg" />
         </a>
@@ -70,22 +86,20 @@ const Register = () => {
             <div className="col-lg-9 col-md-9 col-sm-12 col-12">
               <div className="login-box">
                 <h3 className="mb-4">
-                  साइन अप करण्यासाठी, तुमची
-                  <br />
-                  मूलभूत माहिती प्रविष्ट करा
+                  {register[checkLang].title}
                 </h3>
                 <div className="row registerpage">
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label className="form-label">
-                      पूर्ण नाव<span className="required">*</span>
+                      {register[checkLang].fullname}<span className="required">*</span>
                     </label>
                     <div className="mb-4 input-group">
                       <span className="input-group-text" id="basic-addon1">
                         <i className="fa fa-user" aria-hidden="true" />
                       </span>
                       <input
-                        placeholder="तुमचे पूर्ण नाव एंटर करा "
-                        aria-label="तुमचे पूर्ण नाव एंटर करा "
+                        placeholder={register[checkLang].entername}
+                        aria-label={register[checkLang].entername}
                         aria-describedby="basic-addon1"
                         type="text"
                         className="form-control"
@@ -98,15 +112,15 @@ const Register = () => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label className="form-label">
-                      ई-मेल आयडी<span className="required">*</span>
+                      {register[checkLang].email}<span className="required">*</span>
                     </label>
                     <div className="mb-4 input-group">
                       <span className="input-group-text" id="basic-addon1">
                         <i className="fa fa-envelope" aria-hidden="true" />
                       </span>
                       <input
-                        placeholder="ई-मेल आयडी"
-                        aria-label="ई-मेल आयडी"
+                        placeholder={register[checkLang].enteremail}
+                        aria-label={register[checkLang].enteremail}
                         aria-describedby="basic-addon1"
                         type="email"
                         className="form-control"
@@ -117,15 +131,15 @@ const Register = () => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label className="form-label">
-                      पासवर्ड<span className="required">*</span>
+                      {register[checkLang].password}<span className="required">*</span>
                     </label>
                     <div className="mb-4 input-group">
                       <span className="input-group-text" id="basic-addon1">
                         <i className="fa fa-lock" aria-hidden="true" />
                       </span>
                       <input
-                        placeholder="पासवर्ड"
-                        aria-label="पासवर्ड"
+                        placeholder={register[checkLang].enterpass}
+                        aria-label={register[checkLang].enterpass}
                         aria-describedby="basic-addon1"
                         type={showPassword ? "text" : "password"}
                         className="form-control"
@@ -150,15 +164,15 @@ const Register = () => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label className="form-label">
-                      पासवर्डची पुष्टी<span className="required">*</span>
+                      {register[checkLang].confirmpassword}<span className="required">*</span>
                     </label>
                     <div className="mb-4 input-group">
                       <span className="input-group-text" id="basic-addon1">
                         <i className="fa fa-lock" aria-hidden="true" />
                       </span>
                       <input
-                        placeholder="पासवर्डची पुष्टी करा"
-                        aria-label="पासवर्डची पुष्टी करा"
+                        placeholder={register[checkLang].confpass}
+                        aria-label={register[checkLang].confpass}
                         aria-describedby="basic-addon1"
                         type={showPassword ? "text" : "password"}
                         className="form-control"
@@ -183,15 +197,15 @@ const Register = () => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label className="form-label">
-                      फोन नंबर<span className="required">*</span>
+                      {register[checkLang].mobile}<span className="required">*</span>
                     </label>
                     <div className="mb-4 input-group">
                       <span className="input-group-text" id="basic-addon1">
                         <i className="fa fa-phone" aria-hidden="true" />
                       </span>
                       <input
-                        placeholder="फोन नंबर"
-                        aria-label="फोन नंबर"
+                        placeholder={register[checkLang].entermobile}
+                        aria-label={register[checkLang].entermobile}
                         aria-describedby="basic-addon1"
                         type="number"
                         onKeyDown={(evt) =>
@@ -208,7 +222,7 @@ const Register = () => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label className="form-label">
-                      लिंग<span className="required">*</span>
+                      {register[checkLang].gender}<span className="required">*</span>
                     </label>
                     <div className="mb-4 input-group">
                       <span className="input-group-text" id="basic-addon1">
@@ -222,15 +236,16 @@ const Register = () => {
                         placeholder="लिंग"
                         className="form-select"
                       >
-                        <option value="">लिंग</option>
-                        <option value="male">पुरुष</option>
-                        <option value="female">स्त्री</option>
+                        <option value="">{register[checkLang].selectgen}</option>
+                        <option value="male">{register[checkLang].male}</option>
+                        <option value="female">{register[checkLang].female}</option>
+                        <option value="other">{register[checkLang].others}</option>
                       </select>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label className="form-label">
-                      जन्मतारीख<span className="required">*</span>
+                      {register[checkLang].dob}<span className="required">*</span>
                     </label>
                     <div className="mb-4 input-group">
                       <span className="input-group-text" id="basic-addon1">
@@ -251,7 +266,7 @@ const Register = () => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label className="form-label">
-                      वापरकर्ता प्रकार<span className="required">*</span>
+                      {register[checkLang].user}<span className="required">*</span>
                     </label>
                     <div className="mb-4 input-group">
                       <span className="input-group-text" id="basic-addon1">
@@ -266,15 +281,15 @@ const Register = () => {
                         name="designation"
                         className="form-select"
                       >
-                        <option value="">वापरकर्ता प्रकार निवडा</option>
-                        <option value={"Researcher"}>Researcher(संशोधक)</option>
-                        <option value={"Student"}>Student(विद्यार्थी)</option>
-                        <option value={"Public"}>Public()</option>
+                        <option value="">{register[checkLang].selectuser}</option>
+                        <option value={"Researcher"}>{register[checkLang].research}</option>
+                        <option value={"Student"}>{register[checkLang].stud}</option>
+                        <option value={"Public"}>{register[checkLang].public}()</option>
                       </select>
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label className="form-label">प्रोफाइल चित्र</label>
+                    <label className="form-label">{register[checkLang].profile}</label>
                     <div className="mb-4 input-group">
                       <span className="input-group-text" id="basic-addon1">
                         <i className="fa fa-upload" aria-hidden="true" />
@@ -305,11 +320,11 @@ const Register = () => {
                     display: "block",
                   }}
                 >
-                  साइन अप करा
+                  {register[checkLang].signup}
                 </button>
                 <p className="new_account mt-5">
-                  आधीपासूनच एक खाते आहे?
-                  <a href="/Login">साइन इन करा</a>
+                  {register[checkLang].already}
+                  <a href="/Login">{register[checkLang].signin}</a>
                 </p>
               </div>
             </div>

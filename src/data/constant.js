@@ -19,30 +19,173 @@ import {
   judgments,
 } from "../assets/homeicons";
 
+const loginpage = {
+  marathi: {
+    home: `साइन इन करण्यासाठी, कृपया तुमचा इमेल पत्ता लिहा`,
+    email: `ईमेल पत्ता प्रविष्ट करा`,
+    password: `पासवर्ड टाका`,
+    captcha: `कॅप्चा प्रविष्ट करा`,
+    forgetpassword: `पासवर्ड विसरलात?`,
+    signin: `साइन इन करा`,
+    or: `किंवा`,
+    phonesign: `फोन नंबरसह साइन इन करा`,
+    noaccount: `खाते नाही?`,
+    signup: `साइन अप करा`,
+    emailid: `ईमेल आयडीने साइन इन करा`,
+    sendotp: `OTP मिळवा`,
+    mobile: `फोन नंबर प्रविष्ट करा`,
+    codetype: `साइन इन करण्यासाठी, कृपया कोड टाइप करा`,
+    submit: `प्रस्तुत करणे`,
+  },
+  english: {
+    home: `To Sign In, Please Enter Your Email Address`,
+    email: `Enter Email Address`,
+    password: `Enter Password`,
+    captcha: `Enter captcha`,
+    forgetpassword: `Forgot your password?`,
+    signin: `Sign in`,
+    or: `OR`,
+    phonesign: `Sign in with phone number`,
+    noaccount: `Don't have an account?`,
+    signup: `Sign up`,
+    emailid: `Sign in with email id`,
+    sendotp: `Get OTP`,
+    mobile: `Enter Phone Number`,
+    codetype: `To sign in, please Type the code`,
+    submit: `Submit`,
+  }
+}
+
+const register = {
+  marathi: {
+    title: `साइन अप करण्यासाठी, तुमची मूलभूत माहिती प्रविष्ट करा`,
+    fullname: `पूर्ण नाव`,
+    entername: `तुमचे पूर्ण नाव एंटर करा `,
+    email: `ई-मेल आयडी`,
+    enteremail: `तुमचा ईमेल आयडी टाका`,
+    password: `पासवर्ड`,
+    confirmpassword: `पासवर्डची पुष्टी`,
+    enterpass: `पुष्टी पासवर्ड प्रविष्ट करा`,
+    confpass: `पासवर्डची पुष्टी करा`,
+    mobile: `फोन नंबर`,
+    entermobile: `फोन नंबर प्रविष्ट करा`,
+    gender: `लिंग`,
+    selectgen: `लिंग निवडा`,
+    male: `पुरुष`,
+    female: `स्त्री`,
+    others: `इतर`,
+    dob: `जन्मतारीख`,
+    user: `वापरकर्ता प्रकार`,
+    selectuser: `वापरकर्ता प्रकार निवडा`,
+    research: `संशोधक`,
+    public: `सार्वजनिक`,
+    stud: `विद्यार्थी`,
+    profile: `प्रोफाइल चित्र`,
+    already: `आधीपासूनच एक खाते आहे?`,
+    signin: `साइन इन करा`,
+    signup: `साइन अप करा`,
+  },
+  english: {
+    title: `To sign up, your Enter basic information`,
+    fullname: `Full Name`,
+    entername: `Enter Your Full Name`,
+    email: `Enter Your Email ID`,
+    enteremail: `Enter Your Email Id`,
+    password: `Password`,
+    enterpass: `Enter Password`,
+    confirmpassword: `Confirm Password`,
+    confpass: `Enter Confirm Password`,
+    mobile: `Phone Number`,
+    entermobile: `Enter Phone Number`,
+    gender: `Gender`,
+    selectgen: `Select Gender`,
+    male: `Male`,
+    female: `Female`,
+    others: `Other`,
+    dob: `Date Of Birth`,
+    user: `User type`,
+    selectuser: `Select a user type`,
+    research: `Researcher`,
+    public: `Public`,
+    stud: `Student`,
+    profile: `Profile Picture`,
+    already: `Already have an account?`,
+    signin: `Sign In`,
+    signup: `Sign Up`,
+  }
+}
+
+const resetpassword = {
+  marathi: {
+    button: `ई - मेल पाठवा`,
+    signin: `साइन इन करा`,
+    email: `ईमेल पत्ता प्रविष्ट करा`,
+    newpas: `कृपया तुमचा नवीन पासवर्ड टाका`,
+    title: `तुमचा पासवर्ड रीसेट करण्यासाठी तुमचा नोंदणीकृत ईमेल एंटर करा.`,
+    newpass: `नवीन पासवर्ड टाका`,
+    confipass: `पासवर्डची पुष्टी करा`
+  },
+  english: {
+    button: `Send Email`,
+    newpas: `Please enter your new password`,
+    signin: `Sign in`,
+    email: `Enter Email Address`,
+    title: `Enter your registered email to reset your password.`,
+    newpass: `Enter New Password`,
+    confipass: `Confirm Password`
+  }
+}
+
 const header = {
   marathi: {
-    contact: `आमच्याशी संपर्क साधा`,
-    language: `भाषा`,
-    login: `साइन इन करा`,
-    member: `सदस्य`,
+    contact: `संपर्क साधा`,
+    language: `English`,
+    legislature: `विधिमंडळ `,
+    governor: `राज्यपाल`,
+    legislativecouncil: `विधानपरिषद`,
+    legislativeassembly: `विधानसभा`,
+    minister: `विधिमंडळ मंत्री सचिव`,
+    councilminis: `मंत्रीमंडळ`,
+    legislativelibrary: `विधानमंडळ ग्रंथालय`,
+    various: `विविध`,
+    gallery: `गॅलरी`,
+    notice: `महत्वाचा सूचना`,
+    logout: "साइन आउट करा",
+    login: `साइन इन`,
+    member: `विधानमंडळ सदस्य`,
+    session: `सत्र दिनदर्शिका`,
     Gazette: `राजपत्र`,
     Debate: `सभागृहांचे कार्यवृत्त`,
     Elections: `निवडणूक निकाल`,
     Budget: `अर्थसंकल्प`,
     Legislation: `विधिविधान`,
+    font: `अ`,
   },
   english: {
     contact: `Contact Us`,
-    language: `Language`,
+    language: `मराठी`,
+    logout: "Sign out",
+    legislature: `Legislature `,
+    governor: `Governor`,
+    legislativecouncil: `Legislative Council`,
+    legislativeassembly: `Legislative Assembly`,
+    minister: `Legislative Minister Secretary`,
+    councilminis: `Council of Ministers`,
+    legislativelibrary: `Legislative Library`,
+    various: `Various`,
+    gallery: `Gallery`,
+    notice: `Important notice`,
     login: `Sign In`,
-    member: `Member`,
+    member: `Legislative Member`,
+    session: `Session Calendar`,
     Gazette: `Gazette`,
     Debate: `Debate`,
     Elections: `Election results`,
     Budget: `Budget`,
     Legislation: `Legislation`,
-  }
-}
+    font: `A`,
+  },
+};
 
 const home = {
   marathi: {
@@ -57,13 +200,13 @@ const home = {
         childtext: [
           {
             name: `विधानपरिषद`,
-            link: `/LegislativeCouncil`,
+            link: `/member-council`,
           },
           {
             name: `विधानसभा`,
-            link: `/LegislativeAssembly`,
-          }
-        ]
+            link: `/members-assembly`,
+          },
+        ],
       },
       {
         icon: debate,
@@ -80,8 +223,8 @@ const home = {
           {
             name: ` वर्ष`,
             link: `/Debate`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: sessioncalender,
@@ -94,8 +237,8 @@ const home = {
           {
             name: `विधानसभा`,
             link: `/SessionCalender`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: legis,
@@ -112,8 +255,8 @@ const home = {
           {
             name: `नियम`,
             link: `/LegislationsBills`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: budget,
@@ -126,8 +269,8 @@ const home = {
           {
             name: `विभाग`,
             link: `/Budgetyear`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: election,
@@ -140,8 +283,8 @@ const home = {
           {
             name: `विधानसभा`,
             link: `/Electionresult`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: gazette,
@@ -158,8 +301,8 @@ const home = {
           {
             name: `विभाग`,
             link: `/Gazette`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: publication,
@@ -173,9 +316,9 @@ const home = {
             name: `धोरण`,
           },
           {
-            name: `विभाग`
-          }
-        ]
+            name: `विभाग`,
+          },
+        ],
       },
       {
         icon: media,
@@ -188,9 +331,9 @@ const home = {
             name: `व्हिडिओ`,
           },
           {
-            name: `वृत्तपत्र`
-          }
-        ]
+            name: `वृत्तपत्र`,
+          },
+        ],
       },
       {
         icon: legis,
@@ -201,8 +344,8 @@ const home = {
           },
           {
             name: `नाव`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: gazettee,
@@ -215,8 +358,8 @@ const home = {
           {
             name: `विषय`,
             link: `/Gazetteers`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: judgments,
@@ -229,9 +372,9 @@ const home = {
           {
             name: `विषय`,
             link: `/Judgments`,
-          }
-        ]
-      }
+          },
+        ],
+      },
     ],
     homebottom: [
       {
@@ -263,8 +406,8 @@ const home = {
         icon: imag6,
         title: `इतर अहवाल`,
         subtitle: `405 दशलक्ष`,
-      }
-    ]
+      },
+    ],
   },
   english: {
     header: `A Comprehensive Knowledge Repository - Your Portal to Explore Legislative Discourse \n Election Narratives, and Civic Empowerment. Search and Discover Now!"`,
@@ -282,8 +425,8 @@ const home = {
           {
             name: `Assembly`,
             link: `LegislativeAssembly`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: debate,
@@ -300,8 +443,8 @@ const home = {
           {
             name: `Year`,
             link: `Debate`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: sessioncalender,
@@ -314,8 +457,8 @@ const home = {
           {
             name: `Assembly`,
             link: `/SessionCalender`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: legis,
@@ -332,8 +475,8 @@ const home = {
           {
             name: `Rules`,
             link: `/LegislationsBills`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: budget,
@@ -346,8 +489,8 @@ const home = {
           {
             name: `Department`,
             link: `/Budgetyear`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: election,
@@ -360,8 +503,8 @@ const home = {
           {
             name: `Assembly`,
             link: `/Electionresult`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: gazette,
@@ -378,8 +521,8 @@ const home = {
           {
             name: `Department`,
             link: `/Gazette`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: publication,
@@ -396,8 +539,8 @@ const home = {
           {
             name: `Department`,
             link: `/Publications`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: media,
@@ -410,9 +553,9 @@ const home = {
             name: `Audio`,
           },
           {
-            name: `Newspaper`
-          }
-        ]
+            name: `Newspaper`,
+          },
+        ],
       },
       {
         icon: legis,
@@ -426,8 +569,8 @@ const home = {
           },
           {
             name: `Name`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: gazettee,
@@ -440,8 +583,8 @@ const home = {
           {
             name: `Topic`,
             link: `/Gazetteers`,
-          }
-        ]
+          },
+        ],
       },
       {
         icon: judgments,
@@ -454,9 +597,9 @@ const home = {
           {
             name: `Subject`,
             link: `/Judgments`,
-          }
-        ]
-      }
+          },
+        ],
+      },
     ],
     hometitle: `Explore the resources, documents that have been digitized so far in the MLS library`,
     homebottom: [
@@ -489,8 +632,8 @@ const home = {
         icon: imag6,
         title: `Other Reports`,
         subtitle: `30 million`,
-      }
-    ]
+      },
+    ],
   },
 };
 
@@ -512,8 +655,8 @@ const library = {
     title4: "Library Committee",
     title5: "Library Rules",
     title6: "Contact",
-  }
-}
+  },
+};
 
 // const homeLink = [
 //   "http://mls.org.in/",
@@ -530,15 +673,15 @@ const homeLink = {
     title: `इतर महत्वाचा दुवा`,
     title1: `सर्व लिंक`,
     title2: `मुख्य पृष्ठ`,
-    button: `पुढे वाचा`
+    button: `पुढे वाचा`,
   },
   english: {
     title: `Other Important Link`,
     title1: `All Links`,
     title2: `Home`,
-    button: `Read More`
-  }
-}
+    button: `Read More`,
+  },
+};
 
 const feedback = {
   marathi: {
@@ -584,8 +727,8 @@ const feedback = {
     addresstitle: `Address`,
     telephone: `Telephone No`,
     email: `Email`,
-  }
-}
+  },
+};
 
 const helpdesk = {
   marathi: {
@@ -631,8 +774,8 @@ const helpdesk = {
     addresstitle: `Address`,
     telephone: `Telephone No`,
     email: `Email`,
-  }
-}
+  },
+};
 
 const footer = {
   marathi: {
@@ -652,7 +795,7 @@ const footer = {
     title13: `अभ्यागतांची संख्या`,
   },
   english: {
-    title: `FAQs`,
+    title: `Frequently Asked Questions`,
     title1: `Photo Gallery`,
     title2: `Home`,
     title3: `About`,
@@ -666,8 +809,8 @@ const footer = {
     title11: `Sitemap`,
     title12: `Notification`,
     title13: `Vistors count `,
-  }
-}
+  },
+};
 
 const aboutUs = {
   marathi: {
@@ -685,6 +828,25 @@ const aboutUs = {
     link1: "Home",
     link2: "Legislature",
     link3: "Vidhan Mandal",
+  },
+};
+
+const contactUs = {
+  marathi: {
+    title: "आमच्याशी संपर्क साधा",
+    home: 'मुख्यपृष्ठ',
+    address: `पत्ता`,
+    fax: `फॅक्स क्रमांक`,
+    email: `ई-मेल`,
+    telephone: `विधानमंडळ दूरध्वनी क्रमांक`,
+  },
+  english: {
+    title: "Contact Us",
+    home: 'Home',
+    address: `Address`,
+    fax: `Fax Number`,
+    email: `E-Mail`,
+    telephone: `Legislature Telephone No`,
   },
 };
 
@@ -1153,8 +1315,55 @@ const combinedDebate = {
       field9: "Device",
       field10: "House",
     },
-  },
+  }, 
 };
+
+const memberdetails = {
+  marathi: {
+    title: `सदस्य तपशील`,
+    title1: `सदस्य`,
+    home:`मुख्य पृष्ठ`,
+    basic:`मुलभूत माहिती`,
+    travel:`राजकीय प्रवास`,
+    electiondata:`निवडणूक डेटा`,
+    debate:`सभागृहांचे कार्यवृत्त`,
+    electionres:`निवडणूक निकाल`,
+    totalelec: `एकूण मतदार`,
+    validvote: `एकूण वैध मतदान`,
+    firstfive:`पहिल्या पाच उमेदवारांच्या मतांची संख्या`,
+    srno:`क्रमांक`,
+    topic:`विषय`,
+    house:`सभागृह`,
+    session:`अधिवेशन`,
+    date:`तारीख`,
+    details:`तपशील`,
+    candi:`उमेदवाराचे नाव`,
+    votes:`मते`,
+    party:`राजकीय पक्ष`,
+  },
+  english: {
+    title: `Member Details`,
+    title1:`Member`,
+    home:`Home`,
+    basic:`Basic Information`,
+    travel:`Political Travel`,
+    electiondata:`Election Data`,
+    debate:`Debates`,
+    electionres:`Election Results`,
+    totalelec:`Total Electorate`,
+    validvote:`Total Valid Voting`,
+    firstfive:`Number of votes for the first five candidates`,
+    srno:`Sr No`,
+    topic:`Subject`,
+    house:`House`,
+    session:`Session`,
+    date:`Date`,
+    details:`Details`,
+    candi:`Candidate's Name`,
+    votes:`Votes`,
+    party:`Political Party`
+  }
+}
 
 const assemblyDebate = {
   marathi: {
@@ -1293,6 +1502,72 @@ const assemblyDebate = {
   },
 };
 
+const sessioncal = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    title: `सत्र दिनदर्शिका`,
+    search: `विषय आणि कीवर्ड शोधा`,
+    reset: `रीसेट`,
+    apply: `अर्ज करा`,
+    filter: `सभागृह`,
+    year: `वर्ष निवडा`,
+    date: `तारीख श्रेणी`,
+    datee: `तारीख`,
+    session: `अधिवेशन`,
+    srno: `क्रमांक`,
+    topic: `विषय`,
+    details: `तपशील`,
+  },
+  english: {
+    home: `Home`,
+    title: `Session Calendar`,
+    search: `Search for topics and keywords`,
+    reset: `Reset`,
+    apply: `Apply`,
+    filter: `House`,
+    year: `Year Select`,
+    date: `Date Range`,
+    datee: `Date`,
+    session: `Session`,
+    srno: `Sr No`,
+    topic: `Topic`,
+    details: `Details`,
+  }
+}
+
+const userprofile = {
+  marathi: {
+    home: `मुख्य पृष्ठ`,
+    userpro: `वापरकर्ता प्रोफाइल`,
+    basic: `मुलभूत माहिती`,
+    basictitle: `कृपया येथे मॅन्युअल तपशीलांसाठी स्वरूप निवडा`,
+    intrest: `व्याज आहेत`,
+    sintrest: `स्वारस्य क्षेत्र निवडा`,
+    req: `प्रवेशासाठी विनंती`,
+    desc: `वर्णन`,
+    submit: `प्रस्तुत करणे`,
+    confi: `गोपनीय दस्तऐवज तपशील`,
+    changepass: `पासवर्ड बदला`,
+    reset: `पासवर्ड रीसेट`,
+    logg: `Log Out`,
+  },
+  english: {
+    home: `Home`,
+    userpro: `User Profile`,
+    basic: `Basic Information`,
+    basictitle: `Please select the format for manual details here`,
+    intrest: `Interest Area`,
+    req: `Request for access`,
+    sintrest: `Select Interest Area`,
+    desc: `Description`,
+    submit: `Submit`,
+    confi: `Confidential Documents Details`,
+    changepass: `Change Password`,
+    reset: `Password Reset`,
+    logg: `Log Out`,
+  }
+}
+
 const councilDebate = {
   marathi: {
     home: `मुख्य पृष्ठ`,
@@ -1375,7 +1650,7 @@ const councilDebate = {
     titleselect: "Legislative Assembly",
     titleselect1: "Budgetary",
     filter: `Filter`,
-    adfilter: `Advanced Filter`,
+    adfilter: `Advance Filter`,
     button1: "Apply",
     button2: "Reset",
     button3: "Less Options",
@@ -1461,14 +1736,14 @@ const judgment = {
     title: `Judgement`,
     reset: `Reset`,
     filter: `Filter`,
-    advfilter: `Advanced Filter`,
+    advfilter: `Advance Filter`,
     apply: `Apply`,
     comingsoon: `Coming Soon`,
     searchtitle: `Find the court title`,
     court: `Court`,
     justice: `The name of justice`,
-  }
-}
+  },
+};
 
 const gazetteers = {
   marathi: {
@@ -1488,8 +1763,8 @@ const gazetteers = {
     apply: `Apply`,
     comingsoon: `Coming Soon`,
     searchtitle: `Find the title of the page`,
-  }
-}
+  },
+};
 
 const publications = {
   marathi: {
@@ -1509,8 +1784,8 @@ const publications = {
     apply: `Apply`,
     comingsoon: `Coming Soon`,
     searchtitle: `Find the title of the publication`,
-  }
-}
+  },
+};
 
 const gazetteess = {
   marathi: {
@@ -1530,8 +1805,8 @@ const gazetteess = {
     apply: `Apply`,
     comingsoon: `Coming Soon`,
     searchtitle: `Find the title of the gazette`,
-  }
-}
+  },
+};
 
 const electionresult = {
   marathi: {
@@ -1551,8 +1826,8 @@ const electionresult = {
     apply: `Apply`,
     comingsoon: `Coming Soon`,
     searchtitle: `Find the Title of the Election Result`,
-  }
-}
+  },
+};
 const budgetyear = {
   marathi: {
     home: `मुख्य पृष्ठ`,
@@ -1573,12 +1848,12 @@ const budgetyear = {
     date: `Date`,
     day: `Select the day`,
     filter: `Filter`,
-    advfilter: `Advanced Filter`,
+    advfilter: `Advance Filter`,
     apply: `Apply`,
     comingsoon: `Coming Soon`,
     searchtitle: `Find the title of the budget`,
-  }
-}
+  },
+};
 const legislationsbills = {
   marathi: {
     home: `मुख्य पृष्ठ`,
@@ -1605,30 +1880,48 @@ const legislationsbills = {
     date: `Date`,
     day: `Select the day`,
     filter: `Filter`,
-    advfilter: `Advanced Filter`,
+    advfilter: `Advance Filter`,
     apply: `Apply`,
     comingsoon: `Coming Soon`,
     searchtitle: `Find the title of the bill`,
-  }
-}
+  },
+};
+const faqs = {
+  marathi: {
+    title: `सतत विचारले जाणारे प्रश्न`,
+    home: `मुख्यपृष्ठ`,
+  },
+  english: {
+    title: `Frequently Asked Questions`,
+    home: `Home`,
+  },
+};
 export {
+  loginpage,
+  register,
+  resetpassword,
   header,
   home,
+  faqs,
   library,
   homeLink,
   feedback,
   helpdesk,
   footer,
   aboutUs,
+  contactUs,
   slider,
   governor,
   council,
   assembly,
   councilMember,
   assemblyMember,
+  memberdetails,
   member,
   combinedDebate,
   assemblyDebate,
+  sessioncal,
+  userprofile,
   councilDebate,
   judgment,
   gazetteers,

@@ -43,11 +43,13 @@
 
     .boxes1.row img {
         width: auto !important;
+        margin-bottom: 10px;
     }
 
-    section.resourcesss .col-lg-3 {
+    section.resourcesss .col-lg-4 {
         width: 50%;
         text-align: center;
+        padding: 0px;
     }
 
     .boxes.row p {
@@ -59,11 +61,28 @@
         text-align: center;
     }
 
+    .boxes.row {
+        height: 160px;
+        word-break: break-all;
+    }
+
     .boxes.row img {
-        width: 20% !important;
+        width: 30% !important;
         height: 50% !important;
         margin-bottom: 10px;
         margin-top: 10px;
+    }
+
+    .boxes.row a {
+        font-size: 10px;
+    }
+
+    .boxes.row h6 {
+        font-size: 12px;
+    }
+
+    section.resourcesss h2 {
+        font-size: 18px;
     }
 
     nav.navbar.navbar-expand-sm.navbar-light img {
@@ -125,7 +144,8 @@
     }
 
     .aboutcontent {
-        margin-bottom: 20px;
+        margin-top: 30px;
+        margin-bottom: 30px;
     }
 
     .boxes.row {
@@ -165,8 +185,75 @@
     .memberlistpage.container-fluid .col-lg-3 {
         width: 100%;
     }
-    
+
     .memberlistpage.container-fluid .col-lg-9 {
         width: 100%;
+    }
+
+    .filtermobile.offcanvas {
+        width: 75% !important;
+    }
+
+    .data-graphs.row .col-lg-8 {
+        width: 100%;
+    }
+
+    .data-graphs.row .col-lg-4 {
+        width: 100%;
+    }
+
+    .memberlistpage.container-fluid {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .responsive-table {
+        overflow-x: auto;
+        display: block;
+    }
+
+    .pagination {
+        display: inline-block !important;
+    }
+
+    .paginationnn.pagess {
+        display: inline-block;
+    }
+
+    .pagination button {
+        padding: 10px 20px;
+    }
+
+    .rajyapalcontent .col-lg-8 {
+        width: 70%;
+    }
+
+    .rajyapalcontent .col-lg-3 {
+        width: 30%;
+    }
+
+    .dataofelec {
+        margin-top: 35px;
+    }
+
+    .memberproifleimg.col-lg-3 {
+        margin-bottom: 15px;
+    }
+
+    .tab-content {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .form.helpdessk {
+        padding: 25px 15px;
+    }
+
+    .debate-search {
+        padding: 30px 10px;
+    }
+
+    button.startover {
+        width: 30%;
     }
 }

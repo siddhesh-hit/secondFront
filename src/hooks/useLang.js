@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useLang = () => {
-  const [lang, setLang] = useState(localStorage.getItem("lang"));
+  const [lang, setLang] = useState(localStorage.getItem("lang") || "mr");
 
   useEffect(() => {
     const handleLangChange = () => {

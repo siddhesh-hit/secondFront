@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   Navbar,
@@ -11,38 +11,75 @@ import {
 } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import logo from "../../assets/logo.png";
 
 import { logout } from "../../redux/reducers/userReducer";
 import { decrypt } from "../../utils/encrypt";
-import { postApi, getApi, getApiById } from "../../services/axiosInterceptors";
+import { postApi, getApiById } from "../../services/axiosInterceptors";
 import useLang from "../../hooks/useLang";
 import { home, header } from "../../data/constant";
 
 const Header = () => {
   const [notification, setNotification] = useState([]);
-  const [notificationOpen, setNotificationOpen] = useState(false);
   const [search, setSearch] = useState(null);
   const [userInfo, setUserInfo] = useState({});
+
   const { lang, checkLang } = useLang();
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const location = useLocation().pathname;
+  const dispatch = useDispatch();
+
   const handleLanguage = (newLang) => {
+    console.log(newLang);
+
     window.localStorage.setItem("lang", newLang);
     window.dispatchEvent(new CustomEvent("langChange"));
   };
 
+
+  const affectedElementsSelector = "p, h1, h2, h3, h4, h5, h6, span, a, button";
+
+  const [fontSize, setFontSize] = useState(0);
+
+  const storeOriginalSizes = () => {
+    const affectedElements = document.querySelectorAll(affectedElementsSelector);
+    affectedElements.forEach((element) => {
+      element.dataset.origSize = window.getComputedStyle(element).fontSize;
+    });
+  };
+
+  useEffect(() => {
+    storeOriginalSizes();
+  }, []);
+
+  const changeFontSize = (direction) => {
+    setFontSize(fontSize + direction);
+
+    const affectedElements = document.querySelectorAll(affectedElementsSelector);
+    affectedElements.forEach((element) => {
+      const currentSize = parseFloat(element.dataset.origSize) + direction;
+      element.style.fontSize = `${currentSize}px`;
+    });
+  };
+
+  const resetFontSize = () => {
+    setFontSize(0);
+    const affectedElements = document.querySelectorAll(affectedElementsSelector);
+    affectedElements.forEach((element) => {
+      element.style.fontSize = element.dataset.origSize;
+    });
+  };
 
 
   const handleLogout = async () => {
     await postApi("user/logout", {})
       .then((res) => {
         if (res.data.success) {
-          logout();
-          window.location.href = "/";
+          dispatch(logout());
+          window.location.href = "/Login";
         }
       })
       .catch((err) => {
@@ -50,106 +87,87 @@ const Header = () => {
         toast.error("Something went wrong");
       });
   };
+
   const fetchData = async (id) => {
     await getApiById("notification", id)
       .then((res) => setNotification([...res.data.data.global]))
       .catch((err) => console.log(err));
   };
+
   useEffect(() => {
     if (user && Object.keys(user).length > 0) {
       setUserInfo(JSON.parse(decrypt(user)));
     }
   }, []);
+
   useEffect(() => {
     userInfo.notificationId && fetchData(userInfo.notificationId);
-  }, [userInfo])
-  console.log("notification", notification)
+  }, [userInfo]);
+
   return (
     <div>
-      <div
-        className={`${location === "/"
-          ? "blueColor topheader"
-          : location === "/Homepage2"
-            ? "otherColor"
-            : location === "/Homepage1"
-              ? "newheadercolor"
-              : location === "/Debate"
-                ? "topheader"
-                : location === "/DebateDetail"
-                  ? "newheadercolor"
-                  : "topheader"
-          }`}
+      <div id="toplocation"
+        className="blueColor topheader"
       >
         <Container fluid>
           <Row>
             <Col lg={12}>
               <div className="topheaderright">
+                {isAuthenticated && (
+                  <Dropdown className="languagechanges">
+                    <Dropdown.Toggle>
+                      <i className="fa fa-bell"></i>
+                      <span className="badge badge-warning navbar-badge">
+                        {notification.length}
+                      </span>
+                    </Dropdown.Toggle>
 
-                {/* Icon */}
-
-
-                {/* Notifications */}
-                <Dropdown className="languagechanges">
-                  <Dropdown.Toggle><i className="fa fa-bell"></i>
-                    <span className="badge badge-warning navbar-badge" >{notification.length}</span></Dropdown.Toggle>
-
-                  <Dropdown.Menu>
-                    {
-                      notification.length > 0 &&
-                      notification.map((item, index, array) => (
-                        <Dropdown.Item key={index}
-                          href="#"
-                        >
-                          {item[checkLang]["message"]}
-                        </Dropdown.Item>
-                      ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-                {/* End  Notifications */}
+                    <Dropdown.Menu>
+                      {notification.length > 0 &&
+                        notification.map((item, index) => (
+                          <Dropdown.Item key={index} href="#">
+                            {item[checkLang]["message"]}
+                          </Dropdown.Item>
+                        ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
 
                 <div className="contact-us">
                   <Link to="/ContactUs">
                     <span>{header[checkLang].contact}</span>
                   </Link>
                 </div>
-                <Dropdown className="languagechanges">
-                  <Dropdown.Toggle>{header[checkLang].language}</Dropdown.Toggle>
 
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      onClick={() => handleLanguage("mr")}
-                      href="#"
-                    >
-                      मराठी
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() => handleLanguage("en")}
-                      href="#"
-                    >
-                      English
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <button
+                  className="languagechanges mx-2"
+                  onClick={() => handleLanguage(lang === "mr" ? "en" : "mr")}
+                >
+                  {header[checkLang].language}
+                </button>
+
                 <div className="font-size">
-                  <button className="font-size-button">अ+</button>
-                  <button
+                  <button className="font-size-button" onClick={() => changeFontSize(2)}>{header[checkLang].font}+</button>
+                  <button onClick={resetFontSize}
                     className="font-size-button"
                     style={{
                       borderLeft: "solid #121f29 2px",
                       borderRight: "solid #121f29 2px",
                     }}
                   >
-                    अ
+                    {header[checkLang].font}
                   </button>
-                  <button className="font-size-button">अ-</button>
+                  <button className="font-size-button" onClick={() => changeFontSize(-2)}>{header[checkLang].font}-</button>
                 </div>
-                <a href="/Login">
+                <>
                   {isAuthenticated ? (
-                    <button onClick={handleLogout}>साइन आउट करा</button>
+                    <button onClick={handleLogout}>
+                      {header[checkLang].logout}
+                    </button>
                   ) : (
-                    <span>{header[checkLang].login}</span>
+                    <a href="/Login">{header[checkLang].login}</a>
                   )}
-                </a>
+                </>
               </div>
             </Col>
           </Row>
@@ -228,33 +246,35 @@ const Header = () => {
                     <Offcanvas.Body>
                       <Nav className="justify-content-end  flex-grow-1 pe-5">
                         <NavDropdown
-                          title="विधिमंडळ  "
+                          title={header[checkLang].legislature}
                           id={`offcanvasNavbarDropdown-expand-${expand}`}
                         >
-                          <NavDropdown.Item href="rajyapal">
-                            राज्यपाल
+                          <NavDropdown.Item href="Governer">
+                            {header[checkLang].governor}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="LegislativeCouncil">
-                            विधानपरिषद
+                            {header[checkLang].legislativecouncil}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="LegislativeAssembly">
-                            विधानसभा
+                            {header[checkLang].legislativeassembly}
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="#action5">
-                            विधानमंडळ सचिव
-                          </NavDropdown.Item>
+                          {/* <NavDropdown.Item href="#action5">
+                            {header[checkLang].minister}
+                          </NavDropdown.Item> */}
                           <NavDropdown.Item href="/mantri-parishad">
-                            मंत्रीमंडळ
+                            {header[checkLang].councilminis}
                           </NavDropdown.Item>
                           <NavDropdown.Item href="Library">
-                            विधानमंडळ ग्रंथालय
+                            {header[checkLang].legislativelibrary}
                           </NavDropdown.Item>
                         </NavDropdown>
-                        <div>
-                          <Link className="nav-link" to="/">
-                            {header[checkLang].member}
-                          </Link>
-                        </div>
+                        <Nav.Link
+                          className={`${location === "/members-assembly" ? "active" : ""
+                            }`}
+                          href="/members-assembly"
+                        >
+                          {header[checkLang].member}
+                        </Nav.Link>
                         <Nav.Link
                           className={`${location === "/Debate" ? "active" : ""
                             }`}
@@ -262,27 +282,35 @@ const Header = () => {
                         >
                           {header[checkLang].Debate}
                         </Nav.Link>
-                        <Nav.Link href="#action2">{header[checkLang].Legislation}</Nav.Link>
-                        <Nav.Link href="#action2">{header[checkLang].Budget} </Nav.Link>
+                        <Nav.Link
+                          className={`${location === "/SessionCalender" ? "active" : ""
+                            }`}
+                          href="/SessionCalender"
+                        >
+                          {header[checkLang].session}
+                        </Nav.Link>
+                        <Nav.Link href="/LegislationsBills">
+                          {header[checkLang].Legislation}
+                        </Nav.Link>
+                        <Nav.Link href="/Budgetyear">
+                          {header[checkLang].Budget}
+                        </Nav.Link>
                         <div>
-                          <Link className="nav-link" to="/Library">
+                          <Link className="nav-link" to="/Electionresult">
                             {header[checkLang].Elections}
                           </Link>
                         </div>
                         <div>
-                          <Link className="nav-link" to="/Library">
+                          <Link className="nav-link" to="/Gazette">
                             {header[checkLang].Gazette}
                           </Link>
                         </div>
                         <NavDropdown
-                          title="विविध "
+                          title={header[checkLang].various}
                           id={`offcanvasNavbarDropdown-expand-${expand}`}
                         >
-                          <NavDropdown.Item href="gallery">
-                            गॅलरी
-                          </NavDropdown.Item>
-                          <NavDropdown.Item href="#action5">
-                            महत्वाचा सूचना
+                          <NavDropdown.Item href="/gallery">
+                            {header[checkLang].gallery}
                           </NavDropdown.Item>
                         </NavDropdown>
                       </Nav>

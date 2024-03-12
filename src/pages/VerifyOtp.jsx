@@ -2,14 +2,17 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
+import logo from "../assets/logo.png";
+import { useDispatch } from "react-redux";
 import { postApi } from "../services/axiosInterceptors";
 import { encrypt } from "../utils/encrypt";
-import { useDispatch } from "react-redux";
 import { login } from "../redux/reducers/userReducer";
+import { header, loginpage } from "../data/constant";
+import useLang from "../hooks/useLang";
 
 const VerifyOtp = () => {
   const [otp, setOTP] = useState(["", "", "", ""]);
-
+  const { lang, checkLang } = useLang();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -61,28 +64,69 @@ const VerifyOtp = () => {
       }
     }
   };
+  const handleLanguage = (newLang) => {
+    console.log(newLang);
 
+    window.localStorage.setItem("lang", newLang);
+    window.dispatchEvent(new CustomEvent("langChange"));
+  };
   return (
     <div>
-      <form>
-        {[0, 1, 2, 3].map((index) => (
-          <input
-            key={index}
-            id={`input${index + 1}`}
-            type="text"
-            value={otp[index]}
-            onChange={(event) => handleInputChange(index, event)}
-            maxLength={1}
-          />
-        ))}
+      <div className="container-fluid loginboxpage">
         <button
-          className="btn btn-danger"
-          disabled={otp.some((element) => element === "") ? true : false}
-          onClick={handleSubmit}
+          className="languagechanges loginn mx-2"
+          onClick={() => handleLanguage(lang === "mr" ? "en" : "mr")}
         >
-          Submit
+          {header[checkLang].language}
         </button>
-      </form>
+        <a href="/">
+          <img src={logo} alt="logo" className="loginbg" />
+        </a>
+        <div className="container">
+          <div className="justify-content-center row">
+            <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+              <div className="login-box">
+                <h3 className="mb-4">
+                  {loginpage[checkLang].codetype}
+                </h3>
+                <div className="mb-4">
+                  <form>
+                    <div className="form-top">
+                      {[0, 1, 2, 3].map((index) => (
+                        <input
+                          key={index}
+                          id={`input${index + 1}`}
+                          type="text"
+                          className="form-control-otp"
+                          value={otp[index]}
+                          onChange={(event) => handleInputChange(index, event)}
+                          maxLength={1}
+                        />
+                      ))}
+                    </div>
+                    <button
+                      className="mt-3 btn btn-primary"
+                      disabled={otp.some((element) => element === "") ? true : false}
+                      onClick={handleSubmit}
+                    >
+                      {loginpage[checkLang].submit}
+                    </button>
+                  </form>
+                </div>
+                <div className="horizontal-lines mt-5 mb-3">
+                  <div className="horizontal-line" />
+                  <div className="text">{loginpage[checkLang].or}</div>
+                  <div className="horizontal-line" />
+                </div>
+                <p className="new_account">
+                  {loginpage[checkLang].noaccount}
+                  <a href="/Register">{loginpage[checkLang].signup}</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

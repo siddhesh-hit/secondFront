@@ -1,11 +1,22 @@
-import { useEffect, useState } from "react";
-import { Container, Row, Col, Accordion, Form } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Accordion,
+  Form,
+  Offcanvas,
+  Button,
+} from "react-bootstrap";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { Link } from "react-router-dom";
 
 import PDF from "../assets/debate/Frame.svg";
 import Arrow from "../assets/debate/arrow.svg";
 import Sort from "../assets/debate/sort.svg";
+import { ReactTransliterate } from "react-transliterate";
+import "react-transliterate/dist/index.css";
 
 import { getApi } from "../services/axiosInterceptors";
 import { memberName } from "../data/memberName";
@@ -14,15 +25,27 @@ import PaginationComponent from "../components/Pagination";
 import HighlightSentence from "../components/HighlightSentence";
 import useLang from "../hooks/useLang";
 import { councilDebate } from "../data/constant";
+import { numbers, numToYears } from "../utils/marathitoenglish";
 
 const Debate = () => {
   const [debate, setDebate] = useState([]);
+  const [text, setText] = useState("");
+  const [searchdata, setSearchdata] = useState("");
   const [isDivVisible, setDivVisibility] = useState(false);
+  const [isDivVisible1, setDivVisibility1] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageLimit, setPageLimit] = useState(10);
   const [modalShow, setModalShow] = useState(true);
   const [sorted, setSorted] = useState(false);
   const { lang, checkLang } = useLang();
+  const [options, setOptions] = useState({
+    volume: "",
+    kramank: "",
+    method: "",
+    method_type: "",
+    method_sub_type: "",
+    ministry_name: "",
+  });
 
   const [search, setSearch] = useState({
     topic: "",
@@ -35,16 +58,35 @@ const Debate = () => {
     method_type: "",
     method_sub_type: "",
     ministry_name: "",
+    fromdate: "",
+    todate: "",
   });
 
-  const [options, setOptions] = useState({
-    volume: "",
-    kramank: "",
-    method: "",
-    method_type: "",
-    method_sub_type: "",
-    ministry_name: "",
-  });
+  const [extraDate, setExtraDate] = useState({
+    fromdate: "",
+    todate: "",
+  })
+
+  let keyval = {
+    marathi: {
+      topic: "विषय",
+      house: "सभागृह",
+      session: "अधिवेशन",
+      fromdate: "तारीख",
+      todate: "तारीख",
+      members_name: "सदस्यांचे नाव",
+      action: "क्रिया",
+    },
+    english: {
+      topic: "Topic",
+      house: "House",
+      session: "Session",
+      fromdate: "Date",
+      todate: "Date",
+      members_name: "Member Name",
+      action: "Action",
+    }
+  }
 
   let obj = {
     Legislatio: "विधिविधान",
@@ -70,8 +112,9 @@ const Debate = () => {
     "संसदीय कामकाज पद्धती",
   ];
 
+
   const handleOnSearch = (string, results) => {
-    console.log(string, results);
+    // console.log(string, results);
   };
 
   const handleOnSelect = (item) => {
@@ -91,7 +134,29 @@ const Debate = () => {
         ...prev,
         [name]: newValue,
       }));
-    } else {
+    }
+
+    else if (name === "fromdate" || name === "todate") {
+
+      setExtraDate((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+
+      let date = new Date(value);
+      let day = date.getDate().toString().split("").map((item) => numbers[item]).join("");
+      let months = (date.getMonth() + 1).toString();
+      let monthh = numToYears[months];
+      let year = date.getFullYear();
+      let year1 = year.toString().split("").map((item) => numbers[item]).join("");
+      let newDate = `${day} ${monthh} ${year1}`;
+      setSearch((prev) => ({
+        ...prev,
+        [name]: newDate,
+      }));
+      // console.log(newDate)
+    }
+    else {
       setSearch((prev) => ({
         ...prev,
         [name]: value,
@@ -99,9 +164,12 @@ const Debate = () => {
     }
   };
 
+  // console.log(search)
+
   const handleReset = () => {
     setSearch((prev) => ({
       ...prev,
+      // topic: '',
       volume: "",
       kramank: "",
       method: "",
@@ -168,8 +236,26 @@ const Debate = () => {
 
     let session = search.session === "सर्व" ? "" : search.session;
 
+    // console.log(encodeURIComponent(search.topic));
+
+    if (searchdata) {
+      setSearch((prev) => ({
+        ...prev,
+        topic: searchdata
+      }))
+    }
+
     await getApi(
-      `debate/fields?perPage=${currentPage}&perLimit=${pageLimit}&topic=${search.topic}&members_name=${search.members_name}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
+      `debate/fields?perPage=${encodeURIComponent(
+        currentPage
+      )}&perLimit=${pageLimit}&topic=${encodeURIComponent(
+        searchdata
+      )}&members_name=${search.members_name
+      }&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank
+      }&method=${search.method}&method_type=${search.method_type
+      }&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name
+      }`
+      // &fromdate=${search.fromdate}&todate=${search.todate}
     )
       .then((res) => {
         if (res.data.success) {
@@ -263,13 +349,275 @@ const Debate = () => {
     };
     fetchData();
   }, []);
-
   return (
     <div>
       <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
       <Container fluid className="debatepage">
         <Row>
-          <Col lg={3}>
+          <Col lg={3} className="d-lg-none mb-3">
+            <Button onClick={() => setDivVisibility(true)}>
+              <i className="fa fa-bars mx-1"></i> फिल्टर उघडा
+            </Button>
+          </Col>
+          <Offcanvas
+            className="filtermobile"
+            show={isDivVisible}
+            onHide={() => setDivVisibility(false)}
+          >
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>फिल्टर</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <div className="filters">
+                <div className="firstfilter">
+                  <h3>{councilDebate[checkLang].filter}</h3>
+                  <h4>{councilDebate[checkLang].tableBody.member}</h4>
+                  <ReactSearchAutocomplete
+                    items={memberName}
+                    placeholder={councilDebate[checkLang].search1}
+                    onSearch={handleOnSearch}
+                    onSelect={handleOnSelect}
+                    closeOnSelect={true}
+                  />
+                  <Accordion className="filsss" defaultActiveKey={["0"]}>
+                    <Accordion.Item eventKey="0">
+                      <Accordion.Header>
+                        {councilDebate[checkLang].tableBody.house}
+                      </Accordion.Header>
+                      <Accordion.Body>
+                        <div className="filtercontent">
+                          <div className="datacheck">
+                            <label>विधानपरिषद</label>
+                            <Form.Check
+                              aria-label="option 1"
+                              name="house"
+                              checked={search.house === "विधानपरिषद"}
+                              value={"विधानपरिषद"}
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="datacheck">
+                            <label>विधानसभा</label>
+                            <Form.Check
+                              aria-label="option 2"
+                              name="house"
+                              checked={search.house === "विधानसभा"}
+                              value={"विधानसभा"}
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="datacheck1">
+                            <label>एकत्रित</label>
+                            <Form.Check
+                              aria-label="option 3"
+                              name="house"
+                              checked={search.house === "एकत्रित"}
+                              value={"एकत्रित"}
+                              onChange={handleChange}
+                            />
+                          </div>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="1">
+                      <Accordion.Header>
+                        {councilDebate[checkLang].tableBody.session}
+                      </Accordion.Header>
+                      <Accordion.Body>
+                        <div className="filtercontent">
+                          <div className="datacheck">
+                            <label>सर्व</label>
+                            <Form.Check
+                              aria-label="option 4"
+                              name="session"
+                              checked={search.session === "सर्व"}
+                              value={"सर्व"}
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="datacheck">
+                            <label>पावसाळी</label>
+                            <Form.Check
+                              aria-label="option 5"
+                              name="session"
+                              checked={search.session === "पावसाळी"}
+                              value={"पावसाळी"}
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="datacheck">
+                            <label>अर्थसंकल्पीय</label>
+                            <Form.Check
+                              aria-label="option 6"
+                              name="session"
+                              checked={search.session === "अर्थसंकल्पीय"}
+                              value={"अर्थसंकल्पीय"}
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="datacheck1">
+                            <label>विशेष</label>
+                            <Form.Check
+                              aria-label="option 7"
+                              name="session"
+                              checked={search.session === "विशेष"}
+                              value={"विशेष"}
+                              onChange={handleChange}
+                            />
+                          </div>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="2">
+                      <Accordion.Header>
+                        {councilDebate[checkLang].tableBody.date}
+                      </Accordion.Header>
+                      <Accordion.Body>
+                        <div className="filtercontent">
+                          <Row className="daterange">
+                            <Col lg={6}>
+                              <label>पासून</label>
+                              <input
+                                onChange={handleChange}
+                                className="form-control"
+                                type="date"
+                                name="fromdate"
+                                value={extraDate?.fromdate}
+                                style={{ padding: '8px 5px' }}
+                              />
+                            </Col>
+                            <Col lg={6}>
+                              <label>प्रयंत</label>
+                              <input
+                                onChange={handleChange}
+                                className="form-control"
+                                type="date"
+                                name="todate"
+                                value={extraDate?.todate}
+                                style={{ padding: '8px 5px' }}
+                              />
+                            </Col>
+                            <Col lg={6}>
+                              <button className="apply1">
+                                {councilDebate[checkLang].button1}
+                              </button>
+                            </Col>
+                          </Row>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                </div>
+                <hr />
+                <div className="secondfilter">
+                  <button
+                    className="advanced"
+                    onClick={() => setDivVisibility1(!isDivVisible1)}
+                  >
+                    {councilDebate[checkLang].adfilter}
+                    <div className="iconss">{isDivVisible1 ? "-" : "+"}</div>
+                  </button>
+                  {isDivVisible1 && (
+                    <div className="advancdeee">
+                      <label>कामकाजाची यादी निवडा</label>
+                      <select
+                        className="secondfilers"
+                        value={obj[search.method]}
+                        name="method"
+                        onChange={handleChange}
+                      >
+                        <option hidden>कामकाजाची यादी निवडा</option>
+                        {methods?.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                      <label>प्रकार निवडा</label>
+                      <select
+                        className="secondfilers"
+                        value={search.method_type}
+                        name="method_type"
+                        onChange={handleChange}
+                      >
+                        <option hidden>प्रकार निवडा</option>
+                        {options?.method_type?.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                      <label>उपप्रकार निवडा</label>
+                      <select
+                        className="secondfilers"
+                        value={search.method_sub_type}
+                        name="method_sub_type"
+                        onChange={handleChange}
+                      >
+                        <option hidden>उपप्रकार निवडा</option>
+                        {options?.method_sub_type?.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                      <label>मंत्रालय निवडा</label>
+                      <select
+                        className="secondfilers"
+                        value={search.ministry_name}
+                        name="ministry_name"
+                        onChange={handleChange}
+                      >
+                        <option hidden>मंत्रालय निवडा</option>
+                        {options?.ministry_name?.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                      <label>खंड निवडा</label>
+                      <select
+                        className="secondfilers"
+                        value={search.volume}
+                        name="volume"
+                        onChange={handleChange}
+                      >
+                        <option hidden>खंड निवडा</option>
+                        {options?.volume?.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                      <label>क्रमांक निवडा</label>
+                      <select
+                        className="secondfilers"
+                        value={search.kramank}
+                        name="kramank"
+                        onChange={handleChange}
+                      >
+                        <option hidden>क्रमांक निवडा</option>
+                        {options?.kramank?.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                </div>
+                <div className="formbutton">
+                  <button className="reset" onClick={handleReset}>
+                    {councilDebate[checkLang].button2}
+                  </button>
+                  <button className="apply" onClick={handleSearch}>
+                    {councilDebate[checkLang].button1}
+                  </button>
+                </div>
+              </div>
+            </Offcanvas.Body>
+          </Offcanvas>
+          <Col lg={3} className="d-none d-lg-block">
             <div className="filters">
               <div className="firstfilter">
                 <h3>{councilDebate[checkLang].filter}</h3>
@@ -279,10 +627,14 @@ const Debate = () => {
                   placeholder={councilDebate[checkLang].search1}
                   onSearch={handleOnSearch}
                   onSelect={handleOnSelect}
+                  inputSearchString={search.members_name}
+                  closeOnSelect={true}
                 />
                 <Accordion className="filsss" defaultActiveKey={["0"]}>
                   <Accordion.Item eventKey="0">
-                    <Accordion.Header>{councilDebate[checkLang].tableBody.house}</Accordion.Header>
+                    <Accordion.Header>
+                      {councilDebate[checkLang].tableBody.house}
+                    </Accordion.Header>
                     <Accordion.Body>
                       <div className="filtercontent">
                         <div className="datacheck">
@@ -319,7 +671,9 @@ const Debate = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                   <Accordion.Item eventKey="1">
-                    <Accordion.Header>{councilDebate[checkLang].tableBody.session}</Accordion.Header>
+                    <Accordion.Header>
+                      {councilDebate[checkLang].tableBody.session}
+                    </Accordion.Header>
                     <Accordion.Body>
                       <div className="filtercontent">
                         <div className="datacheck">
@@ -366,34 +720,38 @@ const Debate = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                   <Accordion.Item eventKey="2">
-                    <Accordion.Header>{councilDebate[checkLang].tableBody.date}</Accordion.Header>
+                    <Accordion.Header>
+                      {councilDebate[checkLang].tableBody.date}
+                    </Accordion.Header>
                     <Accordion.Body>
                       <div className="filtercontent">
                         <Row className="daterange">
-                          <Col lg={4}>
+                          <Col lg={6}>
                             <label>पासून</label>
                             <input
+                              onChange={handleChange}
                               className="form-control"
-                              disabled
-                              type="number"
-                              min={1987}
-                              max={2024}
-                              value={2011}
+                              type="date"
+                              name="fromdate"
+                              value={extraDate?.fromdate}
+                              style={{ padding: '8px 5px' }}
                             />
                           </Col>
-                          <Col lg={4}>
+                          <Col lg={6}>
                             <label>प्रयंत</label>
                             <input
+                              onChange={handleChange}
                               className="form-control"
-                              disabled
-                              type="number"
-                              min={1987}
-                              max={2024}
-                              value={2011}
+                              type="date"
+                              name="todate"
+                              value={extraDate?.todate}
+                              style={{ padding: '8px 5px' }}
                             />
                           </Col>
-                          <Col lg={4}>
-                            <button className="apply1">{councilDebate[checkLang].button1}</button>
+                          <Col lg={6}>
+                            <button className="apply1">
+                              {councilDebate[checkLang].button1}
+                            </button>
                           </Col>
                         </Row>
                       </div>
@@ -405,13 +763,14 @@ const Debate = () => {
               <div className="secondfilter">
                 <button
                   className="advanced"
-                  onClick={() => setDivVisibility(!isDivVisible)}
+                  onClick={() => setDivVisibility1(!isDivVisible1)}
                 >
                   {councilDebate[checkLang].adfilter}
-                  <div className="iconss">{isDivVisible ? "-" : "+"}</div>
+                  <div className="iconss">{isDivVisible1 ? "-" : "+"}</div>
                 </button>
-                {isDivVisible && (
+                {isDivVisible1 && (
                   <div className="advancdeee">
+                    <label>कामकाजाची यादी निवडा</label>
                     <select
                       className="secondfilers"
                       value={obj[search.method]}
@@ -425,6 +784,7 @@ const Debate = () => {
                         </option>
                       ))}
                     </select>
+                    <label>प्रकार निवडा</label>
                     <select
                       className="secondfilers"
                       value={search.method_type}
@@ -438,6 +798,7 @@ const Debate = () => {
                         </option>
                       ))}
                     </select>
+                    <label>उपप्रकार निवडा</label>
                     <select
                       className="secondfilers"
                       value={search.method_sub_type}
@@ -451,6 +812,7 @@ const Debate = () => {
                         </option>
                       ))}
                     </select>
+                    <label>मंत्रालय निवडा</label>
                     <select
                       className="secondfilers"
                       value={search.ministry_name}
@@ -464,6 +826,7 @@ const Debate = () => {
                         </option>
                       ))}
                     </select>
+                    <label>खंड निवडा</label>
                     <select
                       className="secondfilers"
                       value={search.volume}
@@ -477,6 +840,7 @@ const Debate = () => {
                         </option>
                       ))}
                     </select>
+                    <label>क्रमांक निवडा</label>
                     <select
                       className="secondfilers"
                       value={search.kramank}
@@ -506,13 +870,23 @@ const Debate = () => {
           <Col lg={9}>
             <div className="debate-search">
               <div className="searchboxx">
+                {/* <ReactTransliterate
+                  renderComponent={(props) => <input className="form-control" {...props} />}
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder={home[checkLang].searchPlaceHolder}
+                  onChangeText={(text) => {
+                    setSearch(text);
+                  }}
+                  lang="hi"
+                /> */}
                 <input
                   type="text"
                   name="topic"
                   className="form-control"
                   placeholder={councilDebate[checkLang].search}
-                  defaultValue={search.topic}
-                  onChange={handleChange}
+                  value={searchdata}
+                  onChange={(e) => setSearchdata(e.target.value)}
                 />
                 <button className="searchb" onClick={handleSearch}>
                   <i className="fa fa-search" />
@@ -521,6 +895,89 @@ const Debate = () => {
                   {councilDebate[checkLang].button2}
                 </button>
               </div>
+              <ul className="search-list">
+                <>
+                  {Object.keys(search).map((key, index) => {
+                    let checkBool;
+                    key === "fromdate" ? checkBool = true : checkBool = false;
+                    return (
+                      search[key] === "" || key === "todate" ?
+                        <React.Fragment key={index}></React.Fragment> :
+                        <React.Fragment key={index}>
+                          {
+                            checkBool ? (
+                              <React.Fragment key={index}>
+                                <OverlayTrigger
+                                  delay={{ hide: 450, show: 300 }}
+                                  overlay={(props) => (
+                                    <Tooltip {...props}>{keyval[checkLang][key]}</Tooltip>
+                                  )}
+                                  placement="top"
+                                >
+                                  <li>
+                                    <a>{search.fromdate} - {search.todate}</a>
+                                    <button
+                                      onClick={() => {
+                                        setSearch((prev) => ({
+                                          ...prev,
+                                          todate: "",
+                                          fromdate: ""
+                                        }))
+                                        setExtraDate((prev) => ({
+                                          ...prev,
+                                          todate: "",
+                                          fromdate: "",
+                                        }))
+                                      }
+                                      }
+                                      className="fa fa-times"
+                                    >
+                                    </button>
+                                  </li>
+                                </OverlayTrigger>
+                              </React.Fragment >
+                            ) : (
+                              <React.Fragment key={index}>
+                                <OverlayTrigger
+                                  delay={{ hide: 450, show: 300 }}
+                                  overlay={(props) => (
+                                    <Tooltip {...props}>{keyval[checkLang][key]}</Tooltip>
+                                  )}
+                                  placement="top"
+                                >
+                                  <li>
+                                    <a>{search[key]}</a>
+                                    <button
+                                      onClick={() => {
+                                        if (key === 'topic') {
+                                          setSearchdata('')
+                                          setSearch((prev) => ({
+                                            ...prev,
+                                            [key]: "",
+                                          }))
+                                        }
+                                        else {
+                                          setSearch((prev) => ({
+                                            ...prev,
+                                            [key]: "",
+                                          }))
+                                        }
+                                      }}
+                                      className="fa fa-times"
+                                    >
+                                    </button>
+                                  </li>
+                                </OverlayTrigger>
+                              </React.Fragment>
+                            )
+                          }
+                        </React.Fragment>
+                    )
+                  }
+                  )}
+                </>
+              </ul>
+
             </div>
             <div className="breadvrumbss">
               <Row>
@@ -541,12 +998,18 @@ const Debate = () => {
                 </Col>
                 <Col lg={6}>
                   <div className="debate-right">
-                    <select name="sabhaselection">
-                      <option value="विधानसभा  12th">विधानसभा 12th</option>
-                      <option value="विधानसभा  11th">विधानसभा 11th</option>
-                      <option value="विधानसभा  10th">विधानसभा 10th</option>
-                      <option value="विधानसभा  09th">विधानसभा 09th</option>
-                    </select>
+                    {
+                      search.house === "विधानपरिषद" ? (
+                        <></>
+                      ) : (
+                        <select name="sabhaselection">
+                          <option value="विधानसभा  12th">विधानसभा 12th</option>
+                          <option value="विधानसभा  11th">विधानसभा 11th</option>
+                          <option value="विधानसभा  10th">विधानसभा 10th</option>
+                          <option value="विधानसभा  09th">विधानसभा 09th</option>
+                        </select>
+                      )
+                    }
                     <select
                       name="sabhaselection"
                       defaultValue={pageLimit}
@@ -566,16 +1029,24 @@ const Debate = () => {
                 </Col>
               </Row>
             </div>
-            <table className="debate-light table table-bordered">
+            <table className="debate-light table table-bordered responsive-table">
               <thead>
                 <tr>
                   <th style={{ width: "30%", borderRight: "solid white 1px" }}>
                     {councilDebate[checkLang].tableBody.topic}
                   </th>
-                  <th style={{ borderRight: "solid white 1px" }}>{councilDebate[checkLang].tableBody.house}</th>
-                  <th style={{ borderRight: "solid white 1px" }}>{councilDebate[checkLang].tableBody.session}</th>
-                  <th style={{ borderRight: "solid white 1px" }}>{councilDebate[checkLang].tableBody.date}</th>
-                  <th style={{ borderRight: "solid white 1px" }}>{councilDebate[checkLang].tableBody.member}</th>
+                  <th style={{ borderRight: "solid white 1px" }}>
+                    {councilDebate[checkLang].tableBody.house}
+                  </th>
+                  <th style={{ borderRight: "solid white 1px" }}>
+                    {councilDebate[checkLang].tableBody.session}
+                  </th>
+                  <th style={{ borderRight: "solid white 1px" }}>
+                    {councilDebate[checkLang].tableBody.date}
+                  </th>
+                  <th style={{ borderRight: "solid white 1px" }}>
+                    {councilDebate[checkLang].tableBody.member}
+                  </th>
                   <th>{councilDebate[checkLang].tableBody.action}</th>
                 </tr>
               </thead>
@@ -606,7 +1077,12 @@ const Debate = () => {
                           search={search?.session}
                         />
                       </td>
-                      <td>{item.date}</td>
+                      <td>
+                        <HighlightSentence
+                          data={item.date}
+                          search={search?.date}
+                        />
+                      </td>
                       <td>
                         <p>
                           <HighlightSentence
@@ -638,15 +1114,21 @@ const Debate = () => {
             </table>
 
             <PaginationComponent
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              pageLimit={pageLimit}
               totalCount={debate?.count}
+              perPage={pageLimit}
+              handlePageChange={(cp) => {
+                setCurrentPage(cp)
+              }}
+              initialPage={currentPage}
+            // currentPage={currentPage}
+            // setCurrentPage={setCurrentPage}
+            // pageLimit={pageLimit}
+            // totalCount={debate?.count}
             />
           </Col>
         </Row>
       </Container>
-    </div>
+    </div >
   );
 };
 

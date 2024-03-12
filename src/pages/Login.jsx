@@ -10,9 +10,11 @@ import { postApi } from "../services/axiosInterceptors";
 import { encrypt } from "../utils/encrypt";
 import { login } from "../redux/reducers/userReducer";
 import { userLoginValidation } from "../validators/UserSchema";
-
+import { header, loginpage } from "../data/constant";
+import useLang from "../hooks/useLang";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { lang, checkLang } = useLang();
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -49,7 +51,7 @@ const Login = () => {
       .then((res) => {
         if (res.data.data.user_verified) {
           let enData = encrypt(res.data.data);
-          localStorage.setItem("userInfo", enData);
+          sessionStorage.setItem("userInfo", enData);
           localStorage.removeItem("temp_email");
           dispatch(login(enData));
           navigate("/");
@@ -69,9 +71,22 @@ const Login = () => {
     value ? setCaptcha(true) : setCaptcha(false);
   };
 
+  const handleLanguage = (newLang) => {
+    console.log(newLang);
+
+    window.localStorage.setItem("lang", newLang);
+    window.dispatchEvent(new CustomEvent("langChange"));
+  };
+
   return (
     <div>
       <div className="container-fluid loginboxpage">
+        <button
+          className="languagechanges loginn mx-2"
+          onClick={() => handleLanguage(lang === "mr" ? "en" : "mr")}
+        >
+          {header[checkLang].language}
+        </button>
         <a href="/">
           <img src={logo} alt="logo" className="loginbg" />
         </a>
@@ -80,16 +95,14 @@ const Login = () => {
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <div className="login-box">
                 <h3 className="mb-4">
-                  साइन इन करण्यासाठी, कृपया
-                  <br />
-                  तुमचा इमेल पत्ता लिहा
+                  {loginpage[checkLang].home}
                 </h3>
                 <div className="mb-4 input-group">
                   <span className="input-group-text" id="basic-addon1">
                     <i className="fa fa-envelope" aria-hidden="true" />
                   </span>
                   <input
-                    placeholder="ई-मेल आयडी"
+                    placeholder={loginpage[checkLang].email}
                     aria-label="ई-मेल आयडी"
                     aria-describedby="basic-addon1"
                     type="email"
@@ -103,7 +116,7 @@ const Login = () => {
                     <i className="fa fa-lock" aria-hidden="true" />
                   </span>
                   <input
-                    placeholder="पासवर्ड"
+                    placeholder={loginpage[checkLang].password}
                     aria-label="पासवर्ड"
                     aria-describedby="basic-addon1"
                     type={showPassword ? "text" : "password"}
@@ -127,35 +140,35 @@ const Login = () => {
                 <Captcha
                   onChange={handleCaptchaChange}
                   // onRefresh={true}
-                  placeholder="Enter captcha"
+                  placeholder={loginpage[checkLang].captacha}
                   length={10}
                 />
                 <a className="Forgot-Pass" href="/forgetpassword">
-                  पासवर्ड विसरलात?
+                  {loginpage[checkLang].forgetpassword}
                 </a>
                 <button
                   type="button"
                   onClick={handleSubmit}
                   className="mt-3 btn btn-primary"
                 >
-                  साइन इन करा
+                  {loginpage[checkLang].signin}
                 </button>
                 <div className="horizontal-lines mt-5 mb-3">
                   <div className="horizontal-line" />
-                  <div className="text">किंवा</div>
+                  <div className="text">{loginpage[checkLang].or}</div>
                   <div className="horizontal-line" />
                 </div>
                 <div className="text-center mt-5 mb-5">
                   <a href="/phone-login">
                     <button className="phone-login ">
                       <i className="fa fa-phone" style={{ marginRight: 5 }} />
-                      फोन नंबरसह साइन इन करा
+                      {loginpage[checkLang].phonesign}
                     </button>
                   </a>
                 </div>
                 <p className="new_account">
-                  खाते नाही?
-                  <a href="/Register">साइन अप करा</a>
+                  {loginpage[checkLang].noaccount}
+                  <a href="/Register">{loginpage[checkLang].signup}</a>
                 </p>
               </div>
             </div>
