@@ -747,11 +747,11 @@ const MembersAssembly = () => {
                               </Link>
                             </td>
                             <td>
-                              {item.basic_info?.constituency ? item.basic_info?.constituency?.council?.constituency_name !== '' ? item.basic_info?.constituency?.council?.constituency_name : item.basic_info?.constituency?.assembly?.constituency_name !== '' ? item.basic_info?.constituency?.assembly?.constituency_name : item.basic_info?.constituency?.assembly?.constituency_name : "" +
+                              {item.basic_info.constituency ? item.basic_info.constituency.council.constituency_name !== '' ? item.basic_info.constituency.council.constituency_name : item.basic_info.constituency.assembly.constituency_name !== '' ? item.basic_info.constituency.assembly.constituency_name : item.basic_info.constituency.assembly.constituency_name : "" +
                                 " " +
                                 item?.basic_info?.district ? item?.basic_info?.district?.checkLang?.district : ""}
                             </td>
-                            <td>{item?.basic_info.party ? item?.basic_info?.party[checkLang]?.party_name : ""}</td>
+                            <td>{item?.basic_info.party ? item?.basic_info.party[checkLang]["party_name"] : ""}</td>
                           </tr>
                         );
                       })}
