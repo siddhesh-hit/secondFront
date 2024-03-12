@@ -103,13 +103,14 @@ const MemberAssemblyDetails = () => {
                       <p>
                         मतदारसंघ :{" "}
                         <span>
-                          {current?.basic_info?.constituency +
-                            " " +
-                            current?.basic_info?.district}
+                          {
+                            current.basic_info && current.basic_info.constituency ? current.basic_info.constituency.council.constituency_name !== '' ? current.basic_info.constituency.council.constituency_name : current.basic_info.constituency.assembly.constituency_name !== '' ? current.basic_info.constituency.assembly.constituency_name : current.basic_info.constituency.assembly.constituency_name : "" +
+                              " " +
+                              current?.basic_info?.district ? current?.basic_info?.district?.checkLang?.district : ""}
                         </span>
                       </p>
                       <p>
-                        राजकीय पक्ष : <span>{current?.basic_info?.party}</span>
+                        राजकीय पक्ष : <span>{current.basic_info && current.basic_info.party ? current.basic_info.party[checkLang]["party_name"] : ""}</span>
                       </p>
                       <p>
                         जन्म तारीख :{" "}
@@ -193,7 +194,8 @@ const MemberAssemblyDetails = () => {
                   <Col lg={9}>
                     <div className="dataofelec">
                       <h3>{memberdetails[checkLang].electionres}</h3>
-                      <p>{current?.election_data?.constituency + " "}</p>
+                      <p>{current.election_data && current.election_data.constituency && current.election_data.constituency ? current.election_data.constituency.council.constituency_name !== '' ? current.election_data.constituency.council.constituency_name : current.election_data.constituency.assembly.constituency_name !== '' ? current.election_data.constituency.assembly.constituency_name : current.election_data.constituency.assembly.constituency_name : "" +
+                        " " + " "}</p>
                       <Row className="counting">
                         <Col lg={4}>
                           <p>
@@ -214,16 +216,16 @@ const MemberAssemblyDetails = () => {
                       <thead>
                         <tr>
                           <th style={{ borderRight: "solid white 1px" }}>
-                          {memberdetails[checkLang].srno}
+                            {memberdetails[checkLang].srno}
                           </th>
                           <th style={{ borderRight: "solid white 1px" }}>
-                          {memberdetails[checkLang].candi}
+                            {memberdetails[checkLang].candi}
                           </th>
                           <th style={{ borderRight: "solid white 1px" }}>
-                          {memberdetails[checkLang].votes}
+                            {memberdetails[checkLang].votes}
                           </th>
                           <th style={{ borderRight: "solid white 1px" }}>
-                          {memberdetails[checkLang].party}
+                            {memberdetails[checkLang].party}
                           </th>
                         </tr>
                       </thead>
@@ -236,7 +238,7 @@ const MemberAssemblyDetails = () => {
                                 <td>{index + 1}</td>
                                 <td>{item?.candidate_name}</td>
                                 <td>{item?.votes}</td>
-                                <td>{item?.party}</td>
+                                <td>{item.party ? item.party[checkLang]["party_name"] : ""}</td>
                               </tr>
                             )
                           )}
@@ -264,7 +266,7 @@ const MemberAssemblyDetails = () => {
                     <table className="table-lightt table table-bordered responsive-table">
                       <thead>
                         <tr>
-                          <th style={{ borderRight: "solid white 1px",width:'10%' }}>{memberdetails[checkLang].srno}</th>
+                          <th style={{ borderRight: "solid white 1px", width: '10%' }}>{memberdetails[checkLang].srno}</th>
                           <th style={{ borderRight: "solid white 1px" }}>{memberdetails[checkLang].topic}</th>
                           <th style={{ borderRight: "solid white 1px" }}>{memberdetails[checkLang].house}</th>
                           <th style={{ borderRight: "solid white 1px" }}>{memberdetails[checkLang].session}</th>
@@ -282,7 +284,7 @@ const MemberAssemblyDetails = () => {
                               <td>{item?.session}</td>
                               <td>{item?.date}</td>
                               <td>
-                                <Link style={{color:'black'}} to={`/DebateDetails?id=${item._id}`}>
+                                <Link style={{ color: 'black' }} to={`/DebateDetails?id=${item._id}`}>
                                   <span>
                                     {" "}
                                     <i className="fa fa-eye"></i>
