@@ -67,16 +67,12 @@ const SessionCalender = () => {
         setSearch((prev) => ({
             ...prev,
             topic: "",
-            members_name: "",
             house: "विधानसभा",
             session: "",
-            party: "",
-            constituency: "",
-            surname: "",
-            district: "",
-            gender: "",
-            ministry_name: "",
+            year: "",
+
         }));
+
         debateFetch();
     };
     const handleSort = () => {
@@ -162,7 +158,6 @@ const SessionCalender = () => {
     useEffect(() => {
         debateFetch();
     }, [
-        search.members_name,
         search.house,
         currentPage,
         pageLimit,]);

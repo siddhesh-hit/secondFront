@@ -9,7 +9,7 @@ import {
   Button,
 } from "react-bootstrap";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
-import { Link } from "react-router-dom";
+import { Link, useParams, } from "react-router-dom";
 
 import Graph from "../assets/graphs.svg";
 import Arrow from "../assets/debate/arrow.svg";
@@ -24,6 +24,7 @@ import { councilMember } from "../data/constant";
 import useLang from "../hooks/useLang";
 
 const MembersAssembly = () => {
+  const { house } = useParams()
   const [debate, setDebate] = useState([]);
   const [count, setCount] = useState(0)
   const [isDivVisible, setDivVisibility] = useState(false);
@@ -35,21 +36,9 @@ const MembersAssembly = () => {
   const { lang, checkLang } = useLang();
 
   const [search, setSearch] = useState({
-    topic: "",
+    name: "",
     members_name: "",
-    house: "विधानसभा",
-    session: "",
-    party: "",
-    constituency: "",
-    surname: "",
-    district: "",
-    gender: "",
-    ministry_name: "",
-  });
-  const [search, setSearch] = useState({
-    topic: "",
-    members_name: "",
-    house: "विधानसभा",
+    house: "एकत्रित",
     session: "",
     party: "",
     constituency: "",
@@ -67,18 +56,7 @@ const MembersAssembly = () => {
     gender: "",
     ministry_name: "",
   });
-  const [options, setOptions] = useState({
-    party: "",
-    constituency: "",
-    surname: "",
-    district: "",
-    gender: "",
-    ministry_name: "",
-  });
 
-  const handleOnSearch = (string, results) => {
-    console.log({ string, results });
-  };
   const handleOnSearch = (string, results) => {
     console.log({ string, results });
   };
@@ -89,20 +67,7 @@ const MembersAssembly = () => {
       members_name: item.name,
     }));
   };
-  const handleOnSelect = (item) => {
-    setSearch((prev) => ({
-      ...prev,
-      members_name: item.name,
-    }));
-  };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setSearch((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSearch((prev) => ({
@@ -123,41 +88,13 @@ const MembersAssembly = () => {
     }));
     debateFetch();
   };
-  const handleReset = () => {
-    setSearch((prev) => ({
-      ...prev,
-      party: "",
-      constituency: "",
-      surname: "",
-      district: "",
-      gender: "",
-      ministry_name: "",
-    }));
-    debateFetch();
-  };
 
   const handleStart = () => {
     setSearch((prev) => ({
       ...prev,
-      topic: "",
+      name: "",
       members_name: "",
-      house: "विधानसभा",
-      session: "",
-      party: "",
-      constituency: "",
-      surname: "",
-      district: "",
-      gender: "",
-      ministry_name: "",
-    }));
-    debateFetch();
-  };
-  const handleStart = () => {
-    setSearch((prev) => ({
-      ...prev,
-      topic: "",
-      members_name: "",
-      house: "विधानसभा",
+      house: "एकत्रित",
       session: "",
       party: "",
       constituency: "",
@@ -172,28 +109,13 @@ const MembersAssembly = () => {
   const handleSort = () => {
     if (sorted) {
       const newDebate = debate.data.sort((a, b) =>
-        b.topic.localeCompare(a.topic)
+        b.name.localeCompare(a.name)
       );
       setDebate(newDebate);
       setSorted(!sorted);
     } else {
       const newDebate = debate.data.sort((a, b) =>
-        a.topic.localeCompare(b.topic)
-      );
-      setDebate(newDebate);
-      setSorted(!sorted);
-    }
-  };
-  const handleSort = () => {
-    if (sorted) {
-      const newDebate = debate.data.sort((a, b) =>
-        b.topic.localeCompare(a.topic)
-      );
-      setDebate(newDebate);
-      setSorted(!sorted);
-    } else {
-      const newDebate = debate.data.sort((a, b) =>
-        a.topic.localeCompare(b.topic)
+        a.name.localeCompare(b.name)
       );
       setDebate(newDebate);
       setSorted(!sorted);
@@ -212,43 +134,22 @@ const MembersAssembly = () => {
             ? "Council"
             : "";
     await getApi(
-      `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}`
+      `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}&fullname=${search.name}`
     )
       .then((res) => { setDebate(res.data.data); setCount(res.data.count) })
       .catch((err) => console.log(err));
 
   };
-  const debateFetch = async () => {
-    let house =
-      search.house === "एकत्रित"
-        ? ""
-        : search.house === "विधानसभा"
-        ? "Assembly"
-        : search.house === "विधानपरिषद"
-        ? "Council"
-        : "";
-    await getApi(
-      `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}`
-    )
-      .then((res) => setDebate(res.data.data))
-      .catch((err) => console.log(err));
-  };
+  useEffect(() => {
+    setSearch((prev) => ({
+      ...prev,
+      house: house,
+    }));
 
+  }, [house])
   useEffect(() => {
     const fetchData = async () => {
-      await getApi("member/option?id=basic_info.party")
-        .then((res) => {
-          if (res.data.success) {
-            setOptions((prev) => ({
-              ...prev,
-              party: res.data.data,
-            }));
-          }
-        })
-        .catch((err) => console.log(err));
-  useEffect(() => {
-    const fetchData = async () => {
-      await getApi("member/option?id=basic_info.party")
+      await getApi("party")
         .then((res) => {
           if (res.data.success) {
             setOptions((prev) => ({
@@ -259,19 +160,10 @@ const MembersAssembly = () => {
         })
         .catch((err) => console.log(err));
 
-      await getApi("member/option?id=basic_info.constituency")
+      await getApi("constituency")
         .then((res) => {
           if (res.data.success) {
-            setOptions((prev) => ({
-              ...prev,
-              constituency: res.data.data,
-            }));
-          }
-        })
-        .catch((err) => console.log(err));
-      await getApi("member/option?id=basic_info.constituency")
-        .then((res) => {
-          if (res.data.success) {
+            console.log("consituency ", res.data.data)
             setOptions((prev) => ({
               ...prev,
               constituency: res.data.data,
@@ -290,28 +182,8 @@ const MembersAssembly = () => {
           }
         })
         .catch((err) => console.log(err));
-      await getApi("member/option?id=basic_info.surname")
-        .then((res) => {
-          if (res.data.success) {
-            setOptions((prev) => ({
-              ...prev,
-              surname: res.data.data,
-            }));
-          }
-        })
-        .catch((err) => console.log(err));
 
-      await getApi("member/option?id=basic_info.district")
-        .then((res) => {
-          if (res.data.success) {
-            setOptions((prev) => ({
-              ...prev,
-              district: res.data.data,
-            }));
-          }
-        })
-        .catch((err) => console.log(err));
-      await getApi("member/option?id=basic_info.district")
+      await getApi("district")
         .then((res) => {
           if (res.data.success) {
             setOptions((prev) => ({
@@ -322,7 +194,7 @@ const MembersAssembly = () => {
         })
         .catch((err) => console.log(err));
 
-      await getApi("member/option?id=basic_info.gender")
+      await getApi("gender")
         .then((res) => {
           if (res.data.success) {
             setOptions((prev) => ({
@@ -334,56 +206,13 @@ const MembersAssembly = () => {
         .catch((err) => console.log(err));
     };
     fetchData();
-  }, []);
-      await getApi("member/option?id=basic_info.gender")
-        .then((res) => {
-          if (res.data.success) {
-            setOptions((prev) => ({
-              ...prev,
-              gender: res.data.data,
-            }));
-          }
-        })
-        .catch((err) => console.log(err));
-    };
-    fetchData();
-  }, []);
+  }, [checkLang]);
 
   useEffect(() => {
     debateFetch();
-  }, [search.members_name, search.house, currentPage, pageLimit]);
-  useEffect(() => {
-    debateFetch();
-  }, [search.members_name, search.house, currentPage, pageLimit]);
+  }, [search.members_name, search.house, currentPage, pageLimit, checkLang]);
 
-  return (
-    <div>
-      <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
-      <Container fluid className="memberlistpage">
-        <Row>
-          <Col lg={3}>
-            <div className="filters">
-              <div className="firstfilter">
-                <h3>फिल्टर</h3>
-                <Accordion className="filsss" defaultActiveKey={["0"]}>
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>सदस्य</Accordion.Header>
-                    <Accordion.Body>
-                      <div className="filtercontent">
-                        <ReactSearchAutocomplete
-                          className="mb-3 mt-2"
-                          items={
-                            debate.length > 0
-                              ? debate.map((item) => {
-                                  return { name: item.basic_info.name };
-                                })
-                              : memberName
-                          }
-                          placeholder="सदस्य शोधा"
-                          onSearch={handleOnSearch}
-                          onSelect={handleOnSelect}
-                        />
-                        {/* <ReactSearchAutocomplete
+
   return (
     <div>
       <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
@@ -529,8 +358,8 @@ const MembersAssembly = () => {
                       >
                         <option hidden>पक्षनिहाय</option>
                         {options?.party?.map((item, index) => (
-                          <option key={index} value={item}>
-                            {item}
+                          <option key={index} value={item?._id}>
+                            {item[checkLang]["party_name"]}
                           </option>
                         ))}
                       </select>
@@ -543,8 +372,8 @@ const MembersAssembly = () => {
                       >
                         <option hidden>मतदारसंघनिहाय</option>
                         {options?.constituency?.map((item, index) => (
-                          <option key={index} value={item}>
-                            {item}
+                          <option key={index} value={item?._id}>
+                            {item.council.constituency_name !== '' ? item.council.constituency_name : item.assembly.constituency_name !== '' ? item.assembly.constituency_name : item.assembly.constituency_name}
                           </option>
                         ))}
                       </select>
@@ -571,8 +400,8 @@ const MembersAssembly = () => {
                       >
                         <option hidden>जिल्हानिहाय</option>
                         {options?.district?.map((item, index) => (
-                          <option key={index} value={item}>
-                            {item}
+                          <option key={index} value={item._id}>
+                            {item[checkLang]["district"]}
                           </option>
                         ))}
                       </select>
@@ -585,8 +414,8 @@ const MembersAssembly = () => {
                       >
                         <option hidden>लिंगनिहाय</option>
                         {options?.gender?.map((item, index) => (
-                          <option key={index} value={item}>
-                            {item}
+                          <option key={index} value={item?._id}>
+                            {item[checkLang]["gender"]}
                           </option>
                         ))}
                       </select>
@@ -731,8 +560,8 @@ const MembersAssembly = () => {
                     >
                       <option hidden>पक्षनिहाय</option>
                       {options?.party?.map((item, index) => (
-                        <option key={index} value={item}>
-                          {item}
+                        <option key={index} value={item._id}>
+                          {item[checkLang]["party_name"]}
                         </option>
                       ))}
                     </select>
@@ -745,8 +574,8 @@ const MembersAssembly = () => {
                     >
                       <option hidden>मतदारसंघनिहाय</option>
                       {options?.constituency?.map((item, index) => (
-                        <option key={index} value={item}>
-                          {item}
+                        <option key={index} value={item._id}>
+                          {item.council.constituency_name !== '' ? item.council.constituency_name : item.assembly.constituency_name !== '' ? item.assembly.constituency_name : item.assembly.constituency_name}
                         </option>
                       ))}
                     </select>
@@ -773,8 +602,8 @@ const MembersAssembly = () => {
                     >
                       <option hidden>जिल्हानिहाय</option>
                       {options?.district?.map((item, index) => (
-                        <option key={index} value={item}>
-                          {item}
+                        <option key={index} value={item._id}>
+                          {item[checkLang]["district"]}
                         </option>
                       ))}
                     </select>
@@ -787,8 +616,8 @@ const MembersAssembly = () => {
                     >
                       <option hidden>लिंगनिहाय</option>
                       {options?.gender?.map((item, index) => (
-                        <option key={index} value={item}>
-                          {item}
+                        <option key={index} value={item._id}>
+                          {item[checkLang]["gender"]}
                         </option>
                       ))}
                     </select>
@@ -810,10 +639,10 @@ const MembersAssembly = () => {
               <div className="searchboxx">
                 <input
                   type="text"
-                  name="topic"
+                  name="name"
                   className="form-control"
                   placeholder="विषय आणि कीवर्ड शोधा"
-                  defaultValue={search.topic}
+                  defaultValue={search.name}
                   onChange={handleChange}
                 />
                 <button className="searchb" onClick={debateFetch}>
@@ -889,7 +718,7 @@ const MembersAssembly = () => {
                     {debate.length > 0 &&
                       debate.map((item, index) => {
                         let name = item?.basic_info?.name.split(",");
-                        console.log("name", name);
+                        console.log("item?.basic_info.party",);
                         let twoEntry;
 
                         name.length < 5
@@ -918,11 +747,11 @@ const MembersAssembly = () => {
                               </Link>
                             </td>
                             <td>
-                              {item?.basic_info?.constituency +
+                              {item.basic_info.constituency ? item.basic_info.constituency.council.constituency_name !== '' ? item.basic_info.constituency.council.constituency_name : item.basic_info.constituency.assembly.constituency_name !== '' ? item.basic_info.constituency.assembly.constituency_name : item.basic_info.constituency.assembly.constituency_name : "" +
                                 " " +
-                                item?.basic_info?.district}
+                                item?.basic_info?.district ? item?.basic_info?.district?.checkLang?.district : ""}
                             </td>
-                            <td>{item?.basic_info?.party}</td>
+                            <td>{item?.basic_info.party ? item?.basic_info.party[checkLang]["party_name"] : ""}</td>
                           </tr>
                         );
                       })}
