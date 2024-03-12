@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { ReactTransliterate } from "react-transliterate";
+import "react-transliterate/dist/index.css";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -7,6 +9,7 @@ import { home, homeLink } from "../data/constant";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 const Homepage = () => {
+  const [text, setText] = useState("");
   const [search, setSearch] = useState([]);
   const { lang, checkLang } = useLang();
   AOS.init();
@@ -19,10 +22,15 @@ const Homepage = () => {
         <Row data-aos="fade-up"
           data-aos-duration="3000" className="form-controlss">
           <Col lg={6}>
-            <input
-              className="form-control"
+            <ReactTransliterate
+              renderComponent={(props) => <input className="form-control" {...props} />}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
               placeholder={home[checkLang].searchPlaceHolder}
-              onChange={(e) => setSearch(e.target.value)}
+              onChangeText={(text) => {
+                setSearch(text);
+              }}
+              lang="hi"
             />
             <Link to={`/SearchDetails?id=${search}`} className="searchh">
               <i className="fa fa-search"></i>

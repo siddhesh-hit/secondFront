@@ -13,7 +13,6 @@ const Footer = () => {
   const [location, setLocation] = useState("/");
   const { lang, checkLang } = useLang();
   const [count, setCount] = useState(0);
-  const [fetched, setFetched] = useState(true);
 
   if (window.location.pathname !== location) {
     setLocation(window.location.pathname);
@@ -29,24 +28,10 @@ const Footer = () => {
     fetchData();
   }, []);
 
-  console.log(count);
-
   return (
     <div>
       <div
-        className={`${location === "/"
-            ? "footer"
-            : location === "/Homepage2"
-              ? "otherColor12"
-              : location === "/Homepage1"
-                ? "newfooter"
-                : location === "/Debate"
-                  ? "footer"
-                  : location === "/DebateDetails"
-                    ? "footer"
-                    : "footer" // Default value if none of the conditions are met
-          }`}
-      >
+        className="footer">
         <div className="firstfoot">
           <Link to="/Faq">{footer[checkLang].title}</Link>
           <Link to="/Gallery">{footer[checkLang].title1}</Link>

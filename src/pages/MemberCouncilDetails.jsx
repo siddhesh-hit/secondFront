@@ -295,10 +295,16 @@ const MemberCouncilDetails = () => {
                     </table>
                     {Debate?.data?.length > 0 && (
                       <PaginationComponent
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
-                        pageLimit={pageLimit}
                         totalCount={Debate?.count}
+                        perPage={pageLimit}
+                        handlePageChange={(cp) => {
+                          setCurrentPage(cp)
+                        }}
+                        initialPage={currentPage}
+                      // currentPage={currentPage}
+                      // setCurrentPage={setCurrentPage}
+                      // pageLimit={pageLimit}
+                      // totalCount={debate?.count}
                       />
                     )}
                   </Col>

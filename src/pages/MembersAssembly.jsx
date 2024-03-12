@@ -25,6 +25,7 @@ import useLang from "../hooks/useLang";
 
 const MembersAssembly = () => {
   const [debate, setDebate] = useState([]);
+  const [count, setCount] = useState(0)
   const [isDivVisible, setDivVisibility] = useState(false);
   const [isDivVisible1, setDivVisibility1] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -120,20 +121,23 @@ const MembersAssembly = () => {
     }
   };
 
+
+
   const debateFetch = async () => {
     let house =
       search.house === "एकत्रित"
         ? ""
         : search.house === "विधानसभा"
-        ? "Assembly"
-        : search.house === "विधानपरिषद"
-        ? "Council"
-        : "";
+          ? "Assembly"
+          : search.house === "विधानपरिषद"
+            ? "Council"
+            : "";
     await getApi(
       `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}`
     )
-      .then((res) => setDebate(res.data.data))
+      .then((res) => { setDebate(res.data.data); setCount(res.data.count) })
       .catch((err) => console.log(err));
+
   };
 
   useEffect(() => {
@@ -232,8 +236,8 @@ const MembersAssembly = () => {
                             items={
                               debate.length > 0
                                 ? debate.map((item) => {
-                                    return { name: item.basic_info.name };
-                                  })
+                                  return { name: item.basic_info.name };
+                                })
                                 : memberName
                             }
                             placeholder="सदस्य शोधा"
@@ -434,8 +438,8 @@ const MembersAssembly = () => {
                           items={
                             debate.length > 0
                               ? debate.map((item) => {
-                                  return { name: item.basic_info.name };
-                                })
+                                return { name: item.basic_info.name };
+                              })
                               : memberName
                           }
                           placeholder="सदस्य शोधा"
@@ -645,7 +649,7 @@ const MembersAssembly = () => {
                 <Col lg={6}>
                   <div className="breadvrumbss-inner">
                     <div className="countdebate">
-                      <span> मुख्य पृष्ठ </span>
+                      <span>{councilMember[checkLang].link1}</span>
                       <img src={Arrow} alt="" />
                       <span>सदस्य</span>
                     </div>
@@ -745,11 +749,20 @@ const MembersAssembly = () => {
                   </tbody>
                 </table>
 
-                <PaginationComponent
+                {/* <PaginationComponent
                   currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
                   pageLimit={pageLimit}
                   totalCount={debate?.count}
+                /> */}
+                <PaginationComponent
+                  totalCount={debate.length
+                  }
+                  perPage={pageLimit}
+                  handlePageChange={(cp) => {
+                    setCurrentPage(cp)
+                  }}
+                  initialPage={currentPage}
                 />
               </Col>
               <Col lg={4}>

@@ -10,7 +10,7 @@ const HighlightSentence = ({ data = "", search = "" }) => {
 
   // Split the data into parts using the regex
   const parts = data.split(regex);
-  console.log(parts);
+  // console.log(parts);
 
   return (
     <span>
