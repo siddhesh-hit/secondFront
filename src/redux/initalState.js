@@ -1,4 +1,4 @@
-let deData = localStorage.getItem("userInfo");
+let deData = sessionStorage.getItem("userInfo");
 
 export const authState = {
   isAuthenticated: deData ? true : null,

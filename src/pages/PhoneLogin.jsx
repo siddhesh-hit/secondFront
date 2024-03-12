@@ -9,7 +9,7 @@ const PhoneLogin = () => {
   const handleLanguage = (newLang) => {
     console.log(newLang);
 
-    window.localStorage.setItem("lang", newLang);
+    window.sessionStorage.setItem("lang", newLang);
     window.dispatchEvent(new CustomEvent("langChange"));
   };
   return (
