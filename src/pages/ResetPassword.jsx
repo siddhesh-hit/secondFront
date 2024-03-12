@@ -9,9 +9,12 @@ import { userResetPasswordValidation } from "../validators/UserSchema";
 import { postApi } from "../services/axiosInterceptors";
 import { login } from "../redux/reducers/userReducer";
 import { encrypt } from "../utils/encrypt";
+import { resetpassword } from "../data/constant";
 
+import useLang from "../hooks/useLang";
 const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { lang, checkLang } = useLang();
   const [userData, setUserData] = useState({
     password: "",
     confirmPassword: "",
@@ -73,13 +76,13 @@ const ResetPassword = () => {
           <div className="justify-content-center row">
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <div className="login-box">
-                <h3 className="mb-4">कृपया तुमचा नवीन पासवर्ड टाका</h3>
+                <h3 className="mb-4">{resetpassword[checkLang].newpas}</h3>
                 <div className="mb-4 input-group">
                   <span className="input-group-text" id="basic-addon1">
                     <i className="fa fa-lock" aria-hidden="true" />
                   </span>
                   <input
-                    placeholder="पासवर्ड"
+                    placeholder={resetpassword[checkLang].newpass}
                     aria-label="पासवर्ड"
                     aria-describedby="basic-addon1"
                     className="form-control"
@@ -95,7 +98,7 @@ const ResetPassword = () => {
                     <i className="fa fa-lock" aria-hidden="true" />
                   </span>
                   <input
-                    placeholder="पासवर्ड"
+                    placeholder={resetpassword[checkLang].confipass}
                     aria-label="पासवर्ड"
                     aria-describedby="basic-addon1"
                     type={showPassword ? "text" : "password"}
@@ -126,7 +129,7 @@ const ResetPassword = () => {
                   onClick={handleSubmit}
                   className="mt-3 btn btn-primary"
                 >
-                  साइन इन करा
+                  {resetpassword[checkLang].signin}
                 </button>
               </div>
             </div>

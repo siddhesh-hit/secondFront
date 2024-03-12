@@ -4,6 +4,7 @@ import Arrow from "../assets/debate/arrow.svg";
 import { useEffect, useState } from "react";
 import { getApi } from "../services/axiosInterceptors";
 import useLang from "../hooks/useLang";
+import { faqs } from "../data/constant";
 const Faq = () => {
     const [newData, setNewData] = useState({});
     const { lang, checkLang } = useLang();
@@ -23,10 +24,10 @@ const Faq = () => {
             <section className="commonbg">
                 <Container>
                     <Row>
-                        <Col lg={3}>
+                        <Col lg={4}>
                             <div className="breadcumbsss">
-                                <div className="countdebate"><Link to="/"><span> Home</span></Link>
-                                    <img src={Arrow} alt="" /><span>Faq&#39;s</span>
+                                <div className="countdebate"><Link to="/"><span>{faqs[checkLang].home}</span></Link>
+                                    <img src={Arrow} alt="" /><span>{faqs[checkLang].title}</span>
                                 </div>
                             </div>
                         </Col>
@@ -37,7 +38,7 @@ const Faq = () => {
                 <Container className="mb-5 pb-3">
                     <div className="aboutcontent">
                         <h1>
-                            Faq&#39;s
+                            {faqs[checkLang].title}
                             <div className="hrline"></div>
                         </h1>
                     </div>

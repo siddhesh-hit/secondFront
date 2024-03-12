@@ -39,6 +39,41 @@ const Header = () => {
     window.dispatchEvent(new CustomEvent("langChange"));
   };
 
+
+  const affectedElementsSelector = "p, h1, h2, h3, h4, h5, h6, span, a, button";
+
+  const [fontSize, setFontSize] = useState(0);
+
+  const storeOriginalSizes = () => {
+    const affectedElements = document.querySelectorAll(affectedElementsSelector);
+    affectedElements.forEach((element) => {
+      element.dataset.origSize = window.getComputedStyle(element).fontSize;
+    });
+  };
+
+  useEffect(() => {
+    storeOriginalSizes();
+  }, []);
+
+  const changeFontSize = (direction) => {
+    setFontSize(fontSize + direction);
+
+    const affectedElements = document.querySelectorAll(affectedElementsSelector);
+    affectedElements.forEach((element) => {
+      const currentSize = parseFloat(element.dataset.origSize) + direction;
+      element.style.fontSize = `${currentSize}px`;
+    });
+  };
+
+  const resetFontSize = () => {
+    setFontSize(0);
+    const affectedElements = document.querySelectorAll(affectedElementsSelector);
+    affectedElements.forEach((element) => {
+      element.style.fontSize = element.dataset.origSize;
+    });
+  };
+
+
   const handleLogout = async () => {
     await postApi("user/logout", {})
       .then((res) => {
@@ -72,18 +107,7 @@ const Header = () => {
   return (
     <div>
       <div id="toplocation"
-        className={`${location === "/"
-          ? "blueColor topheader"
-          : location === "/Homepage2"
-            ? "otherColor"
-            : location === "/Homepage1"
-              ? "newheadercolor"
-              : location === "/Debate"
-                ? "topheader"
-                : location === "/DebateDetail"
-                  ? "newheadercolor"
-                  : "topheader"
-          }`}
+        className="blueColor topheader"
       >
         <Container fluid>
           <Row>
@@ -123,17 +147,17 @@ const Header = () => {
                 </button>
 
                 <div className="font-size">
-                  <button className="font-size-button">अ+</button>
-                  <button
+                  <button className="font-size-button" onClick={() => changeFontSize(2)}>{header[checkLang].font}+</button>
+                  <button onClick={resetFontSize}
                     className="font-size-button"
                     style={{
                       borderLeft: "solid #121f29 2px",
                       borderRight: "solid #121f29 2px",
                     }}
                   >
-                    अ
+                    {header[checkLang].font}
                   </button>
-                  <button className="font-size-button">अ-</button>
+                  <button className="font-size-button" onClick={() => changeFontSize(-2)}>{header[checkLang].font}-</button>
                 </div>
                 <>
                   {isAuthenticated ? (
@@ -234,9 +258,9 @@ const Header = () => {
                           <NavDropdown.Item href="LegislativeAssembly">
                             {header[checkLang].legislativeassembly}
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="#action5">
+                          {/* <NavDropdown.Item href="#action5">
                             {header[checkLang].minister}
-                          </NavDropdown.Item>
+                          </NavDropdown.Item> */}
                           <NavDropdown.Item href="/mantri-parishad">
                             {header[checkLang].councilminis}
                           </NavDropdown.Item>
@@ -244,17 +268,26 @@ const Header = () => {
                             {header[checkLang].legislativelibrary}
                           </NavDropdown.Item>
                         </NavDropdown>
-                        <div>
-                          <Link className="nav-link" to="/members-assembly">
-                            {header[checkLang].member}
-                          </Link>
-                        </div>
+                        <Nav.Link
+                          className={`${location === "/members-assembly" ? "active" : ""
+                            }`}
+                          href="/members-assembly"
+                        >
+                          {header[checkLang].member}
+                        </Nav.Link>
                         <Nav.Link
                           className={`${location === "/Debate" ? "active" : ""
                             }`}
                           href="/Debate"
                         >
                           {header[checkLang].Debate}
+                        </Nav.Link>
+                        <Nav.Link
+                          className={`${location === "/SessionCalender" ? "active" : ""
+                            }`}
+                          href="/SessionCalender"
+                        >
+                          {header[checkLang].session}
                         </Nav.Link>
                         <Nav.Link href="/LegislationsBills">
                           {header[checkLang].Legislation}
@@ -278,9 +311,6 @@ const Header = () => {
                         >
                           <NavDropdown.Item href="/gallery">
                             {header[checkLang].gallery}
-                          </NavDropdown.Item>
-                          <NavDropdown.Item href="#action5">
-                            {header[checkLang].notice}
                           </NavDropdown.Item>
                         </NavDropdown>
                       </Nav>

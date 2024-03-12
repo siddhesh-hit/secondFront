@@ -3,13 +3,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ImageUrl, getApi } from "../services/axiosInterceptors";
-import useLang from "../hooks/useLang";
 import { Link } from "react-router-dom";
 import Arrow from "../assets/debate/arrow.svg";
 import { Col, Container, Row } from "react-bootstrap";
 const Gallery = () => {
-  const [newData, setNewData] = useState({});
-  const { lang, checkLang } = useLang();
   const [gallery, setGallery] = useState([]);
 
   const settings = {

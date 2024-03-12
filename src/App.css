@@ -805,6 +805,7 @@ hr.lineabcd {
 
 .contactpage {
     background: #faf4f2;
+    padding-top: 40px;
 }
 
 .text span {
@@ -1011,7 +1012,7 @@ button.startover {
 }
 
 .breadvrumbss-inner p {
-    font-size: 16px;
+    font-size: 14px;
     font-family: 'Sakal Marathi';
     font-weight: 500;
 }
@@ -1032,7 +1033,7 @@ button.startover {
     background: #F5F5F5;
     padding: 10px 15px;
     margin-right: 10px;
-    color: #999999;
+    color: #3b3b3b;
 }
 
 .debate-right {
@@ -1481,8 +1482,12 @@ select.secondfilers {
 }
 
 .daterange.row .form-control {
+    padding-bottom: 5px !important;
     margin-bottom: 5px;
+    font-family: 'Sakal Marathi';
+    font-size: 13px;
 }
+
 
 .daterange.row label {
     margin-bottom: 10px;
@@ -1497,9 +1502,9 @@ button.apply1 {
     text-transform: uppercase;
     text-align: center;
     color: white;
-    padding: 4px 14px;
+    padding: 4px 10px;
     line-height: 2;
-    margin-top: 35px;
+    margin-top: 10px;
 }
 
 .eUeawN {
@@ -1658,6 +1663,10 @@ mark {
     letter-spacing: 1px;
     line-height: 39px;
     text-align: center;
+    word-wrap: break-word;
+    width: 73%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 span.input-group-text {
@@ -2649,4 +2658,188 @@ p.contentrajyapal {
 .governersidebar ul {
     margin-bottom: 0px;
     padding-bottom: 10px;
+}
+
+
+ul.search-list {
+    display: block;
+    padding-left: 0px;
+    margin-left: -3px;
+    margin-top: 9px;
+    margin-bottom: 0px;
+    position: relative;
+    top: 10px;
+}
+
+ul.search-list li {
+    display: inline-block;
+    padding: 0;
+    margin: 0px 2px 10px;
+    cursor: pointer;
+}
+
+ul.search-list li a {
+    color: #ffffff !important;
+    background: #4e3431;
+    padding: 8px 20px;
+    font-size: 14px;
+    display: inline-block;
+    border: none;
+}
+
+ul.search-list button {
+    color: #ffffff !important;
+    background: #cc7722;
+    padding: 10px 12px;
+    display: inline-block;
+    border: none;
+}
+
+.fffff {
+    font-size: 20px;
+}
+
+span.active {
+    background-color: #4e3431;
+    color: #fff !important;
+}
+
+.paginationnew span {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+    padding: 8px 14px;
+    border: 1px solid #ddd;
+    float: left;
+}
+
+.paginationnew button {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+    padding: 8px 14px;
+    border: 1px solid #ddd;
+    float: left;
+}
+
+input.form-control-otp {
+    background: #0000;
+    border-radius: 5px;
+    box-shadow: 0 4px 4px #00000040;
+    height: 55px;
+    width: 10%;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-top {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-box1 {
+    background: #f4d3b18c;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 5px;
+}
+
+.intrestedarea {
+    padding: 20px;
+}
+
+button.submit-feed {
+    margin-top: 20px;
+    border: 1px solid #CC7722;
+    background: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    color: #990000;
+    padding: 7px 35px;
+    line-height: 2;
+}
+
+h3.heading {
+    font-size: 20px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    padding-top: 20px;
+    color: #4e3431;
+}
+
+p.headingpara {
+    font-size: 16px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    padding-top: 20px;
+    color: #4e3431;
+}
+
+.flex-column.nav.nav-pills {
+    background: #fffbf78c;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 5px;
+}
+
+.flex-column.nav.nav-pills a {
+    padding: 18px 15px;
+    border-bottom: solid #ffcd95 1px;
+    border-radius: 0px;
+}
+
+.activecontent .nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    background-color: #cc7722;
+    color: white !important;
+}
+
+.activecontent a.active.nav-link {
+    color: #ffffff !important;
+    background: #cc7722 !important;
+}
+
+
+p.profile_name i.fa.fa-user {
+    font-size: 18px;
+    border: solid rgb(0, 0, 0) 1px;
+    width: 30px;
+    border-radius: 100px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+p.profile_name {
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 18px;
+    color: #4e3431;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p.profile_name .fa-user:before {
+    content: "\f007";
+    position: relative;
+    top: 5px;
+}
+
+button.languagechanges.loginn.mx-2 {
+    float: right;
+    color: white;
+    position: relative;
+    top: 20px;
+    background: #4E3431;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0;
+    padding: 10px 25px;
 }

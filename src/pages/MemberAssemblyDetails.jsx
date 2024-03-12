@@ -7,9 +7,9 @@ import print from "../assets/print.svg";
 import download from "../assets/download.svg";
 import useLang from "../hooks/useLang";
 import MemberAssemblyProfile from "./MemberAssemblyProfile";
-
 import { ImageUrl, getApi, getApiById } from "../services/axiosInterceptors";
 import PaginationComponent from "../components/Pagination";
+import { memberdetails } from "../data/constant";
 
 const MemberAssemblyDetails = () => {
   const [current, setCurrent] = useState({});
@@ -55,14 +55,14 @@ const MemberAssemblyDetails = () => {
             <div className="breadcumbsss">
               <div className="countdebate">
                 <Link to="/">
-                  <span>मुख्य पृष्ठ</span>
+                  <span>{memberdetails[checkLang].home}</span>
                 </Link>
-                <Link to="/">
+                <Link to="/members-assembly">
                   <img src={Arrow} alt="" />
-                  <span>सदस्य</span>
+                  <span>{memberdetails[checkLang].title1}</span>
                 </Link>
                 <img src={Arrow} alt="" />
-                <span>सदस्य तपशील</span>
+                <span>{memberdetails[checkLang].title}</span>
               </div>
             </div>
           </Col>
@@ -70,7 +70,7 @@ const MemberAssemblyDetails = () => {
       </Container>
       <Container>
         <div className="memberdetailscontent">
-          <h3>सदस्य तपशील</h3>
+          <h3>{memberdetails[checkLang].title}</h3>
           <div className="downloadd">
             <Link to="/">
               <img src={print} alt="" />
@@ -84,7 +84,7 @@ const MemberAssemblyDetails = () => {
             id="uncontrolled-tab-example"
             className="mb-3"
           >
-            <Tab eventKey="मुलभूत माहिती" title="मुलभूत माहिती">
+            <Tab eventKey="मुलभूत माहिती" title={memberdetails[checkLang].basic}>
               <div className="basic-information">
                 <Row>
                   <Col lg={3} className="memberproifleimg">
@@ -148,7 +148,7 @@ const MemberAssemblyDetails = () => {
                 </Row>
               </div>
             </Tab>
-            <Tab eventKey="राजकीय प्रवास" title="राजकीय प्रवास">
+            <Tab eventKey="राजकीय प्रवास" title={memberdetails[checkLang].travel}>
               <div className="basic-information">
                 <Row>
                   <Col lg={3} className="memberproifleimg">
@@ -176,7 +176,7 @@ const MemberAssemblyDetails = () => {
                 </Row>
               </div>
             </Tab>
-            <Tab eventKey="निवडणूक डेटा" title="निवडणूक डेटा">
+            <Tab eventKey="निवडणूक डेटा" title={memberdetails[checkLang].electiondata}>
               <div className="electiondata">
                 <Row>
                   <Col lg={3} className="memberproifleimg">
@@ -192,38 +192,38 @@ const MemberAssemblyDetails = () => {
                   </Col>
                   <Col lg={9}>
                     <div className="dataofelec">
-                      <h3>निवडणूक निकाल</h3>
+                      <h3>{memberdetails[checkLang].electionres}</h3>
                       <p>{current?.election_data?.constituency + " "}</p>
                       <Row className="counting">
                         <Col lg={4}>
                           <p>
-                            • <b>एकूण मतदार :</b>
+                            • <b>{memberdetails[checkLang].totalelec} : </b>
                             {current?.election_data?.total_electorate + " "}
                           </p>
                         </Col>
                         <Col lg={4}>
                           <p>
-                            • <b>एकूण वैध मतदान :</b>
+                            • <b>{memberdetails[checkLang].validvote} : </b>
                             {current?.election_data?.total_valid_voting + " "}
                           </p>
                         </Col>
                       </Row>
                     </div>
-                    <h4>पहिल्या पाच उमेदवारांच्या मतांची संख्या</h4>
+                    <h4>{memberdetails[checkLang].firstfive}</h4>
                     <table className="table table-bordered table-striped">
                       <thead>
                         <tr>
                           <th style={{ borderRight: "solid white 1px" }}>
-                            क्रमांक
+                          {memberdetails[checkLang].srno}
                           </th>
                           <th style={{ borderRight: "solid white 1px" }}>
-                            उमेदवाराचे नाव
+                          {memberdetails[checkLang].candi}
                           </th>
                           <th style={{ borderRight: "solid white 1px" }}>
-                            मते
+                          {memberdetails[checkLang].votes}
                           </th>
                           <th style={{ borderRight: "solid white 1px" }}>
-                            राजकीय पक्ष
+                          {memberdetails[checkLang].party}
                           </th>
                         </tr>
                       </thead>
@@ -232,7 +232,7 @@ const MemberAssemblyDetails = () => {
                           0 &&
                           current?.election_data?.member_election_result?.map(
                             (item, index) => (
-                              <tr>
+                              <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{item?.candidate_name}</td>
                                 <td>{item?.votes}</td>
@@ -246,7 +246,7 @@ const MemberAssemblyDetails = () => {
                 </Row>
               </div>
             </Tab>
-            <Tab eventKey="सभागृहांचे कार्यवृत्त" title="सभागृहांचे कार्यवृत्त">
+            <Tab eventKey="सभागृहांचे कार्यवृत्त" title={memberdetails[checkLang].debate}>
               <div className="debatetalked">
                 <Row>
                   <Col lg={3} className="memberproifleimg">
@@ -264,25 +264,25 @@ const MemberAssemblyDetails = () => {
                     <table className="table-lightt table table-bordered responsive-table">
                       <thead>
                         <tr>
-                          <th>क्रमांक</th>
-                          <th>विषय</th>
-                          <th>सभागृह</th>
-                          <th>अधिवेशन</th>
-                          <th>तारीख</th>
-                          <th>तपशील</th>
+                          <th style={{ borderRight: "solid white 1px",width:'10%' }}>{memberdetails[checkLang].srno}</th>
+                          <th style={{ borderRight: "solid white 1px" }}>{memberdetails[checkLang].topic}</th>
+                          <th style={{ borderRight: "solid white 1px" }}>{memberdetails[checkLang].house}</th>
+                          <th style={{ borderRight: "solid white 1px" }}>{memberdetails[checkLang].session}</th>
+                          <th style={{ borderRight: "solid white 1px" }}>{memberdetails[checkLang].date}</th>
+                          <th style={{ borderRight: "solid white 1px" }}>{memberdetails[checkLang].details}</th>
                         </tr>
                       </thead>
                       <tbody>
                         {Debate?.data?.length > 0 &&
                           Debate?.data?.map((item, index) => (
-                            <tr>
+                            <tr key={index}>
                               <td>{index + 1}</td>
                               <td>{item?.topic}</td>
                               <td>{item?.house}</td>
                               <td>{item?.session}</td>
                               <td>{item?.date}</td>
                               <td>
-                                <Link to={`/DebateDetails?id=${item._id}`}>
+                                <Link style={{color:'black'}} to={`/DebateDetails?id=${item._id}`}>
                                   <span>
                                     {" "}
                                     <i className="fa fa-eye"></i>
@@ -295,10 +295,16 @@ const MemberAssemblyDetails = () => {
                     </table>
                     {Debate?.data?.length > 0 && (
                       <PaginationComponent
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
-                        pageLimit={pageLimit}
                         totalCount={Debate?.count}
+                        perPage={pageLimit}
+                        handlePageChange={(cp) => {
+                          setCurrentPage(cp)
+                        }}
+                        initialPage={currentPage}
+                      // currentPage={currentPage}
+                      // setCurrentPage={setCurrentPage}
+                      // pageLimit={pageLimit}
+                      // totalCount={debate?.count}
                       />
                     )}
                   </Col>

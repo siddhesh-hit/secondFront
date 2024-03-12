@@ -152,10 +152,10 @@ const MembersCouncil = () => {
       search.house === "एकत्रित"
         ? ""
         : search.house === "विधानसभा"
-        ? "Assembly"
-        : search.house === "विधानपरिषद"
-        ? "Council"
-        : "";
+          ? "Assembly"
+          : search.house === "विधानपरिषद"
+            ? "Council"
+            : "";
     await getApi(
       `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}`
     )
@@ -258,8 +258,8 @@ const MembersCouncil = () => {
                             items={
                               debate.length > 0
                                 ? debate.map((item) => {
-                                    return { name: item.basic_info.name };
-                                  })
+                                  return { name: item.basic_info.name };
+                                })
                                 : memberName
                             }
                             placeholder="सदस्य शोधा"
@@ -460,8 +460,8 @@ const MembersCouncil = () => {
                           items={
                             debate.length > 0
                               ? debate.map((item) => {
-                                  return { name: item.basic_info.name };
-                                })
+                                return { name: item.basic_info.name };
+                              })
                               : memberName
                           }
                           placeholder="सदस्य शोधा"
@@ -772,10 +772,13 @@ const MembersCouncil = () => {
                 </table>
 
                 <PaginationComponent
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                  pageLimit={pageLimit}
-                  totalCount={debate?.count}
+                  totalCount={debate.length
+                  }
+                  perPage={pageLimit}
+                  handlePageChange={(cp) => {
+                    setCurrentPage(cp)
+                  }}
+                  initialPage={currentPage}
                 />
               </Col>
               <Col lg={4}>

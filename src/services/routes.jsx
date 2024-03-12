@@ -33,6 +33,7 @@ import Electionresult from "../pages/ElectionResult";
 import Budgetyear from "../pages/BudgetYear";
 import LegislationsBills from "../pages/LegislationsBills";
 import Faq from "../pages/Faq";
+import UserProfile from "../pages/UserProfile";
 
 export const routes = [
   {
@@ -241,5 +242,10 @@ export const routes = [
     path: "/Faq",
     exact: true,
     element: <Faq />,
+  },
+  {
+    path: "/UserProfile",
+    exact: true,
+    element: <UserProfile />,
   },
 ];

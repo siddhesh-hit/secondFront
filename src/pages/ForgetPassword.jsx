@@ -4,7 +4,10 @@ import { userForgetPasswordValidation } from "../validators/UserSchema";
 import { toast } from "react-toastify";
 import { postApi } from "../services/axiosInterceptors";
 import { useNavigate } from "react-router-dom";
+import { header, resetpassword } from "../data/constant";
+import useLang from "../hooks/useLang";
 const ForgetPassword = () => {
+  const { lang, checkLang } = useLang();
   const [email, setEmail] = useState("");
 
   const navigate = useNavigate();
@@ -31,9 +34,21 @@ const ForgetPassword = () => {
         });
     }
   };
+  const handleLanguage = (newLang) => {
+    console.log(newLang);
+
+    window.localStorage.setItem("lang", newLang);
+    window.dispatchEvent(new CustomEvent("langChange"));
+  };
   return (
     <div>
       <div className="container-fluid loginboxpage">
+        <button
+          className="languagechanges loginn mx-2"
+          onClick={() => handleLanguage(lang === "mr" ? "en" : "mr")}
+        >
+          {header[checkLang].language}
+        </button>
         <a href="/">
           <img src={logo} alt="logo" className="loginbg" />
         </a>
@@ -42,13 +57,13 @@ const ForgetPassword = () => {
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <form onSubmit={handleSubmit}>
                 <div className="login-box">
-                  <h3 className="mb-4">पासवर्ड रीसेट करा</h3>
+                  <h3 className="mb-4">{resetpassword[checkLang].title}</h3>
                   <div className="mb-4 input-group">
                     <span className="input-group-text" id="basic-addon1">
                       <i className="fa fa-envelope" aria-hidden="true" />
                     </span>
                     <input
-                      placeholder="ई-मेल आयडी"
+                      placeholder={resetpassword[checkLang].email}
                       aria-label="ई-मेल आयडी"
                       aria-describedby="basic-addon1"
                       type="email"
@@ -62,7 +77,7 @@ const ForgetPassword = () => {
                     onClick={handleSubmit}
                     className="mt-3 btn btn-primary"
                   >
-                    सुरू ठेवा
+                    {resetpassword[checkLang].button}
                   </button>
                 </div>
               </form>

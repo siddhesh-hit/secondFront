@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { ImageUrl, getApi } from "../services/axiosInterceptors";
 import useLang from "../hooks/useLang";
 import { Link } from "react-router-dom";
+import Arrow from "../assets/debate/arrow.svg";
 import { aboutUs } from "../data/constant";
 const AboutUs = () => {
   const [newData, setNewData] = useState({});
@@ -22,6 +23,21 @@ const AboutUs = () => {
 
   return (
     <div className="aboutuspage">
+      <Container>
+        <Row>
+          <Col lg={3}>
+            <div className="breadcumbsss">
+              <div className="countdebate">
+                <Link to="/">
+                  <span> Home</span>
+                </Link>
+                <img src={Arrow} alt="" />
+                <span>{aboutUs[checkLang].title}</span>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
       <Container>
         <Col lg={12}>
           <div className="aboutcontent">
