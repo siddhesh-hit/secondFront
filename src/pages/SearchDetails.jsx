@@ -3,8 +3,11 @@ import { Link, useLocation } from "react-router-dom";
 
 import LoaderComponents from "../components/LoaderComponents";
 import { getApi } from "../services/axiosInterceptors";
+import useLang from "../hooks/useLang";
+import { searchdetails } from "../data/constant";
 
 const SearchDetails = () => {
+  const { lang, checkLang } = useLang();
   const [search, setSearch] = useState(null);
   const [memberData, setMemberData] = useState([]);
   const [debateData, setDebateData] = useState([]);
@@ -48,11 +51,11 @@ const SearchDetails = () => {
     <div>
       <section className="searchdetails">
         <h3>
-          <span>तपशील शोधा</span> : {search}
+          <span>{searchdetails[checkLang].searchdetails}</span> : {search}
         </h3>
         <div className="container">
-          <div className="row sub_cat">
-            <div className="col-lg-12 table-responsive">
+          <div className="row">
+            <div className="col-lg-12">
               <table className="table table-bordered mytable responsive-table">
                 <thead>
                   <tr>
@@ -67,13 +70,16 @@ const SearchDetails = () => {
                         paddingTop: 15,
                       }}
                     >
-                      सर्व शोध डेटा - {debateData.count}
+                      {searchdetails[checkLang].totaldata} - {debateData.count}
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {memberData && memberData.length > 0 ? (
                     <>
+                      <tr>
+                        <td className="debateee">{searchdetails[checkLang].memberprofile}</td>
+                      </tr>
                       {memberData.map((item, index) => (
                         <tr key={index}>
                           <td>
@@ -95,7 +101,7 @@ const SearchDetails = () => {
                                     to={`/MemberDetailsEng?id=${item._id}`}
                                     target="_blank"
                                   >
-                                    सदस्य तपशील
+                                    {searchdetails[checkLang].memberdetail}
                                   </Link>
                                 </span>
                               </div>
@@ -107,40 +113,39 @@ const SearchDetails = () => {
                   ) : (
                     <></>
                   )}
-                  {debateData.data && debateData.data.length > 0 ? (
-                    <>
-                      {debateData.data.map((item, index) => (
-                        <tr key={index}>
-                          <td>
-                            <div className="post_demo_list">
-                              <div className="demo_list_main">
-                                <div className="demo_list">
-                                  <h4>
-                                    <Link
-                                      to={`/DebateDetails?id=${item._id}`}
-                                      target="_blank"
-                                    >
-                                      {item.topic}
+                  <>
+                    {debateData.data && debateData.data.length > 0 ? (
+                      <>
+                        <tr>
+                          <td className="debateee">{searchdetails[checkLang].debatelist}</td>
+                        </tr>
+                        {debateData.data.map((item, index) => (
+                          <tr key={index}>
+                            <td>
+                              <div className="post_demo_list">
+                                <div className="demo_list_main">
+                                  <div className="demo_list">
+                                    <h4>
+                                      <Link to={`/DebateDetails?id=${item._id}`} target="_blank">
+                                        {item.topic}
+                                      </Link>
+                                    </h4>
+                                  </div>
+                                  <span className="demo_list_inner">
+                                    <Link to={`/DebateDetails?id=${item._id}`} target="_blank">
+                                      {searchdetails[checkLang].debatedetail}
                                     </Link>
-                                  </h4>
+                                  </span>
                                 </div>
-                                <span className="demo_list_inner">
-                                  <Link
-                                    to={`/DebateDetails?id=${item._id}`}
-                                    target="_blank"
-                                  >
-                                    सभागृहांचे कार्यवृत्त तपशील
-                                  </Link>
-                                </span>
                               </div>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </>
-                  ) : (
-                    <></>
-                  )}
+                            </td>
+                          </tr>
+                        ))}
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </>
                 </tbody>
               </table>
             </div>

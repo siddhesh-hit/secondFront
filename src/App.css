@@ -418,8 +418,7 @@ img.loginbg {
 
 .nav-link {
     color: #4E3431 !important;
-    font-family: 'Poppins' !important;
-    font-size: 15px !important;
+    font-family: 'Poppins';
     font-weight: 600 !important;
 }
 
@@ -2842,4 +2841,13 @@ button.languagechanges.loginn.mx-2 {
     font-weight: 500;
     letter-spacing: 0;
     padding: 10px 25px;
+}
+
+td.debateee {
+    padding-bottom: 10px !important;
+    color: rgb(204, 119, 34) !important;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0em;
+    padding-top: 10px !important;
 }

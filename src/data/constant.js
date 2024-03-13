@@ -150,7 +150,7 @@ const header = {
     various: `विविध`,
     gallery: `गॅलरी`,
     notice: `महत्वाचा सूचना`,
-    logout: "साइन आउट करा",
+    logout: "साइन आउट",
     login: `साइन इन`,
     member: `विधानमंडळ सदस्य`,
     session: `सत्र दिनदर्शिका`,
@@ -1874,7 +1874,7 @@ const legislationsbills = {
     home: `Home`,
     title: `Legislation`,
     reset: `Reset`,
-    hall: `Hall`,
+    hall: `House`,
     bill: `Bill type`,
     billstatus: `Bill status`,
     date: `Date`,
@@ -1895,6 +1895,24 @@ const faqs = {
     title: `Frequently Asked Questions`,
     home: `Home`,
   },
+};
+const searchdetails = {
+  marathi: {
+    searchdetails: `तपशील शोधा`,
+    totaldata: `सर्व शोध डेटा`,
+    memberprofile: `सदस्य प्रोफाइल`,
+    debatelist: `सभागृहांचे कार्यवृत्त यादी`,
+    debatedetail: `सभागृहांचे कार्यवृत्त तपशील`,
+    memberdetail: `सदस्य तपशील`,
+  },
+  english: {
+    searchdetails: `Search Details`,
+    totaldata: `All Search Data`,
+    memberprofile: `Member Profile`,
+    debatelist: `Debate List`,
+    debatedetail: `Debate Details`,
+    memberdetail: `Member Details`,
+  }
 };
 export {
   loginpage,
@@ -1930,4 +1948,5 @@ export {
   electionresult,
   budgetyear,
   legislationsbills,
+  searchdetails,
 };
