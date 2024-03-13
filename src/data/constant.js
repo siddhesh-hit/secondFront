@@ -200,11 +200,11 @@ const home = {
         childtext: [
           {
             name: `विधानपरिषद`,
-            link: `/members-assembly/विधानपरिषद`,
+            link: `/members-assembly?house=विधानपरिषद`,
           },
           {
             name: `विधानसभा`,
-            link: `/members-assembly/विधानसभा`,
+            link: `/members-assembly?house=विधानसभा`,
           },
         ],
       },

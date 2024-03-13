@@ -24,6 +24,7 @@ import { councilMember } from "../data/constant";
 import useLang from "../hooks/useLang";
 
 const MembersAssembly = () => {
+  let url = new URLSearchParams(window.location.search);
   const { house } = useParams()
   const [debate, setDebate] = useState([]);
   const [count, setCount] = useState(0)
@@ -143,10 +144,10 @@ const MembersAssembly = () => {
   useEffect(() => {
     setSearch((prev) => ({
       ...prev,
-      house: house,
+      house: url.get("house"),
     }));
 
-  }, [house])
+  }, [])
   useEffect(() => {
     const fetchData = async () => {
       await getApi("party")
