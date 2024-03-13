@@ -281,9 +281,9 @@ const Header = () => {
                           </NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link
-                          className={`${location === "/members-assembly/एकत्रित" ? "active" : ""
+                          className={`${location === "/members-assembly?house=एकत्रित" ? "active" : ""
                             }`}
-                          href="/members-assembly/एकत्रित"
+                          href="/members-assembly?house=एकत्रित"
                         >
                           {header[checkLang].member}
                         </Nav.Link>
