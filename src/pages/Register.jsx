@@ -51,7 +51,7 @@ const Register = () => {
         .then((response) => {
           console.log("response", response.data.data.email);
           if (response.data.data.email) {
-            localStorage.setItem("temp_email", response.data.data.email);
+            sessionStorage.setItem("temp_email", response.data.data.email);
             navigate("/verify-otp");
           }
         })
@@ -66,7 +66,7 @@ const Register = () => {
   const handleLanguage = (newLang) => {
     console.log(newLang);
 
-    window.localStorage.setItem("lang", newLang);
+    window.sessionStorage.setItem("lang", newLang);
     window.dispatchEvent(new CustomEvent("langChange"));
   };
   return (

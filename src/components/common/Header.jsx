@@ -12,6 +12,8 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
+import { ReactTransliterate } from "react-transliterate";
+import "react-transliterate/dist/index.css";
 
 import logo from "../../assets/logo.png";
 
@@ -22,6 +24,7 @@ import useLang from "../../hooks/useLang";
 import { home, header } from "../../data/constant";
 
 const Header = () => {
+  const [text, setText] = useState("");
   const [notification, setNotification] = useState([]);
   const [search, setSearch] = useState(null);
   const [userInfo, setUserInfo] = useState({});
@@ -33,9 +36,8 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const handleLanguage = (newLang) => {
-    console.log(newLang);
 
-    window.localStorage.setItem("lang", newLang);
+    window.sessionStorage.setItem("lang", newLang);
     window.dispatchEvent(new CustomEvent("langChange"));
   };
 
@@ -100,6 +102,8 @@ const Header = () => {
     }
   }, []);
 
+  // console.log(userInfo)
+
   useEffect(() => {
     userInfo.notificationId && fetchData(userInfo.notificationId);
   }, [userInfo]);
@@ -161,9 +165,13 @@ const Header = () => {
                 </div>
                 <>
                   {isAuthenticated ? (
-                    <button onClick={handleLogout}>
-                      {header[checkLang].logout}
-                    </button>
+                    <p>
+                      {userInfo?.full_name}
+
+                      <button onClick={
+                        () => handleLogout()}>sdsd
+                      </button>
+                    </p>
                   ) : (
                     <a href="/Login">{header[checkLang].login}</a>
                   )}
@@ -200,11 +208,15 @@ const Header = () => {
                 <Col lg={4}>
                   <div className="search-home">
                     <form>
-                      <input
-                        type="search"
+                      <ReactTransliterate
+                        renderComponent={(props) => <input className="form-control" {...props} />}
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
                         placeholder={home[checkLang].searchPlaceHolder}
-                        className="form-control"
-                        onChange={(e) => setSearch(e.target.value)}
+                        onChangeText={(text) => {
+                          setSearch(text);
+                        }}
+                        lang="hi"
                       />
                       <Link to={`/SearchDetails?id=${search}`}>
                         <i className="fa fa-search" aria-hidden="true"></i>

@@ -6,13 +6,14 @@ export const userInfo = createSlice({
   initialState: authState,
   reducers: {
     login(state, action) {
+      console.log(action)
       state.isAuthenticated = true;
       state.user = action.payload;
     },
     logout(state, action) {
       state.isAuthenticated = false;
       state.user = {};
-      localStorage.removeItem("userInfo");
+      sessionStorage.removeItem("userInfo");
     },
   },
 });

@@ -49,10 +49,12 @@ const Login = () => {
 
     await postApi("user/loginEmail", userData)
       .then((res) => {
+        console.log(res)
         if (res.data.data.user_verified) {
+          console.log('sd')
           let enData = encrypt(res.data.data);
           sessionStorage.setItem("userInfo", enData);
-          localStorage.removeItem("temp_email");
+          sessionStorage.removeItem("temp_email");
           dispatch(login(enData));
           navigate("/");
         } else {
@@ -74,7 +76,7 @@ const Login = () => {
   const handleLanguage = (newLang) => {
     console.log(newLang);
 
-    window.localStorage.setItem("lang", newLang);
+    window.sessionStorage.setItem("lang", newLang);
     window.dispatchEvent(new CustomEvent("langChange"));
   };
 

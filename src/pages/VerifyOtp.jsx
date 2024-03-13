@@ -43,15 +43,15 @@ const VerifyOtp = () => {
     } else {
       const data = {
         email_otp: otp.join(""), // Join the OTP array into a string
-        email: localStorage.getItem("temp_email"),
+        email: sessionStorage.getItem("temp_email"),
       };
 
       try {
         const res = await postApi("user/verifyEmail", data);
         if (res.data.data.user_verified) {
           let enData = encrypt(res.data.data);
-          localStorage.setItem("userInfo", enData);
-          localStorage.removeItem("temp_email");
+          sessionStorage.setItem("userInfo", enData);
+          sessionStorage.removeItem("temp_email");
           dispatch(login(enData));
           navigate("/");
         } else {
@@ -67,7 +67,7 @@ const VerifyOtp = () => {
   const handleLanguage = (newLang) => {
     console.log(newLang);
 
-    window.localStorage.setItem("lang", newLang);
+    window.sessionStorage.setItem("lang", newLang);
     window.dispatchEvent(new CustomEvent("langChange"));
   };
   return (

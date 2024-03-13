@@ -40,8 +40,8 @@ const ResetPassword = () => {
           console.log("res", res.data);
           if (res.data.data.user_verified) {
             let enData = encrypt(res.data.data);
-            localStorage.setItem("userInfo", enData);
-            localStorage.removeItem("temp_email");
+            sessionStorage.setItem("userInfo", enData);
+            sessionStorage.removeItem("temp_email");
             dispatch(login(enData));
             navigate("/");
           } else {
