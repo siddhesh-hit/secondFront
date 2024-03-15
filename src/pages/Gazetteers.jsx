@@ -6,8 +6,10 @@ import Sort from "../assets/debate/sort.svg";
 
 import useLang from "../hooks/useLang";
 import { gazetteers } from "../data/constant";
-
+import { ReactTransliterate } from "react-transliterate";
+import "react-transliterate/dist/index.css";
 const Gazetteers = () => {
+  const [text, setText] = useState("");
   const [isDivVisible, setDivVisibility] = useState(false);
   const { checkLang } = useLang();
   return (
@@ -72,20 +74,28 @@ const Gazetteers = () => {
           </Col>
           <Col lg={9}>
             <div className="debate-search">
-              <div className="searchboxx">
-                <input
-                  type="text"
-                  name="topic"
-                  placeholder={gazetteers[checkLang].searchtitle}
-                  className="form-control"
-                />
-                <button className="searchb">
-                  <i className="fa fa-search" />
-                </button>
-                <button className="startover">
-                  {gazetteers[checkLang].reset}
-                </button>
-              </div>
+              <Row>
+                <Col lg={10} style={{ position: 'relative' }}>
+                  <ReactTransliterate
+                    renderComponent={(props) => <input className="form-control" {...props} />}
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    placeholder={gazetteers[checkLang].searchtitle}
+                    onChangeText={(text) => {
+                      setText(text);
+                    }}
+                    lang="hi"
+                  />
+                  <button className="searchb">
+                    <i className="fa fa-search" />
+                  </button>
+                </Col>
+                <Col lg={2}>
+                  <button className="startover">
+                    {gazetteers[checkLang].reset}
+                  </button>
+                </Col>
+              </Row>
             </div>
             <div className="breadvrumbss">
               <Row>

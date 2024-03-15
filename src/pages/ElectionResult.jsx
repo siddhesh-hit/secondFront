@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
 import Arrow from "../assets/debate/arrow.svg";
@@ -5,8 +6,10 @@ import Sort from "../assets/debate/sort.svg";
 
 import useLang from "../hooks/useLang";
 import { electionresult } from "../data/constant";
-
+import { ReactTransliterate } from "react-transliterate";
+import "react-transliterate/dist/index.css";
 const ElectionResult = () => {
+    const [text, setText] = useState("");
     const { checkLang } = useLang();
     return (
         <div>
@@ -65,20 +68,28 @@ const ElectionResult = () => {
                     </Col>
                     <Col lg={9}>
                         <div className="debate-search">
-                            <div className="searchboxx">
-                                <input
-                                    type="text"
-                                    name="topic"
-                                    placeholder={electionresult[checkLang].searchtitle}
-                                    className="form-control"
-                                />
-                                <button className="searchb">
-                                    <i className="fa fa-search" />
-                                </button>
-                                <button className="startover">
-                                    {electionresult[checkLang].reset}
-                                </button>
-                            </div>
+                            <Row>
+                                <Col lg={10} style={{ position: 'relative' }}>
+                                    <ReactTransliterate
+                                        renderComponent={(props) => <input className="form-control" {...props} />}
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                        placeholder={electionresult[checkLang].searchtitle}
+                                        onChangeText={(text) => {
+                                            setText(text);
+                                        }}
+                                        lang="hi"
+                                    />
+                                    <button className="searchb">
+                                        <i className="fa fa-search" />
+                                    </button>
+                                </Col>
+                                <Col lg={2}>
+                                    <button className="startover">
+                                        {electionresult[checkLang].reset}
+                                    </button>
+                                </Col>
+                            </Row>
                         </div>
                         <div className="breadvrumbss">
                             <Row>

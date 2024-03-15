@@ -255,5 +255,7 @@
 
     button.startover {
         width: 30%;
+        margin-top: 10px;
+        margin-left: 0px;
     }
 }

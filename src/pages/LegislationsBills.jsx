@@ -6,8 +6,10 @@ import Sort from "../assets/debate/sort.svg";
 
 import useLang from "../hooks/useLang";
 import { legislationsbills } from "../data/constant";
-
+import { ReactTransliterate } from "react-transliterate";
+import "react-transliterate/dist/index.css";
 const LegislationsBills = () => {
+    const [text, setText] = useState("");
     const [isDivVisible, setDivVisibility] = useState(false);
     const { checkLang } = useLang();
     return (
@@ -204,20 +206,28 @@ const LegislationsBills = () => {
                     </Col>
                     <Col lg={9}>
                         <div className="debate-search">
-                            <div className="searchboxx">
-                                <input
-                                    type="text"
-                                    name="topic"
-                                    placeholder={legislationsbills[checkLang].searchtitle}
-                                    className="form-control"
-                                />
-                                <button className="searchb">
-                                    <i className="fa fa-search" />
-                                </button>
-                                <button className="startover">
-                                    {legislationsbills[checkLang].reset}
-                                </button>
-                            </div>
+                            <Row>
+                                <Col lg={10} style={{ position: 'relative' }}>
+                                    <ReactTransliterate
+                                        renderComponent={(props) => <input className="form-control" {...props} />}
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                        placeholder={legislationsbills[checkLang].searchtitle}
+                                        onChangeText={(text) => {
+                                            setText(text);
+                                        }}
+                                        lang="hi"
+                                    />
+                                    <button className="searchb">
+                                        <i className="fa fa-search" />
+                                    </button>
+                                </Col>
+                                <Col lg={2}>
+                                    <button className="startover">
+                                        {legislationsbills[checkLang].reset}
+                                    </button>
+                                </Col>
+                            </Row>
                         </div>
                         <div className="breadvrumbss">
                             <Row>

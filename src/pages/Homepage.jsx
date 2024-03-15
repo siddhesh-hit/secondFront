@@ -94,7 +94,12 @@ const Homepage = () => {
           </Row>
         </Container>
       </section>
-      <section className="importantlinks">
+      <h2>
+        <Container className="pt-5 pb-5">
+          <p className="demophase">{home[checkLang].hometitle1}</p>
+        </Container>
+      </h2>
+      <section className="importantlinks pt-5">
         <Container>
           <div className="aboutcontent">
             <h1>

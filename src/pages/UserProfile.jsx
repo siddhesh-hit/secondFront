@@ -1,15 +1,35 @@
+import { useEffect, useState } from "react";
 import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
-
+import { useSelector } from "react-redux";
 import Arrow from "../assets/debate/arrow.svg";
+import samplePDF1 from "../assets/Documents/02- Library Collection.pdf";
 
 import { Link } from "react-router-dom";
 
-import samplePDF1 from "../assets/Documents/02- Library Collection.pdf";
 import useLang from "../hooks/useLang";
 import { userprofile } from "../data/constant";
+import { decrypt } from "../utils/encrypt";
 
 const UserProfile = () => {
-    const { lang, checkLang } = useLang();
+    const [userInfo, setUserInfo] = useState({});
+    const dateOfBirth = userInfo.date_of_birth;
+    const { isAuthenticated, user } = useSelector((state) => state.auth);
+    const { checkLang } = useLang();
+
+    const formattedDate = new Date(dateOfBirth).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+
+    useEffect(() => {
+        if (user && Object.keys(user).length > 0) {
+            setUserInfo(JSON.parse(decrypt(user)));
+        }
+    }, []);
+
+
+
     return (
         <div className="galleryback">
             <Container>
@@ -29,7 +49,7 @@ const UserProfile = () => {
             </Container>
             <div className="aboutcontent">
                 <h1>
-                {userprofile[checkLang].userpro}
+                    {userprofile[checkLang].userpro}
                     <div className="hrline"></div>
                 </h1>
             </div>
@@ -66,7 +86,7 @@ const UserProfile = () => {
                                 <Tab.Pane eventKey="first">
                                     <div className="profile-box1">
                                         <h3 className="heading">
-                                        {userprofile[checkLang].basic}
+                                            {userprofile[checkLang].basic}
                                         </h3>
                                         <p className="headingpara">{userprofile[checkLang].basictitle}</p>
                                         <div className="intrestedarea">
@@ -76,7 +96,7 @@ const UserProfile = () => {
                                                         Name
                                                     </label>
                                                     <div className="subject_textarea mb-2 input-group">
-                                                        <input type="text" className="form-control" id="full_name" />
+                                                        <input type="text" readOnly value={userInfo.full_name} className="form-control" id="full_name" />
                                                     </div>
                                                 </Col>
                                             </div>
@@ -86,7 +106,7 @@ const UserProfile = () => {
                                                         Date of Birth
                                                     </label>
                                                     <div className="subject_textarea mb-2 input-group">
-                                                        <input type="text" className="form-control" id="full_name" />
+                                                        <input type="text" readOnly value={formattedDate} className="form-control" id="full_name" />
                                                     </div>
                                                 </Col>
                                             </div>
@@ -96,7 +116,7 @@ const UserProfile = () => {
                                                         Email
                                                     </label>
                                                     <div className="subject_textarea mb-2 input-group">
-                                                        <input type="text" className="form-control" id="full_name" />
+                                                        <input type="text" readOnly value={userInfo.email} className="form-control" id="full_name" />
                                                     </div>
                                                 </Col>
                                             </div>
@@ -106,7 +126,7 @@ const UserProfile = () => {
                                                         Contact No
                                                     </label>
                                                     <div className="subject_textarea mb-2 input-group">
-                                                        <input type="text" className="form-control" id="full_name" />
+                                                        <input type="text" readOnly value={userInfo.phone_number} className="form-control" id="full_name" />
                                                     </div>
                                                 </Col>
                                             </div>
@@ -157,7 +177,7 @@ const UserProfile = () => {
                                             <div className="row">
                                                 <div className="button_less">
                                                     <button className="submit-feed">
-                                                    {userprofile[checkLang].submit}
+                                                        {userprofile[checkLang].submit}
                                                     </button>
                                                 </div>
                                             </div>
@@ -208,7 +228,7 @@ const UserProfile = () => {
                                             <div className="row">
                                                 <div className="button_less">
                                                     <button className="submit-feed">
-                                                    {userprofile[checkLang].submit}
+                                                        {userprofile[checkLang].submit}
                                                     </button>
                                                 </div>
                                             </div>
@@ -281,7 +301,7 @@ const UserProfile = () => {
                                 <Tab.Pane eventKey="fifth">
                                     <div className="profile-box1">
                                         <h3 className="heading">
-                                        {userprofile[checkLang].reset}
+                                            {userprofile[checkLang].reset}
                                         </h3>
                                         <div className="intrestedarea">
                                             <div className="row">
@@ -302,7 +322,7 @@ const UserProfile = () => {
                                             <div className="row">
                                                 <div className="button_less">
                                                     <button className="submit-feed">
-                                                    {userprofile[checkLang].submit}
+                                                        {userprofile[checkLang].submit}
                                                     </button>
                                                 </div>
                                             </div>

@@ -12,7 +12,10 @@ import Arrow from "../assets/debate/arrow.svg";
 import Sort from "../assets/debate/sort.svg";
 import useLang from "../hooks/useLang";
 import { judgment } from "../data/constant";
+import { ReactTransliterate } from "react-transliterate";
+import "react-transliterate/dist/index.css";
 const Judgments = () => {
+  const [text, setText] = useState("");
   const [isDivVisible, setDivVisibility] = useState(false);
   const [isDivVisible1, setDivVisibility1] = useState(false);
   const { checkLang } = useLang();
@@ -158,20 +161,28 @@ const Judgments = () => {
           </Col>
           <Col lg={9}>
             <div className="debate-search">
-              <div className="searchboxx">
-                <input
-                  type="text"
-                  name="topic"
-                  placeholder={judgment[checkLang].searchtitle}
-                  className="form-control"
-                />
-                <button className="searchb">
-                  <i className="fa fa-search" />
-                </button>
-                <button className="startover">
-                  {judgment[checkLang].reset}
-                </button>
-              </div>
+              <Row>
+                <Col lg={10} style={{ position: 'relative' }}>
+                  <ReactTransliterate
+                    renderComponent={(props) => <input className="form-control" {...props} />}
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    placeholder={judgment[checkLang].searchtitle}
+                    onChangeText={(text) => {
+                      setText(text);
+                    }}
+                    lang="hi"
+                  />
+                  <button className="searchb">
+                    <i className="fa fa-search" />
+                  </button>
+                </Col>
+                <Col lg={2}>
+                  <button className="startover">
+                    {judgment[checkLang].reset}
+                  </button>
+                </Col>
+              </Row>
             </div>
             <div className="breadvrumbss">
               <Row>
@@ -208,7 +219,7 @@ const Judgments = () => {
           </Col>
         </Row>
       </Container>
-    </div>
+    </div >
   );
 };
 export default Judgments;

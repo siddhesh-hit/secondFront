@@ -83,17 +83,12 @@ const Gallery = () => {
         <Slider {...settings}>
           {gallery?.length > 0 &&
             gallery.map((section, index) => (
-              <div key={index}>
-                <img
-                  src={
-                    ImageUrl +
-                    section["destination"] +
-                    "/" +
-                    section["filename"]
-                  }
-                  className="w-100"
-                  alt="about"
-                />
+              <div className="gallery_imagess" key={index}>
+                {section["filename"].endsWith(".mp4") ? (
+                  <video muted controls style={{ width: '100%' }} src={ImageUrl + section["destination"] + "/" + section["filename"]}></video>
+                ) : (
+                  <img src={ImageUrl + section["destination"] + "/" + section["filename"]} className="w-100" alt="about" />
+                )}
               </div>
             ))}
         </Slider>

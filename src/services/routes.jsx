@@ -8,7 +8,7 @@ import Homepage from "../pages/Homepage";
 import Library from "../pages/Library";
 import Login from "../pages/Login";
 import MantriParishad from "../pages/MantriParishad";
-import MembersAssembly from "../pages/MembersAssembly";
+import Members from "../pages/Members";
 import PhoneLogin from "../pages/PhoneLogin";
 import Governer from "../pages/Governer";
 import GovernerList from "../pages/GovernerList";
@@ -18,7 +18,7 @@ import VerifyOtp from "../pages/VerifyOtp";
 import ResetPassword from "../pages/ResetPassword";
 import AllLinks from "../pages/AllLinks";
 import Feedback from "../pages/Feedback";
-import MemberAssemblyDetails from "../pages/MemberAssemblyDetails";
+import MemberDetails from "../pages/MemberDetails";
 import MembersCouncil from "../pages/MembersCouncil";
 import MemberCouncilDetails from "../pages/MemberCouncilDetails";
 import Gallery from "../components/Gallery";
@@ -132,9 +132,9 @@ export const routes = [
   },
   {
     name: "MemberAssembly",
-    path: "/members-assembly",
+    path: "/members",
     exact: true,
-    element: <MembersAssembly />,
+    element: <Members />,
   },
   {
     name: "MantriParishad",
@@ -156,9 +156,9 @@ export const routes = [
   },
   {
     name: "MemberAssembly",
-    path: "/member-assembly-details/:id",
+    path: "/member-details/:id",
     exact: true,
-    element: <MemberAssemblyDetails />,
+    element: <MemberDetails />,
   },
   {
     name: "MemberCouncil",

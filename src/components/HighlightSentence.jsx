@@ -1,4 +1,4 @@
-const HighlightSentence = ({ data = "", search = "" }) => {
+const HighlightSentence = ({ data = "", search = "", }) => {
   if (typeof search !== "string" || !search.trim()) {
     return <span>{data}</span>;
   }
@@ -14,14 +14,16 @@ const HighlightSentence = ({ data = "", search = "" }) => {
 
   return (
     <span>
-      {parts.map((part, i) =>
-        part.toLowerCase() === search.toLowerCase() ? (
-          <mark key={i}>{part}</mark>
-        ) : (
-          <span key={i}>{part}</span>
+      {
+        parts.map((part, i) =>
+          part.toLowerCase() === search.toLowerCase() ? (
+            <mark key={i}>{part}</mark>
+          ) : (
+            <span key={i}>{part}</span>
+          )
         )
-      )}
-    </span>
+      }
+    </span >
   );
 };
 
