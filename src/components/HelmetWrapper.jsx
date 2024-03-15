@@ -9,7 +9,6 @@ const HelmetWrapper = () => {
   const [Loading, setLoader] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
-  console.log("location", location.pathname);
   const seoData = useSelector((state) => state.seo);
   const element = document.getElementById("toplocation");
 
@@ -38,7 +37,6 @@ const HelmetWrapper = () => {
   useEffect(() => {
     fetchData();
   }, [location.pathname]);
-  console.log("seoData", seoData);
   return (
     !Loading && (
       <Helmet>
