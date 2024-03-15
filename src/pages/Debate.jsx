@@ -65,7 +65,7 @@ const Debate = () => {
   const [extraDate, setExtraDate] = useState({
     fromdate: "",
     todate: "",
-  })
+  });
 
   let keyval = {
     marathi: {
@@ -85,8 +85,8 @@ const Debate = () => {
       todate: "Date",
       members_name: "Member Name",
       action: "Action",
-    }
-  }
+    },
+  };
 
   let obj = {
     Legislatio: "विधिविधान",
@@ -112,7 +112,6 @@ const Debate = () => {
     "संसदीय कामकाज पद्धती",
   ];
 
-
   const handleOnSearch = (string, results) => {
     // console.log(string, results);
   };
@@ -134,36 +133,40 @@ const Debate = () => {
         ...prev,
         [name]: newValue,
       }));
-    }
-
-    else if (name === "fromdate" || name === "todate") {
-
+    } else if (name === "fromdate" || name === "todate") {
       setExtraDate((prev) => ({
         ...prev,
         [name]: value,
       }));
 
       let date = new Date(value);
-      let day = date.getDate().toString().split("").map((item) => numbers[item]).join("");
+      let day = date
+        .getDate()
+        .toString()
+        .split("")
+        .map((item) => numbers[item])
+        .join("");
       let months = (date.getMonth() + 1).toString();
       let monthh = numToYears[months];
       let year = date.getFullYear();
-      let year1 = year.toString().split("").map((item) => numbers[item]).join("");
+      let year1 = year
+        .toString()
+        .split("")
+        .map((item) => numbers[item])
+        .join("");
       let newDate = `${day} ${monthh} ${year1}`;
       setSearch((prev) => ({
         ...prev,
         [name]: newDate,
       }));
       // console.log(newDate)
-    }
-    else {
+    } else {
       setSearch((prev) => ({
         ...prev,
         [name]: value,
       }));
     }
   };
-
 
   const handleReset = () => {
     setSearch((prev) => ({
@@ -232,31 +235,28 @@ const Debate = () => {
 
   const handleSearch = async () => {
     let house = search.house === "एकत्रित" ? "" : search.house;
-
     let session = search.session === "सर्व" ? "" : search.session;
-
-    // console.log(encodeURIComponent(search.topic));
 
     if (searchdata) {
       setSearch((prev) => ({
         ...prev,
-        topic: searchdata
-      }))
+        topic: searchdata,
+      }));
     }
-
-
-    // setCurrentPage(0);
-    // setPageLimit(10);
 
     await getApi(
       `debate/fields?perPage=${encodeURIComponent(
         currentPage
       )}&perLimit=${pageLimit}&topic=${encodeURIComponent(
         searchdata
-      )}&members_name=${search.members_name
-      }&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank
-      }&method=${search.method}&method_type=${search.method_type
-      }&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name
+      )}&members_name=${
+        search.members_name
+      }&house=${house}&session=${session}&volume=${search.volume}&kramank=${
+        search.kramank
+      }&method=${search.method}&method_type=${
+        search.method_type
+      }&method_sub_type=${search.method_sub_type}&ministry_name=${
+        search.ministry_name
       }`
       // &fromdate=${search.fromdate}&todate=${search.todate}
     )
@@ -269,19 +269,14 @@ const Debate = () => {
   };
 
   useEffect(() => {
-    if (!search.topic || !search.members_name || !search.house || !search.session || !search.volume || !search.kramank || !search.method || !search.method_type || !search.method_sub_type || !search.ministry_name || !search.fromdate || !search.todate) {
-      setCurrentPage(0);
-    }
-
-    console.log(currentPage, "current page hai")
-
     handleSearch();
   }, [
     search.session,
     search.house,
-    search.members_name, currentPage, pageLimit
+    search.members_name,
+    currentPage,
+    pageLimit,
   ]);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -353,6 +348,9 @@ const Debate = () => {
     };
     fetchData();
   }, []);
+
+  console.log(currentPage, "in debate");
+
   return (
     <div>
       {/* <PopupHome show={modalShow} onHide={() => setModalShow(false)} /> */}
@@ -487,7 +485,7 @@ const Debate = () => {
                                 type="date"
                                 name="fromdate"
                                 value={extraDate?.fromdate}
-                                style={{ padding: '8px 5px' }}
+                                style={{ padding: "8px 5px" }}
                               />
                             </Col>
                             <Col lg={6}>
@@ -498,7 +496,7 @@ const Debate = () => {
                                 type="date"
                                 name="todate"
                                 value={extraDate?.todate}
-                                style={{ padding: '8px 5px' }}
+                                style={{ padding: "8px 5px" }}
                               />
                             </Col>
                             <Col lg={6}>
@@ -738,7 +736,7 @@ const Debate = () => {
                               type="date"
                               name="fromdate"
                               value={extraDate?.fromdate}
-                              style={{ padding: '8px 5px' }}
+                              style={{ padding: "8px 5px" }}
                             />
                           </Col>
                           <Col lg={6}>
@@ -749,7 +747,7 @@ const Debate = () => {
                               type="date"
                               name="todate"
                               value={extraDate?.todate}
-                              style={{ padding: '8px 5px' }}
+                              style={{ padding: "8px 5px" }}
                             />
                           </Col>
                           <Col lg={6}>
@@ -874,9 +872,11 @@ const Debate = () => {
           <Col lg={9}>
             <div className="debate-search">
               <Row>
-                <Col lg={10} style={{ position: 'relative' }}>
+                <Col lg={10} style={{ position: "relative" }}>
                   <ReactTransliterate
-                    renderComponent={(props) => <input className="form-control" {...props} />}
+                    renderComponent={(props) => (
+                      <input className="form-control" {...props} />
+                    )}
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     placeholder={councilDebate[checkLang].search}
@@ -899,82 +899,83 @@ const Debate = () => {
                 <>
                   {Object.keys(search).map((key, index) => {
                     let checkBool;
-                    key === "fromdate" ? checkBool = true : checkBool = false;
-                    return (
-                      search[key] === "" || key === "todate" ?
-                        <React.Fragment key={index}></React.Fragment> :
-                        <React.Fragment key={index}>
-                          {
-                            checkBool ? (
-                              <React.Fragment key={index}>
-                                <OverlayTrigger
-                                  delay={{ hide: 450, show: 300 }}
-                                  overlay={(props) => (
-                                    <Tooltip {...props}>{keyval[checkLang][key]}</Tooltip>
-                                  )}
-                                  placement="top"
-                                >
-                                  <li>
-                                    <a>{search.fromdate} - {search.todate}</a>
-                                    <button
-                                      onClick={() => {
-                                        setSearch((prev) => ({
-                                          ...prev,
-                                          todate: "",
-                                          fromdate: ""
-                                        }))
-                                        setExtraDate((prev) => ({
-                                          ...prev,
-                                          todate: "",
-                                          fromdate: "",
-                                        }))
-                                      }
-                                      }
-                                      className="fa fa-times"
-                                    >
-                                    </button>
-                                  </li>
-                                </OverlayTrigger>
-                              </React.Fragment >
-                            ) : (
-                              <React.Fragment key={index}>
-                                <OverlayTrigger
-                                  delay={{ hide: 450, show: 300 }}
-                                  overlay={(props) => (
-                                    <Tooltip {...props}>{keyval[checkLang][key]}</Tooltip>
-                                  )}
-                                  placement="top"
-                                >
-                                  <li>
-                                    <a>{search[key]}</a>
-                                    <button
-                                      onClick={() => {
-                                        if (key === 'topic') {
-                                          setSearchdata('')
-                                          setSearch((prev) => ({
-                                            ...prev,
-                                            [key]: "",
-                                          }))
-                                        }
-                                        else {
-                                          setSearch((prev) => ({
-                                            ...prev,
-                                            [key]: "",
-                                          }))
-                                        }
-                                      }}
-                                      className="fa fa-times"
-                                    >
-                                    </button>
-                                  </li>
-                                </OverlayTrigger>
-                              </React.Fragment>
-                            )
-                          }
-                        </React.Fragment>
-                    )
-                  }
-                  )}
+                    key === "fromdate"
+                      ? (checkBool = true)
+                      : (checkBool = false);
+                    return search[key] === "" || key === "todate" ? (
+                      <React.Fragment key={index}></React.Fragment>
+                    ) : (
+                      <React.Fragment key={index}>
+                        {checkBool ? (
+                          <React.Fragment key={index}>
+                            <OverlayTrigger
+                              delay={{ hide: 450, show: 300 }}
+                              overlay={(props) => (
+                                <Tooltip {...props}>
+                                  {keyval[checkLang][key]}
+                                </Tooltip>
+                              )}
+                              placement="top"
+                            >
+                              <li>
+                                <a>
+                                  {search.fromdate} - {search.todate}
+                                </a>
+                                <button
+                                  onClick={() => {
+                                    setSearch((prev) => ({
+                                      ...prev,
+                                      todate: "",
+                                      fromdate: "",
+                                    }));
+                                    setExtraDate((prev) => ({
+                                      ...prev,
+                                      todate: "",
+                                      fromdate: "",
+                                    }));
+                                  }}
+                                  className="fa fa-times"
+                                ></button>
+                              </li>
+                            </OverlayTrigger>
+                          </React.Fragment>
+                        ) : (
+                          <React.Fragment key={index}>
+                            <OverlayTrigger
+                              delay={{ hide: 450, show: 300 }}
+                              overlay={(props) => (
+                                <Tooltip {...props}>
+                                  {keyval[checkLang][key]}
+                                </Tooltip>
+                              )}
+                              placement="top"
+                            >
+                              <li>
+                                <a>{search[key]}</a>
+                                <button
+                                  onClick={() => {
+                                    if (key === "topic") {
+                                      setSearchdata("");
+                                      setSearch((prev) => ({
+                                        ...prev,
+                                        [key]: "",
+                                      }));
+                                    } else {
+                                      setSearch((prev) => ({
+                                        ...prev,
+                                        [key]: "",
+                                      }));
+                                    }
+                                  }}
+                                  className="fa fa-times"
+                                ></button>
+                              </li>
+                            </OverlayTrigger>
+                          </React.Fragment>
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
                 </>
               </ul>
             </div>
@@ -997,18 +998,16 @@ const Debate = () => {
                 </Col>
                 <Col lg={6}>
                   <div className="debate-right">
-                    {
-                      search.house === "विधानपरिषद" ? (
-                        <></>
-                      ) : (
-                        <select name="sabhaselection">
-                          <option value="विधानसभा  12th">विधानसभा 12th</option>
-                          <option value="विधानसभा  11th">विधानसभा 11th</option>
-                          <option value="विधानसभा  10th">विधानसभा 10th</option>
-                          <option value="विधानसभा  09th">विधानसभा 09th</option>
-                        </select>
-                      )
-                    }
+                    {search.house === "विधानपरिषद" ? (
+                      <></>
+                    ) : (
+                      <select name="sabhaselection">
+                        <option value="विधानसभा  12th">विधानसभा 12th</option>
+                        <option value="विधानसभा  11th">विधानसभा 11th</option>
+                        <option value="विधानसभा  10th">विधानसभा 10th</option>
+                        <option value="विधानसभा  09th">विधानसभा 09th</option>
+                      </select>
+                    )}
                     <select
                       name="sabhaselection"
                       defaultValue={pageLimit}
@@ -1028,108 +1027,143 @@ const Debate = () => {
                 </Col>
               </Row>
             </div>
-            <table className="debate-light table table-bordered responsive-table">
-              <thead>
-                <tr>
-                  <th style={{ width: "30%", borderRight: "solid white 1px" }}>
-                    {councilDebate[checkLang].tableBody.topic}
-                  </th>
-                  <th style={{ borderRight: "solid white 1px" }}>
-                    {councilDebate[checkLang].tableBody.house}
-                  </th>
-                  <th style={{ borderRight: "solid white 1px" }}>
-                    {councilDebate[checkLang].tableBody.session}
-                  </th>
-                  <th style={{ borderRight: "solid white 1px" }}>
-                    {councilDebate[checkLang].tableBody.date}
-                  </th>
-                  <th style={{ borderRight: "solid white 1px", width: "25%" }}>
-                    {councilDebate[checkLang].tableBody.member}
-                  </th>
-                  <th>{councilDebate[checkLang].tableBody.action}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {debate?.data?.map((item, index) => {
-                  // let name = item?.members_name.split(",");
-                  // let twoEntry;
+            {debate?.count > 0 ? (
+              <table className="debate-light table table-bordered responsive-table">
+                <thead>
+                  <tr>
+                    <th
+                      style={{ width: "30%", borderRight: "solid white 1px" }}
+                    >
+                      {councilDebate[checkLang].tableBody.topic}
+                    </th>
+                    <th style={{ borderRight: "solid white 1px" }}>
+                      {councilDebate[checkLang].tableBody.house}
+                    </th>
+                    <th style={{ borderRight: "solid white 1px" }}>
+                      {councilDebate[checkLang].tableBody.session}
+                    </th>
+                    <th style={{ borderRight: "solid white 1px" }}>
+                      {councilDebate[checkLang].tableBody.date}
+                    </th>
+                    <th
+                      style={{ borderRight: "solid white 1px", width: "25%" }}
+                    >
+                      {councilDebate[checkLang].tableBody.member}
+                    </th>
+                    <th>{councilDebate[checkLang].tableBody.action}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {debate?.data?.map((item, index) => {
+                    // let name = item?.members_name.split(",");
+                    // let twoEntry;
 
-                  // name.length < 5 ? (twoEntry = true) : (twoEntry = false);
+                    // name.length < 5 ? (twoEntry = true) : (twoEntry = false);
 
-                  return (
-                    <tr key={index}>
-                      <td>
-                        <HighlightSentence
-                          data={item.topic}
-                          search={search?.topic}
-                        />
-                      </td>
-                      <td>
-                        <HighlightSentence
-                          data={item.house}
-                          search={search?.house}
-                        />
-                      </td>
-                      <td>
-                        <HighlightSentence
-                          data={item.session}
-                          search={search?.session}
-                        />
-                      </td>
-                      <td>
-                        <HighlightSentence
-                          data={item.date}
-                          search={search?.date}
-                        />
-                      </td>
-                      <td>
-                        <p>
+                    return (
+                      <tr key={index}>
+                        <td>
                           <HighlightSentence
-                            data={
-                              // twoEntry
-                              //   ? name[0] + "...."
-                              //   : name[0] + name[1] + "...."
-                              item?.members_name
-                            }
-                            search={search?.members_name}
-
+                            data={item.topic}
+                            search={search?.topic}
                           />
-                        </p>
-                      </td>
-                      <td className="imagee">
-                        <Link to={`/DebateDetails?id=${item._id}`}>
-                          <i className="fa fa-eye" />
-                        </Link>
-                        <a
-                          href={"http://103.112.121.109:8000/" + item.fileurl}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <img src={PDF} alt="" />
-                        </a>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                        </td>
+                        <td>
+                          <HighlightSentence
+                            data={item.house}
+                            search={search?.house}
+                          />
+                        </td>
+                        <td>
+                          <HighlightSentence
+                            data={item.session}
+                            search={search?.session}
+                          />
+                        </td>
+                        <td>
+                          <HighlightSentence
+                            data={item.date}
+                            search={search?.date}
+                          />
+                        </td>
+                        <td>
+                          <p>
+                            <HighlightSentence
+                              data={
+                                // twoEntry
+                                //   ? name[0] + "...."
+                                //   : name[0] + name[1] + "...."
+                                item?.members_name
+                              }
+                              search={search?.members_name}
+                            />
+                          </p>
+                        </td>
+                        <td className="imagee">
+                          <Link to={`/DebateDetails?id=${item._id}`}>
+                            <i className="fa fa-eye" />
+                          </Link>
+                          <a
+                            href={"http://103.112.121.109:8000/" + item.fileurl}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <img src={PDF} alt="" />
+                          </a>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <table className="debate-light table table-bordered responsive-table">
+                <thead>
+                  <tr>
+                    <th
+                      style={{ width: "30%", borderRight: "solid white 1px" }}
+                    >
+                      {councilDebate[checkLang].tableBody.topic}
+                    </th>
+                    <th style={{ borderRight: "solid white 1px" }}>
+                      {councilDebate[checkLang].tableBody.house}
+                    </th>
+                    <th style={{ borderRight: "solid white 1px" }}>
+                      {councilDebate[checkLang].tableBody.session}
+                    </th>
+                    <th style={{ borderRight: "solid white 1px" }}>
+                      {councilDebate[checkLang].tableBody.date}
+                    </th>
+                    <th
+                      style={{ borderRight: "solid white 1px", width: "25%" }}
+                    >
+                      {councilDebate[checkLang].tableBody.member}
+                    </th>
+                    <th>{councilDebate[checkLang].tableBody.action}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <td colSpan={6}>
+                    <>No data found for provided query</>
+                  </td>
+                </tbody>
+              </table>
+            )}
 
-            <PaginationComponent
-              totalCount={debate?.count}
-              perPage={pageLimit}
-              handlePageChange={(cp) => {
-                setCurrentPage(cp)
-              }}
-              initialPage={currentPage}
-            // currentPage={currentPage}
-            // setCurrentPage={setCurrentPage}
-            // pageLimit={pageLimit}
-            // totalCount={debate?.count}
-            />
+            {debate?.count > 0 && (
+              <PaginationComponent
+                totalCount={debate?.count}
+                perPage={pageLimit}
+                handlePageChange={(cp) => {
+                  setCurrentPage(cp);
+                }}
+                initialPage={currentPage}
+              />
+            )}
           </Col>
         </Row>
       </Container>
-    </div >
+    </div>
   );
 };
 
