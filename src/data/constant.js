@@ -415,7 +415,7 @@ const home = {
     ],
   },
   english: {
-    header: `We are pleased to present the beta version of Maharashtra Legislative \n Board Secretariat Information System. This is just a look, we are \n trying to provide more information in the future`,
+    header: `We are pleased to present the beta version of Maharashtra Legislative Board Secretariat \n Information System. This is just a look, we are trying to provide more \n information in the future`,
     searchPlaceHolder: `Enter the search keywords`,
     legislature: `Legislature Members`,
     hometitle: `What kind of information will be available in the future...`,

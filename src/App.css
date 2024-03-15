@@ -1650,7 +1650,7 @@ mark {
     margin-bottom: 25px;
     margin-left: 25px;
     margin-top: 25px;
-    width: 320px;
+    width: 500px;
 }
 
 .login-box {
@@ -1705,8 +1705,13 @@ button.btn.btn-primary {
     font-weight: 500;
     letter-spacing: 0;
     width: 100%;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+button#dropdown-basic-button {
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 .Forgot-Pass {
