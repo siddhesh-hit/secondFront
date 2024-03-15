@@ -369,7 +369,17 @@ const Members = () => {
                         <option hidden>मतदारसंघनिहाय</option>
                         {options?.constituency?.map((item, index) => (
                           <option key={index} value={item._id}>
-                            {item?.council?.constituency_name !== '' ? item?.council?.constituency_name : item?.assembly?.constituency_name !== '' ? item?.assembly?.constituency_name : item?.assembly?.constituency_name}
+                            {
+                              item[
+                                search.house === "विधानसभा"
+                                  ? "council"
+                                  : "assembly"
+                              ]?.constituency_name
+                              // ? item?.council?.constituency_name
+                              // : item?.assembly?.constituency_name !== “”
+                              // ? item?.assembly?.constituency_name
+                              // : item?.assembly?.constituency_name
+                            }
                           </option>
                         ))}
                       </select>
@@ -560,11 +570,32 @@ const Members = () => {
                       onChange={handleChange}
                     >
                       <option hidden>मतदारसंघनिहाय</option>
-                      {options?.constituency?.map((item, index) => (
-                        <option key={index} value={item._id}>
-                          {item?.council?.constituency_name !== '' ? item?.council?.constituency_name : item?.assembly?.constituency_name !== '' ? item?.assembly?.constituency_name : item?.assembly?.constituency_name}
-                        </option>
-                      ))}
+                      {options?.constituency?.map((item, index) => {
+                        const constituencyName =
+                          item[
+                            search.house === "विधानपरिषद" ? "council" : "assembly"
+                          ]?.constituency_name;
+                        const alternateConstituencyName =
+                          item[
+                            search.house === "विधानसभा" ? "assembly" : "council"
+                          ]?.constituency_name;
+
+                        if (alternateConstituencyName !== '') {
+                          return (
+                            <option key={index} value={item._id}>
+                              {alternateConstituencyName}
+                            </option>
+                          );
+                        } else if (constituencyName !== '') {
+                          return (
+                            <option key={index} value={item._id}>
+                              {constituencyName}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })}
+
                     </select>
                     <label>आडनावानुसार</label>
                     <select
