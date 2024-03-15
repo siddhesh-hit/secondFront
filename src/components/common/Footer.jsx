@@ -8,6 +8,7 @@ import facebook from "../../assets/social/facebook.png";
 import twitter from "../../assets/social/twitter.png";
 import linkdein from "../../assets/social/linkedin.png";
 import instagram from "../../assets/social/instagram.png";
+import card from "../../assets/social/card.png";
 
 const Footer = () => {
   const [location, setLocation] = useState("/");
@@ -40,7 +41,7 @@ const Footer = () => {
           <Link to="/">{footer[checkLang].title2}</Link>
           <Link to="/AboutUs">{footer[checkLang].title3}</Link>
           <Link to="/Library">{footer[checkLang].title4}</Link>
-          <Link to="/News">{footer[checkLang].title5}</Link>
+          {/* <Link to="/News">{footer[checkLang].title5}</Link> */}
           <Link to="/Governer">{footer[checkLang].title6}</Link>
         </div>
         <div className="thirdfooter">
@@ -65,6 +66,9 @@ const Footer = () => {
           </Link>
           <Link to="https://in.linkedin.com/">
             <img src={linkdein} alt="linkdein" />
+          </Link>
+          <Link to="http://mls.org.in/">
+            <img src={card} alt="linkdein" />
           </Link>
         </div>
       </div>

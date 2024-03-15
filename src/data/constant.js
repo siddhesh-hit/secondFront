@@ -18,6 +18,8 @@ import {
   media,
   judgments,
 } from "../assets/homeicons";
+import logo from "../assets/logo.png";
+import englogo from "../assets/englogo.png";
 
 const loginpage = {
   marathi: {
@@ -138,6 +140,7 @@ const resetpassword = {
 
 const header = {
   marathi: {
+    logo: logo,
     contact: `संपर्क साधा`,
     language: `English`,
     legislature: `विधिमंडळ `,
@@ -162,6 +165,7 @@ const header = {
     font: `अ`,
   },
   english: {
+    logo: englogo,
     contact: `Contact Us`,
     language: `मराठी`,
     logout: "Sign out",
@@ -189,10 +193,11 @@ const header = {
 
 const home = {
   marathi: {
-    header: `एक सर्वसमावेशक ज्ञान भांडार - विधिमंडळ प्रवचन,निवडणूक कथा, आणि नागरी सक्षमीकरण \n एक्सप्लोर करण्यासाठी तुमचे पोर्टल.आता शोधा!`,
+    header: `महाराष्ट्र विधान बोर्ड सचिवालय माहिती प्रणालीचा बीटा व्हरझन सादर करताना आम्हाला आनंद होत आहे. ही फक्त \n पहा आहे, वेदधने अधिक सुचना भविष्याचा आमचा प्रयत्न`,
     searchPlaceHolder: `शोध कीवर्ड प्रविष्ट करा`,
     legislature: `विधिमंडळ सदस्य`,
-    hometitle: `आतापर्यंत एमएलएस ग्रंथालयातील संसाधने, दस्तऐवज डिजीटलाइज्ड झाली आहे ते एक्सप्लोरे करा`,
+    hometitle1: `ही बीटा व्हर्झन फक्त एक सुरुवात आहे. आम्ही तुम्हाला आमच्यासोबत विधानमंडळातील अलौकिक खजिन्याची माहिती प्राप्त करून देणारे माध्यम उपलब्ध करून देत आहोत .`,
+    hometitle: `भविष्यात कोणत्या प्रकारची माहिती येथे उपलब्ध असणार आहे...`,
     nav: [
       {
         icon: legmem,
@@ -200,11 +205,11 @@ const home = {
         childtext: [
           {
             name: `विधानपरिषद`,
-            link: `/members-assembly?house=विधानपरिषद`,
+            link: `/members?house=विधानपरिषद`,
           },
           {
             name: `विधानसभा`,
-            link: `/members-assembly?house=विधानसभा`,
+            link: `/members?house=विधानसभा`,
           },
         ],
       },
@@ -379,40 +384,42 @@ const home = {
     homebottom: [
       {
         icon: imag1,
-        title: `लेख`,
-        subtitle: `405 दशलक्ष`,
+        title: `कायदेविषयक दस्तऐवज`,
+        subtitle: `अध्यादेश, विधेयक, अधिनियम, अधिनियम सुधारणा, नियम, विनियमन आणि इतर कायदेविषयक दस्तऐवजांच्या साक्षीदार व्हा.`,
       },
       {
         icon: imag2,
-        title: `विधेयके आणि कायदे`,
-        subtitle: `405 दशलक्ष`,
+        title: `समिती अहवालाचे अंतरंग `,
+        subtitle: `विधिमंडळ समित्यांच्या कामकाजाचा सखोल अभ्यास करा. धोरणे आणि निर्णयांना आकार देणारे अभ्यासपूर्ण अहवाल, शिफारशी आणि विश्लेषणांमध्ये प्रवेश मिळवा.`,
       },
       {
         icon: imag3,
-        title: `माध्यम फाइल्स`,
-        subtitle: `405 दशलक्ष`,
+        title: `शासकीय योजना आणि धोरणे `,
+        subtitle: `सर्व शासकीय योजना आणि धोरणांचा समावेश या विभागात असणार आहे. या योजना व धोरणांचा महाराष्ट्रातीळ नागरिकांच्या जीवनावर मोठ्या प्रमाणात परिणाम होतो.`,
       },
       {
         icon: imag4,
-        title: `राजपत्र`,
-        subtitle: `405 दशलक्ष`,
+        title: `महाराष्ट्र राज्याचे राजपत्र`,
+        subtitle: `महाराष्ट्र शासनाद्वारे विविध विभागांतर्गत वेळोवेळी प्रसिद्ध केलेले राजपत्र विषयानुसार, विभागानुसार, क्रमांकानुसार येथे उपलब्ध होणार आहे `,
       },
       {
         icon: imag5,
-        title: `इतर अहवाल`,
-        subtitle: `405 दशलक्ष`,
+        title: `अर्थसंकल्पाची संपूर्ण माहिती`,
+        subtitle: `अर्थसंकल्पीय दस्तऐवजांची विश्व उघडून पहा. यामध्ये आर्थिक पाहणी, अर्थसंकल्प विषयक सर्व प्रकाशने, अर्थमंत्र्यांची भाषणे, विभागाशी संबंधित कार्यक्रम अंदाजपत्रक, पुरवणी मागणी पुस्तके, यासह इतर सर्व अर्थसंकल्प विषयक प्रकाशने येथे उपलब्ध असतील.`,
       },
       {
         icon: imag6,
-        title: `इतर अहवाल`,
-        subtitle: `405 दशलक्ष`,
+        title: `निवडणूक निकाल`,
+        subtitle: `1952 नंतरच्या विधानसभेच्या मागील निवडणुकांची गतिशीलता समजून घ्या आणि राजकीय परिदृश्याबद्दल माहिती मिळवा.`,
       },
     ],
   },
   english: {
-    header: `A Comprehensive Knowledge Repository - Your Portal to Explore Legislative Discourse \n Election Narratives, and Civic Empowerment. Search and Discover Now!"`,
+    header: `We are pleased to present the beta version of Maharashtra Legislative \n Board Secretariat Information System. This is just a look, we are \n trying to provide more information in the future`,
     searchPlaceHolder: `Enter the search keywords`,
     legislature: `Legislature Members`,
+    hometitle: `What kind of information will be available in the future...`,
+    hometitle1: `This beta version is just the foundation. We invite you to embark on this exciting journey with us as we work towards expanding the portal to be your go-to resource for all things related to the Maharashtra Legislative Secretariat.`,
     nav: [
       {
         icon: legmem,
@@ -420,11 +427,11 @@ const home = {
         childtext: [
           {
             name: `Council`,
-            link: `LegislativeCouncil`,
+            link: `/members?house=विधानपरिषद`,
           },
           {
             name: `Assembly`,
-            link: `LegislativeAssembly`,
+            link: `/members?house=विधानसभा`,
           },
         ],
       },
@@ -601,37 +608,36 @@ const home = {
         ],
       },
     ],
-    hometitle: `Explore the resources, documents that have been digitized so far in the MLS library`,
     homebottom: [
       {
         icon: imag1,
-        title: `Debates`,
-        subtitle: `405 million`,
+        title: `Legislation Documents Galore`,
+        subtitle: `Soon, access an extensive collection of legislation documents, including ordinance, bills, acts, amendments, rules, regulation and more. Witness the evolution of Maharashtra's legal landscape.`,
       },
       {
         icon: imag2,
-        title: `Articles`,
-        subtitle: `440 million`,
+        title: `Committee Reports Insights`,
+        subtitle: `Delve deeper into the workings of legislative committees. Gain access to insightful reports, recommendations, and analyses that shape policies and decisions`,
       },
       {
         icon: imag3,
-        title: `Bills & Acts`,
-        subtitle: `25 million`,
+        title: `Government Schemes & Policies Hub`,
+        subtitle: `Stay tuned for a dedicated section featuring all government schemes and policies. Understand how these initiatives impact the lives of Maharashtra's citizens.`,
       },
       {
         icon: imag4,
-        title: `Media files`,
-        subtitle: `10 million`,
+        title: `Maharashtra State Gazette`,
+        subtitle: `As per the notifications published by the Maharashtra government under various departments from time to time in the official gazette, the information available here is organized according to the departments and in chronological order.`,
       },
       {
         icon: imag5,
-        title: `Gazettes`,
-        subtitle: `6 million`,
+        title: `Budget In detail`,
+        subtitle: `Uncover the intricacies of budgetary documents including economic survey, finance minister speeches, department related performance budget , financial statements / budget & supplementary demands  in speech will be at your fingertips.`,
       },
       {
         icon: imag6,
-        title: `Other Reports`,
-        subtitle: `30 million`,
+        title: `Election Results`,
+        subtitle: `Where the journey begins! Understand the dynamics of past elections of legislative assembly 1952 onwards  and stay informed about the political landscape.`,
       },
     ],
   },
@@ -670,10 +676,10 @@ const library = {
 
 const homeLink = {
   marathi: {
-    title: `इतर महत्वाचा दुवा`,
+    title: `इतर महत्वाचे  दुवे`,
     title1: `सर्व लिंक`,
     title2: `मुख्य पृष्ठ`,
-    button: `पुढे वाचा`,
+    button: `अधिक जाणून घ्या`,
   },
   english: {
     title: `Other Important Link`,
@@ -689,9 +695,9 @@ const feedback = {
     title1: `अभिप्राय`,
     title2: `आम्हाला संदेश पाठवा`,
     title3: `आपल्या मौल्यवान सूचनांसह आम्हाला संदेश पाठवा`,
-    form1: `तुमचे पुर्ण नाव`,
-    form2: `तुमचा ईमेल पत्ता`,
-    form3: `तुमचा विषय`,
+    form1: `पुर्ण नाव`,
+    form2: `ईमेल पत्ता`,
+    form3: `विषय`,
     form4: `आपला अभिप्राय`,
     submit: `प्रस्तुत करणे`,
     select: `कृपया विषय निवडा`,
@@ -711,10 +717,10 @@ const feedback = {
     title1: `Feedback`,
     title2: `Send us a Message`,
     title3: `Send us a message with valuable suggestion`,
-    form1: `Your Full Name`,
-    form2: `Your Email-id`,
-    form3: `Your Subject`,
-    form4: `Your Feedback`,
+    form1: `Full Name`,
+    form2: `Email-id`,
+    form3: `Subject`,
+    form4: `Feedback`,
     submit: `Submit`,
     select: `Please select Subject`,
     select1: `Vidhan Mandal`,
@@ -735,11 +741,11 @@ const helpdesk = {
     title: `मुख्यपृष्ठ`,
     title1: `मदत कक्ष`,
     title3: `तुमची क्वेरी येथे पाठवा, आमचे कार्यकारी तुम्हाला मदत करतील`,
-    form1: `तुमचे पुर्ण नाव`,
-    form2: `तुमचा ईमेल पत्ता`,
-    form3: `तुमचा दूरध्वनी क्रमांक`,
-    form4: `तुमचा पत्ता`,
-    form5: `तुमचा संदेश येथे`,
+    form1: `पुर्ण नाव`,
+    form2: `ईमेल पत्ता`,
+    form3: `दूरध्वनी क्रमांक`,
+    form4: `पत्ता`,
+    form5: `संदेश येथे`,
     submit: `प्रस्तुत करणे`,
     select: `कृपया विषय निवडा`,
     select1: `विधानमंडळ`,
@@ -757,11 +763,11 @@ const helpdesk = {
     title: `Home`,
     title1: `Help Desk`,
     title3: `Send your query here, our executive will help you`,
-    form1: `Your Full Name`,
-    form2: `Your Email-id`,
-    form3: `Your Telephone Number`,
-    form4: `Your Address`,
-    form5: `Your Message Here`,
+    form1: `Full Name`,
+    form2: `Email-id`,
+    form3: `Telephone Number`,
+    form4: `Address`,
+    form5: `Message Here`,
     submit: `Submit`,
     select: `Please select Subject`,
     select1: `Vidhan Mandal`,
@@ -779,7 +785,7 @@ const helpdesk = {
 
 const footer = {
   marathi: {
-    title: `सतत विचारले जाणारे प्रश्न`,
+    title: `सामान्य प्रश्न`,
     title1: `फोटो गॅलरी`,
     title2: `मुख्यपृष्ठ`,
     title3: `विधानमंडळ`,
@@ -788,7 +794,7 @@ const footer = {
     title6: `राज्यपाल`,
     title7: `अभिप्राय`,
     title8: `मदत आणि समर्थन`,
-    title9: `महत्वाचा दुवा`,
+    title9: `महत्वाचे  दुवे`,
     title10: `सेवा अटी`,
     title11: `साइट मॅप`,
     title12: `सूचना`,
@@ -899,6 +905,17 @@ const governor = {
     link1: "मुख्यपृष्ठ",
     link2: "विधिमंडळ",
     link3: "राज्यपाल",
+    list: `राज्यपालांची यादी`,
+    srno: `क्रमांक`,
+    namegov: `राज्यपालांचे नाव`,
+    politicalcareer: `राजकीय कारकीर्द`,
+    gov: `मा. राज्यपालांचे अभिभाषण`,
+    forgov: `माजी राज्यपाल`,
+    name: `नाव`,
+    selectdate: `निवडलेली तारीख`,
+    gender: `लिंग`,
+    dob: `जन्म दिनांक`,
+    birth: `जन्म ठिकाण`,
     table1title: "माननीय राज्यपाल",
     table1head: "मा. राज्यपालांचे अभिभाषण",
     table2title: "राज्यपाल",
@@ -914,6 +931,17 @@ const governor = {
     link1: "Home",
     link2: "Legislature",
     link3: "Governor",
+    list: `List Of Governers`,
+    srno: `Sr No`,
+    politicalcareer: `Political career`,
+    namegov: `Name of the Governor`,
+    gov: `Hon. Governor's Address`,
+    forgov: `Former Governor`,
+    name: `Name`,
+    selectdate: `Selected Date`,
+    gender: `Gender`,
+    dob: `Date of Birth`,
+    birth: `Place of Birth`,
     table1title: "Honourable Governor",
     table1head: "Hon  . Governor Address",
     table2title: "Rajypal",
@@ -998,11 +1026,25 @@ const assembly = {
 
 const councilMember = {
   marathi: {
-    title: "विधान परिषद सदस्यांची यादी",
-    search: "शोधा",
+    house: `सदस्य`,
+    session: `सभागृह`,
+    date: `तारीख`,
+    filter: `फिल्टर`,
+    adfilter: `ऍडव्हान्स फिल्टर`,
+    member: `सदस्य`,
+    button1: "अर्ज करा",
+    button2: "रीसेट",
+    button3: "रीसेट",
+    button2op: "अधिक पर्याय दाखवा",
     link1: "मुख्यपृष्ठ",
-    link2: "विधानमंडळ सदस्य",
-    link3: "विधान परिषद सदस्यांची यादी",
+    search: "विषय आणि कीवर्ड शोधा",
+    search1: "सदस्य शोधा",
+    title: "विधान परिषद सदस्यांची यादी",
+    number: `क्रमांक`,
+    name: `नाव`,
+    const: `मतदारसंघ`,
+    party: `राजकीय पक्ष`,
+
     heading: {
       one: "द्वारे शोधा",
       two: "प्रथमच निवडून आलेले सदस्य",
@@ -1017,11 +1059,24 @@ const councilMember = {
     },
   },
   english: {
+    house: `House`,
+    session: `Session`,
+    date: `Date`,
     title: "List of Legislative Council Members",
-    search: "Search",
+    filter: `Filter`,
+    member: `Members`,
+    adfilter: `Advance Filter`,
+    button1: "Apply",
+    button2: "Reset",
+    button3: "Reset",
+    search: "Search for topics and keywords",
     link1: "Home",
     link2: "Member of Legislature",
     link3: "List of Legislative Council Members",
+    number: `Sr No`,
+    name: `Name`,
+    const: `Constituency`,
+    party: `Political Party`,
     heading: {
       one: "Search by",
       two: "First Time Elected Members",
@@ -1346,7 +1401,7 @@ const memberdetails = {
     title1: `Member`,
     home: `Home`,
     basic: `Basic Information`,
-    travel: `Political Travel`,
+    travel: `Legislative Journey`,
     electiondata: `Election Data`,
     debate: `Debates`,
     electionres: `Election Results`,
@@ -1571,6 +1626,12 @@ const userprofile = {
 const councilDebate = {
   marathi: {
     home: `मुख्य पृष्ठ`,
+    option1: `कामकाजाची यादी निवडा`,
+    option2: `प्रकार निवडा`,
+    option3: `उपप्रकार निवडा`,
+    option4: `मंत्रालय निवडा`,
+    option5: `खंड निवडा`,
+    option6: `क्रमांक निवडा`,
     title: "सभागृहांचे कार्यवृत्त",
     titleselect: "विधानपरिषद",
     titleselect1: "अर्थसंकल्पीय",
@@ -1646,6 +1707,12 @@ const councilDebate = {
   },
   english: {
     home: `Home`,
+    option1: `Select L.O.B`,
+    option2: `Select Type of L.O.B`,
+    option3: `Select Subtype of L.O.B`,
+    option4: `Select Department`,
+    option5: `Select Volume`,
+    option6: `Select Kramank`,
     title: "Debates",
     titleselect: "Legislative Assembly",
     titleselect1: "Budgetary",
@@ -1888,12 +1955,32 @@ const legislationsbills = {
 };
 const faqs = {
   marathi: {
-    title: `सतत विचारले जाणारे प्रश्न`,
+    title: `सामान्य प्रश्न`,
     home: `मुख्यपृष्ठ`,
   },
   english: {
     title: `Frequently Asked Questions`,
     home: `Home`,
+  },
+};
+const mantriparishad = {
+  marathi: {
+    title: `मंत्री परिषद`,
+    home: `मुख्यपृष्ठ`,
+    membername: `सदस्याचे नाव `,
+    position: `पद`,
+    account: `खाते`,
+    minister: `मंत्री`,
+    stateminister: `राज्यमंत्री`,
+  },
+  english: {
+    title: `Council of Minister`,
+    home: `Home`,
+    membername: `Member Name`,
+    position: `Position`,
+    account: `Account`,
+    minister: `Minister`,
+    stateminister: `Minister of State`,
   },
 };
 const searchdetails = {
@@ -1914,6 +2001,45 @@ const searchdetails = {
     memberdetail: `Member Details`,
   }
 };
+
+const vidhanassembly = {
+  marathi: {
+    home: `मुख्यपृष्ठ `,
+    title: `विधानसभा`,
+    title1: `विधानपरिषद`,
+    public: `महत्वाची प्रकाशने`,
+    type: `प्रकार`,
+    structure: `रचना`,
+    limit: `मुदत मर्यादा`,
+    place: `जागा`,
+    bio: `चरित्रात्मक माहिती`,
+    partywise: `सदस्यांचे पक्षनिहाय प्रतिनिधीत्व`,
+    pgroup: `राजकीय गट`,
+  },
+  english: {
+    home: `Home `,
+    title: `Legislative Assembly`,
+    title1: `Legislative Council`,
+    public: `Important Publications`,
+    type: `Type`,
+    structure: `Structure`,
+    limit: `Term Limits`,
+    place: `Place`,
+    bio: `Biographical information`,
+    partywise: `Party wise representation of members`,
+    pgroup: `Political Group`,
+  }
+};
+
+const popup = {
+  marathi: {
+    text: `हे पोर्टल विकासाधीन ( under development ) आहे. हि बीटा आवृत्ती असल्याकारणाने, पोर्टलमध्ये वापरलेली माहिती पूर्णतः तपासलेली नाही आहे`,
+  },
+  english: {
+    text: `This portal is under development. As this is a beta version, the information used in the portal has not been fully tested`,
+  },
+}
+
 export {
   loginpage,
   register,
@@ -1921,6 +2047,7 @@ export {
   header,
   home,
   faqs,
+  mantriparishad,
   library,
   homeLink,
   feedback,
@@ -1949,4 +2076,6 @@ export {
   budgetyear,
   legislationsbills,
   searchdetails,
+  popup,
+  vidhanassembly
 };

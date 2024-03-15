@@ -3,13 +3,13 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import Arrow from "../assets/debate/arrow.svg";
-import assembly from "../assets/assembly.jpg";
+import assembly from "../assets/council/22.jpg";
 import graph from "../assets/card.png";
-import biographparty from "../assets/biograph-party.jpg";
+import biographparty from "../assets/council/2.jpg";
 
 import { ImageUrl, getApi } from "../services/axiosInterceptors";
 import useLang from "../hooks/useLang";
-
+import { vidhanassembly } from "../data/constant";
 const LegislativeCouncil = () => {
     const [serverData, setServerData] = useState({});
     const { checkLang } = useLang();
@@ -23,7 +23,6 @@ const LegislativeCouncil = () => {
             console.log(err);
         }
     };
-    // console.log(serverData[checkLang].legislative_council);
     useEffect(() => {
         fetchData();
     }, []);
@@ -33,8 +32,8 @@ const LegislativeCouncil = () => {
                 <Row>
                     <Col lg={3}>
                         <div className="breadcumbsss">
-                            <div className="countdebate"><Link to="/"><span>मुख्यपृष्ठ </span></Link>
-                                <img src={Arrow} alt="" /><span>विधानपरिषद</span>
+                            <div className="countdebate"><Link to="/"><span>{vidhanassembly[checkLang].home} </span></Link>
+                                <img src={Arrow} alt="" /><span>{vidhanassembly[checkLang].title1}</span>
                             </div>
                         </div>
                     </Col>
@@ -42,7 +41,7 @@ const LegislativeCouncil = () => {
                 <Col lg={12}>
                     <div className="aboutcontent mt-4">
                         <h1>
-                            विधानपरिषद
+                            {vidhanassembly[checkLang].title1}
                             <div className="hrline"></div>
                         </h1>
                     </div>
@@ -62,7 +61,7 @@ const LegislativeCouncil = () => {
                                 <h2
                                     className="bio-head"
                                 >
-                                    महत्वाची प्रकाशने
+                                    {vidhanassembly[checkLang].public}
                                     <div className="hrline"></div>
                                 </h2>
 
@@ -180,21 +179,21 @@ const LegislativeCouncil = () => {
                                     />
                                 </div>
                                 <h4 className="subtitle-name">{serverData[checkLang]?.structure.name}</h4>
-                                <h4 className="subtitle-name">प्रकार - {serverData[checkLang]?.structure.type} </h4>
-                                <h4 className="subtitle-name">मुदत मर्यादा - {serverData[checkLang]?.structure.term_limit}</h4>
-                                <h4 className="subtitle-name">जागा- {serverData[checkLang]?.structure.seats}</h4>
+                                <h4 className="subtitle-name">{vidhanassembly[checkLang].type} - {serverData[checkLang]?.structure.type} </h4>
+                                <h4 className="subtitle-name">{vidhanassembly[checkLang].limit} - {serverData[checkLang]?.structure.term_limit}</h4>
+                                <h4 className="subtitle-name">{vidhanassembly[checkLang].place}- {serverData[checkLang]?.structure.seats}</h4>
                                 <hr />
                                 <div className="text-center mb-3">
                                     <h2
                                         className="bio-head"
                                     >
-                                        चरित्रात्मक माहिती
+                                        {vidhanassembly[checkLang].bio}
                                         <div className="hrline"></div>
                                     </h2>
                                 </div>
                                 <div className="linkcouncil">
                                     <a href="/LegislativeCouncil">
-                                        सदस्यांचे पक्षनिहाय प्रतिनिधीत्व
+                                        {vidhanassembly[checkLang].partywise}
                                     </a>
                                 </div>
                                 <img
@@ -202,7 +201,7 @@ const LegislativeCouncil = () => {
                                     style={{ width: "80%" }}
                                 />
                                 <h3 className="political-groups">
-                                    Political Group
+                                    {vidhanassembly[checkLang].pgroup}
                                 </h3>
                                 <img
                                     src={assembly}

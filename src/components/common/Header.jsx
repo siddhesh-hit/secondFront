@@ -7,6 +7,7 @@ import {
   Nav,
   Row,
   Col,
+  DropdownButton,
   Dropdown,
 } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
@@ -19,7 +20,7 @@ import logo from "../../assets/logo.png";
 
 import { logout } from "../../redux/reducers/userReducer";
 import { decrypt } from "../../utils/encrypt";
-import { postApi, getApiById } from "../../services/axiosInterceptors";
+import { postApi, getApiById, ImageUrl } from "../../services/axiosInterceptors";
 import useLang from "../../hooks/useLang";
 import { home, header } from "../../data/constant";
 
@@ -44,7 +45,7 @@ const Header = () => {
 
   const affectedElementsSelector = "p, h1, h2, h3, h4, h5, h6, span, a, button";
 
-  const [fontSize, setFontSize] = useState(0);
+  const [fontSize, setFontSize] = useState();
 
   const storeOriginalSizes = () => {
     const affectedElements = document.querySelectorAll(affectedElementsSelector);
@@ -103,7 +104,6 @@ const Header = () => {
   }, []);
 
   // console.log(userInfo)
-
   useEffect(() => {
     userInfo.notificationId && fetchData(userInfo.notificationId);
   }, [userInfo]);
@@ -163,19 +163,14 @@ const Header = () => {
                   </button>
                   <button className="font-size-button" onClick={() => changeFontSize(-2)}>{header[checkLang].font}-</button>
                 </div>
-                <>
-                  {isAuthenticated ? (
-                    <p>
-                      {userInfo?.full_name}
-
-                      <button onClick={
-                        () => handleLogout()}>sdsd
-                      </button>
-                    </p>
-                  ) : (
-                    <a href="/Login">{header[checkLang].login}</a>
-                  )}
-                </>
+                {isAuthenticated ? (
+                  <DropdownButton id="dropdown-basic-button" title={<><img src={ImageUrl + userInfo?.user_image?.["destination"] + "/" + userInfo?.user_image?.["filename"]} className="user-profile-image" /> {userInfo?.full_name}</>}>
+                    <Dropdown.Item href="/Userprofile">My Profile</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleLogout()}>Logout</Dropdown.Item>
+                  </DropdownButton>
+                ) : (
+                  <a href="/Login">{header[checkLang].login}</a>
+                )}
               </div>
             </Col>
           </Row>
@@ -189,7 +184,7 @@ const Header = () => {
             <Row className="midhead one">
               <Col lg={4}>
                 <Nav.Link href="/">
-                  <img src={logo} alt="logo" className="loginbg" />
+                  <img src={header[checkLang].logo} alt="logo" className="loginbg" />
                 </Nav.Link>
               </Col>
             </Row>
@@ -202,7 +197,7 @@ const Header = () => {
               <Row className="midhead two">
                 <Col lg={4}>
                   <Nav.Link href="/">
-                    <img src={logo} alt="logo" className="loginbg" />
+                    <img src={header[checkLang].logo} alt="logo" className="loginbg" />
                   </Nav.Link>
                 </Col>
                 <Col lg={4}>
@@ -281,9 +276,9 @@ const Header = () => {
                           </NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link
-                          className={`${location === "/members-assembly?house=एकत्रित" ? "active" : ""
+                          className={`${location === "/members?house=एकत्रित" ? "active" : ""
                             }`}
-                          href="/members-assembly?house=एकत्रित"
+                          href="/members?house=एकत्रित"
                         >
                           {header[checkLang].member}
                         </Nav.Link>
@@ -301,22 +296,25 @@ const Header = () => {
                         >
                           {header[checkLang].session}
                         </Nav.Link>
-                        <Nav.Link href="/LegislationsBills">
+                        <Nav.Link
+                          className={`${location === "/LegislationsBills" ? "active" : ""
+                            }`}
+                          href="/LegislationsBills"
+                        >
                           {header[checkLang].Legislation}
                         </Nav.Link>
-                        <Nav.Link href="/Budgetyear">
+                        <Nav.Link className={`${location === "/Budgetyear" ? "active" : ""
+                          }`} href="/Budgetyear">
                           {header[checkLang].Budget}
                         </Nav.Link>
-                        <div>
-                          <Link className="nav-link" to="/Electionresult">
-                            {header[checkLang].Elections}
-                          </Link>
-                        </div>
-                        <div>
-                          <Link className="nav-link" to="/Gazette">
-                            {header[checkLang].Gazette}
-                          </Link>
-                        </div>
+                        <Nav.Link className={`${location === "/Electionresult" ? "active" : ""
+                          }`} href="/Electionresult">
+                          {header[checkLang].Elections}
+                        </Nav.Link>
+                        <Nav.Link className={`${location === "/Gazette" ? "active" : ""
+                          }`} href="/Gazette">
+                          {header[checkLang].Gazette}
+                        </Nav.Link>
                         <NavDropdown
                           title={header[checkLang].various}
                           id={`offcanvasNavbarDropdown-expand-${expand}`}

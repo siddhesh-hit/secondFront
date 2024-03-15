@@ -164,7 +164,6 @@ const Debate = () => {
     }
   };
 
-  // console.log(search)
 
   const handleReset = () => {
     setSearch((prev) => ({
@@ -245,6 +244,10 @@ const Debate = () => {
       }))
     }
 
+
+    // setCurrentPage(0);
+    // setPageLimit(10);
+
     await getApi(
       `debate/fields?perPage=${encodeURIComponent(
         currentPage
@@ -266,18 +269,19 @@ const Debate = () => {
   };
 
   useEffect(() => {
+    if (!search.topic || !search.members_name || !search.house || !search.session || !search.volume || !search.kramank || !search.method || !search.method_type || !search.method_sub_type || !search.ministry_name || !search.fromdate || !search.todate) {
+      setCurrentPage(0);
+    }
+
+    console.log(currentPage, "current page hai")
+
     handleSearch();
   }, [
     search.session,
     search.house,
-    search.members_name,
-    currentPage,
-    pageLimit,
+    search.members_name, currentPage, pageLimit
   ]);
 
-  useEffect(() => {
-    debateFetch();
-  }, [currentPage, pageLimit]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -351,7 +355,7 @@ const Debate = () => {
   }, []);
   return (
     <div>
-      <PopupHome show={modalShow} onHide={() => setModalShow(false)} />
+      {/* <PopupHome show={modalShow} onHide={() => setModalShow(false)} /> */}
       <Container fluid className="debatepage">
         <Row>
           <Col lg={3} className="d-lg-none mb-3">
@@ -519,7 +523,7 @@ const Debate = () => {
                   </button>
                   {isDivVisible1 && (
                     <div className="advancdeee">
-                      <label>कामकाजाची यादी निवडा</label>
+                      <label>{councilDebate[checkLang].option1}</label>
                       <select
                         className="secondfilers"
                         value={obj[search.method]}
@@ -533,7 +537,7 @@ const Debate = () => {
                           </option>
                         ))}
                       </select>
-                      <label>प्रकार निवडा</label>
+                      <label>{councilDebate[checkLang].option2}</label>
                       <select
                         className="secondfilers"
                         value={search.method_type}
@@ -547,7 +551,7 @@ const Debate = () => {
                           </option>
                         ))}
                       </select>
-                      <label>उपप्रकार निवडा</label>
+                      <label>{councilDebate[checkLang].option3}</label>
                       <select
                         className="secondfilers"
                         value={search.method_sub_type}
@@ -561,7 +565,7 @@ const Debate = () => {
                           </option>
                         ))}
                       </select>
-                      <label>मंत्रालय निवडा</label>
+                      <label>{councilDebate[checkLang].option4}</label>
                       <select
                         className="secondfilers"
                         value={search.ministry_name}
@@ -575,7 +579,7 @@ const Debate = () => {
                           </option>
                         ))}
                       </select>
-                      <label>खंड निवडा</label>
+                      <label>{councilDebate[checkLang].option5}</label>
                       <select
                         className="secondfilers"
                         value={search.volume}
@@ -589,7 +593,7 @@ const Debate = () => {
                           </option>
                         ))}
                       </select>
-                      <label>क्रमांक निवडा</label>
+                      <label>{councilDebate[checkLang].option6}</label>
                       <select
                         className="secondfilers"
                         value={search.kramank}
@@ -770,7 +774,7 @@ const Debate = () => {
                 </button>
                 {isDivVisible1 && (
                   <div className="advancdeee">
-                    <label>कामकाजाची यादी निवडा</label>
+                    <label>{councilDebate[checkLang].option1}</label>
                     <select
                       className="secondfilers"
                       value={obj[search.method]}
@@ -784,7 +788,7 @@ const Debate = () => {
                         </option>
                       ))}
                     </select>
-                    <label>प्रकार निवडा</label>
+                    <label>{councilDebate[checkLang].option2}</label>
                     <select
                       className="secondfilers"
                       value={search.method_type}
@@ -798,7 +802,7 @@ const Debate = () => {
                         </option>
                       ))}
                     </select>
-                    <label>उपप्रकार निवडा</label>
+                    <label>{councilDebate[checkLang].option3}</label>
                     <select
                       className="secondfilers"
                       value={search.method_sub_type}
@@ -812,7 +816,7 @@ const Debate = () => {
                         </option>
                       ))}
                     </select>
-                    <label>मंत्रालय निवडा</label>
+                    <label>{councilDebate[checkLang].option4}</label>
                     <select
                       className="secondfilers"
                       value={search.ministry_name}
@@ -826,7 +830,7 @@ const Debate = () => {
                         </option>
                       ))}
                     </select>
-                    <label>खंड निवडा</label>
+                    <label>{councilDebate[checkLang].option5}</label>
                     <select
                       className="secondfilers"
                       value={search.volume}
@@ -840,7 +844,7 @@ const Debate = () => {
                         </option>
                       ))}
                     </select>
-                    <label>क्रमांक निवडा</label>
+                    <label>{councilDebate[checkLang].option6}</label>
                     <select
                       className="secondfilers"
                       value={search.kramank}
@@ -869,32 +873,28 @@ const Debate = () => {
           </Col>
           <Col lg={9}>
             <div className="debate-search">
-              <div className="searchboxx">
-                {/* <ReactTransliterate
-                  renderComponent={(props) => <input className="form-control" {...props} />}
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  placeholder={home[checkLang].searchPlaceHolder}
-                  onChangeText={(text) => {
-                    setSearch(text);
-                  }}
-                  lang="hi"
-                /> */}
-                <input
-                  type="text"
-                  name="topic"
-                  className="form-control"
-                  placeholder={councilDebate[checkLang].search}
-                  value={searchdata}
-                  onChange={(e) => setSearchdata(e.target.value)}
-                />
-                <button className="searchb" onClick={handleSearch}>
-                  <i className="fa fa-search" />
-                </button>
-                <button className="startover" onClick={handleStart}>
-                  {councilDebate[checkLang].button2}
-                </button>
-              </div>
+              <Row>
+                <Col lg={10} style={{ position: 'relative' }}>
+                  <ReactTransliterate
+                    renderComponent={(props) => <input className="form-control" {...props} />}
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    placeholder={councilDebate[checkLang].search}
+                    onChangeText={(text) => {
+                      setSearchdata(text);
+                    }}
+                    lang="hi"
+                  />
+                  <button className="searchb" onClick={handleSearch}>
+                    <i className="fa fa-search" />
+                  </button>
+                </Col>
+                <Col lg={2}>
+                  <button className="startover" onClick={handleStart}>
+                    {councilDebate[checkLang].button2}
+                  </button>
+                </Col>
+              </Row>
               <ul className="search-list">
                 <>
                   {Object.keys(search).map((key, index) => {
@@ -977,7 +977,6 @@ const Debate = () => {
                   )}
                 </>
               </ul>
-
             </div>
             <div className="breadvrumbss">
               <Row>
@@ -1044,7 +1043,7 @@ const Debate = () => {
                   <th style={{ borderRight: "solid white 1px" }}>
                     {councilDebate[checkLang].tableBody.date}
                   </th>
-                  <th style={{ borderRight: "solid white 1px" }}>
+                  <th style={{ borderRight: "solid white 1px", width: "25%" }}>
                     {councilDebate[checkLang].tableBody.member}
                   </th>
                   <th>{councilDebate[checkLang].tableBody.action}</th>
@@ -1052,10 +1051,10 @@ const Debate = () => {
               </thead>
               <tbody>
                 {debate?.data?.map((item, index) => {
-                  let name = item?.members_name.split(",");
-                  let twoEntry;
+                  // let name = item?.members_name.split(",");
+                  // let twoEntry;
 
-                  name.length < 5 ? (twoEntry = true) : (twoEntry = false);
+                  // name.length < 5 ? (twoEntry = true) : (twoEntry = false);
 
                   return (
                     <tr key={index}>
@@ -1087,11 +1086,13 @@ const Debate = () => {
                         <p>
                           <HighlightSentence
                             data={
-                              twoEntry
-                                ? name[0] + "...."
-                                : name[0] + name[1] + "...."
+                              // twoEntry
+                              //   ? name[0] + "...."
+                              //   : name[0] + name[1] + "...."
+                              item?.members_name
                             }
                             search={search?.members_name}
+
                           />
                         </p>
                       </td>

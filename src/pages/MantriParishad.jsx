@@ -2,14 +2,30 @@ import { Col, Container, Row } from "react-bootstrap"
 import Eknath from "../assets/mantri/CM.jpg"
 import Devendra from "../assets/mantri/D_CM.jpg"
 import Ajith from "../assets/mantri/ajitpawar.jpg"
+import { Link } from "react-router-dom";
+import Arrow from "../assets/debate/arrow.svg"
+import useLang from "../hooks/useLang"
+import { mantriparishad } from "../data/constant";
 
 const MantriParishad = () => {
-
+    const { checkLang } = useLang();
     return (
         <div>
             <section className="rajypallist">
+
                 <Container>
-                    <div className="aboutcontent mt-4"><h1>मंत्रीमंडळ<div className="hrline"></div></h1></div>
+                    <Row>
+                        <Col lg={3}>
+                            <div className="breadcumbsss">
+                                <div className="countdebate"><Link to="/"><span>{mantriparishad[checkLang].home}</span></Link>
+                                    <img src={Arrow} alt="" /><span>{mantriparishad[checkLang].title}</span>
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+                <Container>
+                    <div className="aboutcontent mt-4"><h1>{mantriparishad[checkLang].title}<div className="hrline"></div></h1></div>
                     <Row className="first">
                         <Col md={5} sm={6} xs={12}>
                             <Row>
@@ -20,9 +36,9 @@ const MantriParishad = () => {
                                 </Col>
                                 <Col md={5} sm={5} xs={12}>
                                     <div className="rajyapalname">
-                                        <h3>सदस्याचे नाव :</h3>
+                                        <h3>{mantriparishad[checkLang].membername} :</h3>
                                         <p>श्री. एकनाथ संभाजी शिंदे</p>
-                                        <h3>पद :</h3>
+                                        <h3>{mantriparishad[checkLang].position} :</h3>
                                         <p>महाराष्ट्राचे मुख्यमंत्री</p>
                                     </div>
                                 </Col>
@@ -39,9 +55,9 @@ const MantriParishad = () => {
                                 </Col>
                                 <Col md={5} sm={5} xs={12}>
                                     <div className="rajyapalname">
-                                        <h3>सदस्याचे नाव :</h3>
+                                        <h3>{mantriparishad[checkLang].membername} :</h3>
                                         <p>श्री. देवेंद्र फडणवीस</p>
-                                        <h3>पद :</h3>
+                                        <h3>{mantriparishad[checkLang].position} :</h3>
                                         <p>महाराष्ट्राचे उपमुख्यमंत्री</p>
                                     </div>
                                 </Col>
@@ -56,9 +72,9 @@ const MantriParishad = () => {
                                 </Col>
                                 <Col md={5} sm={5} xs={12}>
                                     <div className="rajyapalname">
-                                        <h3>सदस्याचे नाव :</h3>
+                                        <h3>{mantriparishad[checkLang].membername} :</h3>
                                         <p>श्री. अजित अनंतराव पवार</p>
-                                        <h3>पद :</h3>
+                                        <h3>{mantriparishad[checkLang].position} :</h3>
                                         <p>महाराष्ट्राचे उपमुख्यमंत्री</p>
                                     </div>
                                 </Col>
@@ -67,14 +83,14 @@ const MantriParishad = () => {
                     </Row>
                     <div className="mantri mb-5">
                         <div className="panel panel-primary">
-                            <div className="panel-heading">मंत्री</div>
+                            <div className="panel-heading">{mantriparishad[checkLang].minister}</div>
                             <div className="panel-body">
                                 <table id="tech-companies-1" className="table table-striped">
                                     <thead className="thead-dark" style={{ backgroundColor: "#000088" }}>
                                         <tr>
-                                            <th style={{ borderRight: '1px solid white' }}>सदस्याचे नाव</th>
-                                            <th style={{ borderRight: '1px solid white' }}>पद</th>
-                                            <th>खाते</th>
+                                            <th style={{ borderRight: '1px solid white' }}>{mantriparishad[checkLang].membername}</th>
+                                            <th style={{ borderRight: '1px solid white' }}>{mantriparishad[checkLang].position}</th>
+                                            <th>{mantriparishad[checkLang].account}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -407,14 +423,14 @@ const MantriParishad = () => {
                     </div>
                     <div className="mantri">
                         <div className="panel panel-primary">
-                            <div className="panel-heading">राज्यमंत्री</div>
+                            <div className="panel-heading">{mantriparishad[checkLang].stateminister}</div>
                             <div className="panel-body">
                                 <table id="tech-companies-1" className="table table-striped">
                                     <thead className="thead-dark" style={{ backgroundColor: "#000088" }}>
                                         <tr>
-                                            <th style={{ borderRight: '1px solid white' }}>सदस्याचे नाव</th>
-                                            <th style={{ borderRight: '1px solid white' }}>पद</th>
-                                            <th>खाते</th>
+                                            <th style={{ borderRight: '1px solid white' }}>{mantriparishad[checkLang].membername}</th>
+                                            <th style={{ borderRight: '1px solid white' }}>{mantriparishad[checkLang].position}</th>
+                                            <th>{mantriparishad[checkLang].account}</th>
                                         </tr>
                                     </thead>
                                     <tbody>

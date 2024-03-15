@@ -5,8 +5,11 @@ import useLang from "../hooks/useLang"; 1
 import { ImageUrl, getApi } from "../services/axiosInterceptors";
 import { Link } from "react-router-dom";
 import { sessioncal } from "../data/constant";
+import { ReactTransliterate } from "react-transliterate";
+import "react-transliterate/dist/index.css";
 const SessionCalender = () => {
     const [isDivVisible, setDivVisibility] = useState(false);
+    const [text, setText] = useState("");
     const [debate, setDebate] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [pageLimit, setPageLimit] = useState(10);
@@ -161,6 +164,7 @@ const SessionCalender = () => {
         search.house,
         currentPage,
         pageLimit,]);
+    console.log("debate data", debate)
     return (
         <div>
             <Container fluid className="debatepage">
@@ -280,22 +284,28 @@ const SessionCalender = () => {
                     </Col>
                     <Col lg={9}>
                         <div className="debate-search">
-                            <div className="searchboxx">
-                                <input
-                                    type="text"
-                                    name="topic"
-                                    className="form-control"
-                                    placeholder={sessioncal[checkLang].search}
-                                    defaultValue={search.topic}
-                                    onChange={handleChange}
-                                />
-                                <button onClick={debateFetch} className="searchb">
-                                    <i className="fa fa-search" />
-                                </button>
-                                <button className="startover">
-                                    {sessioncal[checkLang].reset}
-                                </button>
-                            </div>
+                            <Row>
+                                <Col lg={10} style={{ position: 'relative' }}>
+                                    <ReactTransliterate
+                                        renderComponent={(props) => <input className="form-control" {...props} />}
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                        placeholder={sessioncal[checkLang].search}
+                                        onChangeText={(text) => {
+                                            setSearch(text);
+                                        }}
+                                        lang="hi"
+                                    />
+                                    <button className="searchb" onClick={debateFetch}>
+                                        <i className="fa fa-search" />
+                                    </button>
+                                </Col>
+                                <Col lg={2}>
+                                    <button className="startover">
+                                        {sessioncal[checkLang].reset}
+                                    </button>
+                                </Col>
+                            </Row>
                         </div>
                         <div className="breadvrumbss">
                             <Row>
@@ -313,7 +323,7 @@ const SessionCalender = () => {
                                 </Col>
                             </Row>
                         </div>
-                        <table className="debate-light table table-bordered">
+                        <table className="debate-light table table-bordered responsive-table">
                             <thead>
                                 <tr>
                                     <th style={{ borderRight: "solid white 1px" }}>{sessioncal[checkLang].srno}</th>
@@ -340,7 +350,7 @@ const SessionCalender = () => {
                                             </td>
                                             <td>{item?.houses}</td>
                                             <td>
-                                                <p><span>{item[checkLang]["session"]}</span></p>
+                                                <p>{item.session.name}</p>
                                             </td>
                                             <td>{item.date}</td>
                                             <td className="imagee">

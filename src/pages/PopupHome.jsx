@@ -1,6 +1,8 @@
 import { Modal } from "react-bootstrap";
-
+import { popup } from "../data/constant";
+import useLang from "../hooks/useLang";
 const PopupHome = (props) => {
+  const { checkLang } = useLang();
   return (
     <div>
       <Modal
@@ -12,7 +14,7 @@ const PopupHome = (props) => {
         <Modal.Header className="closebutton" closeButton></Modal.Header>
         <Modal.Body className="smfkdnmk">
           <p>
-            हे पोर्टल विकासाधीन ( under development ) आहे.  हि  बीटा आवृत्ती  असल्याकारणाने, पोर्टलमध्ये वापरलेली माहिती पूर्णतः तपासलेली  नाही  आहे
+            {popup[checkLang].text}
           </p>
         </Modal.Body>
         {/* <Modal.Footer>
