@@ -29,7 +29,7 @@ const PhoneLogin = () => {
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <div className="login-box">
                 <h3 className="mb-4">
-                  {loginpage[checkLang].home}
+                  {loginpage[checkLang].home1}
                 </h3>
                 <div className="mb-4 input-group">
                   <span className="input-group-text" id="basic-addon1">
