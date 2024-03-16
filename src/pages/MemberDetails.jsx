@@ -47,6 +47,8 @@ const MemberAssemblyDetails = () => {
       fetchDebateById(current.basic_info.name);
   }, [current, currentPage]);
 
+  console.log(current?.basic_info?.other_info, "asdsdsdd")
+
   return (
     <div className="memberassemdetails">
       <Container fluid>
@@ -101,7 +103,7 @@ const MemberAssemblyDetails = () => {
                   <Col lg={6}>
                     <div className="basic-info-data">
                       <p>
-                        मतदारसंघ :{" "}
+                        {memberdetails[checkLang].const} :{" "}
                         <span>
                           {
                             current.basic_info && current.basic_info.constituency ? current.basic_info.constituency.council.constituency_name !== '' ? current.basic_info.constituency.council.constituency_name : current.basic_info.constituency.assembly.constituency_name !== '' ? current.basic_info.constituency.assembly.constituency_name : current.basic_info.constituency.assembly.constituency_name : "" +
@@ -110,39 +112,39 @@ const MemberAssemblyDetails = () => {
                         </span>
                       </p>
                       <p>
-                        राजकीय पक्ष : <span>{current.basic_info && current.basic_info.party ? current.basic_info.party[checkLang]["party_name"] : ""}</span>
+                        {memberdetails[checkLang].political} : <span>{current.basic_info && current.basic_info.party ? current.basic_info.party[checkLang]["party_name"] : ""}</span>
                       </p>
                       <p>
-                        जन्म तारीख :{" "}
+                        {memberdetails[checkLang].dob} :{" "}
                         <span>{current?.basic_info?.date_of_birth}</span>
                       </p>
                       <p>
-                        जन्म स्थान :{" "}
+                        {memberdetails[checkLang].placeof} :{" "}
                         <span>{current?.basic_info?.place_of_birth}</span>
                       </p>
                       <p>
-                        शिक्षण : <span>{current?.basic_info?.education}</span>
+                        {memberdetails[checkLang].edu} : <span>{current?.basic_info?.education}</span>
                       </p>
                       <p>
-                        छंद :<span> {current?.basic_info?.hobby}</span>
+                        {memberdetails[checkLang].hobby} :<span> {current?.basic_info?.hobby}</span>
                       </p>
                       <p>
-                        वैवाहिक स्थिती :{" "}
+                        {memberdetails[checkLang].mara} :{" "}
                         <span> {current?.basic_info?.marital_status}</span>
                       </p>
                       <p>
-                        अपत्ये : <span> {current?.basic_info?.children}</span>
+                        {memberdetails[checkLang].child} : <span> {current?.basic_info?.children}</span>
                       </p>
                       <p>
-                        ज्ञात भाषा :{" "}
+                        {memberdetails[checkLang].lang} :{" "}
                         <span> {current?.basic_info?.language}</span>
                       </p>
                       <p>
-                        व्यवसाय : <span> {current?.basic_info?.business}</span>
+                        {memberdetails[checkLang].business} : <span> {current?.basic_info?.business}</span>
                       </p>
-                      <p>सध्याचा पत्ता :</p>
+                      <p>{memberdetails[checkLang].caddress} :</p>
                       <h6> {current?.basic_info?.address}</h6>
-                      <p>इतर पत्ता :</p>
+                      <p>{memberdetails[checkLang].oaddress} :</p>
                       <h6> {current?.basic_info?.address1}</h6>
                     </div>
                   </Col>
@@ -166,7 +168,7 @@ const MemberAssemblyDetails = () => {
                   <Col lg={6}>
                     <div className="basic-info-data">
                       <p>
-                        मतदारसंघ :{" "}
+                        {memberdetails[checkLang].const} :{" "}
                         <span>
                           {
                             current.basic_info && current.basic_info.constituency ? current.basic_info.constituency.council.constituency_name !== '' ? current.basic_info.constituency.council.constituency_name : current.basic_info.constituency.assembly.constituency_name !== '' ? current.basic_info.constituency.assembly.constituency_name : current.basic_info.constituency.assembly.constituency_name : "" +
@@ -175,39 +177,39 @@ const MemberAssemblyDetails = () => {
                         </span>
                       </p>
                       <p>
-                        राजकीय पक्ष : <span>{current.basic_info && current.basic_info.party ? current.basic_info.party[checkLang]["party_name"] : ""}</span>
+                        {memberdetails[checkLang].political} : <span>{current.basic_info && current.basic_info.party ? current.basic_info.party[checkLang]["party_name"] : ""}</span>
                       </p>
                       <p>
-                        जन्म तारीख :{" "}
+                        {memberdetails[checkLang].dob} :{" "}
                         <span>{current?.basic_info?.date_of_birth}</span>
                       </p>
                       <p>
-                        जन्म स्थान :{" "}
+                        {memberdetails[checkLang].placeof} :{" "}
                         <span>{current?.basic_info?.place_of_birth}</span>
                       </p>
                       <p>
-                        शिक्षण : <span>{current?.basic_info?.education}</span>
+                        {memberdetails[checkLang].edu} : <span>{current?.basic_info?.education}</span>
                       </p>
                       <p>
-                        छंद :<span> {current?.basic_info?.hobby}</span>
+                        {memberdetails[checkLang].hobby} :<span> {current?.basic_info?.hobby}</span>
                       </p>
                       <p>
-                        वैवाहिक स्थिती :{" "}
+                        {memberdetails[checkLang].mara} :{" "}
                         <span> {current?.basic_info?.marital_status}</span>
                       </p>
                       <p>
-                        अपत्ये : <span> {current?.basic_info?.children}</span>
+                        {memberdetails[checkLang].child} : <span> {current?.basic_info?.children}</span>
                       </p>
                       <p>
-                        ज्ञात भाषा :{" "}
+                        {memberdetails[checkLang].lang} :{" "}
                         <span> {current?.basic_info?.language}</span>
                       </p>
                       <p>
-                        व्यवसाय : <span> {current?.basic_info?.business}</span>
+                        {memberdetails[checkLang].business} : <span> {current?.basic_info?.business}</span>
                       </p>
-                      <p>सध्याचा पत्ता :</p>
+                      <p>{memberdetails[checkLang].caddress} :</p>
                       <h6> {current?.basic_info?.address}</h6>
-                      <p>इतर पत्ता :</p>
+                      <p>{memberdetails[checkLang].oaddress} :</p>
                       <h6> {current?.basic_info?.address1}</h6>
                     </div>
                   </Col>
@@ -218,10 +220,17 @@ const MemberAssemblyDetails = () => {
                       <p>{memberdetails[checkLang].pradesh} :</p>
                       <h6> {current?.basic_info?.foreign_migration}</h6>
                     </div>
-                    <div className="basic-info-data">
-                      <p>{memberdetails[checkLang].otherinfo} :</p>
-                      <h6 dangerouslySetInnerHTML={{ __html: current?.basic_info?.other_info }}></h6>
-                    </div>
+                    <>
+                      {current?.basic_info?.other_info === '' || current?.basic_info?.other_info === '<p>-</p>' || current?.basic_info?.other_info === '-' ? (
+                        <>
+                        </>
+                      ) : (
+                        <div className="basic-info-data">
+                          <p>{memberdetails[checkLang].otherinfo} :</p>
+                          <h6 dangerouslySetInnerHTML={{ __html: current?.basic_info?.other_info }}></h6>
+                        </div>
+                      )}
+                    </>
                   </Col>
                 </Row>
               </div>

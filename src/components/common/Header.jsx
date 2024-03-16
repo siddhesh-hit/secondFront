@@ -108,6 +108,8 @@ const Header = () => {
     userInfo.notificationId && fetchData(userInfo.notificationId);
   }, [userInfo]);
 
+  console.log(location)
+
   return (
     <div>
       <div id="toplocation"
@@ -256,13 +258,13 @@ const Header = () => {
                           title={header[checkLang].legislature}
                           id={`offcanvasNavbarDropdown-expand-${expand}`}
                         >
-                          <NavDropdown.Item href="Governer">
+                          <NavDropdown.Item href="/Governer">
                             {header[checkLang].governor}
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="LegislativeCouncil">
+                          <NavDropdown.Item href="/LegislativeCouncil">
                             {header[checkLang].legislativecouncil}
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="LegislativeAssembly">
+                          <NavDropdown.Item href="/LegislativeAssembly">
                             {header[checkLang].legislativeassembly}
                           </NavDropdown.Item>
                           {/* <NavDropdown.Item href="#action5">
@@ -271,14 +273,14 @@ const Header = () => {
                           <NavDropdown.Item href="/mantri-parishad">
                             {header[checkLang].councilminis}
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="Library">
+                          <NavDropdown.Item href="/Library">
                             {header[checkLang].legislativelibrary}
                           </NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link
-                          className={`${location === "/members?house=एकत्रित" ? "active" : ""
+                          className={`${location.includes("/members/") ? "active" : ""
                             }`}
-                          href="/members?house=एकत्रित"
+                          href="/members/एकत्रित"
                         >
                           {header[checkLang].member}
                         </Nav.Link>
