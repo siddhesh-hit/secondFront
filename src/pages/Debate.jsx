@@ -227,7 +227,7 @@ const Debate = () => {
   // const debateFetch = async () => {
   //   // console.log(currentPage, pageLimit);
   //   await getApi(
-  //     `debate?perPage=${currentPage}&perLimit=${pageLimit}&house=${search.house}`
+  //     `debate/dump?perPage=${currentPage}&perLimit=${pageLimit}&house=${search.house}`
   //   )
   //     .then((res) => setDebate(res.data))
   //     .catch((err) => console.log(err));
@@ -245,7 +245,17 @@ const Debate = () => {
     }
 
     await getApi(
-      `debate/fields?perPage=${currentPage}&perLimit=${pageLimit}&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
+      `debate/dumpFields?perPage=${currentPage}&perLimit=${pageLimit}&topic=${encodeURI(
+        searchdata
+      )}&members_name=${
+        search.members_name
+      }&house=${house}&session=${session}&volume=${search.volume}&kramank=${
+        search.kramank
+      }&method=${search.method}&method_type=${
+        search.method_type
+      }&method_sub_type=${search.method_sub_type}&ministry_name=${
+        search.ministry_name
+      }`
       // &fromdate=${search.fromdate}&todate=${search.todate}
     )
       .then((res) => {
@@ -273,7 +283,7 @@ const Debate = () => {
   useEffect(() => {
     const fetchData = async () => {
       await getApi(
-        `debate/option?id=volume&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+        `debate/dumpOption?id=volume&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -286,7 +296,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/option?id=kramank&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+        `debate/dumpOption?id=kramank&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -299,7 +309,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/option?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+        `debate/dumpOption?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -312,7 +322,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/option?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+        `debate/dumpOption?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -325,7 +335,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/option?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+        `debate/dumpOption?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -338,7 +348,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/option?id=ministry_name&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+        `debate/dumpOption?id=ministry&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
       )
         .then((res) => {
           if (res.data.success) {
