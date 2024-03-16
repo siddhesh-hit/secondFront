@@ -29,7 +29,6 @@ import "react-transliterate/dist/index.css";
 const Members = () => {
   let url = new URLSearchParams(window.location.search);
   const [text, setText] = useState("");
-  const { house } = useParams();
   const [debate, setDebate] = useState([]);
   const [count, setCount] = useState(0);
   const [isDivVisible, setDivVisibility] = useState(false);
@@ -38,12 +37,15 @@ const Members = () => {
   const [pageLimit, setPageLimit] = useState(10);
   const [modalShow, setModalShow] = useState(true);
   const [sorted, setSorted] = useState(false);
+  const [paramsReady, setParamsReady] = useState(false);
+
   const { lang, checkLang } = useLang();
+  const { house } = useParams();
 
   const [search, setSearch] = useState({
     name: "",
     members_name: "",
-    house: "एकत्रित",
+    house: "",
     session: "",
     party: "",
     constituency: "",
@@ -147,11 +149,14 @@ const Members = () => {
   };
 
   useEffect(() => {
+    if (house) {
+      setParamsReady(true);
+    }
     setSearch((prev) => ({
       ...prev,
-      house: url.get("house"),
+      house,
     }));
-  }, []);
+  }, [house]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -221,24 +226,30 @@ const Members = () => {
   }, [checkLang, search.house]);
 
   useEffect(() => {
-    // if (
-    //   search.name ||
-    //   search.members_name ||
-    //   search.house ||
-    //   search.session ||
-    //   search.name
-    // ) {
-    //   setCurrentPage(0);
-    // }
+    if (paramsReady) {
+      debateFetch();
+    }
+  }, [paramsReady]);
+
+  useEffect(() => {
+    for (let key in search) {
+      if (search[key]) {
+        setCurrentPage(0);
+      }
+    }
+
     debateFetch();
   }, [
     search.members_name,
     search.house,
-    currentPage,
-    pageLimit,
     checkLang,
+    house,
     // search,
   ]);
+
+  useEffect(() => {
+    debateFetch();
+  }, [currentPage, pageLimit]);
 
   return (
     <div>

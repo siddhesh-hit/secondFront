@@ -259,7 +259,6 @@ const Debate = () => {
   useEffect(() => {
     for (let key in search) {
       if (search[key] || searchdata) {
-        // console.log(key, true);
         setCurrentPage(0);
       }
     }
@@ -268,19 +267,14 @@ const Debate = () => {
   }, [search.session, search.house, search.members_name]);
 
   useEffect(() => {
-    // for (let key in search) {
-    //   if (search[key]) {
-    //     console.log(key, true);
-    //     setCurrentPage(0);
-    //   }
-    // }
-
     handleSearch();
   }, [currentPage, pageLimit]);
 
   useEffect(() => {
     const fetchData = async () => {
-      await getApi("debate/option?id=volume")
+      await getApi(
+        `debate/option?id=volume&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+      )
         .then((res) => {
           if (res.data.success) {
             setOptions((prev) => ({
@@ -291,7 +285,9 @@ const Debate = () => {
         })
         .catch((err) => console.log(err));
 
-      await getApi("debate/option?id=kramank")
+      await getApi(
+        `debate/option?id=kramank&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+      )
         .then((res) => {
           if (res.data.success) {
             setOptions((prev) => ({
@@ -302,7 +298,9 @@ const Debate = () => {
         })
         .catch((err) => console.log(err));
 
-      await getApi("debate/option?id=method")
+      await getApi(
+        `debate/option?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+      )
         .then((res) => {
           if (res.data.success) {
             setOptions((prev) => ({
@@ -313,7 +311,9 @@ const Debate = () => {
         })
         .catch((err) => console.log(err));
 
-      await getApi("debate/option?id=method_type")
+      await getApi(
+        `debate/option?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+      )
         .then((res) => {
           if (res.data.success) {
             setOptions((prev) => ({
@@ -324,7 +324,9 @@ const Debate = () => {
         })
         .catch((err) => console.log(err));
 
-      await getApi("debate/option?id=method_sub_type")
+      await getApi(
+        `debate/option?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+      )
         .then((res) => {
           if (res.data.success) {
             setOptions((prev) => ({
@@ -335,7 +337,9 @@ const Debate = () => {
         })
         .catch((err) => console.log(err));
 
-      await getApi("debate/option?id=ministry_name")
+      await getApi(
+        `debate/option?id=ministry_name&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+      )
         .then((res) => {
           if (res.data.success) {
             setOptions((prev) => ({

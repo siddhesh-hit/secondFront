@@ -57,8 +57,8 @@ const loginpage = {
     mobile: `Enter Phone Number`,
     codetype: `To sign in, please Type the code`,
     submit: `Submit`,
-  }
-}
+  },
+};
 
 const register = {
   marathi: {
@@ -116,8 +116,8 @@ const register = {
     already: `Already have an account?`,
     signin: `Sign In`,
     signup: `Sign Up`,
-  }
-}
+  },
+};
 
 const resetpassword = {
   marathi: {
@@ -127,7 +127,7 @@ const resetpassword = {
     newpas: `कृपया तुमचा नवीन पासवर्ड टाका`,
     title: `तुमचा पासवर्ड रीसेट करण्यासाठी तुमचा नोंदणीकृत ईमेल एंटर करा.`,
     newpass: `नवीन पासवर्ड टाका`,
-    confipass: `पासवर्डची पुष्टी करा`
+    confipass: `पासवर्डची पुष्टी करा`,
   },
   english: {
     button: `Send Email`,
@@ -136,9 +136,9 @@ const resetpassword = {
     email: `Enter Email Address`,
     title: `Enter your registered email to reset your password.`,
     newpass: `Enter New Password`,
-    confipass: `Confirm Password`
-  }
-}
+    confipass: `Confirm Password`,
+  },
+};
 
 const header = {
   marathi: {
@@ -207,11 +207,11 @@ const home = {
         childtext: [
           {
             name: `विधानपरिषद`,
-            link: `/members?house=विधानपरिषद`,
+            link: `/members/विधानपरिषद`,
           },
           {
             name: `विधानसभा`,
-            link: `/members?house=विधानसभा`,
+            link: `/members/विधानसभा`,
           },
         ],
       },
@@ -429,11 +429,11 @@ const home = {
         childtext: [
           {
             name: `Council`,
-            link: `/members?house=विधानपरिषद`,
+            link: `/members/विधानपरिषद`,
           },
           {
             name: `Assembly`,
-            link: `/members?house=विधानसभा`,
+            link: `/members/विधानसभा`,
           },
         ],
       },
@@ -842,7 +842,7 @@ const aboutUs = {
 const contactUs = {
   marathi: {
     title: "संपर्क साधा",
-    home: 'मुख्यपृष्ठ',
+    home: "मुख्यपृष्ठ",
     address: `पत्ता`,
     fax: `फॅक्स क्रमांक`,
     email: `ई-मेल`,
@@ -850,7 +850,7 @@ const contactUs = {
   },
   english: {
     title: "Contact Us",
-    home: 'Home',
+    home: "Home",
     address: `Address`,
     fax: `Fax Number`,
     email: `E-Mail`,
@@ -1424,9 +1424,9 @@ const memberdetails = {
     details: `Details`,
     candi: `Candidate's Name`,
     votes: `Votes`,
-    party: `Political Party`
-  }
-}
+    party: `Political Party`,
+  },
+};
 
 const assemblyDebate = {
   marathi: {
@@ -1595,8 +1595,8 @@ const sessioncal = {
     srno: `Sr No`,
     topic: `Topic`,
     details: `Details`,
-  }
-}
+  },
+};
 
 const userprofile = {
   marathi: {
@@ -1628,8 +1628,8 @@ const userprofile = {
     changepass: `Change Password`,
     reset: `Password Reset`,
     logg: `Log Out`,
-  }
-}
+  },
+};
 
 const councilDebate = {
   marathi: {
@@ -2007,7 +2007,7 @@ const searchdetails = {
     debatelist: `Debate List`,
     debatedetail: `Debate Details`,
     memberdetail: `Member Details`,
-  }
+  },
 };
 
 const vidhanassembly = {
@@ -2036,7 +2036,7 @@ const vidhanassembly = {
     bio: `Biographical information`,
     partywise: `Party wise representation of members`,
     pgroup: `Political Group`,
-  }
+  },
 };
 
 const popup = {
@@ -2053,6 +2053,13 @@ const filterdata = {
     council: `विधानपरिषद`,
     assembly: `विधानसभा`,
     both: `एकत्रित`,
+    all: `सर्व`,
+    rain: `पावसाळी`,
+    budget: `अर्थसंकल्पीय`,
+    special: `विशेष`,
+    from: `पासून`,
+    to: `पर्यंत`,
+    page: `प्रति पृष्ठ`,
     all: `सर्व`,
     rain: `पावसाळी`,
     budget: `अर्थसंकल्पीय`,
@@ -2113,5 +2120,5 @@ export {
   searchdetails,
   popup,
   vidhanassembly,
-  filterdata
+  filterdata,
 };
