@@ -71,9 +71,6 @@ const UserProfile = () => {
                                     <Nav.Link eventKey="third">{userprofile[checkLang].req}</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Nav.Link eventKey="four">{userprofile[checkLang].confi}</Nav.Link>
-                                </Nav.Item>
-                                <Nav.Item>
                                     <Nav.Link eventKey="fifth">{userprofile[checkLang].changepass}</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
@@ -232,69 +229,6 @@ const UserProfile = () => {
                                                     </button>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </Tab.Pane>
-                                <Tab.Pane eventKey="four">
-
-                                    <div className="profile-box1">
-                                        <h3 className="heading">
-                                            Confidential Documents Details
-                                        </h3>
-                                        <div className="intrestedarea">
-                                            <table className="debate-light table table-bordered responsive-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th style={{ borderRight: "1px solid white" }}>क्रमांक</th>
-                                                        <th style={{ borderRight: "1px solid white" }}>नाव</th>
-                                                        <th style={{ borderRight: "1px solid white" }}>मतदारसंघ</th>
-                                                        <th style={{ borderRight: "1px solid white" }}>राजकीय पक्ष</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>
-                                                            Tender(General)
-                                                        </td>
-                                                        <td>1692313416268.19_TENDER DOCUMENT.pdf</td>
-                                                        <td><a style={{ color: 'black' }} href={samplePDF1} download><i className="fa fa-download icon-calender"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>
-                                                            Tender(General)
-                                                        </td>
-                                                        <td>1692313416268.19_TENDER DOCUMENT.pdf</td>
-                                                        <td><a style={{ color: 'black' }} href={samplePDF1} download><i className="fa fa-download icon-calender"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>
-                                                            Tender(General)
-                                                        </td>
-                                                        <td>1692313416268.19_TENDER DOCUMENT.pdf</td>
-                                                        <td><a style={{ color: 'black' }} href={samplePDF1} download><i className="fa fa-download icon-calender"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>
-                                                            Tender(General)
-                                                        </td>
-                                                        <td>1692313416268.19_TENDER DOCUMENT.pdf</td>
-                                                        <td><a style={{ color: 'black' }} href={samplePDF1} download><i className="fa fa-download icon-calender"></i></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>
-                                                            Tender(General)
-                                                        </td>
-                                                        <td>1692313416268.19_TENDER DOCUMENT.pdf</td>
-                                                        <td><a style={{ color: 'black' }} href={samplePDF1} download><i className="fa fa-download icon-calender"></i></a></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-
                                         </div>
                                     </div>
                                 </Tab.Pane>

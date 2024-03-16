@@ -151,7 +151,7 @@ const Header = () => {
                 </button>
 
                 <div className="font-size">
-                  <button className="font-size-button" onClick={() => changeFontSize(2)}>{header[checkLang].font}+</button>
+                  <button className="font-size-button" onClick={() => changeFontSize(1)}>{header[checkLang].font}+</button>
                   <button onClick={resetFontSize}
                     className="font-size-button"
                     style={{
@@ -161,7 +161,7 @@ const Header = () => {
                   >
                     {header[checkLang].font}
                   </button>
-                  <button className="font-size-button" onClick={() => changeFontSize(-2)}>{header[checkLang].font}-</button>
+                  <button className="font-size-button" onClick={() => changeFontSize(-1)}>{header[checkLang].font}-</button>
                 </div>
                 {isAuthenticated ? (
                   <DropdownButton id="dropdown-basic-button" title={<><img src={ImageUrl + userInfo?.user_image?.["destination"] + "/" + userInfo?.user_image?.["filename"]} className="user-profile-image" /> {userInfo?.full_name}</>}>
