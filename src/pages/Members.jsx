@@ -222,6 +222,15 @@ const Members = () => {
   }, [checkLang, search.house]);
 
   useEffect(() => {
+    // if (
+    //   search.name ||
+    //   search.members_name ||
+    //   search.house ||
+    //   search.session ||
+    //   search.name
+    // ) {
+    //   setCurrentPage(0);
+    // }
     debateFetch();
   }, [
     search.members_name,
@@ -657,13 +666,16 @@ const Members = () => {
                           assemblyName = item.assembly?.constituency_name;
                         }
 
-                        if (assemblyName) {
+                        if (search.house === "विधानसभा" && assemblyName) {
                           return (
                             <option key={index} value={item._id}>
                               {assemblyName}
                             </option>
                           );
-                        } else if (constituencyName) {
+                        } else if (
+                          search.house === "विधानपरिषद" &&
+                          constituencyName
+                        ) {
                           return (
                             <option key={index} value={item._id}>
                               {constituencyName}

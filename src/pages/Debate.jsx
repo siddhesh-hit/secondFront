@@ -197,7 +197,7 @@ const Debate = () => {
       method_sub_type: "",
       ministry_name: "",
     }));
-    debateFetch();
+    handleSearch();
   };
 
   const handleSort = () => {
@@ -224,14 +224,14 @@ const Debate = () => {
     }
   };
 
-  const debateFetch = async () => {
-    // console.log(currentPage, pageLimit);
-    await getApi(
-      `debate?perPage=${currentPage}&perLimit=${pageLimit}&house=${search.house}`
-    )
-      .then((res) => setDebate(res.data))
-      .catch((err) => console.log(err));
-  };
+  // const debateFetch = async () => {
+  //   // console.log(currentPage, pageLimit);
+  //   await getApi(
+  //     `debate?perPage=${currentPage}&perLimit=${pageLimit}&house=${search.house}`
+  //   )
+  //     .then((res) => setDebate(res.data))
+  //     .catch((err) => console.log(err));
+  // };
 
   const handleSearch = async () => {
     let house = search.house === "एकत्रित" ? "" : search.house;
@@ -245,19 +245,7 @@ const Debate = () => {
     }
 
     await getApi(
-      `debate/fields?perPage=${encodeURIComponent(
-        currentPage
-      )}&perLimit=${pageLimit}&topic=${encodeURIComponent(
-        searchdata
-      )}&members_name=${
-        search.members_name
-      }&house=${house}&session=${session}&volume=${search.volume}&kramank=${
-        search.kramank
-      }&method=${search.method}&method_type=${
-        search.method_type
-      }&method_sub_type=${search.method_sub_type}&ministry_name=${
-        search.ministry_name
-      }`
+      `debate/fields?perPage=${currentPage}&perLimit=${pageLimit}&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
       // &fromdate=${search.fromdate}&todate=${search.todate}
     )
       .then((res) => {
@@ -269,14 +257,26 @@ const Debate = () => {
   };
 
   useEffect(() => {
+    for (let key in search) {
+      if (search[key] || searchdata) {
+        // console.log(key, true);
+        setCurrentPage(0);
+      }
+    }
+
     handleSearch();
-  }, [
-    search.session,
-    search.house,
-    search.members_name,
-    currentPage,
-    pageLimit,
-  ]);
+  }, [search.session, search.house, search.members_name]);
+
+  useEffect(() => {
+    // for (let key in search) {
+    //   if (search[key]) {
+    //     console.log(key, true);
+    //     setCurrentPage(0);
+    //   }
+    // }
+
+    handleSearch();
+  }, [currentPage, pageLimit]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -349,7 +349,7 @@ const Debate = () => {
     fetchData();
   }, []);
 
-  console.log(currentPage, "in debate");
+  // console.log(currentPage, "in debate");
 
   return (
     <div>
