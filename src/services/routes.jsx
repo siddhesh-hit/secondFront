@@ -132,7 +132,7 @@ export const routes = [
   },
   {
     name: "MemberAssembly",
-    path: "/members",
+    path: "/members/:house",
     exact: true,
     element: <Members />,
   },

@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 
 import useLang from "../hooks/useLang";
 import { home, homeLink } from "../data/constant";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
 const Homepage = () => {
   const [text, setText] = useState("");
   const [search, setSearch] = useState([]);
@@ -17,13 +17,23 @@ const Homepage = () => {
   return (
     <div>
       <section className="homepageback">
-        <h1 data-aos="fade-up"
-          data-aos-duration="3000" style={{ whiteSpace: "pre-line" }}>{home[checkLang].header}</h1>
-        <Row data-aos="fade-up"
-          data-aos-duration="3000" className="form-controlss">
+        <h1
+          data-aos="fade-up"
+          data-aos-duration="3000"
+          style={{ whiteSpace: "pre-line" }}
+        >
+          {home[checkLang].header}
+        </h1>
+        <Row
+          data-aos="fade-up"
+          data-aos-duration="3000"
+          className="form-controlss"
+        >
           <Col lg={6}>
             <ReactTransliterate
-              renderComponent={(props) => <input className="form-control" {...props} />}
+              renderComponent={(props) => (
+                <input className="form-control" {...props} />
+              )}
               value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder={home[checkLang].searchPlaceHolder}
@@ -48,21 +58,21 @@ const Homepage = () => {
                     </Col>
                     <Col lg={9}>
                       <h6>{item.title}</h6>
-                      {item?.childtext && item?.childtext?.map((it, ind) => {
-                        let bool
-                        if (ind === item.childtext.length - 1) {
-                          bool = true
-                        }
-                        else {
-                          bool = false
-                        }
-                        return (
-                          <Link to={it.link} key={ind}>
-                            <>{it.name}</>
-                            {bool ? <span></span> : <span>|</span>}
-                          </Link>
-                        )
-                      })}
+                      {item?.childtext &&
+                        item?.childtext?.map((it, ind) => {
+                          let bool;
+                          if (ind === item.childtext.length - 1) {
+                            bool = true;
+                          } else {
+                            bool = false;
+                          }
+                          return (
+                            <Link to={it.link} key={ind}>
+                              <>{it.name}</>
+                              {bool ? <span></span> : <span>|</span>}
+                            </Link>
+                          );
+                        })}
                     </Col>
                   </Row>
                 </Col>
@@ -73,11 +83,8 @@ const Homepage = () => {
       </section>
       <section className="resourcesss">
         <Container>
-          <h2>
-            {home[checkLang].hometitle}
-          </h2>
+          <h2>{home[checkLang].hometitle}</h2>
           <Row>
-
             {home[checkLang].homebottom.map((item, index) => (
               <Col lg={4} key={index}>
                 <Row className="boxes1">
@@ -115,22 +122,30 @@ const Homepage = () => {
             </Col>
             <Col lg={3}>
               <div className="links">
-                <Link to="https:// gr.maharashtra.gov.in">https:// gr.maharashtra.gov.in</Link>
+                <Link to="https:// gr.maharashtra.gov.in">
+                  https:// gr.maharashtra.gov.in
+                </Link>
               </div>
             </Col>
             <Col lg={3}>
               <div className="links">
-                <Link to="https:// beams.mahakosh.gov.in">https:// beams.mahakosh.gov.in</Link>
+                <Link to="https:// beams.mahakosh.gov.in">
+                  https:// beams.mahakosh.gov.in
+                </Link>
               </div>
             </Col>
             <Col lg={3}>
               <div className="links">
-                <Link to="https:// directorate.marathi.gov.in">https:// directorate.marathi.gov.in</Link>
+                <Link to="https:// directorate.marathi.gov.in">
+                  https:// directorate.marathi.gov.in
+                </Link>
               </div>
             </Col>
             <Col lg={3}>
               <div className="links">
-                <Link to="https://main.sci.govin/">https://main.sci.govin/</Link>
+                <Link to="https://main.sci.govin/">
+                  https://main.sci.govin/
+                </Link>
               </div>
             </Col>
             <Col lg={3}>
@@ -140,18 +155,23 @@ const Homepage = () => {
             </Col>
             <Col lg={3}>
               <div className="links">
-                <Link to="https://main.sci.govin/">https://main.sci.govin/</Link>
+                <Link to="https://main.sci.govin/">
+                  https://main.sci.govin/
+                </Link>
               </div>
             </Col>
             <Col lg={3}>
               <div className="links">
-                <Link to="https:// beams.mahakosh.gov.in">https:// beams.mahakosh.gov.in</Link>
+                <Link to="https:// beams.mahakosh.gov.in">
+                  https:// beams.mahakosh.gov.in
+                </Link>
               </div>
             </Col>
           </Row>
           <div className="readd">
             <Link className="readmore" to="/all-links">
-              {homeLink[checkLang].button} <i className="fa fa-angle-double-right" aria-hidden="true"></i>
+              {homeLink[checkLang].button}{" "}
+              <i className="fa fa-angle-double-right" aria-hidden="true"></i>
             </Link>
           </div>
         </Container>
