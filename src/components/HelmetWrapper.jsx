@@ -40,10 +40,10 @@ const HelmetWrapper = () => {
   return (
     !Loading && (
       <Helmet>
-        <title>{seoData?.data?.title || "Default Title"}</title>
+        <title>{seoData?.data?.title || "Maharashtra Legislature Secretariat Information Portal"}</title>
         <meta
           name="description"
-          content={seoData?.data?.description || "Default Description"}
+          content={seoData?.data?.description || "Maharashtra Legislature Secretariat Information Portal"}
         />
         {/* Add other meta tags as needed */}
       </Helmet>

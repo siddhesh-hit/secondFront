@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-
 import { Container, Row, Col } from "react-bootstrap";
 import Arrow from "../assets/debate/arrow.svg";
-
 import useLang from "../hooks/useLang";
 import { getApi } from "../services/axiosInterceptors";
 import { contactUs } from "../data/constant";
@@ -11,20 +9,22 @@ import { Link } from "react-router-dom";
 const ContactUs = () => {
   const [newData, setNewData] = useState({});
   const { lang, checkLang } = useLang();
+
   const fetchData = async () => {
-    await getApi("contact")
-      .then((res) => {
-        setNewData(res.data.data);
-      })
-      .catch((err) => console.log(err));
+    try {
+      const res = await getApi("contact");
+      setNewData(res.data.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
-  console.log(newData);
 
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
-    <div className="contactpage">
+    <div className="contactpage" style={{ fontFamily: checkLang === 'marathi' ? 'Sakal Marathi' : 'Poppins' }}>
       <Container>
         <Row>
           <Col lg={3}>
@@ -43,7 +43,8 @@ const ContactUs = () => {
       <Col lg={12}>
         <div className="contactcontent">
           <h1>
-            {contactUs[checkLang].title}<div className="hrline"></div>
+            {contactUs[checkLang].title}
+            <div className="hrline"></div>
           </h1>
         </div>
       </Col>
@@ -58,8 +59,7 @@ const ContactUs = () => {
                   </div>
                   <div className="text">
                     <span>{contactUs[checkLang].address}:</span>
-                    <p dangerouslySetInnerHTML={{ __html: section[checkLang].address }}>
-                    </p>
+                    <p dangerouslySetInnerHTML={{ __html: section[checkLang].address }}></p>
                   </div>
                 </div>
               </Col>
@@ -71,9 +71,7 @@ const ContactUs = () => {
                   <div className="text">
                     <span>{contactUs[checkLang].telephone}:</span>
                     <p>
-                      <a href="tel://1234567920">
-                        {section[checkLang].telephone}
-                      </a>
+                      <a href="tel://1234567920">{section[checkLang].telephone}</a>
                     </p>
                   </div>
                 </div>
@@ -86,9 +84,7 @@ const ContactUs = () => {
                   <div className="text">
                     <span>{contactUs[checkLang].fax}:</span>
                     <p>
-                      <a href="mailto:info@yoursite.com">
-                        {section[checkLang].fax}
-                      </a>
+                      <a href="mailto:info@yoursite.com">{section[checkLang].fax}</a>
                     </p>
                   </div>
                 </div>
@@ -108,7 +104,6 @@ const ContactUs = () => {
                 </div>
               </Col>
             </Row>
-
           ))}
       </Container>
       <iframe
