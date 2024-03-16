@@ -411,6 +411,21 @@ const Members = () => {
                         onChange={handleChange}
                       >
                         <option hidden>मतदारसंघनिहाय</option>
+                        {options?.constituency?.map((item, index) => (
+                          <option key={index} value={item._id}>
+                            {
+                              item[
+                                search.house === "विधानसभा"
+                                  ? "council"
+                                  : "assembly"
+                              ]?.constituency_name
+                              // ? item?.council?.constituency_name
+                              // : item?.assembly?.constituency_name !== “”
+                              // ? item?.assembly?.constituency_name
+                              // : item?.assembly?.constituency_name
+                            }
+                          </option>
+                        ))}
                         {options?.constituency?.map((item, index) => {
                           let constituencyName, assemblyName;
 

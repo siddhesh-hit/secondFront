@@ -1004,18 +1004,10 @@ const Debate = () => {
                       <></>
                     ) : (
                       <select name="sabhaselection">
-                        <option value="विधानसभा  12th">
-                          {filterdata[checkLang].assembly} 12th
-                        </option>
-                        <option value="विधानसभा  11th">
-                          {filterdata[checkLang].assembly} 11th
-                        </option>
-                        <option value="विधानसभा  10th">
-                          {filterdata[checkLang].assembly} 10th
-                        </option>
-                        <option value="विधानसभा  09th">
-                          {filterdata[checkLang].assembly} 09th
-                        </option>
+                        <option value="विधानसभा  12th">{filterdata[checkLang].assembly} 12th</option>
+                        <option value="विधानसभा  11th">{filterdata[checkLang].assembly} 11th</option>
+                        <option value="विधानसभा  10th">{filterdata[checkLang].assembly} 10th</option>
+                        <option value="विधानसभा  09th">{filterdata[checkLang].assembly} 09th</option>
                       </select>
                     )}
                     <select
@@ -1023,18 +1015,10 @@ const Debate = () => {
                       defaultValue={pageLimit}
                       onChange={(e) => setPageLimit(+e.target.value)}
                     >
-                      <option value={10}>
-                        10 {filterdata[checkLang].page}
-                      </option>
-                      <option value={20}>
-                        20 {filterdata[checkLang].page}
-                      </option>
-                      <option value={30}>
-                        30 {filterdata[checkLang].page}
-                      </option>
-                      <option value={40}>
-                        40 {filterdata[checkLang].page}
-                      </option>
+                      <option value={10}>10 {filterdata[checkLang].page}</option>
+                      <option value={20}>20 {filterdata[checkLang].page}</option>
+                      <option value={30}>30 {filterdata[checkLang].page}</option>
+                      <option value={40}>40 {filterdata[checkLang].page}</option>
                     </select>
                     <span className="sorting">
                       <button onClick={handleSort}>
