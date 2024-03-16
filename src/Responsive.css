@@ -258,4 +258,9 @@
         margin-top: 10px;
         margin-left: 0px;
     }
+
+    select.sabahaselectionss {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 }

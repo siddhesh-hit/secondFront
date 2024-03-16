@@ -24,6 +24,7 @@ import englogo from "../assets/englogo.png";
 const loginpage = {
   marathi: {
     home: `साइन इन करण्यासाठी, कृपया तुमचा इमेल पत्ता लिहा`,
+    home1: `साइन इन करण्यासाठी, कृपया मोबाइल नंबर प्रविष्ट करा`,
     email: `ईमेल पत्ता प्रविष्ट करा`,
     password: `पासवर्ड टाका`,
     captcha: `कॅप्चा प्रविष्ट करा`,
@@ -41,6 +42,7 @@ const loginpage = {
   },
   english: {
     home: `To Sign In, Please Enter Your Email Address`,
+    home1: `To Sign In, Please Enter Mobile Number`,
     email: `Enter Email Address`,
     password: `Enter Password`,
     captcha: `Enter captcha`,
