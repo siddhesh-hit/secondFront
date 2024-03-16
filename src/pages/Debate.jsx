@@ -20,22 +20,22 @@ import "react-transliterate/dist/index.css";
 
 import { getApi } from "../services/axiosInterceptors";
 import { memberName } from "../data/memberName";
-import PopupHome from "./PopupHome";
 import PaginationComponent from "../components/Pagination";
 import HighlightSentence from "../components/HighlightSentence";
 import useLang from "../hooks/useLang";
 import { councilDebate, filterdata } from "../data/constant";
 import { numbers, numToYears } from "../utils/marathitoenglish";
+import Loader from "../components/common/Loader";
 
 const Debate = () => {
   const [debate, setDebate] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [text, setText] = useState("");
   const [searchdata, setSearchdata] = useState("");
   const [isDivVisible, setDivVisibility] = useState(false);
   const [isDivVisible1, setDivVisibility1] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageLimit, setPageLimit] = useState(10);
-  const [modalShow, setModalShow] = useState(true);
   const [sorted, setSorted] = useState(false);
   const { lang, checkLang } = useLang();
   const [options, setOptions] = useState({
@@ -348,10 +348,16 @@ const Debate = () => {
             }));
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err)).finally(() => setLoading(false));
     };
     fetchData();
   }, []);
+
+  // console.log(currentPage, "in debate");
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div>
@@ -381,6 +387,7 @@ const Debate = () => {
                     placeholder={councilDebate[checkLang].search1}
                     onSearch={handleOnSearch}
                     onSelect={handleOnSelect}
+                    inputSearchString={search.members_name}
                     closeOnSelect={true}
                   />
                   <Accordion className="filsss" defaultActiveKey={["0"]}>
@@ -391,7 +398,7 @@ const Debate = () => {
                       <Accordion.Body>
                         <div className="filtercontent">
                           <div className="datacheck">
-                            <label>विधानपरिषद</label>
+                            <label>{filterdata[checkLang].council}</label>
                             <Form.Check
                               aria-label="option 1"
                               name="house"
@@ -401,7 +408,7 @@ const Debate = () => {
                             />
                           </div>
                           <div className="datacheck">
-                            <label>विधानसभा</label>
+                            <label>{filterdata[checkLang].assembly}</label>
                             <Form.Check
                               aria-label="option 2"
                               name="house"
@@ -411,7 +418,7 @@ const Debate = () => {
                             />
                           </div>
                           <div className="datacheck1">
-                            <label>एकत्रित</label>
+                            <label>{filterdata[checkLang].both}</label>
                             <Form.Check
                               aria-label="option 3"
                               name="house"
@@ -430,7 +437,7 @@ const Debate = () => {
                       <Accordion.Body>
                         <div className="filtercontent">
                           <div className="datacheck">
-                            <label>सर्व</label>
+                            <label>{filterdata[checkLang].all}</label>
                             <Form.Check
                               aria-label="option 4"
                               name="session"
@@ -440,7 +447,7 @@ const Debate = () => {
                             />
                           </div>
                           <div className="datacheck">
-                            <label>पावसाळी</label>
+                            <label>{filterdata[checkLang].rain}</label>
                             <Form.Check
                               aria-label="option 5"
                               name="session"
@@ -450,7 +457,7 @@ const Debate = () => {
                             />
                           </div>
                           <div className="datacheck">
-                            <label>अर्थसंकल्पीय</label>
+                            <label>{filterdata[checkLang].budget}</label>
                             <Form.Check
                               aria-label="option 6"
                               name="session"
@@ -460,7 +467,7 @@ const Debate = () => {
                             />
                           </div>
                           <div className="datacheck1">
-                            <label>विशेष</label>
+                            <label>{filterdata[checkLang].special}</label>
                             <Form.Check
                               aria-label="option 7"
                               name="session"
@@ -480,7 +487,7 @@ const Debate = () => {
                         <div className="filtercontent">
                           <Row className="daterange">
                             <Col lg={6}>
-                              <label>पासून</label>
+                              <label>{filterdata[checkLang].from}</label>
                               <input
                                 onChange={handleChange}
                                 className="form-control"
@@ -491,7 +498,7 @@ const Debate = () => {
                               />
                             </Col>
                             <Col lg={6}>
-                              <label>प्रयंत</label>
+                              <label>{filterdata[checkLang].to}</label>
                               <input
                                 onChange={handleChange}
                                 className="form-control"
@@ -1003,7 +1010,7 @@ const Debate = () => {
                     {search.house === "विधानपरिषद" ? (
                       <></>
                     ) : (
-                      <select name="sabhaselection">
+                      <select name="sabhaselection" className="sabahaselectionss">
                         <option value="विधानसभा  12th">{filterdata[checkLang].assembly} 12th</option>
                         <option value="विधानसभा  11th">{filterdata[checkLang].assembly} 11th</option>
                         <option value="विधानसभा  10th">{filterdata[checkLang].assembly} 10th</option>

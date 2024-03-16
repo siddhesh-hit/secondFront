@@ -2916,3 +2916,45 @@ p.demophase {
     margin-bottom: 0px;
     padding-bottom: 0px;
 }
+
+.square:nth-child(1) {
+    transform: rotate(0deg);
+}
+
+.square {
+    width: 90px;
+    height: 100px;
+    background-image: url(../src/assets/download.png);
+    margin: 0 5px;
+    animation: rotate 1.5s linear;
+}
+
+.rotating-squares-loader {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    padding-top: 17%;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(60deg);
+    }
+}
+
+.links img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    margin-right: 5px;
+    border-radius: 5px;
+}

@@ -6,7 +6,9 @@ import { ImageUrl, getApi } from "../services/axiosInterceptors";
 import { Link } from "react-router-dom";
 import Arrow from "../assets/debate/arrow.svg";
 import { Col, Container, Row } from "react-bootstrap";
+import Loader from "./common/Loader";
 const Gallery = () => {
+  const [loading, setLoading] = useState(true);
   const [gallery, setGallery] = useState([]);
 
   const settings = {
@@ -49,13 +51,18 @@ const Gallery = () => {
       .then((res) => {
         setGallery(res.data.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err)).finally(() => setLoading(false));
   };
   // console.log(gallery);
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="galleryback">
       <Container>

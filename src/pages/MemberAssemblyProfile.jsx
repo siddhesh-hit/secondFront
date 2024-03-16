@@ -3,6 +3,7 @@ import facebook from "../assets/social/facebook.png";
 import twitter from "../assets/social/twitter.png";
 import linkdein from "../assets/social/linkedin.png";
 import instagram from "../assets/social/instagram.png";
+import web from "../assets/social/web.png";
 
 const MemberAssemblyProfile = (props) => {
 
@@ -17,10 +18,11 @@ const MemberAssemblyProfile = (props) => {
             </div>
             <h2>{props.name}</h2>
             <div className="socialss">
-                <img src={facebook} alt="" />
-                <img src={twitter} alt="" />
-                <img src={instagram} alt="" />
-                <img src={linkdein} alt="" />
+                <a href="https://facebook.com/"><img src={facebook} alt="" /></a>
+                <a href="https://twitter.com/"><img src={twitter} alt="" /></a>
+                <a href="https://instagram.com/"><img src={instagram} alt="" /></a>
+                <a href="https://in.linkedin.com/"><img src={linkdein} alt="" /></a>
+                <a href="/"><img src={web} alt="" /></a>
             </div>
         </div>
     )
