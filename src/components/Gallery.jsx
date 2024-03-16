@@ -10,13 +10,13 @@ const Gallery = () => {
   const [gallery, setGallery] = useState([]);
 
   const settings = {
-    className: "center",
-    centerMode: true,
     infinite: true,
     slidesToShow: 2,
     speed: 500,
     rows: 2,
     slidesPerRow: 2,
+    autoplay: true, // Enable auto rotation
+    autoplaySpeed: 3000, // Set rotation speed in milliseconds
     responsive: [
       {
         breakpoint: 1024,
@@ -79,7 +79,7 @@ const Gallery = () => {
           <div className="hrline"></div>
         </h1>
       </div>
-      <Container fluid>
+      <Container>
         <Slider {...settings}>
           {gallery?.length > 0 &&
             gallery.map((section, index) => (

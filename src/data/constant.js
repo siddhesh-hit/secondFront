@@ -839,7 +839,7 @@ const aboutUs = {
 
 const contactUs = {
   marathi: {
-    title: "आमच्याशी संपर्क साधा",
+    title: "संपर्क साधा",
     home: 'मुख्यपृष्ठ',
     address: `पत्ता`,
     fax: `फॅक्स क्रमांक`,
@@ -1379,8 +1379,11 @@ const memberdetails = {
     title1: `सदस्य`,
     home: `मुख्य पृष्ठ`,
     basic: `मुलभूत माहिती`,
+    complete: `संपूर्ण माहिती`,
+    pradesh: `परदेश प्रवास`,
+    otherinfo: `इतर माहिती `,
     travel: `राजकीय प्रवास`,
-    electiondata: `निवडणूक डेटा`,
+    electiondata: `निवडणूक निकाल`,
     debate: `सभागृहांचे कार्यवृत्त`,
     electionres: `निवडणूक निकाल`,
     totalelec: `एकूण मतदार`,
@@ -1401,7 +1404,10 @@ const memberdetails = {
     title1: `Member`,
     home: `Home`,
     basic: `Basic Information`,
+    complete: `Complete Information`,
     travel: `Legislative Journey`,
+    pradesh: `Foreign Trip`,
+    otherinfo: `Other Information `,
     electiondata: `Election Data`,
     debate: `Debates`,
     electionres: `Election Results`,
@@ -2038,7 +2044,34 @@ const popup = {
   english: {
     text: `This portal is under development. As this is a beta version, the information used in the portal has not been fully tested`,
   },
-}
+};
+
+const filterdata = {
+  marathi: {
+    council: `विधानपरिषद`,
+    assembly: `विधानसभा`,
+    both: `एकत्रित`,
+    all:`सर्व`,
+    rain:`पावसाळी`,
+    budget:`अर्थसंकल्पीय`,
+    special:`विशेष`,
+    from:`पासून`,
+    to:`पर्यंत`,
+    page:`प्रति पृष्ठ`,
+  },
+  english: {
+    council: `Legislative Council`,
+    assembly: `Legislative Assembly`,
+    both: `Combined`,
+    all:`All`,
+    rain:`Rainy Season`,
+    budget:`Budget`,
+    special:`Special`,
+    from:`From`,
+    to:`To`,
+    page:`Per Page`,
+  }
+};
 
 export {
   loginpage,
@@ -2077,5 +2110,6 @@ export {
   legislationsbills,
   searchdetails,
   popup,
-  vidhanassembly
+  vidhanassembly,
+  filterdata
 };

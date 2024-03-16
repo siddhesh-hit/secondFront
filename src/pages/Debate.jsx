@@ -24,7 +24,7 @@ import PopupHome from "./PopupHome";
 import PaginationComponent from "../components/Pagination";
 import HighlightSentence from "../components/HighlightSentence";
 import useLang from "../hooks/useLang";
-import { councilDebate } from "../data/constant";
+import { councilDebate, filterdata } from "../data/constant";
 import { numbers, numToYears } from "../utils/marathitoenglish";
 
 const Debate = () => {
@@ -225,7 +225,6 @@ const Debate = () => {
   };
 
   const debateFetch = async () => {
-    // console.log(currentPage, pageLimit);
     await getApi(
       `debate?perPage=${currentPage}&perLimit=${pageLimit}&house=${search.house}`
     )
@@ -258,7 +257,6 @@ const Debate = () => {
       }&method_sub_type=${search.method_sub_type}&ministry_name=${
         search.ministry_name
       }`
-      // &fromdate=${search.fromdate}&todate=${search.todate}
     )
       .then((res) => {
         if (res.data.success) {
@@ -640,7 +638,7 @@ const Debate = () => {
                     <Accordion.Body>
                       <div className="filtercontent">
                         <div className="datacheck">
-                          <label>विधानपरिषद</label>
+                          <label>{filterdata[checkLang].council}</label>
                           <Form.Check
                             aria-label="option 1"
                             name="house"
@@ -650,7 +648,7 @@ const Debate = () => {
                           />
                         </div>
                         <div className="datacheck">
-                          <label>विधानसभा</label>
+                          <label>{filterdata[checkLang].assembly}</label>
                           <Form.Check
                             aria-label="option 2"
                             name="house"
@@ -660,7 +658,7 @@ const Debate = () => {
                           />
                         </div>
                         <div className="datacheck1">
-                          <label>एकत्रित</label>
+                          <label>{filterdata[checkLang].both}</label>
                           <Form.Check
                             aria-label="option 3"
                             name="house"
@@ -679,7 +677,7 @@ const Debate = () => {
                     <Accordion.Body>
                       <div className="filtercontent">
                         <div className="datacheck">
-                          <label>सर्व</label>
+                          <label>{filterdata[checkLang].all}</label>
                           <Form.Check
                             aria-label="option 4"
                             name="session"
@@ -689,7 +687,7 @@ const Debate = () => {
                           />
                         </div>
                         <div className="datacheck">
-                          <label>पावसाळी</label>
+                          <label>{filterdata[checkLang].rain}</label>
                           <Form.Check
                             aria-label="option 5"
                             name="session"
@@ -699,7 +697,7 @@ const Debate = () => {
                           />
                         </div>
                         <div className="datacheck">
-                          <label>अर्थसंकल्पीय</label>
+                          <label>{filterdata[checkLang].budget}</label>
                           <Form.Check
                             aria-label="option 6"
                             name="session"
@@ -709,7 +707,7 @@ const Debate = () => {
                           />
                         </div>
                         <div className="datacheck1">
-                          <label>विशेष</label>
+                          <label>{filterdata[checkLang].special}</label>
                           <Form.Check
                             aria-label="option 7"
                             name="session"
@@ -729,7 +727,7 @@ const Debate = () => {
                       <div className="filtercontent">
                         <Row className="daterange">
                           <Col lg={6}>
-                            <label>पासून</label>
+                            <label>{filterdata[checkLang].from}</label>
                             <input
                               onChange={handleChange}
                               className="form-control"
@@ -740,7 +738,7 @@ const Debate = () => {
                             />
                           </Col>
                           <Col lg={6}>
-                            <label>प्रयंत</label>
+                            <label>{filterdata[checkLang].to}</label>
                             <input
                               onChange={handleChange}
                               className="form-control"
@@ -1002,10 +1000,10 @@ const Debate = () => {
                       <></>
                     ) : (
                       <select name="sabhaselection">
-                        <option value="विधानसभा  12th">विधानसभा 12th</option>
-                        <option value="विधानसभा  11th">विधानसभा 11th</option>
-                        <option value="विधानसभा  10th">विधानसभा 10th</option>
-                        <option value="विधानसभा  09th">विधानसभा 09th</option>
+                        <option value="विधानसभा  12th">{filterdata[checkLang].assembly} 12th</option>
+                        <option value="विधानसभा  11th">{filterdata[checkLang].assembly} 11th</option>
+                        <option value="विधानसभा  10th">{filterdata[checkLang].assembly} 10th</option>
+                        <option value="विधानसभा  09th">{filterdata[checkLang].assembly} 09th</option>
                       </select>
                     )}
                     <select
@@ -1013,10 +1011,10 @@ const Debate = () => {
                       defaultValue={pageLimit}
                       onChange={(e) => setPageLimit(+e.target.value)}
                     >
-                      <option value={10}>10 प्रति पृष्ठ</option>
-                      <option value={20}>20 प्रति पृष्ठ</option>
-                      <option value={30}>30 प्रति पृष्ठ</option>
-                      <option value={40}>40 प्रति पृष्ठ</option>
+                      <option value={10}>10 {filterdata[checkLang].page}</option>
+                      <option value={20}>20 {filterdata[checkLang].page}</option>
+                      <option value={30}>30 {filterdata[checkLang].page}</option>
+                      <option value={40}>40 {filterdata[checkLang].page}</option>
                     </select>
                     <span className="sorting">
                       <button onClick={handleSort}>

@@ -49,7 +49,7 @@ const MemberAssemblyDetails = () => {
 
   return (
     <div className="memberassemdetails">
-      <Container>
+      <Container fluid>
         <Row>
           <Col lg={4}>
             <div className="breadcumbsss">
@@ -68,7 +68,7 @@ const MemberAssemblyDetails = () => {
           </Col>
         </Row>
       </Container>
-      <Container>
+      <Container fluid>
         <div className="memberdetailscontent">
           <h3>{memberdetails[checkLang].title}</h3>
           <div className="downloadd">
@@ -89,7 +89,7 @@ const MemberAssemblyDetails = () => {
                 <Row>
                   <Col lg={3} className="memberproifleimg">
                     <MemberAssemblyProfile
-                      name={current?.basic_info?.name}
+                      name={`${current?.basic_info?.surname}  ${current?.basic_info?.name}`}
                       memberprofile={
                         ImageUrl +
                         current?.basic_info?.profile?.destination +
@@ -142,8 +142,85 @@ const MemberAssemblyDetails = () => {
                       </p>
                       <p>सध्याचा पत्ता :</p>
                       <h6> {current?.basic_info?.address}</h6>
-                      <p>कायमचा पत्ता :</p>
+                      <p>इतर पत्ता :</p>
+                      <h6> {current?.basic_info?.address1}</h6>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </Tab>
+            <Tab eventKey="संपूर्ण माहिती" title={memberdetails[checkLang].complete}>
+              <div className="basic-information">
+                <Row>
+                  <Col lg={3} className="memberproifleimg">
+                    <MemberAssemblyProfile
+                      name={`${current?.basic_info?.surname}  ${current?.basic_info?.name}`}
+                      memberprofile={
+                        ImageUrl +
+                        current?.basic_info?.profile?.destination +
+                        "/" +
+                        current?.basic_info?.profile?.filename
+                      }
+                    />
+                  </Col>
+                  <Col lg={6}>
+                    <div className="basic-info-data">
+                      <p>
+                        मतदारसंघ :{" "}
+                        <span>
+                          {
+                            current.basic_info && current.basic_info.constituency ? current.basic_info.constituency.council.constituency_name !== '' ? current.basic_info.constituency.council.constituency_name : current.basic_info.constituency.assembly.constituency_name !== '' ? current.basic_info.constituency.assembly.constituency_name : current.basic_info.constituency.assembly.constituency_name : "" +
+                              " " +
+                              current?.basic_info?.district ? current?.basic_info?.district?.checkLang?.district : ""}
+                        </span>
+                      </p>
+                      <p>
+                        राजकीय पक्ष : <span>{current.basic_info && current.basic_info.party ? current.basic_info.party[checkLang]["party_name"] : ""}</span>
+                      </p>
+                      <p>
+                        जन्म तारीख :{" "}
+                        <span>{current?.basic_info?.date_of_birth}</span>
+                      </p>
+                      <p>
+                        जन्म स्थान :{" "}
+                        <span>{current?.basic_info?.place_of_birth}</span>
+                      </p>
+                      <p>
+                        शिक्षण : <span>{current?.basic_info?.education}</span>
+                      </p>
+                      <p>
+                        छंद :<span> {current?.basic_info?.hobby}</span>
+                      </p>
+                      <p>
+                        वैवाहिक स्थिती :{" "}
+                        <span> {current?.basic_info?.marital_status}</span>
+                      </p>
+                      <p>
+                        अपत्ये : <span> {current?.basic_info?.children}</span>
+                      </p>
+                      <p>
+                        ज्ञात भाषा :{" "}
+                        <span> {current?.basic_info?.language}</span>
+                      </p>
+                      <p>
+                        व्यवसाय : <span> {current?.basic_info?.business}</span>
+                      </p>
+                      <p>सध्याचा पत्ता :</p>
+                      <h6> {current?.basic_info?.address}</h6>
+                      <p>इतर पत्ता :</p>
+                      <h6> {current?.basic_info?.address1}</h6>
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg="10 mt-5">
+                    <div className="basic-info-data">
+                      <p>{memberdetails[checkLang].pradesh} :</p>
                       <h6> {current?.basic_info?.foreign_migration}</h6>
+                    </div>
+                    <div className="basic-info-data">
+                      <p>{memberdetails[checkLang].otherinfo} :</p>
+                      <h6 dangerouslySetInnerHTML={{ __html: current?.basic_info?.other_info }}></h6>
                     </div>
                   </Col>
                 </Row>
@@ -154,7 +231,7 @@ const MemberAssemblyDetails = () => {
                 <Row>
                   <Col lg={3} className="memberproifleimg">
                     <MemberAssemblyProfile
-                      name={current?.basic_info?.name}
+                      name={`${current?.basic_info?.surname}  ${current?.basic_info?.name}`}
                       memberprofile={
                         ImageUrl +
                         current?.basic_info?.profile?.destination +
@@ -168,7 +245,7 @@ const MemberAssemblyDetails = () => {
                       <ul>
                         {current?.political_journey?.map((item, index) => (
                           <li key={index}>
-                            {item?.date}; {item?.title}
+                            <b>{item?.date.split("-")[0]}</b> : {item?.title}
                           </li>
                         ))}
                       </ul>
@@ -182,7 +259,7 @@ const MemberAssemblyDetails = () => {
                 <Row>
                   <Col lg={3} className="memberproifleimg">
                     <MemberAssemblyProfile
-                      name={current?.basic_info?.name}
+                      name={`${current?.basic_info?.surname}  ${current?.basic_info?.name}`}
                       memberprofile={
                         ImageUrl +
                         current?.basic_info?.profile?.destination +
@@ -253,7 +330,7 @@ const MemberAssemblyDetails = () => {
                 <Row>
                   <Col lg={3} className="memberproifleimg">
                     <MemberAssemblyProfile
-                      name={current?.basic_info?.name}
+                      name={`${current?.basic_info?.surname}  ${current?.basic_info?.name}`}
                       memberprofile={
                         ImageUrl +
                         current?.basic_info?.profile?.destination +
@@ -309,6 +386,52 @@ const MemberAssemblyDetails = () => {
                       // totalCount={debate?.count}
                       />
                     )}
+                  </Col>
+                </Row>
+              </div>
+            </Tab>
+            <Tab eventKey="परदेश प्रवास" title={memberdetails[checkLang].pradesh}>
+              <div className="basic-information">
+                <Row>
+                  <Col lg={3} className="memberproifleimg">
+                    <MemberAssemblyProfile
+                      name={`${current?.basic_info?.surname}  ${current?.basic_info?.name}`}
+                      memberprofile={
+                        ImageUrl +
+                        current?.basic_info?.profile?.destination +
+                        "/" +
+                        current?.basic_info?.profile?.filename
+                      }
+                    />
+                  </Col>
+                  <Col lg={6}>
+                    <div className="basic-info-data">
+                      <p>{memberdetails[checkLang].pradesh} :</p>
+                      <h6> {current?.basic_info?.foreign_migration}</h6>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </Tab>
+            <Tab eventKey="इतर माहिती" title={memberdetails[checkLang].otherinfo}>
+              <div className="basic-information">
+                <Row>
+                  <Col lg={3} className="memberproifleimg">
+                    <MemberAssemblyProfile
+                      name={`${current?.basic_info?.surname}  ${current?.basic_info?.name}`}
+                      memberprofile={
+                        ImageUrl +
+                        current?.basic_info?.profile?.destination +
+                        "/" +
+                        current?.basic_info?.profile?.filename
+                      }
+                    />
+                  </Col>
+                  <Col lg={6}>
+                    <div className="basic-info-data">
+                      <p>{memberdetails[checkLang].otherinfo} :</p>
+                      <h6 dangerouslySetInnerHTML={{ __html: current?.basic_info?.other_info }}></h6>
+                    </div>
                   </Col>
                 </Row>
               </div>
