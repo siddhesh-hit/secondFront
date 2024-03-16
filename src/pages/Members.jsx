@@ -222,6 +222,15 @@ const Members = () => {
   }, [checkLang, search.house]);
 
   useEffect(() => {
+    // if (
+    //   search.name ||
+    //   search.members_name ||
+    //   search.house ||
+    //   search.session ||
+    //   search.name
+    // ) {
+    //   setCurrentPage(0);
+    // }
     debateFetch();
   }, [
     search.members_name,
@@ -637,11 +646,69 @@ const Members = () => {
                       onChange={handleChange}
                     >
                       <option hidden>मतदारसंघनिहाय</option>
-                      {options?.constituency?.map((item, index) => (
-                        <option key={index} value={item._id}>
-                          {item?.council?.constituency_name !== '' ? item?.council?.constituency_name : item?.assembly?.constituency_name !== '' ? item?.assembly?.constituency_name : item?.assembly?.constituency_name}
-                        </option>
-                      ))}
+                      {/* {options?.constituency?.map((item, index) => {
+                        const constituencyName =
+                          item[
+                            search.house === "विधानपरिषद"
+                              ? "council"
+                              : "assembly"
+                          ]?.constituency_name;
+                        const assemblyName =
+                          item[
+                            search.house === "विधानसभा" ? "assembly" : "council"
+                          ]?.constituency_name;
+                        if (assemblyName !== "") {
+                          return (
+                            <option key={index} value={item._id}>
+                              {assemblyName}
+                            </option>
+                          );
+                        } else if (constituencyName !== "") {
+                          return (
+                            <option key={index} value={item._id}>
+                              {constituencyName}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })} */}
+                      {options?.constituency?.map((item, index) => {
+                        let constituencyName, assemblyName;
+
+                        if (search.house === "विधानपरिषद") {
+                          constituencyName = item.council?.constituency_name;
+                        } else if (search.house === "विधानसभा") {
+                          assemblyName = item.assembly?.constituency_name;
+                        }
+
+                        if (search.house === "विधानसभा" && assemblyName) {
+                          return (
+                            <option key={index} value={item._id}>
+                              {assemblyName}
+                            </option>
+                          );
+                        } else if (
+                          search.house === "विधानपरिषद" &&
+                          constituencyName
+                        ) {
+                          return (
+                            <option key={index} value={item._id}>
+                              {constituencyName}
+                            </option>
+                          );
+                        } else if (search.house === "एकत्रित") {
+                          return (
+                            <option key={index} value={item._id}>
+                              {item?.council?.constituency_name !== ""
+                                ? item?.council?.constituency_name
+                                : item?.assembly?.constituency_name !== ""
+                                ? item?.assembly?.constituency_name
+                                : item?.assembly?.constituency_name}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })}
                     </select>
                     <label>आडनावानुसार</label>
                     <select
