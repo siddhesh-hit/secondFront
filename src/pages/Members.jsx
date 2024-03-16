@@ -56,12 +56,12 @@ const Members = () => {
   });
 
   const [options, setOptions] = useState({
-    party: "",
-    constituency: "",
-    surname: "",
-    district: "",
-    gender: "",
-    ministry_name: "",
+    party: [],
+    constituency: [],
+    surname: [],
+    district: [],
+    gender: [],
+    ministry_name: [],
   });
 
   const handleOnSearch = (string, results) => {
@@ -160,7 +160,7 @@ const Members = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await getApi("party/option")
+      await getApi("party")
         .then((res) => {
           if (res.data.success) {
             setOptions((prev) => ({
@@ -434,19 +434,19 @@ const Members = () => {
                             assemblyName = item.assembly?.constituency_name;
                           }
 
-                          if (assemblyName) {
+                          if (search.house === "विधानसभा" && assemblyName) {
                             return (
                               <option key={index} value={item._id}>
                                 {assemblyName}
                               </option>
                             );
-                          } else if (constituencyName) {
+                          } else if (search.house === "विधानपरिषद" && constituencyName) {
                             return (
                               <option key={index} value={item._id}>
                                 {constituencyName}
                               </option>
                             );
-                          } else {
+                          } else if (search.house === "एकत्रित") {
                             return (
                               <option key={index} value={item._id}>
                                 {item?.council?.constituency_name !== ""
@@ -475,20 +475,23 @@ const Members = () => {
                           </option>
                         ))}
                       </select>
-                      <label>जिल्हानिहाय</label>
-                      <select
-                        className="secondfilers"
-                        value={search.district}
-                        name="district"
-                        onChange={handleChange}
-                      >
-                        <option hidden>जिल्हानिहाय</option>
-                        {options?.district?.map((item, index) => (
-                          <option key={index} value={item._id}>
-                            {item[checkLang]["district"]}
-                          </option>
-                        ))}
-                      </select>
+
+                      {search.house === "विधानपरिषद" ? (<> </>) : (<> <label>जिल्हानिहाय</label>
+                        <select
+                          className="secondfilers"
+                          value={search.district}
+                          name="district"
+                          onChange={handleChange}
+                        >
+                          <option hidden>जिल्हानिहाय</option>
+                          {options?.district?.map((item, index) => (
+                            <option key={index} value={item._id}>
+                              {item[checkLang]["district"]}
+                            </option>
+                          ))}
+                        </select></>)}
+
+
                       <label>लिंगनिहाय</label>
                       <select
                         className="secondfilers"
@@ -734,20 +737,24 @@ const Members = () => {
                         </option>
                       ))}
                     </select>
-                    <label>जिल्हानिहाय</label>
-                    <select
-                      className="secondfilers"
-                      value={search.district}
-                      name="district"
-                      onChange={handleChange}
-                    >
-                      <option hidden>जिल्हानिहाय</option>
-                      {options?.district?.map((item, index) => (
-                        <option key={index} value={item._id}>
-                          {item[checkLang]["district"]}
-                        </option>
-                      ))}
-                    </select>
+                    {search.house === "विधानपरिषद" ? (<></>)
+                      : (
+                        <>
+                          <label>जिल्हानिहाय</label>
+                          <select
+                            className="secondfilers"
+                            value={search.district}
+                            name="district"
+                            onChange={handleChange}
+                          >
+                            <option hidden>जिल्हानिहाय</option>
+                            {options?.district?.map((item, index) => (
+                              <option key={index} value={item._id}>
+                                {item[checkLang]["district"]}
+                              </option>
+                            ))}
+                          </select> </>)}
+
                     <label>लिंगनिहाय</label>
                     <select
                       className="secondfilers"
