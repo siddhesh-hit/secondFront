@@ -2052,7 +2052,7 @@ const filterdata = {
   marathi: {
     council: `विधानपरिषद`,
     assembly: `विधानसभा`,
-    both: `एकत्रित`,
+    both: `एकत्रित (विधानसभा & विधानपरिषद)`,
     all: `सर्व`,
     rain: `पावसाळी`,
     budget: `अर्थसंकल्पीय`,
@@ -2071,7 +2071,7 @@ const filterdata = {
   english: {
     council: `Legislative Council`,
     assembly: `Legislative Assembly`,
-    both: `Combined`,
+    both: `Combined (LA & LC)`,
     all: `All`,
     rain: `Rainy Season`,
     budget: `Budget`,

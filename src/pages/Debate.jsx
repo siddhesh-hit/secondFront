@@ -37,7 +37,10 @@ const Debate = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageLimit, setPageLimit] = useState(10);
   const [sorted, setSorted] = useState(false);
-  const { lang, checkLang } = useLang();
+  const [disabledMethod, setDisabledMethod] = useState(false);
+  const [disabledMethodType, setDisabledMethodType] = useState(false);
+  const [disabledMethodSubType, setDisabledMethodSubType] = useState(false);
+
   const [options, setOptions] = useState({
     volume: "",
     kramank: "",
@@ -112,6 +115,8 @@ const Debate = () => {
     "संसदीय कामकाज पद्धती",
   ];
 
+  const { lang, checkLang } = useLang();
+
   const handleOnSearch = (string, results) => {
     // console.log(string, results);
   };
@@ -127,11 +132,11 @@ const Debate = () => {
     const { name, value } = e.target;
 
     if (name === "method") {
-      let newValue = Object.keys(obj).find((key) => obj[key] === value);
+      // let newValue = Object.keys(obj).find((key) => obj[key] === value);
 
       setSearch((prev) => ({
         ...prev,
-        [name]: newValue,
+        [name]: value,
       }));
     } else if (name === "fromdate" || name === "todate") {
       setExtraDate((prev) => ({
@@ -180,10 +185,18 @@ const Debate = () => {
       ministry_name: "",
     }));
 
+    setSearchdata("");
+    setText("");
+
+    setDisabledMethod(false);
+    setDisabledMethodType(false);
+    setDisabledMethodSubType(false);
+
     handleSearch();
   };
 
   const handleStart = () => {
+    setSearchdata("");
     setSearch((prev) => ({
       ...prev,
       topic: "",
@@ -197,7 +210,15 @@ const Debate = () => {
       method_sub_type: "",
       ministry_name: "",
     }));
-    handleSearch();
+    setText("");
+    setDisabledMethod(false);
+    setDisabledMethodType(false);
+    setDisabledMethodSubType(false);
+
+    setSearchdata("") &&
+      Promise.resolve().then(() => {
+        handleSearch();
+      });
   };
 
   const handleSort = () => {
@@ -224,15 +245,6 @@ const Debate = () => {
     }
   };
 
-  // const debateFetch = async () => {
-  //   // console.log(currentPage, pageLimit);
-  //   await getApi(
-  //     `debate?perPage=${currentPage}&perLimit=${pageLimit}&house=${search.house}`
-  //   )
-  //     .then((res) => setDebate(res.data))
-  //     .catch((err) => console.log(err));
-  // };
-
   const handleSearch = async () => {
     let house = search.house === "एकत्रित" ? "" : search.house;
     let session = search.session === "सर्व" ? "" : search.session;
@@ -245,7 +257,17 @@ const Debate = () => {
     }
 
     await getApi(
-      `debate/fields?perPage=${currentPage}&perLimit=${pageLimit}&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&ministry_name=${search.ministry_name}`
+      `debate/dumpFields?perPage=${currentPage}&perLimit=${pageLimit}&topic=${encodeURIComponent(
+        searchdata.trim()
+      )}&members_name=${encodeURIComponent(
+        search.members_name.trim()
+      )}&house=${house}&session=${session}&volume=${search.volume}&kramank=${
+        search.kramank
+      }&method=${search.method}&method_type=${
+        search.method_type
+      }&method_sub_type=${search.method_sub_type}&ministry=${
+        search.ministry_name
+      }`
       // &fromdate=${search.fromdate}&todate=${search.todate}
     )
       .then((res) => {
@@ -254,6 +276,25 @@ const Debate = () => {
         }
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleOnSelectMethod = () => {
+    setDisabledMethod(false);
+  };
+
+  const handleOnSelectMethodType = () => {
+    if (!search.method) {
+      setDisabledMethod(true);
+    }
+    setDisabledMethodType(false);
+  };
+
+  const handleOnSelectMethodSubType = () => {
+    if (!search.method || !search.method_type) {
+      setDisabledMethod(true);
+      setDisabledMethodType(true);
+    }
+    setDisabledMethodSubType(false);
   };
 
   useEffect(() => {
@@ -273,33 +314,7 @@ const Debate = () => {
   useEffect(() => {
     const fetchData = async () => {
       await getApi(
-        `debate/option?id=volume&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
-      )
-        .then((res) => {
-          if (res.data.success) {
-            setOptions((prev) => ({
-              ...prev,
-              volume: res.data.data,
-            }));
-          }
-        })
-        .catch((err) => console.log(err));
-
-      await getApi(
-        `debate/option?id=kramank&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
-      )
-        .then((res) => {
-          if (res.data.success) {
-            setOptions((prev) => ({
-              ...prev,
-              kramank: res.data.data,
-            }));
-          }
-        })
-        .catch((err) => console.log(err));
-
-      await getApi(
-        `debate/option?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+        `debate/dumpOption?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -312,7 +327,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/option?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+        `debate/dumpOption?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -325,7 +340,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/option?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+        `debate/dumpOption?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -338,7 +353,33 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/option?id=ministry_name&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}`
+        `debate/dumpOption?id=volume&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+      )
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              volume: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
+
+      await getApi(
+        `debate/dumpOption?id=kramank&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+      )
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              kramank: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
+
+      await getApi(
+        `debate/dumpOption?id=ministry&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -348,12 +389,18 @@ const Debate = () => {
             }));
           }
         })
-        .catch((err) => console.log(err)).finally(() => setLoading(false));
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
     };
     fetchData();
-  }, []);
-
-  // console.log(currentPage, "in debate");
+  }, [
+    search.session,
+    search.house,
+    search.members_name,
+    search.method,
+    search.method_type,
+    search.method_sub_type,
+  ]);
 
   if (loading) {
     return <Loader />;
@@ -437,16 +484,16 @@ const Debate = () => {
                       <Accordion.Body>
                         <div className="filtercontent">
                           <div className="datacheck">
-                            <label>{filterdata[checkLang].all}</label>
-                            <Form.Check
-                              aria-label="option 4"
-                              name="session"
-                              checked={search.session === "सर्व"}
-                              value={"सर्व"}
-                              onChange={handleChange}
-                            />
-                          </div>
-                          <div className="datacheck">
+                            <div className="datacheck">
+                              <label>{filterdata[checkLang].budget}</label>
+                              <Form.Check
+                                aria-label="option 6"
+                                name="session"
+                                checked={search.session === "अर्थसंकल्पीय"}
+                                value={"अर्थसंकल्पीय"}
+                                onChange={handleChange}
+                              />
+                            </div>
                             <label>{filterdata[checkLang].rain}</label>
                             <Form.Check
                               aria-label="option 5"
@@ -457,12 +504,14 @@ const Debate = () => {
                             />
                           </div>
                           <div className="datacheck">
-                            <label>{filterdata[checkLang].budget}</label>
+                            <label>
+                              {checkLang === "marathi" ? "हिवाळी" : "Winter"}
+                            </label>
                             <Form.Check
-                              aria-label="option 6"
+                              aria-label="option 5"
                               name="session"
-                              checked={search.session === "अर्थसंकल्पीय"}
-                              value={"अर्थसंकल्पीय"}
+                              checked={search.session === "हिवाळी"}
+                              value={"हिवाळी"}
                               onChange={handleChange}
                             />
                           </div>
@@ -473,6 +522,16 @@ const Debate = () => {
                               name="session"
                               checked={search.session === "विशेष"}
                               value={"विशेष"}
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="datacheck">
+                            <label>{filterdata[checkLang].all}</label>
+                            <Form.Check
+                              aria-label="option 4"
+                              name="session"
+                              checked={search.session === "सर्व"}
+                              value={"सर्व"}
                               onChange={handleChange}
                             />
                           </div>
@@ -538,7 +597,7 @@ const Debate = () => {
                         onChange={handleChange}
                       >
                         <option hidden>कामकाजाची यादी निवडा</option>
-                        {methods?.map((item, index) => (
+                        {options?.method?.map((item, index) => (
                           <option key={index} value={item}>
                             {item}
                           </option>
@@ -688,12 +747,12 @@ const Debate = () => {
                     <Accordion.Body>
                       <div className="filtercontent">
                         <div className="datacheck">
-                          <label>{filterdata[checkLang].all}</label>
+                          <label>{filterdata[checkLang].budget}</label>
                           <Form.Check
-                            aria-label="option 4"
+                            aria-label="option 6"
                             name="session"
-                            checked={search.session === "सर्व"}
-                            value={"सर्व"}
+                            checked={search.session === "अर्थसंकल्पीय"}
+                            value={"अर्थसंकल्पीय"}
                             onChange={handleChange}
                           />
                         </div>
@@ -708,15 +767,18 @@ const Debate = () => {
                           />
                         </div>
                         <div className="datacheck">
-                          <label>{filterdata[checkLang].budget}</label>
+                          <label>
+                            {checkLang === "marathi" ? "हिवाळी" : "Winter"}
+                          </label>
                           <Form.Check
-                            aria-label="option 6"
+                            aria-label="option 5"
                             name="session"
-                            checked={search.session === "अर्थसंकल्पीय"}
-                            value={"अर्थसंकल्पीय"}
+                            checked={search.session === "हिवाळी"}
+                            value={"हिवाळी"}
                             onChange={handleChange}
                           />
                         </div>
+
                         <div className="datacheck1">
                           <label>{filterdata[checkLang].special}</label>
                           <Form.Check
@@ -724,6 +786,16 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "विशेष"}
                             value={"विशेष"}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="datacheck">
+                          <label>{filterdata[checkLang].all}</label>
+                          <Form.Check
+                            aria-label="option 4"
+                            name="session"
+                            checked={search.session === "सर्व"}
+                            value={"सर्व"}
                             onChange={handleChange}
                           />
                         </div>
@@ -774,7 +846,12 @@ const Debate = () => {
               <div className="secondfilter">
                 <button
                   className="advanced"
-                  onClick={() => setDivVisibility1(!isDivVisible1)}
+                  onClick={() => {
+                    setDisabledMethod(false);
+                    setDisabledMethodType(false);
+                    setDisabledMethodSubType(false);
+                    setDivVisibility1(!isDivVisible1);
+                  }}
                 >
                   {councilDebate[checkLang].adfilter}
                   <div className="iconss">{isDivVisible1 ? "-" : "+"}</div>
@@ -783,13 +860,21 @@ const Debate = () => {
                   <div className="advancdeee">
                     <label>{councilDebate[checkLang].option1}</label>
                     <select
-                      className="secondfilers"
-                      value={obj[search.method]}
+                      className={`secondfilers ${
+                        disabledMethod ? "not-alllowed" : ""
+                      }`}
                       name="method"
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        handleChange(e);
+                        handleOnSelectMethod();
+                      }}
+                      disabled={disabledMethod}
+                      value={
+                        disabledMethod ? options?.method[0] : search.method
+                      }
                     >
                       <option hidden>कामकाजाची यादी निवडा</option>
-                      {methods?.map((item, index) => (
+                      {options?.method?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
                         </option>
@@ -797,10 +882,20 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option2}</label>
                     <select
-                      className="secondfilers"
-                      value={search.method_type}
+                      className={`secondfilers ${
+                        disabledMethodType ? "not-alllowed" : ""
+                      }`}
                       name="method_type"
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        handleChange(e);
+                        handleOnSelectMethodType();
+                      }}
+                      disabled={disabledMethodType}
+                      value={
+                        disabledMethodType
+                          ? options?.method_type[0]
+                          : search.method_type
+                      }
                     >
                       <option hidden>प्रकार निवडा</option>
                       {options?.method_type?.map((item, index) => (
@@ -811,10 +906,20 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option3}</label>
                     <select
-                      className="secondfilers"
-                      value={search.method_sub_type}
+                      className={`secondfilers ${
+                        disabledMethodSubType ? "not-alllowed" : ""
+                      }`}
                       name="method_sub_type"
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        handleChange(e);
+                        handleOnSelectMethodSubType();
+                      }}
+                      disabled={disabledMethodSubType}
+                      value={
+                        disabledMethodSubType
+                          ? options?.method_sub_type[0]
+                          : search.method_sub_type
+                      }
                     >
                       <option hidden>उपप्रकार निवडा</option>
                       {options?.method_sub_type?.map((item, index) => (
@@ -886,7 +991,7 @@ const Debate = () => {
                     renderComponent={(props) => (
                       <input className="form-control" {...props} />
                     )}
-                    value={text}
+                    value={searchdata}
                     onChange={(e) => setText(e.target.value)}
                     placeholder={councilDebate[checkLang].search}
                     onChangeText={(text) => {
@@ -967,7 +1072,7 @@ const Debate = () => {
                                       setSearchdata("");
                                       setSearch((prev) => ({
                                         ...prev,
-                                        [key]: "",
+                                        topic: "",
                                       }));
                                     } else {
                                       setSearch((prev) => ({
@@ -1010,11 +1115,22 @@ const Debate = () => {
                     {search.house === "विधानपरिषद" ? (
                       <></>
                     ) : (
-                      <select name="sabhaselection" className="sabahaselectionss">
-                        <option value="विधानसभा  12th">{filterdata[checkLang].assembly} 12th</option>
-                        <option value="विधानसभा  11th">{filterdata[checkLang].assembly} 11th</option>
-                        <option value="विधानसभा  10th">{filterdata[checkLang].assembly} 10th</option>
-                        <option value="विधानसभा  09th">{filterdata[checkLang].assembly} 09th</option>
+                      <select
+                        name="sabhaselection"
+                        className="sabahaselectionss"
+                      >
+                        <option value="विधानसभा  12th">
+                          {filterdata[checkLang].assembly} 12th
+                        </option>
+                        <option value="विधानसभा  11th">
+                          {filterdata[checkLang].assembly} 11th
+                        </option>
+                        <option value="विधानसभा  10th">
+                          {filterdata[checkLang].assembly} 10th
+                        </option>
+                        <option value="विधानसभा  09th">
+                          {filterdata[checkLang].assembly} 09th
+                        </option>
                       </select>
                     )}
                     <select
@@ -1022,10 +1138,18 @@ const Debate = () => {
                       defaultValue={pageLimit}
                       onChange={(e) => setPageLimit(+e.target.value)}
                     >
-                      <option value={10}>10 {filterdata[checkLang].page}</option>
-                      <option value={20}>20 {filterdata[checkLang].page}</option>
-                      <option value={30}>30 {filterdata[checkLang].page}</option>
-                      <option value={40}>40 {filterdata[checkLang].page}</option>
+                      <option value={10}>
+                        10 {filterdata[checkLang].page}
+                      </option>
+                      <option value={20}>
+                        20 {filterdata[checkLang].page}
+                      </option>
+                      <option value={30}>
+                        30 {filterdata[checkLang].page}
+                      </option>
+                      <option value={40}>
+                        40 {filterdata[checkLang].page}
+                      </option>
                     </select>
                     <span className="sorting">
                       <button onClick={handleSort}>
@@ -1064,11 +1188,6 @@ const Debate = () => {
                 </thead>
                 <tbody>
                   {debate?.data?.map((item, index) => {
-                    // let name = item?.members_name.split(",");
-                    // let twoEntry;
-
-                    // name.length < 5 ? (twoEntry = true) : (twoEntry = false);
-
                     return (
                       <tr key={index}>
                         <td>
@@ -1113,7 +1232,7 @@ const Debate = () => {
                             <i className="fa fa-eye" />
                           </Link>
                           <a
-                            href={"http://103.112.121.109:8000/" + item.fileurl}
+                            href={"http://103.112.121.109:4000" + item.fileurl}
                             target="_blank"
                             rel="noreferrer"
                           >

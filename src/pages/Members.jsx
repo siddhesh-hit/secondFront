@@ -20,9 +20,8 @@ import { memberName } from "../data/memberName";
 import PopupHome from "./PopupHome";
 import PaginationComponent from "../components/Pagination";
 import HighlightSentence from "../components/HighlightSentence";
-import { councilMember } from "../data/constant";
+import { councilMember, filterdata } from "../data/constant";
 import useLang from "../hooks/useLang";
-
 import { ReactTransliterate } from "react-transliterate";
 import "react-transliterate/dist/index.css";
 
@@ -134,10 +133,10 @@ const Members = () => {
       search.house === "एकत्रित"
         ? ""
         : search.house === "विधानसभा"
-          ? "Assembly"
-          : search.house === "विधानपरिषद"
-            ? "Council"
-            : "";
+        ? "Assembly"
+        : search.house === "विधानपरिषद"
+        ? "Council"
+        : "";
     await getApi(
       `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}&fullname=${search.name}`
     )
@@ -183,9 +182,10 @@ const Members = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `member/option?id=basic_info.surname&basic_info.house=${search.house === "एकत्रित"
-          ? ""
-          : search.house === "विधानसभा"
+        `member/option?id=basic_info.surname&basic_info.house=${
+          search.house === "एकत्रित"
+            ? ""
+            : search.house === "विधानसभा"
             ? "Assembly"
             : "Council"
         }`
@@ -287,11 +287,11 @@ const Members = () => {
                             items={
                               debate.length > 0
                                 ? debate.map((item) => {
-                                  return { name: item.basic_info.name };
-                                })
+                                    return { name: item.basic_info.name };
+                                  })
                                 : memberName
                             }
-                            placeholder="सदस्य शोधा"
+                            placeholder={filterdata[checkLang].find}
                             onSearch={handleOnSearch}
                             onSelect={handleOnSelect}
                           />
@@ -300,12 +300,12 @@ const Members = () => {
                     </Accordion.Item>
                     <Accordion.Item eventKey="1">
                       <Accordion.Header>
-                        {councilMember[checkLang].session}
+                        {councilMember[checkLang].house}
                       </Accordion.Header>
                       <Accordion.Body>
                         <div className="filtercontent">
                           <div className="datacheck">
-                            <label>विधानपरिषद</label>
+                            <label>{filterdata[checkLang].council}</label>
                             <Form.Check
                               aria-label="option 1"
                               name="house"
@@ -315,7 +315,7 @@ const Members = () => {
                             />
                           </div>
                           <div className="datacheck">
-                            <label>विधानसभा</label>
+                            <label>{filterdata[checkLang].assembly}</label>
                             <Form.Check
                               aria-label="option 2"
                               name="house"
@@ -325,7 +325,7 @@ const Members = () => {
                             />
                           </div>
                           <div className="datacheck1">
-                            <label>एकत्रित</label>
+                            <label>{filterdata[checkLang].both}</label>
                             <Form.Check
                               aria-label="option 3"
                               name="house"
@@ -344,8 +344,8 @@ const Members = () => {
                       <Accordion.Body>
                         <div className="filtercontent">
                           <Row className="daterange">
-                            <Col lg={4}>
-                              <label>पासून</label>
+                            <Col lg={6}>
+                              <label>{filterdata[checkLang].from}</label>
                               <input
                                 className="form-control"
                                 disabled
@@ -355,8 +355,8 @@ const Members = () => {
                                 value={2011}
                               />
                             </Col>
-                            <Col lg={4}>
-                              <label>प्रयंत</label>
+                            <Col lg={6}>
+                              <label>{filterdata[checkLang].to}</label>
                               <input
                                 className="form-control"
                                 disabled
@@ -366,7 +366,7 @@ const Members = () => {
                                 value={2011}
                               />
                             </Col>
-                            <Col lg={4}>
+                            <Col lg={6}>
                               <button className="apply1">
                                 {councilMember[checkLang].button1}
                               </button>
@@ -410,21 +410,32 @@ const Members = () => {
                         onChange={handleChange}
                       >
                         <option hidden>मतदारसंघनिहाय</option>
-                        {options?.constituency?.map((item, index) => (
-                          <option key={index} value={item._id}>
-                            {
-                              item[
-                                search.house === "विधानसभा"
-                                  ? "council"
-                                  : "assembly"
-                              ]?.constituency_name
-                              // ? item?.council?.constituency_name
-                              // : item?.assembly?.constituency_name !== “”
-                              // ? item?.assembly?.constituency_name
-                              // : item?.assembly?.constituency_name
-                            }
-                          </option>
-                        ))}
+                        {/* {options?.constituency?.map((item, index) => {
+                        const constituencyName =
+                          item[
+                            search.house === "विधानपरिषद"
+                              ? "council"
+                              : "assembly"
+                          ]?.constituency_name;
+                        const assemblyName =
+                          item[
+                            search.house === "विधानसभा" ? "assembly" : "council"
+                          ]?.constituency_name;
+                        if (assemblyName !== "") {
+                          return (
+                            <option key={index} value={item._id}>
+                              {assemblyName}
+                            </option>
+                          );
+                        } else if (constituencyName !== "") {
+                          return (
+                            <option key={index} value={item._id}>
+                              {constituencyName}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })} */}
                         {options?.constituency?.map((item, index) => {
                           let constituencyName, assemblyName;
 
@@ -434,30 +445,32 @@ const Members = () => {
                             assemblyName = item.assembly?.constituency_name;
                           }
 
-                          if (assemblyName) {
+                          if (search.house === "विधानसभा" && assemblyName) {
                             return (
                               <option key={index} value={item._id}>
                                 {assemblyName}
                               </option>
                             );
-                          } else if (constituencyName) {
+                          } else if (
+                            search.house === "विधानपरिषद" &&
+                            constituencyName
+                          ) {
                             return (
                               <option key={index} value={item._id}>
                                 {constituencyName}
                               </option>
                             );
-                          } else {
+                          } else if (search.house === "एकत्रित") {
                             return (
                               <option key={index} value={item._id}>
                                 {item?.council?.constituency_name !== ""
                                   ? item?.council?.constituency_name
                                   : item?.assembly?.constituency_name !== ""
-                                    ? item?.assembly?.constituency_name
-                                    : item?.assembly?.constituency_name}
+                                  ? item?.assembly?.constituency_name
+                                  : item?.assembly?.constituency_name}
                               </option>
                             );
                           }
-
                           return null;
                         })}
                       </select>
@@ -533,11 +546,11 @@ const Members = () => {
                           items={
                             debate.length > 0
                               ? debate.map((item) => {
-                                return { name: item.basic_info.name };
-                              })
+                                  return { name: item.basic_info.name };
+                                })
                               : memberName
                           }
-                          placeholder="सदस्य शोधा"
+                          placeholder={filterdata[checkLang].find}
                           onSearch={handleOnSearch}
                           onSelect={handleOnSelect}
                         />
@@ -551,7 +564,7 @@ const Members = () => {
                     <Accordion.Body>
                       <div className="filtercontent">
                         <div className="datacheck">
-                          <label>विधानपरिषद</label>
+                          <label>{filterdata[checkLang].council}</label>
                           <Form.Check
                             aria-label="option 1"
                             name="house"
@@ -561,7 +574,7 @@ const Members = () => {
                           />
                         </div>
                         <div className="datacheck">
-                          <label>विधानसभा</label>
+                          <label>{filterdata[checkLang].assembly}</label>
                           <Form.Check
                             aria-label="option 2"
                             name="house"
@@ -571,7 +584,7 @@ const Members = () => {
                           />
                         </div>
                         <div className="datacheck1">
-                          <label>एकत्रित</label>
+                          <label>{filterdata[checkLang].both}</label>
                           <Form.Check
                             aria-label="option 3"
                             name="house"
@@ -590,8 +603,8 @@ const Members = () => {
                     <Accordion.Body>
                       <div className="filtercontent">
                         <Row className="daterange">
-                          <Col lg={4}>
-                            <label>पासून</label>
+                          <Col lg={6}>
+                            <label>{filterdata[checkLang].from}</label>
                             <input
                               className="form-control"
                               disabled
@@ -601,8 +614,8 @@ const Members = () => {
                               value={2011}
                             />
                           </Col>
-                          <Col lg={4}>
-                            <label>प्रयंत</label>
+                          <Col lg={6}>
+                            <label>{filterdata[checkLang].to}</label>
                             <input
                               className="form-control"
                               disabled
@@ -612,7 +625,7 @@ const Members = () => {
                               value={2011}
                             />
                           </Col>
-                          <Col lg={4}>
+                          <Col lg={6}>
                             <button className="apply1">
                               {councilMember[checkLang].button1}
                             </button>
@@ -712,8 +725,8 @@ const Members = () => {
                               {item?.council?.constituency_name !== ""
                                 ? item?.council?.constituency_name
                                 : item?.assembly?.constituency_name !== ""
-                                  ? item?.assembly?.constituency_name
-                                  : item?.assembly?.constituency_name}
+                                ? item?.assembly?.constituency_name
+                                : item?.assembly?.constituency_name}
                             </option>
                           );
                         }
@@ -824,10 +837,18 @@ const Members = () => {
                       <></>
                     ) : (
                       <select name="sabhaselection">
-                        <option value="विधानसभा  12th">विधानसभा 12th</option>
-                        <option value="विधानसभा  11th">विधानसभा 11th</option>
-                        <option value="विधानसभा  10th">विधानसभा 10th</option>
-                        <option value="विधानसभा  09th">विधानसभा 09th</option>
+                        <option value="विधानसभा  12th">
+                          {filterdata[checkLang].assembly} 12th
+                        </option>
+                        <option value="विधानसभा  11th">
+                          {filterdata[checkLang].assembly} 11th
+                        </option>
+                        <option value="विधानसभा  10th">
+                          {filterdata[checkLang].assembly} 10th
+                        </option>
+                        <option value="विधानसभा  09th">
+                          {filterdata[checkLang].assembly} 09th
+                        </option>
                       </select>
                     )}
                     <select
@@ -835,10 +856,18 @@ const Members = () => {
                       defaultValue={pageLimit}
                       onChange={(e) => setPageLimit(+e.target.value)}
                     >
-                      <option value={10}>10 प्रति पृष्ठ</option>
-                      <option value={20}>20 प्रति पृष्ठ</option>
-                      <option value={30}>30 प्रति पृष्ठ</option>
-                      <option value={40}>40 प्रति पृष्ठ</option>
+                      <option value={10}>
+                        10 {filterdata[checkLang].page}
+                      </option>
+                      <option value={20}>
+                        20 {filterdata[checkLang].page}
+                      </option>
+                      <option value={30}>
+                        30 {filterdata[checkLang].page}
+                      </option>
+                      <option value={40}>
+                        40 {filterdata[checkLang].page}
+                      </option>
                     </select>
                     <span className="sorting">
                       <button onClick={handleSort}>
@@ -897,30 +926,30 @@ const Members = () => {
                                     alt="user"
                                     className="member_imgs"
                                   />
-                                  {name[0]}
+                                  {`${item?.basic_info?.surname}  ${item?.basic_info?.name}`}
                                 </Link>
                               </td>
                               <td>
                                 {item?.basic_info.constituency
                                   ? item?.basic_info?.constituency.council
-                                    ?.constituency_name !== ""
-                                    ? item?.basic_info?.constituency.council
-                                      ?.constituency_name
-                                    : item?.basic_info?.constituency.assembly
                                       ?.constituency_name !== ""
-                                      ? item?.basic_info?.constituency?.assembly
+                                    ? item?.basic_info?.constituency.council
                                         ?.constituency_name
-                                      : item?.basic_info?.constituency?.assembly
+                                    : item?.basic_info?.constituency.assembly
+                                        ?.constituency_name !== ""
+                                    ? item?.basic_info?.constituency?.assembly
+                                        ?.constituency_name
+                                    : item?.basic_info?.constituency?.assembly
                                         ?.constituency_name
                                   : "" + " " + item?.basic_info?.district
-                                    ? item?.basic_info?.district?.checkLang
+                                  ? item?.basic_info?.district?.checkLang
                                       ?.district
-                                    : ""}
+                                  : ""}
                               </td>
                               <td>
                                 {item?.basic_info?.party
                                   ? item?.basic_info?.party[checkLang]
-                                    ?.party_name
+                                      ?.party_name
                                   : ""}
                               </td>
                             </tr>
@@ -968,8 +997,7 @@ const Members = () => {
               <Col lg={4}>
                 <div className="assemblymember mb-2">
                   <h3 style={{ background: "#000088" }}>
-                    सांख्यिकीय विश्लेषण <br />
-                    प्रातिनिधिक
+                    {filterdata[checkLang].stat}
                   </h3>
                 </div>
                 <img className="w-100" src={Graph} alt="" />

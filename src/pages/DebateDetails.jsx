@@ -16,7 +16,7 @@ const DebateDetails = () => {
 
   const fetchData = async () => {
     setLoader(true);
-    await getApiById("debate", id)
+    await getApiById("debate/dump", id)
       .then((res) => setDebate(res.data.data))
       .catch((err) => console.log(err));
     setLoader(false);
@@ -58,7 +58,7 @@ const DebateDetails = () => {
                   <td>{debate.date}</td>
 
                   <td>
-                    <Link to={"http://103.112.121.109:8000/" + debate.fileurl}>
+                    <Link to={"http://103.112.121.109:4000" + debate.fileurl}>
                       <img src={PDF} alt="" />
                     </Link>
                     {/* &nbsp;पहा */}

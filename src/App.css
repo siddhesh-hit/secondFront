@@ -2958,3 +2958,8 @@ p.demophase {
     margin-right: 5px;
     border-radius: 5px;
 }
+
+.not-alllowed{
+    cursor: not-allowed;
+  pointer-events: all !important;
+}
