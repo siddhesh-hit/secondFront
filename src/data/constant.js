@@ -2060,6 +2060,13 @@ const filterdata = {
     from: `पासून`,
     to: `पर्यंत`,
     page: `प्रति पृष्ठ`,
+    all: `सर्व`,
+    rain: `पावसाळी`,
+    budget: `अर्थसंकल्पीय`,
+    special: `विशेष`,
+    from: `पासून`,
+    to: `पर्यंत`,
+    page: `प्रति पृष्ठ`,
   },
   english: {
     council: `Legislative Council`,
@@ -2072,7 +2079,7 @@ const filterdata = {
     from: `From`,
     to: `To`,
     page: `Per Page`,
-  },
+  }
 };
 
 export {
