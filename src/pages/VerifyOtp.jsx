@@ -6,7 +6,7 @@ import logo from "../assets/logo.png";
 import { useDispatch } from "react-redux";
 import { postApi } from "../services/axiosInterceptors";
 import { encrypt } from "../utils/encrypt";
-import { login } from "../redux/reducers/userReducer";
+import { login } from "../redux/reducers/UserReducer";
 import { header, loginpage } from "../data/constant";
 import useLang from "../hooks/useLang";
 
@@ -86,9 +86,7 @@ const VerifyOtp = () => {
           <div className="justify-content-center row">
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <div className="login-box">
-                <h3 className="mb-4">
-                  {loginpage[checkLang].codetype}
-                </h3>
+                <h3 className="mb-4">{loginpage[checkLang].codetype}</h3>
                 <div className="mb-4">
                   <form>
                     <div className="form-top">
@@ -106,7 +104,9 @@ const VerifyOtp = () => {
                     </div>
                     <button
                       className="mt-3 btn btn-primary"
-                      disabled={otp.some((element) => element === "") ? true : false}
+                      disabled={
+                        otp.some((element) => element === "") ? true : false
+                      }
                       onClick={handleSubmit}
                     >
                       {loginpage[checkLang].submit}

@@ -8,7 +8,7 @@ import Captcha from "demos-react-captcha";
 
 import { postApi } from "../services/axiosInterceptors";
 import { encrypt } from "../utils/encrypt";
-import { login } from "../redux/reducers/userReducer";
+import { login } from "../redux/reducers/UserReducer";
 import { userLoginValidation } from "../validators/UserSchema";
 import { header, loginpage } from "../data/constant";
 import useLang from "../hooks/useLang";
@@ -49,9 +49,9 @@ const Login = () => {
 
     await postApi("user/loginEmail", userData)
       .then((res) => {
-        console.log(res)
+        console.log(res);
         if (res.data.data.user_verified) {
-          console.log('sd')
+          console.log("sd");
           let enData = encrypt(res.data.data);
           sessionStorage.setItem("userInfo", enData);
           sessionStorage.removeItem("temp_email");
@@ -96,9 +96,7 @@ const Login = () => {
           <div className="justify-content-center row">
             <div className="col-lg-6 col-md-6 col-sm-12 col-12">
               <div className="login-box">
-                <h3 className="mb-4">
-                  {loginpage[checkLang].home}
-                </h3>
+                <h3 className="mb-4">{loginpage[checkLang].home}</h3>
                 <div className="mb-4 input-group">
                   <span className="input-group-text" id="basic-addon1">
                     <i className="fa fa-envelope" aria-hidden="true" />
