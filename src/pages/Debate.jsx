@@ -316,7 +316,7 @@ const Debate = () => {
       let house = search.house === "एकत्रित" ? "" : search.house;
 
       await getApi(
-        `debate/dumpOption?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -329,7 +329,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -342,7 +342,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}`
+        `debate/dumpOption?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -355,7 +355,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=volume&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=volume&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -368,7 +368,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=kramank&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=kramank&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -381,7 +381,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=ministry&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=ministry&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
