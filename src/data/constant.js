@@ -195,7 +195,7 @@ const header = {
 
 const home = {
   marathi: {
-    header: `महाराष्ट्र विधान बोर्ड सचिवालय माहिती प्रणालीचा बीटा व्हरझन सादर करताना आम्हाला आनंद होत आहे. ही फक्त \n पहा आहे, वेदधने अधिक सुचना भविष्याचा आमचा प्रयत्न`,
+    header: `महाराष्ट्र विधानमंडळ सचिवालय माहिती प्रणालीचा बीटा व्हर्झन सादर करताना आम्हाला आनंद होत आहे. \n ही फक्त सुरुवात आहे, भविष्याचा वेध घेऊन अधिक चांगली माहिती \n देण्याचा आमचा प्रयत्न राहील.`,
     searchPlaceHolder: `शोध कीवर्ड प्रविष्ट करा`,
     legislature: `विधिमंडळ सदस्य`,
     hometitle1: `ही बीटा व्हर्झन फक्त एक सुरुवात आहे. आम्ही तुम्हाला आमच्यासोबत विधानमंडळातील अलौकिक खजिन्याची माहिती प्राप्त करून देणारे माध्यम उपलब्ध करून देत आहोत .`,
@@ -203,7 +203,7 @@ const home = {
     nav: [
       {
         icon: legmem,
-        title: `विधिमंडळ सदस्य`,
+        title: `विधानमंडळ सदस्य`,
         childtext: [
           {
             name: `विधानपरिषद`,
@@ -217,7 +217,7 @@ const home = {
       },
       {
         icon: debate,
-        title: `सभागृहांचे कार्यवृत्त`,
+        title: `सभागृहांचे कार्यवाही  वृत्त  `,
         childtext: [
           {
             name: `सभागृह`,
@@ -344,7 +344,7 @@ const home = {
       },
       {
         icon: legis,
-        title: `विधिमंडळ समिती`,
+        title: `विधानमंडळ समिती`,
         childtext: [
           {
             name: `प्रकार`,
@@ -387,22 +387,22 @@ const home = {
       {
         icon: imag1,
         title: `कायदेविषयक दस्तऐवज`,
-        subtitle: `अध्यादेश, विधेयक, अधिनियम, अधिनियम सुधारणा, नियम, विनियमन आणि इतर कायदेविषयक दस्तऐवजांच्या साक्षीदार व्हा.`,
+        subtitle: `अध्यादेश, विधेयक, अधिनियम, अधिनियम सुधारणा, नियम, विनियमन आणि इतर कायदेविषयक दस्तऐवजांचे साक्षीदार व्हा.`,
       },
       {
         icon: imag2,
         title: `समिती अहवालाचे अंतरंग `,
-        subtitle: `विधिमंडळ समित्यांच्या कामकाजाचा सखोल अभ्यास करा. धोरणे आणि निर्णयांना आकार देणारे अभ्यासपूर्ण अहवाल, शिफारशी आणि विश्लेषणांमध्ये प्रवेश मिळवा.`,
+        subtitle: `विधायी समित्यांच्या कामकाजाची कसून तपासणी करा. धोरणे आणि निर्णयांवर प्रभाव टाकणारे माहितीपूर्ण अहवाल, शिफारसी आणि विश्लेषणांमध्ये प्रवेश मिळवा.`,
       },
       {
         icon: imag3,
         title: `शासकीय योजना आणि धोरणे `,
-        subtitle: `सर्व शासकीय योजना आणि धोरणांचा समावेश या विभागात असणार आहे. या योजना व धोरणांचा महाराष्ट्रातीळ नागरिकांच्या जीवनावर मोठ्या प्रमाणात परिणाम होतो.`,
+        subtitle: `सर्व शासकीय योजना आणि धोरणांचा समावेश या विभागात असणार आहे. या योजना व धोरणांचा महाराष्ट्रातील नागरिकांच्या जीवनावर मोठ्या प्रमाणात परिणाम होतो.`,
       },
       {
         icon: imag4,
         title: `महाराष्ट्र राज्याचे राजपत्र`,
-        subtitle: `महाराष्ट्र शासनाद्वारे विविध विभागांतर्गत वेळोवेळी प्रसिद्ध केलेले राजपत्र विषयानुसार, विभागानुसार, क्रमांकानुसार येथे उपलब्ध होणार आहे `,
+        subtitle: `महाराष्ट्र शासनामार्फत विविध विभागांतर्गत वेगवेगळ्या वेळी प्रकाशित होणारे राजपत्र येथे विषय, विभाग आणि क्रमांकानुसार वर्गीकृत उपलब्ध असेल.`,
       },
       {
         icon: imag5,
@@ -417,11 +417,13 @@ const home = {
     ],
   },
   english: {
-    header: `We are pleased to present the beta version of Maharashtra Legislative Board Secretariat \n Information System. This is just a look, we are trying to provide more \n information in the future`,
+    header: `We are thrilled to present the Beta Version of our
+Maharashtra Legislature Secretariat Information Portal.
+This is just the beginning which gives a sneak peek into the potential that lies ahead.`,
     searchPlaceHolder: `Enter the search keywords`,
     legislature: `Legislature Members`,
-    hometitle: `What kind of information will be available in the future...`,
-    hometitle1: `This beta version is just the foundation. We invite you to embark on this exciting journey with us as we work towards expanding the portal to be your go-to resource for all things related to the Maharashtra Legislative Secretariat.`,
+    hometitle: `What's in Store for the Future?`,
+    hometitle1: `This beta version is just the foundation. We invite you to embark on this exciting journey with us as we work towards expanding the portal to be your go-to resource for all things related to the Maharashtra Legislature Secretariat.`,
     nav: [
       {
         icon: legmem,
@@ -619,7 +621,7 @@ const home = {
       {
         icon: imag2,
         title: `Committee Reports Insights`,
-        subtitle: `Delve deeper into the workings of legislative committees. Gain access to insightful reports, recommendations, and analyses that shape policies and decisions`,
+        subtitle: `Delve deeper into the workings of legislative committees. Gain access to insightful reports, recommendations, and analyses that shape policies and decisions.`,
       },
       {
         icon: imag3,
@@ -628,7 +630,7 @@ const home = {
       },
       {
         icon: imag4,
-        title: `Maharashtra State Gazette`,
+        title: `Gazette`,
         subtitle: `As per the notifications published by the Maharashtra government under various departments from time to time in the official gazette, the information available here is organized according to the departments and in chronological order.`,
       },
       {
@@ -1410,7 +1412,7 @@ const memberdetails = {
     child: `अपत्ये`,
     lang: `ज्ञात भाषा`,
     business: `व्यवसाय`,
-    caddress: `सध्याचा पत्ता`,
+    caddress: `पत्ता`,
     oaddress: `इतर पत्ता`,
   },
   english: {
@@ -2076,7 +2078,9 @@ const filterdata = {
   marathi: {
     council: `विधानपरिषद`,
     assembly: `विधानसभा`,
-    both: `एकत्रित (विधानसभा & विधानपरिषद)`,
+    find: `सदस्य शोधा`,
+    stat: `सांख्यिकीय विश्लेषण प्रातिनिधिक`,
+    both: `एकत्रित`,
     all: `सर्व`,
     rain: `पावसाळी`,
     budget: `अर्थसंकल्पीय`,
@@ -2088,7 +2092,9 @@ const filterdata = {
   english: {
     council: `Legislative Council`,
     assembly: `Legislative Assembly`,
-    both: `Combined (LA & LC)`,
+    find: `Search Members`,
+    stat: `Statistical Analysis Representative`,
+    both: `Combined`,
     all: `All`,
     rain: `Rainy Season`,
     budget: `Budget`,
@@ -2096,7 +2102,7 @@ const filterdata = {
     from: `From`,
     to: `To`,
     page: `Per Page`,
-  }
+  },
 };
 
 export {

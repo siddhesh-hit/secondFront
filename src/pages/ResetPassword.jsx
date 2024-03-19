@@ -7,7 +7,7 @@ import logo from "../assets/logo.png";
 
 import { userResetPasswordValidation } from "../validators/UserSchema";
 import { postApi } from "../services/axiosInterceptors";
-import { login } from "../redux/reducers/userReducer";
+import { login } from "../redux/reducers/UserReducer";
 import { encrypt } from "../utils/encrypt";
 import { resetpassword } from "../data/constant";
 

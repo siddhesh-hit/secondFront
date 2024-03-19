@@ -313,6 +313,8 @@ const Debate = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      let house = search.house === "एकत्रित" ? "" : search.house;
+
       await getApi(
         `debate/dumpOption?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
