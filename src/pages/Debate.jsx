@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import {
   Container,
   Row,
@@ -8,6 +7,8 @@ import {
   Form,
   Offcanvas,
   Button,
+  OverlayTrigger,
+  Tooltip,
 } from "react-bootstrap";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { Link } from "react-router-dom";
