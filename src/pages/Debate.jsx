@@ -25,6 +25,7 @@ import PaginationComponent from "../components/Pagination";
 import HighlightSentence from "../components/HighlightSentence";
 import useLang from "../hooks/useLang";
 import { councilDebate, filterdata } from "../data/constant";
+import { ministry } from "../data/ministry";
 import { numbers, numToYears } from "../utils/marathitoenglish";
 import Loader from "../components/common/Loader";
 
@@ -939,7 +940,7 @@ const Debate = () => {
                       onChange={handleChange}
                     >
                       <option hidden>मंत्रालय निवडा</option>
-                      {options?.ministry_name?.map((item, index) => (
+                      {ministry?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
                         </option>
