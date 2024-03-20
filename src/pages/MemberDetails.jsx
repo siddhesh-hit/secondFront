@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Col, Container, Row, Tab, Tabs } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import Arrow from "../assets/debate/arrow.svg";
 import print from "../assets/print.svg";
@@ -22,6 +22,7 @@ const MemberAssemblyDetails = () => {
 
   const { lang, checkLang } = useLang();
   const { id } = useParams();
+  const { state } = useLocation()
 
   const fetchDataById = async () => {
     await getApiById("member", id)
@@ -69,6 +70,7 @@ const MemberAssemblyDetails = () => {
             </div>
           </Col>
         </Row>
+        <>{state.assembly ? <p>{current?.basic_info?.assembly_number?.assembly_name}</p> : ""}</>
       </Container>
       <Container fluid>
         <div className="memberdetailscontent">
@@ -110,18 +112,18 @@ const MemberAssemblyDetails = () => {
                         <span>
                           {current.basic_info && current.basic_info.constituency
                             ? current.basic_info.constituency.council
-                                .constituency_name !== ""
+                              .constituency_name !== ""
                               ? current.basic_info.constituency.council
-                                  .constituency_name
+                                .constituency_name
                               : current.basic_info.constituency.assembly
-                                  .constituency_name !== ""
-                              ? current.basic_info.constituency.assembly
+                                .constituency_name !== ""
+                                ? current.basic_info.constituency.assembly
                                   .constituency_name
-                              : current.basic_info.constituency.assembly
+                                : current.basic_info.constituency.assembly
                                   .constituency_name
                             : "" + " " + current?.basic_info?.district
-                            ? current?.basic_info?.district?.checkLang?.district
-                            : ""}
+                              ? current?.basic_info?.district?.checkLang?.district
+                              : ""}
                         </span>
                       </p>
                       <p>
@@ -197,18 +199,18 @@ const MemberAssemblyDetails = () => {
                         <span>
                           {current.basic_info && current.basic_info.constituency
                             ? current.basic_info.constituency.council
-                                .constituency_name !== ""
+                              .constituency_name !== ""
                               ? current.basic_info.constituency.council
-                                  .constituency_name
+                                .constituency_name
                               : current.basic_info.constituency.assembly
-                                  .constituency_name !== ""
-                              ? current.basic_info.constituency.assembly
+                                .constituency_name !== ""
+                                ? current.basic_info.constituency.assembly
                                   .constituency_name
-                              : current.basic_info.constituency.assembly
+                                : current.basic_info.constituency.assembly
                                   .constituency_name
                             : "" + " " + current?.basic_info?.district
-                            ? current?.basic_info?.district?.checkLang?.district
-                            : ""}
+                              ? current?.basic_info?.district?.checkLang?.district
+                              : ""}
                         </span>
                       </p>
                       <p>
@@ -266,8 +268,8 @@ const MemberAssemblyDetails = () => {
                     </div>
                     <>
                       {current?.basic_info?.other_info === "" ||
-                      current?.basic_info?.other_info === "<p>-</p>" ||
-                      current?.basic_info?.other_info === "-" ? (
+                        current?.basic_info?.other_info === "<p>-</p>" ||
+                        current?.basic_info?.other_info === "-" ? (
                         <></>
                       ) : (
                         <div className="basic-info-data">
@@ -338,17 +340,17 @@ const MemberAssemblyDetails = () => {
                         <h3>{memberdetails[checkLang].electionres}</h3>
                         <p>
                           {current.election_data &&
-                          current.election_data.constituency &&
-                          current.election_data.constituency
+                            current.election_data.constituency &&
+                            current.election_data.constituency
                             ? current.election_data.constituency.council
-                                .constituency_name !== ""
+                              .constituency_name !== ""
                               ? current.election_data.constituency.council
-                                  .constituency_name
+                                .constituency_name
                               : current.election_data.constituency.assembly
-                                  .constituency_name !== ""
-                              ? current.election_data.constituency.assembly
+                                .constituency_name !== ""
+                                ? current.election_data.constituency.assembly
                                   .constituency_name
-                              : current.election_data.constituency.assembly
+                                : current.election_data.constituency.assembly
                                   .constituency_name
                             : "" + " " + " "}
                         </p>
@@ -489,10 +491,10 @@ const MemberAssemblyDetails = () => {
                           setCurrentPage(cp);
                         }}
                         initialPage={currentPage}
-                        // currentPage={currentPage}
-                        // setCurrentPage={setCurrentPage}
-                        // pageLimit={pageLimit}
-                        // totalCount={debate?.count}
+                      // currentPage={currentPage}
+                      // setCurrentPage={setCurrentPage}
+                      // pageLimit={pageLimit}
+                      // totalCount={debate?.count}
                       />
                     )}
                   </Col>

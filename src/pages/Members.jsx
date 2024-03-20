@@ -45,7 +45,7 @@ const Members = () => {
   const { lang, checkLang } = useLang();
   const { house } = useParams();
 
-  const [assembly, setAssembly] = useState("65c3678e7f89a327721cceb1");
+  const [assembly, setAssembly] = useState("");
 
   const [search, setSearch] = useState({
     name: "",
@@ -239,13 +239,17 @@ const Members = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-
+      const defaultAssembly = {
+        "_id": "",
+        "assembly_number": "-",
+        "assembly_name": "सर्व",
+      }
       await getApi("assembly/option")
         .then((res) => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              assembly: res.data.data,
+              assembly: [defaultAssembly, ...res.data.data],
             }));
           }
         })
@@ -1122,6 +1126,7 @@ const Members = () => {
                               <td>
                                 <Link
                                   to={`/member-details/${item?._id}`}
+                                  state={{ assembly: search.house === "विधानपरिषद" ? false : true }}
                                   className="membernamee"
                                 >
                                   <img
