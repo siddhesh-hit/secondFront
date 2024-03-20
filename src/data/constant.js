@@ -2088,6 +2088,12 @@ const filterdata = {
     from: `पासून`,
     to: `पर्यंत`,
     page: `प्रति पृष्ठ`,
+    political: `पक्षनिहाय`,
+    consti: `मतदारसंघनिहाय`,
+    surname: `आडनावानुसार`,
+    gender: `लिंगनिहाय`,
+    dist: `जिल्हानिहाय`,
+
   },
   english: {
     council: `Legislative Council`,
@@ -2102,6 +2108,11 @@ const filterdata = {
     from: `From`,
     to: `To`,
     page: `Per Page`,
+    political: `Select Political Party`,
+    consti: `Select Constituency`,
+    surname: `Select Surname`,
+    gender: `Select Gender`,
+    dist: `Select District`,
   },
 };
 

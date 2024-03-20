@@ -7,8 +7,6 @@ import {
   Form,
   Offcanvas,
   Button,
-  OverlayTrigger,
-  Tooltip,
 } from "react-bootstrap";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { Link, useParams } from "react-router-dom";
@@ -22,7 +20,6 @@ import { ImageUrl, getApi } from "../services/axiosInterceptors";
 import { memberName } from "../data/memberName";
 import PopupHome from "./PopupHome";
 import PaginationComponent from "../components/Pagination";
-import HighlightSentence from "../components/HighlightSentence";
 import { councilMember, filterdata } from "../data/constant";
 import useLang from "../hooks/useLang";
 import { ReactTransliterate } from "react-transliterate";
@@ -30,6 +27,8 @@ import "react-transliterate/dist/index.css";
 
 const Members = () => {
   let url = new URLSearchParams(window.location.search);
+  const [inputValue, setInputValue] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
   const [text, setText] = useState("");
   const [searchdata, setSearchdata] = useState("");
   const [debate, setDebate] = useState([]);
@@ -108,6 +107,30 @@ const Members = () => {
       members_name: item.name,
     }));
   };
+
+  const fetchSuggestions = async (input) => {
+
+    return memberName.filter(suggestion =>
+      suggestion.name.toLowerCase().includes(input.toLowerCase())
+    );
+  };
+
+  const handleInputChange = async (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+    if (value.length > 0) {
+      const suggestions = await fetchSuggestions(value);
+      setSuggestions(suggestions);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSelection = (selectedValue) => {
+    setInputValue(selectedValue.name);
+    setSuggestions([]);
+  };
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -204,10 +227,10 @@ const Members = () => {
       search.house === "एकत्रित"
         ? ""
         : search.house === "विधानसभा"
-        ? "Assembly"
-        : search.house === "विधानपरिषद"
-        ? "Council"
-        : "";
+          ? "Assembly"
+          : search.house === "विधानपरिषद"
+            ? "Council"
+            : "";
 
     if (searchdata) {
       setSearch((prev) => ({
@@ -242,8 +265,8 @@ const Members = () => {
         search.house === "एकत्रित"
           ? ""
           : search.house === "विधानसभा"
-          ? "Assembly"
-          : "Constituency";
+            ? "Assembly"
+            : "Constituency";
 
       await getApi("assembly/option").then((res) => {
         if (res.data.success) {
@@ -651,6 +674,26 @@ const Members = () => {
                           onSearch={handleOnSearch}
                           onSelect={handleOnSelect}
                         />
+                        {/* <div className="autocomplete">
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            placeholder="Type to search..."
+                          />
+                          {suggestions.length > 0 && (
+                            <div className="dropdown">
+                              <ul>
+                                {suggestions.map((item, index) => (
+                                  <li key={index} onClick={() => handleSelection(item)}>
+                                    {item.name}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div> */}
                       </div>
                     </Accordion.Body>
                   </Accordion.Item>
@@ -712,9 +755,8 @@ const Members = () => {
                               maxDate={new Date()}
                               onChange={(date) => {
                                 let changeDate = new Date(date);
-                                let newDate = `${changeDate.getDate()}-${
-                                  changeDate.getMonth() + 1
-                                }-${changeDate.getFullYear()}`;
+                                let newDate = `${changeDate.getDate()}-${changeDate.getMonth() + 1
+                                  }-${changeDate.getFullYear()}`;
                                 setSearch((prev) => ({
                                   ...prev,
                                   fromdate: date,
@@ -740,9 +782,8 @@ const Members = () => {
                               maxDate={new Date()}
                               onChange={(date) => {
                                 let changeDate = new Date(date);
-                                let newDate = `${changeDate.getDate()}-${
-                                  changeDate.getMonth() + 1
-                                }-${changeDate.getFullYear()}`;
+                                let newDate = `${changeDate.getDate()}-${changeDate.getMonth() + 1
+                                  }-${changeDate.getFullYear()}`;
                                 setSearch((prev) => ({
                                   ...prev,
                                   todate: date,
@@ -779,54 +820,28 @@ const Members = () => {
                 </button>
                 {isDivVisible1 && (
                   <div className="advancdeee">
-                    <label>पक्षनिहाय</label>
+                    <label>{filterdata[checkLang].political}</label>
                     <select
                       className="secondfilers"
                       value={search.party}
                       name="party"
                       onChange={handleChange}
                     >
-                      <option hidden>पक्षनिहाय</option>
+                      <option hidden>{filterdata[checkLang].political}</option>
                       {options?.party?.map((item, index) => (
                         <option key={index} value={item._id}>
                           {item[checkLang]["party_name"]}
                         </option>
                       ))}
                     </select>
-                    <label>मतदारसंघनिहाय</label>
+                    <label>{filterdata[checkLang].consti}</label>
                     <select
                       className="secondfilers"
                       value={search.constituency}
                       name="constituency"
                       onChange={handleChange}
                     >
-                      <option hidden>मतदारसंघनिहाय</option>
-                      {/* {options?.constituency?.map((item, index) => {
-                        const constituencyName =
-                          item[
-                            search.house === "विधानपरिषद"
-                              ? "council"
-                              : "assembly"
-                          ]?.constituency_name;
-                        const assemblyName =
-                          item[
-                            search.house === "विधानसभा" ? "assembly" : "council"
-                          ]?.constituency_name;
-                        if (assemblyName !== "") {
-                          return (
-                            <option key={index} value={item._id}>
-                              {assemblyName}
-                            </option>
-                          );
-                        } else if (constituencyName !== "") {
-                          return (
-                            <option key={index} value={item._id}>
-                              {constituencyName}
-                            </option>
-                          );
-                        }
-                        return null;
-                      })} */}
+                      <option hidden>{filterdata[checkLang].consti}</option>
                       {options?.constituency?.map((item, index) => {
                         let constituencyName, assemblyName;
 
@@ -865,45 +880,45 @@ const Members = () => {
                         return null;
                       })}
                     </select>
-                    <label>आडनावानुसार</label>
+                    <label>{filterdata[checkLang].surname}</label>
                     <select
                       className="secondfilers"
                       value={search.surname}
                       name="surname"
                       onChange={handleChange}
                     >
-                      <option hidden>आडनावानुसार</option>
+                      <option hidden>{filterdata[checkLang].surname}</option>
                       {options?.surname?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}
                         </option>
                       ))}
                     </select>
-                    <label>जिल्हानिहाय</label>
+                    <label>{filterdata[checkLang].dist}</label>
                     <select
                       className="secondfilers"
                       value={search.district}
                       name="district"
                       onChange={handleChange}
                     >
-                      <option hidden>जिल्हानिहाय</option>
+                      <option hidden>{filterdata[checkLang].dist}</option>
                       {options?.district?.map((item, index) => (
                         <option key={index} value={item._id}>
                           {item[checkLang]["district"]}
                         </option>
                       ))}
                     </select>
-                    <label>लिंगनिहाय</label>
+                    <label>{filterdata[checkLang].gender}</label>
                     <select
                       className="secondfilers"
                       value={search.gender}
                       name="gender"
                       onChange={handleChange}
                     >
-                      <option hidden>लिंगनिहाय</option>
+                      <option hidden>{filterdata[checkLang].gender}</option>
                       {options?.gender?.map((item, index) => (
                         <option key={index} value={item._id}>
-                          {item[checkLang]["gender"]}
+                          {item.marathi["gender"]}
                         </option>
                       ))}
                     </select>
