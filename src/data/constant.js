@@ -2102,7 +2102,7 @@ const filterdata = {
     from: `From`,
     to: `To`,
     page: `Per Page`,
-  }
+  },
 };
 
 export {
