@@ -18,9 +18,13 @@ import "react-transliterate/dist/index.css";
 
 import logo from "../../assets/logo.png";
 
-import { logout } from "../../redux/reducers/userReducer";
+import { logout } from "../../redux/reducers/UserReducer";
 import { decrypt } from "../../utils/encrypt";
-import { postApi, getApiById, ImageUrl } from "../../services/axiosInterceptors";
+import {
+  postApi,
+  getApiById,
+  ImageUrl,
+} from "../../services/axiosInterceptors";
 import useLang from "../../hooks/useLang";
 import { home, header } from "../../data/constant";
 
@@ -37,18 +41,18 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const handleLanguage = (newLang) => {
-
     window.sessionStorage.setItem("lang", newLang);
     window.dispatchEvent(new CustomEvent("langChange"));
   };
-
 
   const affectedElementsSelector = "p, h1, h2, h3, h4, h5, h6, span, a, button";
 
   const [fontSize, setFontSize] = useState();
 
   const storeOriginalSizes = () => {
-    const affectedElements = document.querySelectorAll(affectedElementsSelector);
+    const affectedElements = document.querySelectorAll(
+      affectedElementsSelector
+    );
     affectedElements.forEach((element) => {
       element.dataset.origSize = window.getComputedStyle(element).fontSize;
     });
@@ -61,7 +65,9 @@ const Header = () => {
   const changeFontSize = (direction) => {
     setFontSize(fontSize + direction);
 
-    const affectedElements = document.querySelectorAll(affectedElementsSelector);
+    const affectedElements = document.querySelectorAll(
+      affectedElementsSelector
+    );
     affectedElements.forEach((element) => {
       const currentSize = parseFloat(element.dataset.origSize) + direction;
       element.style.fontSize = `${currentSize}px`;
@@ -70,12 +76,13 @@ const Header = () => {
 
   const resetFontSize = () => {
     setFontSize(0);
-    const affectedElements = document.querySelectorAll(affectedElementsSelector);
+    const affectedElements = document.querySelectorAll(
+      affectedElementsSelector
+    );
     affectedElements.forEach((element) => {
       element.style.fontSize = element.dataset.origSize;
     });
   };
-
 
   const handleLogout = async () => {
     await postApi("user/logout", {})
@@ -108,11 +115,11 @@ const Header = () => {
     userInfo.notificationId && fetchData(userInfo.notificationId);
   }, [userInfo]);
 
+  console.log(location);
+
   return (
     <div>
-      <div id="toplocation"
-        className="blueColor topheader"
-      >
+      <div id="toplocation" className="blueColor topheader">
         <Container fluid>
           <Row>
             <Col lg={12}>
@@ -137,22 +144,21 @@ const Header = () => {
                   </Dropdown>
                 )}
 
-                <div className="contact-us">
+                <div className="contact-us" style={{ marginRight: "10px" }}>
                   <Link to="/ContactUs">
                     <span>{header[checkLang].contact}</span>
                   </Link>
                 </div>
 
-                <button
-                  className="languagechanges mx-2"
-                  onClick={() => handleLanguage(lang === "mr" ? "en" : "mr")}
-                >
-                  {header[checkLang].language}
-                </button>
-
                 <div className="font-size">
-                  <button className="font-size-button" onClick={() => changeFontSize(1)}>{header[checkLang].font}+</button>
-                  <button onClick={resetFontSize}
+                  <button
+                    className="font-size-button"
+                    onClick={() => changeFontSize(1)}
+                  >
+                    {header[checkLang].font}+
+                  </button>
+                  <button
+                    onClick={resetFontSize}
                     className="font-size-button"
                     style={{
                       borderLeft: "solid #121f29 2px",
@@ -161,30 +167,65 @@ const Header = () => {
                   >
                     {header[checkLang].font}
                   </button>
-                  <button className="font-size-button" onClick={() => changeFontSize(-1)}>{header[checkLang].font}-</button>
+                  <button
+                    className="font-size-button"
+                    onClick={() => changeFontSize(-1)}
+                  >
+                    {header[checkLang].font}-
+                  </button>
                 </div>
                 {isAuthenticated ? (
-                  <DropdownButton id="dropdown-basic-button" title={<><img src={ImageUrl + userInfo?.user_image?.["destination"] + "/" + userInfo?.user_image?.["filename"]} className="user-profile-image" /> {userInfo?.full_name}</>}>
-                    <Dropdown.Item href="/Userprofile">My Profile</Dropdown.Item>
-                    <Dropdown.Item onClick={() => handleLogout()}>Logout</Dropdown.Item>
+                  <DropdownButton
+                    id="dropdown-basic-button"
+                    title={
+                      <>
+                        <img
+                          src={
+                            ImageUrl +
+                            userInfo?.user_image?.["destination"] +
+                            "/" +
+                            userInfo?.user_image?.["filename"]
+                          }
+                          className="user-profile-image"
+                        />{" "}
+                        {userInfo?.full_name}
+                      </>
+                    }
+                  >
+                    <Dropdown.Item href="/Userprofile">
+                      My Profile
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleLogout()}>
+                      Logout
+                    </Dropdown.Item>
                   </DropdownButton>
                 ) : (
                   <a href="/Login">{header[checkLang].login}</a>
                 )}
+                <button
+                  className="languagechanges mx-2"
+                  onClick={() => handleLanguage(lang === "mr" ? "en" : "mr")}
+                >
+                  {header[checkLang].language}
+                </button>
               </div>
             </Col>
           </Row>
         </Container>
       </div>
       {location === "/" ||
-        location === "/Homepage1" ||
-        location === "/Homepage2" ? (
+      location === "/Homepage1" ||
+      location === "/Homepage2" ? (
         <div className="headerlogos">
           <Container fluid>
             <Row className="midhead one">
               <Col lg={4}>
                 <Nav.Link href="/">
-                  <img src={header[checkLang].logo} alt="logo" className="loginbg" />
+                  <img
+                    src={header[checkLang].logo}
+                    alt="logo"
+                    className="loginbg"
+                  />
                 </Nav.Link>
               </Col>
             </Row>
@@ -197,14 +238,20 @@ const Header = () => {
               <Row className="midhead two">
                 <Col lg={4}>
                   <Nav.Link href="/">
-                    <img src={header[checkLang].logo} alt="logo" className="loginbg" />
+                    <img
+                      src={header[checkLang].logo}
+                      alt="logo"
+                      className="loginbg"
+                    />
                   </Nav.Link>
                 </Col>
                 <Col lg={4}>
                   <div className="search-home">
                     <form>
                       <ReactTransliterate
-                        renderComponent={(props) => <input className="form-control" {...props} />}
+                        renderComponent={(props) => (
+                          <input className="form-control" {...props} />
+                        )}
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         placeholder={home[checkLang].searchPlaceHolder}
@@ -256,13 +303,13 @@ const Header = () => {
                           title={header[checkLang].legislature}
                           id={`offcanvasNavbarDropdown-expand-${expand}`}
                         >
-                          <NavDropdown.Item href="Governer">
+                          <NavDropdown.Item href="/Governer">
                             {header[checkLang].governor}
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="LegislativeCouncil">
+                          <NavDropdown.Item href="/LegislativeCouncil">
                             {header[checkLang].legislativecouncil}
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="LegislativeAssembly">
+                          <NavDropdown.Item href="/LegislativeAssembly">
                             {header[checkLang].legislativeassembly}
                           </NavDropdown.Item>
                           {/* <NavDropdown.Item href="#action5">
@@ -271,48 +318,64 @@ const Header = () => {
                           <NavDropdown.Item href="/mantri-parishad">
                             {header[checkLang].councilminis}
                           </NavDropdown.Item>
-                          <NavDropdown.Item href="Library">
+                          <NavDropdown.Item href="/Library">
                             {header[checkLang].legislativelibrary}
                           </NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link
-                          className={`${location === "/members?house=एकत्रित" ? "active" : ""
-                            }`}
-                          href="/members?house=एकत्रित"
+                          className={`${
+                            location.includes("/members/") ? "active" : ""
+                          }`}
+                          href="/members/एकत्रित"
                         >
                           {header[checkLang].member}
                         </Nav.Link>
                         <Nav.Link
-                          className={`${location === "/Debate" ? "active" : ""
-                            }`}
+                          className={`${
+                            location === "/Debate" ? "active" : ""
+                          }`}
                           href="/Debate"
                         >
                           {header[checkLang].Debate}
                         </Nav.Link>
                         <Nav.Link
-                          className={`${location === "/SessionCalender" ? "active" : ""
-                            }`}
+                          className={`${
+                            location === "/SessionCalender" ? "active" : ""
+                          }`}
                           href="/SessionCalender"
                         >
                           {header[checkLang].session}
                         </Nav.Link>
                         <Nav.Link
-                          className={`${location === "/LegislationsBills" ? "active" : ""
-                            }`}
+                          className={`${
+                            location === "/LegislationsBills" ? "active" : ""
+                          }`}
                           href="/LegislationsBills"
                         >
                           {header[checkLang].Legislation}
                         </Nav.Link>
-                        <Nav.Link className={`${location === "/Budgetyear" ? "active" : ""
-                          }`} href="/Budgetyear">
+                        <Nav.Link
+                          className={`${
+                            location === "/Budgetyear" ? "active" : ""
+                          }`}
+                          href="/Budgetyear"
+                        >
                           {header[checkLang].Budget}
                         </Nav.Link>
-                        <Nav.Link className={`${location === "/Electionresult" ? "active" : ""
-                          }`} href="/Electionresult">
+                        <Nav.Link
+                          className={`${
+                            location === "/Electionresult" ? "active" : ""
+                          }`}
+                          href="/Electionresult"
+                        >
                           {header[checkLang].Elections}
                         </Nav.Link>
-                        <Nav.Link className={`${location === "/Gazette" ? "active" : ""
-                          }`} href="/Gazette">
+                        <Nav.Link
+                          className={`${
+                            location === "/Gazette" ? "active" : ""
+                          }`}
+                          href="/Gazette"
+                        >
                           {header[checkLang].Gazette}
                         </Nav.Link>
                         <NavDropdown

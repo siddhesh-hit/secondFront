@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { ReactTransliterate } from "react-transliterate";
 import "react-transliterate/dist/index.css";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -10,9 +10,9 @@ import { Link } from "react-router-dom";
 import useLang from "../hooks/useLang";
 import { home, homeLink } from "../data/constant";
 
-import one from "../assets/implink/1.jpeg"
-import two from "../assets/implink/2.jpeg"
-import three from "../assets/implink/3.jpeg"
+import one from "../assets/implink/1.jpeg";
+import two from "../assets/implink/2.jpeg";
+import three from "../assets/implink/3.jpeg";
 
 const Homepage = () => {
   const [text, setText] = useState("");
@@ -24,9 +24,9 @@ const Homepage = () => {
     if (window.confirm("Are you sure you want to visit this link?") === true) {
       window.location.href = link;
     } else {
-      return false
+      return false;
     }
-  }
+  };
   return (
     <div>
       <section className="homepageback">
@@ -130,17 +130,36 @@ const Homepage = () => {
           <Row>
             <Col lg={4}>
               <div className="links">
-                <div style={{ cursor: 'pointer' }} onClick={() => handleLinkClick("http://mls.org.in/index.aspx")}><img src={one} /> http://mls.org.in</div>
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    handleLinkClick("http://mls.org.in/index.aspx")
+                  }
+                >
+                  <img src={one} /> http://mls.org.in
+                </div>
               </div>
             </Col>
             <Col lg={4}>
               <div className="links">
-                <div style={{ cursor: 'pointer' }} onClick={() => handleLinkClick("https://beams.mahakosh.gov.in")}><img src={two} /> https://beams.mahakosh.gov.in</div>
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    handleLinkClick("https://beams.mahakosh.gov.in")
+                  }
+                >
+                  <img src={two} /> https://beams.mahakosh.gov.in
+                </div>
               </div>
             </Col>
             <Col lg={4}>
               <div className="links">
-                <div style={{ cursor: 'pointer' }} onClick={() => handleLinkClick("https://www.eci.gov.in/")}><img src={three} /> https://www.eci.gov.in/</div>
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleLinkClick("https://www.eci.gov.in/")}
+                >
+                  <img src={three} /> https://www.eci.gov.in/
+                </div>
               </div>
             </Col>
           </Row>

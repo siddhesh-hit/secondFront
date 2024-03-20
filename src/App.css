@@ -62,7 +62,7 @@ section.homepageback111 {
 }
 
 section.homepageback h1 {
-    font-size: 26px;
+    font-size: 23px;
     font-family: 'Poppins';
     font-weight: 700;
     letter-spacing: 0em;
@@ -780,7 +780,7 @@ hr.lineabcd {
 .contactcontent h1 {
     display: inline-block;
     font-size: 25px;
-    font-weight: 700;
+    font-weight: 600;
     color: #4e3431;
     position: relative;
     padding-bottom: 5px;
@@ -2957,4 +2957,9 @@ p.demophase {
     object-fit: cover;
     margin-right: 5px;
     border-radius: 5px;
+}
+
+.not-alllowed{
+    cursor: not-allowed;
+  pointer-events: all !important;
 }

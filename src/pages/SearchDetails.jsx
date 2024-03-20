@@ -22,7 +22,7 @@ const SearchDetails = () => {
       .then((res) => setMemberData(res.data.data))
       .catch((err) => console.log(err));
 
-    await getApi(`debate/search?id=${id}`)
+    await getApi(`debate/dumpSearch?id=${id}`)
       .then((res) => setDebateData(res.data))
       .catch((err) => console.log(err));
 
@@ -78,7 +78,9 @@ const SearchDetails = () => {
                   {memberData && memberData.length > 0 ? (
                     <>
                       <tr>
-                        <td className="debateee">{searchdetails[checkLang].memberprofile}</td>
+                        <td className="debateee">
+                          {searchdetails[checkLang].memberprofile}
+                        </td>
                       </tr>
                       {memberData.map((item, index) => (
                         <tr key={index}>
@@ -88,7 +90,7 @@ const SearchDetails = () => {
                                 <div className="demo_list">
                                   <h4>
                                     <Link
-                                      to={`/MemberDetailsEng?id=${item._id}`}
+                                      to={`/member-details/${item?._id}`}
                                       target="_blank"
                                     >
                                       {item.basic_info.name +
@@ -98,7 +100,7 @@ const SearchDetails = () => {
                                 </div>
                                 <span className="demo_list_inner">
                                   <Link
-                                    to={`/MemberDetailsEng?id=${item._id}`}
+                                    to={`/member-details/${item?._id}`}
                                     target="_blank"
                                   >
                                     {searchdetails[checkLang].memberdetail}
@@ -117,7 +119,9 @@ const SearchDetails = () => {
                     {debateData.data && debateData.data.length > 0 ? (
                       <>
                         <tr>
-                          <td className="debateee">{searchdetails[checkLang].debatelist}</td>
+                          <td className="debateee">
+                            {searchdetails[checkLang].debatelist}
+                          </td>
                         </tr>
                         {debateData.data.map((item, index) => (
                           <tr key={index}>
@@ -126,13 +130,19 @@ const SearchDetails = () => {
                                 <div className="demo_list_main">
                                   <div className="demo_list">
                                     <h4>
-                                      <Link to={`/DebateDetails?id=${item._id}`} target="_blank">
+                                      <Link
+                                        to={`/DebateDetails?id=${item._id}`}
+                                        target="_blank"
+                                      >
                                         {item.topic}
                                       </Link>
                                     </h4>
                                   </div>
                                   <span className="demo_list_inner">
-                                    <Link to={`/DebateDetails?id=${item._id}`} target="_blank">
+                                    <Link
+                                      to={`/DebateDetails?id=${item._id}`}
+                                      target="_blank"
+                                    >
                                       {searchdetails[checkLang].debatedetail}
                                     </Link>
                                   </span>

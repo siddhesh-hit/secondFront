@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -7,9 +7,12 @@ import {
   Form,
   Offcanvas,
   Button,
+  OverlayTrigger,
+  Tooltip,
 } from "react-bootstrap";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { Link, useParams } from "react-router-dom";
+import DatePicker from "react-datepicker";
 
 import Graph from "../assets/graphs.svg";
 import Arrow from "../assets/debate/arrow.svg";
@@ -20,15 +23,15 @@ import { memberName } from "../data/memberName";
 import PopupHome from "./PopupHome";
 import PaginationComponent from "../components/Pagination";
 import HighlightSentence from "../components/HighlightSentence";
-import { councilMember } from "../data/constant";
+import { councilMember, filterdata } from "../data/constant";
 import useLang from "../hooks/useLang";
-
 import { ReactTransliterate } from "react-transliterate";
 import "react-transliterate/dist/index.css";
 
 const Members = () => {
   let url = new URLSearchParams(window.location.search);
   const [text, setText] = useState("");
+  const [searchdata, setSearchdata] = useState("");
   const [debate, setDebate] = useState([]);
   const [count, setCount] = useState(0);
   const [isDivVisible, setDivVisibility] = useState(false);
@@ -42,6 +45,8 @@ const Members = () => {
   const { lang, checkLang } = useLang();
   const { house } = useParams();
 
+  const [assembly, setAssembly] = useState("65c3678e7f89a327721cceb1");
+
   const [search, setSearch] = useState({
     name: "",
     members_name: "",
@@ -53,6 +58,8 @@ const Members = () => {
     district: "",
     gender: "",
     ministry_name: "",
+    fromdate: "",
+    todate: "",
   });
 
   const [options, setOptions] = useState({
@@ -62,7 +69,35 @@ const Members = () => {
     district: [],
     gender: [],
     ministry_name: [],
+    assembly: [],
+
   });
+
+  const [extraDate, setExtraDate] = useState({
+    fromdate: "",
+    todate: "",
+  });
+
+  let keyval = {
+    marathi: {
+      name: "नाम",
+      house: "सभागृह",
+      session: "अधिवेशन",
+      fromdate: "तारीख",
+      todate: "तारीख",
+      members_name: "सदस्यांचे नाव",
+      action: "क्रिया",
+    },
+    english: {
+      name: "Name",
+      house: "House",
+      session: "Session",
+      fromdate: "Date",
+      todate: "Date",
+      members_name: "Member Name",
+      action: "Action",
+    },
+  };
 
   const handleOnSearch = (string, results) => {
     // console.log({ string, results });
@@ -77,10 +112,39 @@ const Members = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setSearch((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (name === "fromdate" || name === "todate") {
+      setExtraDate((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+
+      let date = new Date(value);
+      let day = date
+        .getDate()
+        .toString()
+        .split("")
+        .map((item) => numbers[item])
+        .join("");
+      let months = (date.getMonth() + 1).toString();
+      let monthh = numToYears[months];
+      let year = date.getFullYear();
+      let year1 = year
+        .toString()
+        .split("")
+        .map((item) => numbers[item])
+        .join("");
+      let newDate = `${day} ${monthh} ${year1}`;
+      setSearch((prev) => ({
+        ...prev,
+        [name]: newDate,
+      }));
+      // console.log(newDate)
+    } else {
+      setSearch((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleReset = () => {
@@ -97,6 +161,8 @@ const Members = () => {
   };
 
   const handleStart = () => {
+    setSearchdata("");
+
     setSearch((prev) => ({
       ...prev,
       name: "",
@@ -110,7 +176,12 @@ const Members = () => {
       gender: "",
       ministry_name: "",
     }));
-    debateFetch();
+    setText("");
+
+    setSearchdata("") &&
+      Promise.resolve().then(() => {
+        debateFetch();
+      });
   };
 
   const handleSort = () => {
@@ -138,8 +209,16 @@ const Members = () => {
           : search.house === "विधानपरिषद"
             ? "Council"
             : "";
+
+    if (searchdata) {
+      setSearch((prev) => ({
+        ...prev,
+        name: searchdata,
+      }));
+    }
+    let assembly_number = search.house === "विधानपरिषद" ? "" : assembly;
     await getApi(
-      `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}&fullname=${search.name}`
+      `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}&fullname=${searchdata}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}&assembly_number=${assembly_number}`
     )
       .then((res) => {
         setDebate(res.data.data);
@@ -160,7 +239,19 @@ const Members = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await getApi("party")
+
+      await getApi("assembly/option")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              assembly: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
+
+      await getApi("party/option")
         .then((res) => {
           if (res.data.success) {
             setOptions((prev) => ({
@@ -223,13 +314,14 @@ const Members = () => {
         .catch((err) => console.log(err));
     };
     fetchData();
-  }, [checkLang, search.house]);
+  }, [checkLang, search.house,]);
 
-  useEffect(() => {
-    if (paramsReady) {
-      debateFetch();
-    }
-  }, [paramsReady]);
+  // useEffect(() => {
+  //   if (paramsReady) {
+  //     console.log(search.house);
+  //     paramsReady && debateFetch();
+  //   }
+  // }, [paramsReady]);
 
   useEffect(() => {
     for (let key in search) {
@@ -243,13 +335,15 @@ const Members = () => {
     search.members_name,
     search.house,
     checkLang,
-    house,
+    house, assembly
     // search,
   ]);
 
   useEffect(() => {
     debateFetch();
   }, [currentPage, pageLimit]);
+
+  // console.log(search);
 
   return (
     <div>
@@ -291,7 +385,7 @@ const Members = () => {
                                 })
                                 : memberName
                             }
-                            placeholder="सदस्य शोधा"
+                            placeholder={filterdata[checkLang].find}
                             onSearch={handleOnSearch}
                             onSelect={handleOnSelect}
                           />
@@ -300,12 +394,12 @@ const Members = () => {
                     </Accordion.Item>
                     <Accordion.Item eventKey="1">
                       <Accordion.Header>
-                        {councilMember[checkLang].session}
+                        {councilMember[checkLang].house}
                       </Accordion.Header>
                       <Accordion.Body>
                         <div className="filtercontent">
                           <div className="datacheck">
-                            <label>विधानपरिषद</label>
+                            <label>{filterdata[checkLang].council}</label>
                             <Form.Check
                               aria-label="option 1"
                               name="house"
@@ -315,7 +409,7 @@ const Members = () => {
                             />
                           </div>
                           <div className="datacheck">
-                            <label>विधानसभा</label>
+                            <label>{filterdata[checkLang].assembly}</label>
                             <Form.Check
                               aria-label="option 2"
                               name="house"
@@ -325,7 +419,7 @@ const Members = () => {
                             />
                           </div>
                           <div className="datacheck1">
-                            <label>एकत्रित</label>
+                            <label>{filterdata[checkLang].both}</label>
                             <Form.Check
                               aria-label="option 3"
                               name="house"
@@ -344,8 +438,8 @@ const Members = () => {
                       <Accordion.Body>
                         <div className="filtercontent">
                           <Row className="daterange">
-                            <Col lg={4}>
-                              <label>पासून</label>
+                            <Col lg={6}>
+                              <label>{filterdata[checkLang].from}</label>
                               <input
                                 className="form-control"
                                 disabled
@@ -355,8 +449,8 @@ const Members = () => {
                                 value={2011}
                               />
                             </Col>
-                            <Col lg={4}>
-                              <label>प्रयंत</label>
+                            <Col lg={6}>
+                              <label>{filterdata[checkLang].to}</label>
                               <input
                                 className="form-control"
                                 disabled
@@ -366,7 +460,7 @@ const Members = () => {
                                 value={2011}
                               />
                             </Col>
-                            <Col lg={4}>
+                            <Col lg={6}>
                               <button className="apply1">
                                 {councilMember[checkLang].button1}
                               </button>
@@ -410,21 +504,32 @@ const Members = () => {
                         onChange={handleChange}
                       >
                         <option hidden>मतदारसंघनिहाय</option>
-                        {options?.constituency?.map((item, index) => (
-                          <option key={index} value={item._id}>
-                            {
-                              item[
-                                search.house === "विधानसभा"
-                                  ? "council"
-                                  : "assembly"
-                              ]?.constituency_name
-                              // ? item?.council?.constituency_name
-                              // : item?.assembly?.constituency_name !== “”
-                              // ? item?.assembly?.constituency_name
-                              // : item?.assembly?.constituency_name
-                            }
-                          </option>
-                        ))}
+                        {/* {options?.constituency?.map((item, index) => {
+                        const constituencyName =
+                          item[
+                            search.house === "विधानपरिषद"
+                              ? "council"
+                              : "assembly"
+                          ]?.constituency_name;
+                        const assemblyName =
+                          item[
+                            search.house === "विधानसभा" ? "assembly" : "council"
+                          ]?.constituency_name;
+                        if (assemblyName !== "") {
+                          return (
+                            <option key={index} value={item._id}>
+                              {assemblyName}
+                            </option>
+                          );
+                        } else if (constituencyName !== "") {
+                          return (
+                            <option key={index} value={item._id}>
+                              {constituencyName}
+                            </option>
+                          );
+                        }
+                        return null;
+                      })} */}
                         {options?.constituency?.map((item, index) => {
                           let constituencyName, assemblyName;
 
@@ -457,7 +562,6 @@ const Members = () => {
                               </option>
                             );
                           }
-
                           return null;
                         })}
                       </select>
@@ -540,7 +644,7 @@ const Members = () => {
                               })
                               : memberName
                           }
-                          placeholder="सदस्य शोधा"
+                          placeholder={filterdata[checkLang].find}
                           onSearch={handleOnSearch}
                           onSelect={handleOnSelect}
                         />
@@ -554,7 +658,7 @@ const Members = () => {
                     <Accordion.Body>
                       <div className="filtercontent">
                         <div className="datacheck">
-                          <label>विधानपरिषद</label>
+                          <label>{filterdata[checkLang].council}</label>
                           <Form.Check
                             aria-label="option 1"
                             name="house"
@@ -564,7 +668,7 @@ const Members = () => {
                           />
                         </div>
                         <div className="datacheck">
-                          <label>विधानसभा</label>
+                          <label>{filterdata[checkLang].assembly}</label>
                           <Form.Check
                             aria-label="option 2"
                             name="house"
@@ -574,7 +678,7 @@ const Members = () => {
                           />
                         </div>
                         <div className="datacheck1">
-                          <label>एकत्रित</label>
+                          <label>{filterdata[checkLang].both}</label>
                           <Form.Check
                             aria-label="option 3"
                             name="house"
@@ -593,30 +697,63 @@ const Members = () => {
                     <Accordion.Body>
                       <div className="filtercontent">
                         <Row className="daterange">
-                          <Col lg={4}>
-                            <label>पासून</label>
-                            <input
+                          <Col lg={6}>
+                            <label>{filterdata[checkLang].from}</label>
+                            <DatePicker
                               className="form-control"
-                              disabled
-                              type="number"
-                              min={1987}
-                              max={2024}
-                              value={2011}
+                              selected={search.fromdate}
+                              showYearPicker
+                              placeholderText="From"
+                              dateFormat="yyyy"
+                              minDate={"1937/01/01"}
+                              maxDate={new Date()}
+                              onChange={(date) => {
+                                let changeDate = new Date(date);
+                                let newDate = `${changeDate.getDate()}-${changeDate.getMonth() + 1
+                                  }-${changeDate.getFullYear()}`;
+                                setSearch((prev) => ({
+                                  ...prev,
+                                  fromdate: date,
+                                }));
+                                setExtraDate((prev) => ({
+                                  ...prev,
+                                  fromdate: newDate,
+                                }));
+                              }}
                             />
                           </Col>
-                          <Col lg={4}>
-                            <label>प्रयंत</label>
-                            <input
+                          <Col lg={6}>
+                            <label>{filterdata[checkLang].to}</label>
+                            <DatePicker
                               className="form-control"
-                              disabled
-                              type="number"
-                              min={1987}
-                              max={2024}
-                              value={2011}
+                              selected={search.todate}
+                              showYearPicker
+                              placeholderText="To"
+                              dateFormat="yyyy"
+                              minDate={
+                                search.fromdate ? search.fromdate : "1937/01/01"
+                              }
+                              maxDate={new Date()}
+                              onChange={(date) => {
+                                let changeDate = new Date(date);
+                                let newDate = `${changeDate.getDate()}-${changeDate.getMonth() + 1
+                                  }-${changeDate.getFullYear()}`;
+                                setSearch((prev) => ({
+                                  ...prev,
+                                  todate: date,
+                                }));
+                                setExtraDate((prev) => ({
+                                  ...prev,
+                                  todate: newDate,
+                                }));
+                              }}
                             />
                           </Col>
-                          <Col lg={4}>
-                            <button className="apply1">
+                          <Col lg={6}>
+                            <button
+                              className="apply1"
+                              onClick={() => debateFetch()}
+                            >
                               {councilMember[checkLang].button1}
                             </button>
                           </Col>
@@ -794,11 +931,7 @@ const Members = () => {
                     onChange={(e) => setText(e.target.value)}
                     placeholder={councilMember[checkLang].search}
                     onChangeText={(text) => {
-                      setSearch((prev) => ({
-                        ...prev,
-                        name: text,
-                      }));
-                      console.log(search);
+                      setSearchdata(text);
                     }}
                     lang="hi"
                   />
@@ -812,6 +945,89 @@ const Members = () => {
                   </button>
                 </Col>
               </Row>
+              {/* <ul className="search-list">
+                <>
+                  {Object.keys(search).map((key, index) => {
+                    let checkBool;
+                    key === "fromdate"
+                      ? (checkBool = true)
+                      : (checkBool = false);
+                    return search[key] === "" || key === "todate" ? (
+                      <React.Fragment key={index}></React.Fragment>
+                    ) : (
+                      <React.Fragment key={index}>
+                        {checkBool ? (
+                          <React.Fragment key={index}>
+                            <OverlayTrigger
+                              delay={{ hide: 450, show: 300 }}
+                              overlay={(props) => (
+                                <Tooltip {...props}>
+                                  {keyval[checkLang][key]}
+                                </Tooltip>
+                              )}
+                              placement="top"
+                            >
+                              <li>
+                                <a>
+                                  {search.fromdate} - {search.todate}
+                                </a>
+                                <button
+                                  onClick={() => {
+                                    setSearch((prev) => ({
+                                      ...prev,
+                                      todate: "",
+                                      fromdate: "",
+                                    }));
+                                    setExtraDate((prev) => ({
+                                      ...prev,
+                                      todate: "",
+                                      fromdate: "",
+                                    }));
+                                  }}
+                                  className="fa fa-times"
+                                ></button>
+                              </li>
+                            </OverlayTrigger>
+                          </React.Fragment>
+                        ) : (
+                          <React.Fragment key={index}>
+                            <OverlayTrigger
+                              delay={{ hide: 450, show: 300 }}
+                              overlay={(props) => (
+                                <Tooltip {...props}>
+                                  {keyval[checkLang][key]}
+                                </Tooltip>
+                              )}
+                              placement="top"
+                            >
+                              <li>
+                                <a>{search[key]}</a>
+                                <button
+                                  onClick={() => {
+                                    if (key === "topic") {
+                                      setSearchdata("");
+                                      setSearch((prev) => ({
+                                        ...prev,
+                                        topic: "",
+                                      }));
+                                    } else {
+                                      setSearch((prev) => ({
+                                        ...prev,
+                                        [key]: "",
+                                      }));
+                                    }
+                                  }}
+                                  className="fa fa-times"
+                                ></button>
+                              </li>
+                            </OverlayTrigger>
+                          </React.Fragment>
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
+                </>
+              </ul> */}
             </div>
             <div className="breadvrumbss">
               <Row>
@@ -830,11 +1046,17 @@ const Members = () => {
                     {search.house === "विधानपरिषद" ? (
                       <></>
                     ) : (
-                      <select name="sabhaselection">
-                        <option value="विधानसभा  12th">विधानसभा 12th</option>
-                        <option value="विधानसभा  11th">विधानसभा 11th</option>
-                        <option value="विधानसभा  10th">विधानसभा 10th</option>
-                        <option value="विधानसभा  09th">विधानसभा 09th</option>
+                      <select
+                        name="sabhaselection"
+                        value={assembly}
+                        onChange={(e) => setAssembly(e.target.value)}
+                      >
+                        {options?.assembly.length > 0 &&
+                          options?.assembly?.map((item, index) => (
+                            <option key={index} value={item._id}>
+                              {item.assembly_name}
+                            </option>
+                          ))}
                       </select>
                     )}
                     <select
@@ -842,10 +1064,18 @@ const Members = () => {
                       defaultValue={pageLimit}
                       onChange={(e) => setPageLimit(+e.target.value)}
                     >
-                      <option value={10}>10 प्रति पृष्ठ</option>
-                      <option value={20}>20 प्रति पृष्ठ</option>
-                      <option value={30}>30 प्रति पृष्ठ</option>
-                      <option value={40}>40 प्रति पृष्ठ</option>
+                      <option value={10}>
+                        10 {filterdata[checkLang].page}
+                      </option>
+                      <option value={20}>
+                        20 {filterdata[checkLang].page}
+                      </option>
+                      <option value={30}>
+                        30 {filterdata[checkLang].page}
+                      </option>
+                      <option value={40}>
+                        40 {filterdata[checkLang].page}
+                      </option>
                     </select>
                     <span className="sorting">
                       <button onClick={handleSort}>
@@ -904,7 +1134,7 @@ const Members = () => {
                                     alt="user"
                                     className="member_imgs"
                                   />
-                                  {name[0]}
+                                  {`${item?.basic_info?.surname}  ${item?.basic_info?.name}`}
                                 </Link>
                               </td>
                               <td>
@@ -975,8 +1205,7 @@ const Members = () => {
               <Col lg={4}>
                 <div className="assemblymember mb-2">
                   <h3 style={{ background: "#000088" }}>
-                    सांख्यिकीय विश्लेषण <br />
-                    प्रातिनिधिक
+                    {filterdata[checkLang].stat}
                   </h3>
                 </div>
                 <img className="w-100" src={Graph} alt="" />
