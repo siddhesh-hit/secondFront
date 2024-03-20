@@ -261,12 +261,9 @@ const Debate = () => {
         searchdata.trim()
       )}&members_name=${encodeURIComponent(
         search.members_name.trim()
-      )}&house=${house}&session=${session}&volume=${search.volume}&kramank=${
-        search.kramank
-      }&method=${search.method}&method_type=${
-        search.method_type
-      }&method_sub_type=${search.method_sub_type}&ministry=${
-        search.ministry_name
+      )}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank
+      }&method=${search.method}&method_type=${search.method_type
+      }&method_sub_type=${search.method_sub_type}&ministry=${search.ministry_name
       }`
       // &fromdate=${search.fromdate}&todate=${search.todate}
     )
@@ -313,8 +310,10 @@ const Debate = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      let house = search.house === "एकत्रित" ? "" : search.house;
+
       await getApi(
-        `debate/dumpOption?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -327,7 +326,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -340,7 +339,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}`
+        `debate/dumpOption?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -353,7 +352,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=volume&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=volume&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -366,7 +365,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=kramank&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=kramank&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -379,7 +378,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=ministry&topic=${searchdata}&members_name=${search.members_name}&house=${search.house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=ministry&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -860,9 +859,8 @@ const Debate = () => {
                   <div className="advancdeee">
                     <label>{councilDebate[checkLang].option1}</label>
                     <select
-                      className={`secondfilers ${
-                        disabledMethod ? "not-alllowed" : ""
-                      }`}
+                      className={`secondfilers ${disabledMethod ? "not-alllowed" : ""
+                        }`}
                       name="method"
                       onChange={(e) => {
                         handleChange(e);
@@ -882,9 +880,8 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option2}</label>
                     <select
-                      className={`secondfilers ${
-                        disabledMethodType ? "not-alllowed" : ""
-                      }`}
+                      className={`secondfilers ${disabledMethodType ? "not-alllowed" : ""
+                        }`}
                       name="method_type"
                       onChange={(e) => {
                         handleChange(e);
@@ -906,9 +903,8 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option3}</label>
                     <select
-                      className={`secondfilers ${
-                        disabledMethodSubType ? "not-alllowed" : ""
-                      }`}
+                      className={`secondfilers ${disabledMethodSubType ? "not-alllowed" : ""
+                        }`}
                       name="method_sub_type"
                       onChange={(e) => {
                         handleChange(e);
@@ -935,7 +931,7 @@ const Debate = () => {
                       name="ministry_name"
                       onChange={handleChange}
                     >
-                      <option hidden>मंत्रालय निवडा</option>
+                      <option hidden>विभाग निवडा</option>
                       {options?.ministry_name?.map((item, index) => (
                         <option key={index} value={item}>
                           {item}

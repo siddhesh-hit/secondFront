@@ -110,18 +110,18 @@ const MemberAssemblyDetails = () => {
                         <span>
                           {current.basic_info && current.basic_info.constituency
                             ? current.basic_info.constituency.council
-                                .constituency_name !== ""
+                              .constituency_name !== ""
                               ? current.basic_info.constituency.council
-                                  .constituency_name
+                                .constituency_name
                               : current.basic_info.constituency.assembly
-                                  .constituency_name !== ""
-                              ? current.basic_info.constituency.assembly
+                                .constituency_name !== ""
+                                ? current.basic_info.constituency.assembly
                                   .constituency_name
-                              : current.basic_info.constituency.assembly
+                                : current.basic_info.constituency.assembly
                                   .constituency_name
                             : "" + " " + current?.basic_info?.district
-                            ? current?.basic_info?.district?.checkLang?.district
-                            : ""}
+                              ? current?.basic_info?.district?.checkLang?.district
+                              : ""}
                         </span>
                       </p>
                       <p>
@@ -134,7 +134,21 @@ const MemberAssemblyDetails = () => {
                       </p>
                       <p>
                         {memberdetails[checkLang].dob} :{" "}
-                        <span>{current?.basic_info?.date_of_birth}</span>
+                        <span>
+                          <>
+                            {
+                              current?.basic_info?.date_of_birth === "0001-01-01" ? (
+                                <>
+                                  -
+                                </>
+                              ) : (
+                                <>
+                                  {current?.basic_info?.date_of_birth}
+                                </>
+                              )
+                            }
+                          </>
+                        </span>
                       </p>
                       <p>
                         {memberdetails[checkLang].placeof} :{" "}
@@ -197,18 +211,18 @@ const MemberAssemblyDetails = () => {
                         <span>
                           {current.basic_info && current.basic_info.constituency
                             ? current.basic_info.constituency.council
-                                .constituency_name !== ""
+                              .constituency_name !== ""
                               ? current.basic_info.constituency.council
-                                  .constituency_name
+                                .constituency_name
                               : current.basic_info.constituency.assembly
-                                  .constituency_name !== ""
-                              ? current.basic_info.constituency.assembly
+                                .constituency_name !== ""
+                                ? current.basic_info.constituency.assembly
                                   .constituency_name
-                              : current.basic_info.constituency.assembly
+                                : current.basic_info.constituency.assembly
                                   .constituency_name
                             : "" + " " + current?.basic_info?.district
-                            ? current?.basic_info?.district?.checkLang?.district
-                            : ""}
+                              ? current?.basic_info?.district?.checkLang?.district
+                              : ""}
                         </span>
                       </p>
                       <p>
@@ -221,7 +235,21 @@ const MemberAssemblyDetails = () => {
                       </p>
                       <p>
                         {memberdetails[checkLang].dob} :{" "}
-                        <span>{current?.basic_info?.date_of_birth}</span>
+                        <span>
+                          <>
+                            {
+                              current?.basic_info?.date_of_birth === "0001-01-01" ? (
+                                <>
+                                  -
+                                </>
+                              ) : (
+                                <>
+                                  {current?.basic_info?.date_of_birth}
+                                </>
+                              )
+                            }
+                          </>
+                        </span>
                       </p>
                       <p>
                         {memberdetails[checkLang].placeof} :{" "}
@@ -266,8 +294,8 @@ const MemberAssemblyDetails = () => {
                     </div>
                     <>
                       {current?.basic_info?.other_info === "" ||
-                      current?.basic_info?.other_info === "<p>-</p>" ||
-                      current?.basic_info?.other_info === "-" ? (
+                        current?.basic_info?.other_info === "<p>-</p>" ||
+                        current?.basic_info?.other_info === "-" ? (
                         <></>
                       ) : (
                         <div className="basic-info-data">
@@ -338,17 +366,17 @@ const MemberAssemblyDetails = () => {
                         <h3>{memberdetails[checkLang].electionres}</h3>
                         <p>
                           {current.election_data &&
-                          current.election_data.constituency &&
-                          current.election_data.constituency
+                            current.election_data.constituency &&
+                            current.election_data.constituency
                             ? current.election_data.constituency.council
-                                .constituency_name !== ""
+                              .constituency_name !== ""
                               ? current.election_data.constituency.council
-                                  .constituency_name
+                                .constituency_name
                               : current.election_data.constituency.assembly
-                                  .constituency_name !== ""
-                              ? current.election_data.constituency.assembly
+                                .constituency_name !== ""
+                                ? current.election_data.constituency.assembly
                                   .constituency_name
-                              : current.election_data.constituency.assembly
+                                : current.election_data.constituency.assembly
                                   .constituency_name
                             : "" + " " + " "}
                         </p>
@@ -458,8 +486,8 @@ const MemberAssemblyDetails = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {Debate?.data?.length > 0 &&
-                          Debate?.data?.map((item, index) => (
+                        {Debate?.data?.length > 0 ? (
+                          Debate.data.map((item, index) => (
                             <tr key={index}>
                               <td>{index + 1}</td>
                               <td>{item?.topic}</td>
@@ -478,7 +506,12 @@ const MemberAssemblyDetails = () => {
                                 </Link>
                               </td>
                             </tr>
-                          ))}
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan="6" className="text-center">No data found for provided query</td>
+                          </tr>
+                        )}
                       </tbody>
                     </table>
                     {Debate?.data?.length > 0 && (
@@ -489,10 +522,10 @@ const MemberAssemblyDetails = () => {
                           setCurrentPage(cp);
                         }}
                         initialPage={currentPage}
-                        // currentPage={currentPage}
-                        // setCurrentPage={setCurrentPage}
-                        // pageLimit={pageLimit}
-                        // totalCount={debate?.count}
+                      // currentPage={currentPage}
+                      // setCurrentPage={setCurrentPage}
+                      // pageLimit={pageLimit}
+                      // totalCount={debate?.count}
                       />
                     )}
                   </Col>

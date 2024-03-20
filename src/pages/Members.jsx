@@ -133,10 +133,10 @@ const Members = () => {
       search.house === "एकत्रित"
         ? ""
         : search.house === "विधानसभा"
-        ? "Assembly"
-        : search.house === "विधानपरिषद"
-        ? "Council"
-        : "";
+          ? "Assembly"
+          : search.house === "विधानपरिषद"
+            ? "Council"
+            : "";
     await getApi(
       `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}&fullname=${search.name}`
     )
@@ -182,10 +182,9 @@ const Members = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `member/option?id=basic_info.surname&basic_info.house=${
-          search.house === "एकत्रित"
-            ? ""
-            : search.house === "विधानसभा"
+        `member/option?id=basic_info.surname&basic_info.house=${search.house === "एकत्रित"
+          ? ""
+          : search.house === "विधानसभा"
             ? "Assembly"
             : "Council"
         }`
@@ -287,8 +286,8 @@ const Members = () => {
                             items={
                               debate.length > 0
                                 ? debate.map((item) => {
-                                    return { name: item.basic_info.name };
-                                  })
+                                  return { name: item.basic_info.name };
+                                })
                                 : memberName
                             }
                             placeholder={filterdata[checkLang].find}
@@ -466,8 +465,8 @@ const Members = () => {
                                 {item?.council?.constituency_name !== ""
                                   ? item?.council?.constituency_name
                                   : item?.assembly?.constituency_name !== ""
-                                  ? item?.assembly?.constituency_name
-                                  : item?.assembly?.constituency_name}
+                                    ? item?.assembly?.constituency_name
+                                    : item?.assembly?.constituency_name}
                               </option>
                             );
                           }
@@ -546,8 +545,8 @@ const Members = () => {
                           items={
                             debate.length > 0
                               ? debate.map((item) => {
-                                  return { name: item.basic_info.name };
-                                })
+                                return { name: item.basic_info.name };
+                              })
                               : memberName
                           }
                           placeholder={filterdata[checkLang].find}
@@ -725,8 +724,8 @@ const Members = () => {
                               {item?.council?.constituency_name !== ""
                                 ? item?.council?.constituency_name
                                 : item?.assembly?.constituency_name !== ""
-                                ? item?.assembly?.constituency_name
-                                : item?.assembly?.constituency_name}
+                                  ? item?.assembly?.constituency_name
+                                  : item?.assembly?.constituency_name}
                             </option>
                           );
                         }
@@ -932,24 +931,24 @@ const Members = () => {
                               <td>
                                 {item?.basic_info.constituency
                                   ? item?.basic_info?.constituency.council
-                                      ?.constituency_name !== ""
+                                    ?.constituency_name !== ""
                                     ? item?.basic_info?.constituency.council
-                                        ?.constituency_name
+                                      ?.constituency_name
                                     : item?.basic_info?.constituency.assembly
-                                        ?.constituency_name !== ""
-                                    ? item?.basic_info?.constituency?.assembly
+                                      ?.constituency_name !== ""
+                                      ? item?.basic_info?.constituency?.assembly
                                         ?.constituency_name
-                                    : item?.basic_info?.constituency?.assembly
+                                      : item?.basic_info?.constituency?.assembly
                                         ?.constituency_name
                                   : "" + " " + item?.basic_info?.district
-                                  ? item?.basic_info?.district?.checkLang
+                                    ? item?.basic_info?.district?.checkLang
                                       ?.district
-                                  : ""}
+                                    : ""}
                               </td>
                               <td>
                                 {item?.basic_info?.party
                                   ? item?.basic_info?.party[checkLang]
-                                      ?.party_name
+                                    ?.party_name
                                   : ""}
                               </td>
                             </tr>
