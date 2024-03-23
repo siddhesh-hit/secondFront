@@ -60,6 +60,10 @@ const Members = () => {
     ministry_name: "",
     fromdate: "",
     todate: "",
+    designation: "",
+    position: "",
+    officer: "",
+
   });
 
   const [options, setOptions] = useState({
@@ -70,6 +74,10 @@ const Members = () => {
     gender: [],
     ministry_name: [],
     assembly: [],
+    officer: [],
+    designation: [],
+    position: [],
+
 
   });
 
@@ -158,6 +166,9 @@ const Members = () => {
       district: "",
       gender: "",
       ministry_name: "",
+      officer: "",
+      designation: "",
+      position: "",
     }));
     debateFetch();
   };
@@ -177,6 +188,10 @@ const Members = () => {
       district: "",
       gender: "",
       ministry_name: "",
+      officer: "",
+      designation: "",
+      position: "",
+
     }));
     setText("");
 
@@ -222,7 +237,7 @@ const Members = () => {
     const fromdate = search.fromdate ? new Date(search.fromdate).getFullYear() : "";
     const todate = search.todate ? new Date(search.todate).getFullYear() : "";
     await getApi(
-      `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}&fullname=${searchdata}&fromdate=${fromdate}&todate=${todate}&assembly_number=${assembly_number}`
+      `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}&fullname=${searchdata}&fromdate=${fromdate}&todate=${todate}&assembly_number=${assembly_number}&officer=${search.officer}&designation=${search.designation}&position=${search.position}`
     )
       .then((res) => {
         setDebate(res.data.data);
@@ -247,7 +262,6 @@ const Members = () => {
         "_id": "",
         "assembly_number": "-",
         "assembly_name": "सर्व",
-
       }
       await getApi("assembly/option")
         .then((res) => {
@@ -321,6 +335,37 @@ const Members = () => {
           }
         })
         .catch((err) => console.log(err));
+      await getApi("officer/option")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              officer: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
+      await getApi("designation/option")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              designation: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
+      await getApi("position/option")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              position: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
+
     };
     fetchData();
   }, [checkLang, search.house,]);
@@ -639,6 +684,28 @@ const Members = () => {
               <div className="firstfilter">
                 <h3>{councilMember[checkLang].filter}</h3>
                 <Accordion className="filsss" defaultActiveKey={["1"]}>
+                  {/* <Accordion.Item eventKey="0">
+                    <Accordion.Header>
+                      {councilMember[checkLang].member}
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <div className="filtercontent">
+                        <ReactSearchAutocomplete
+                          className="mb-3 mt-2"
+                          items={
+                            debate.length > 0
+                              ? debate.map((item) => {
+                                return { name: item.basic_info.name };
+                              })
+                              : memberName
+                          }
+                          placeholder={filterdata[checkLang].find}
+                          onSearch={handleOnSearch}
+                          onSelect={handleOnSelect}
+                        />
+                      </div>
+                    </Accordion.Body>
+                  </Accordion.Item> */}
                   <Accordion.Item eventKey="1">
                     <Accordion.Header>
                       {councilMember[checkLang].house}
@@ -894,6 +961,54 @@ const Members = () => {
                         </option>
                       ))}
                     </select>
+                    <>
+                      <label>designation</label>
+                      <select
+                        className="secondfilers"
+                        value={search.designation}
+                        name="designation"
+                        onChange={handleChange}
+                      >
+                        <option hidden>designation</option>
+                        {options?.designation?.map((item, index) => (
+                          <option key={index} value={item._id}>
+                            {item["name"]}
+                          </option>
+                        ))}
+                      </select>
+                    </>
+                    <>
+                      <label>position</label>
+                      <select
+                        className="secondfilers"
+                        value={search.position}
+                        name="position"
+                        onChange={handleChange}
+                      >
+                        <option hidden>position</option>
+                        {options?.position?.map((item, index) => (
+                          <option key={index} value={item._id}>
+                            {item["name"]}
+                          </option>
+                        ))}
+                      </select>
+                    </>
+                    <>
+                      <label>officer</label>
+                      <select
+                        className="secondfilers"
+                        value={search.officer}
+                        name="officer"
+                        onChange={handleChange}
+                      >
+                        <option hidden>officer</option>
+                        {options?.officer?.map((item, index) => (
+                          <option key={index} value={item._id}>
+                            {item["name"]}
+                          </option>
+                        ))}
+                      </select>
+                    </>
                   </div>
                 )}
               </div>
