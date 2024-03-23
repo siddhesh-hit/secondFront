@@ -31,7 +31,7 @@ const MemberAssemblyDetails = () => {
 
   const fetchDebateById = async (name) => {
     await getApi(
-      `debate/fields?members_name=${name}&perPage=${currentPage}&perLimit=${pageLimit}`
+      `debate/dumpFields?topic=${name}&perPage=${currentPage}&perLimit=${pageLimit}`
     )
       .then((res) => setDebate({ data: res.data.data, count: res.data.count }))
       .catch((err) => console.log(err));
@@ -44,7 +44,7 @@ const MemberAssemblyDetails = () => {
   useEffect(() => {
     current.basic_info &&
       current.basic_info.name &&
-      fetchDebateById(current.basic_info.name);
+      fetchDebateById(current.basic_info.surname.trim() + " " + current.basic_info.name.trim());
   }, [current, currentPage]);
 
   // console.log(Object.keys(current?.basic_info?.assembly_number).length > 0);
@@ -553,6 +553,36 @@ const MemberAssemblyDetails = () => {
                     <div className="basic-info-data">
                       <p>{memberdetails[checkLang].pradesh} :</p>
                       <h6> {current?.basic_info?.foreign_migration}</h6>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </Tab>
+            <Tab
+              eventKey="पुरस्कार"
+              title={memberdetails[checkLang].awards}
+            >
+              <div className="basic-information">
+                <Row>
+                  <Col lg={3} className="memberproifleimg">
+                    <MemberAssemblyProfile
+                      name={`${current?.basic_info?.surname}  ${current?.basic_info?.name}`}
+                      memberprofile={
+                        ImageUrl +
+                        current?.basic_info?.profile?.destination +
+                        "/" +
+                        current?.basic_info?.profile?.filename
+                      }
+                    />
+                  </Col>
+                  <Col lg={6}>
+                    <div className="basic-info-data">
+                      <p>{memberdetails[checkLang].awards} :</p>
+                      <h6
+                        dangerouslySetInnerHTML={{
+                          __html: current?.basic_info?.awards,
+                        }}
+                      ></h6>
                     </div>
                   </Col>
                 </Row>
