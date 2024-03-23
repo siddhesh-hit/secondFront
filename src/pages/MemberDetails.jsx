@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Col, Container, Row, Tab, Tabs } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import Arrow from "../assets/debate/arrow.svg";
 import print from "../assets/print.svg";
@@ -22,6 +22,7 @@ const MemberAssemblyDetails = () => {
 
   const { lang, checkLang } = useLang();
   const { id } = useParams();
+  const { state } = useLocation()
 
   const fetchDataById = async () => {
     await getApiById("member", id)
@@ -69,6 +70,7 @@ const MemberAssemblyDetails = () => {
             </div>
           </Col>
         </Row>
+        <>{state.assembly ? <p>{current?.basic_info?.assembly_number?.assembly_name}</p> : ""}</>
       </Container>
       <Container fluid>
         <div className="memberdetailscontent">

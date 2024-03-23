@@ -45,7 +45,7 @@ const Members = () => {
   const { lang, checkLang } = useLang();
   const { house } = useParams();
 
-  const [assembly, setAssembly] = useState("65c3678e7f89a327721cceb1");
+  const [assembly, setAssembly] = useState("");
 
   const [search, setSearch] = useState({
     name: "",
@@ -112,39 +112,41 @@ const Members = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "fromdate" || name === "todate") {
-      setExtraDate((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
+    // if (name === "fromdate" || name === "todate") {
+    //   setExtraDate((prev) => ({
+    //     ...prev,
+    //     [name]: value,
+    //   }));
 
-      let date = new Date(value);
-      let day = date
-        .getDate()
-        .toString()
-        .split("")
-        .map((item) => numbers[item])
-        .join("");
-      let months = (date.getMonth() + 1).toString();
-      let monthh = numToYears[months];
-      let year = date.getFullYear();
-      let year1 = year
-        .toString()
-        .split("")
-        .map((item) => numbers[item])
-        .join("");
-      let newDate = `${day} ${monthh} ${year1}`;
-      setSearch((prev) => ({
-        ...prev,
-        [name]: newDate,
-      }));
-      // console.log(newDate)
-    } else {
-      setSearch((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    //   let date = new Date(value);
+    //   let day = date
+    //     .getDate()
+    //     .toString()
+    //     .split("")
+    //     .map((item) => numbers[item])
+    //     .join("");
+    //   let months = (date.getMonth() + 1).toString();
+    //   let monthh = numToYears[months];
+    //   let year = date.getFullYear();
+    //   let year1 = year
+    //     .toString()
+    //     .split("")
+    //     .map((item) => numbers[item])
+    //     .join("");
+    //   let newDate = `${day} ${monthh} ${year1}`;
+    //   setSearch((prev) => ({
+    //     ...prev,
+    //     [name]: newDate,
+    //   }));
+    //   // console.log(newDate)
+    // } 
+    // else 
+    // {
+    setSearch((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    // }
   };
 
   const handleReset = () => {
@@ -217,8 +219,10 @@ const Members = () => {
       }));
     }
     let assembly_number = search.house === "विधानपरिषद" ? "" : assembly;
+    const fromdate = search.fromdate ? new Date(search.fromdate).getFullYear() : "";
+    const todate = search.todate ? new Date(search.todate).getFullYear() : "";
     await getApi(
-      `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}&fullname=${searchdata}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}&assembly_number=${assembly_number}`
+      `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}&fullname=${searchdata}&fromdate=${fromdate}&todate=${todate}&assembly_number=${assembly_number}`
     )
       .then((res) => {
         setDebate(res.data.data);
@@ -239,13 +243,18 @@ const Members = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const defaultAssembly = {
+        "_id": "",
+        "assembly_number": "-",
+        "assembly_name": "सर्व",
 
+      }
       await getApi("assembly/option")
         .then((res) => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              assembly: res.data.data,
+              assembly: [defaultAssembly, ...res.data.data],
             }));
           }
         })
@@ -445,8 +454,9 @@ const Members = () => {
                                 disabled
                                 type="number"
                                 min={1987}
-                                max={2024}
+                                // max={new Date().getFullYear()}
                                 value={2011}
+
                               />
                             </Col>
                             <Col lg={6}>
@@ -456,7 +466,7 @@ const Members = () => {
                                 disabled
                                 type="number"
                                 min={1987}
-                                max={2024}
+                                // max={new Date().getFullYear()}
                                 value={2011}
                               />
                             </Col>
@@ -715,10 +725,10 @@ const Members = () => {
                                   ...prev,
                                   fromdate: date,
                                 }));
-                                setExtraDate((prev) => ({
-                                  ...prev,
-                                  fromdate: newDate,
-                                }));
+                                // setExtraDate((prev) => ({
+                                //   ...prev,
+                                //   fromdate: newDate,
+                                // }));
                               }}
                             />
                           </Col>
@@ -742,10 +752,10 @@ const Members = () => {
                                   ...prev,
                                   todate: date,
                                 }));
-                                setExtraDate((prev) => ({
-                                  ...prev,
-                                  todate: newDate,
-                                }));
+                                // setExtraDate((prev) => ({
+                                //   ...prev,
+                                //   todate: newDate,
+                                // }));
                               }}
                             />
                           </Col>
@@ -1122,6 +1132,7 @@ const Members = () => {
                               <td>
                                 <Link
                                   to={`/member-details/${item?._id}`}
+                                  state={{ assembly: search.house === "विधानपरिषद" ? false : true }}
                                   className="membernamee"
                                 >
                                   <img
