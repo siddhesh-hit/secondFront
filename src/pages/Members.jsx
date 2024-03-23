@@ -29,7 +29,6 @@ import { ReactTransliterate } from "react-transliterate";
 import "react-transliterate/dist/index.css";
 
 const Members = () => {
-  let url = new URLSearchParams(window.location.search);
   const [text, setText] = useState("");
   const [searchdata, setSearchdata] = useState("");
   const [debate, setDebate] = useState([]);
@@ -70,34 +69,12 @@ const Members = () => {
     gender: [],
     ministry_name: [],
     assembly: [],
-
   });
 
   const [extraDate, setExtraDate] = useState({
     fromdate: "",
     todate: "",
   });
-
-  let keyval = {
-    marathi: {
-      name: "नाम",
-      house: "सभागृह",
-      session: "अधिवेशन",
-      fromdate: "तारीख",
-      todate: "तारीख",
-      members_name: "सदस्यांचे नाव",
-      action: "क्रिया",
-    },
-    english: {
-      name: "Name",
-      house: "House",
-      session: "Session",
-      fromdate: "Date",
-      todate: "Date",
-      members_name: "Member Name",
-      action: "Action",
-    },
-  };
 
   const handleOnSearch = (string, results) => {
     // console.log({ string, results });
@@ -111,42 +88,11 @@ const Members = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    // if (name === "fromdate" || name === "todate") {
-    //   setExtraDate((prev) => ({
-    //     ...prev,
-    //     [name]: value,
-    //   }));
-
-    //   let date = new Date(value);
-    //   let day = date
-    //     .getDate()
-    //     .toString()
-    //     .split("")
-    //     .map((item) => numbers[item])
-    //     .join("");
-    //   let months = (date.getMonth() + 1).toString();
-    //   let monthh = numToYears[months];
-    //   let year = date.getFullYear();
-    //   let year1 = year
-    //     .toString()
-    //     .split("")
-    //     .map((item) => numbers[item])
-    //     .join("");
-    //   let newDate = `${day} ${monthh} ${year1}`;
-    //   setSearch((prev) => ({
-    //     ...prev,
-    //     [name]: newDate,
-    //   }));
-    //   // console.log(newDate)
-    // } 
-    // else 
-    // {
+    let { name, value } = e.target;
     setSearch((prev) => ({
       ...prev,
       [name]: value,
     }));
-    // }
   };
 
   const handleReset = () => {
@@ -207,10 +153,10 @@ const Members = () => {
       search.house === "एकत्रित"
         ? ""
         : search.house === "विधानसभा"
-          ? "Assembly"
-          : search.house === "विधानपरिषद"
-            ? "Council"
-            : "";
+        ? "Assembly"
+        : search.house === "विधानपरिषद"
+        ? "Council"
+        : "";
 
     if (searchdata) {
       setSearch((prev) => ({
@@ -218,9 +164,14 @@ const Members = () => {
         name: searchdata,
       }));
     }
+
     let assembly_number = search.house === "विधानपरिषद" ? "" : assembly;
-    const fromdate = search.fromdate ? new Date(search.fromdate).getFullYear() : "";
-    const todate = search.todate ? new Date(search.todate).getFullYear() : "";
+
+    let fromdate = search.fromdate
+      ? new Date(search.fromdate).getFullYear()
+      : "";
+    let todate = search.todate ? new Date(search.todate).getFullYear() : "";
+
     await getApi(
       `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}&fullname=${searchdata}&fromdate=${fromdate}&todate=${todate}&assembly_number=${assembly_number}`
     )
@@ -244,11 +195,10 @@ const Members = () => {
   useEffect(() => {
     const fetchData = async () => {
       const defaultAssembly = {
-        "_id": "",
-        "assembly_number": "-",
-        "assembly_name": "सर्व",
-
-      }
+        _id: "",
+        assembly_number: "-",
+        assembly_name: "सर्व",
+      };
       await getApi("assembly/option")
         .then((res) => {
           if (res.data.success) {
@@ -283,9 +233,10 @@ const Members = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `member/option?id=basic_info.surname&basic_info.house=${search.house === "एकत्रित"
-          ? ""
-          : search.house === "विधानसभा"
+        `member/option?id=basic_info.surname&basic_info.house=${
+          search.house === "एकत्रित"
+            ? ""
+            : search.house === "विधानसभा"
             ? "Assembly"
             : "Council"
         }`
@@ -323,14 +274,7 @@ const Members = () => {
         .catch((err) => console.log(err));
     };
     fetchData();
-  }, [checkLang, search.house,]);
-
-  // useEffect(() => {
-  //   if (paramsReady) {
-  //     console.log(search.house);
-  //     paramsReady && debateFetch();
-  //   }
-  // }, [paramsReady]);
+  }, [checkLang, search.house]);
 
   useEffect(() => {
     for (let key in search) {
@@ -344,15 +288,14 @@ const Members = () => {
     search.members_name,
     search.house,
     checkLang,
-    house, assembly
+    house,
+    assembly,
     // search,
   ]);
 
   useEffect(() => {
     debateFetch();
   }, [currentPage, pageLimit]);
-
-  // console.log(search);
 
   return (
     <div>
@@ -390,8 +333,8 @@ const Members = () => {
                             items={
                               debate.length > 0
                                 ? debate.map((item) => {
-                                  return { name: item.basic_info.name };
-                                })
+                                    return { name: item.basic_info.name };
+                                  })
                                 : memberName
                             }
                             placeholder={filterdata[checkLang].find}
@@ -456,7 +399,6 @@ const Members = () => {
                                 min={1987}
                                 // max={new Date().getFullYear()}
                                 value={2011}
-
                               />
                             </Col>
                             <Col lg={6}>
@@ -514,32 +456,6 @@ const Members = () => {
                         onChange={handleChange}
                       >
                         <option hidden>मतदारसंघनिहाय</option>
-                        {/* {options?.constituency?.map((item, index) => {
-                        const constituencyName =
-                          item[
-                            search.house === "विधानपरिषद"
-                              ? "council"
-                              : "assembly"
-                          ]?.constituency_name;
-                        const assemblyName =
-                          item[
-                            search.house === "विधानसभा" ? "assembly" : "council"
-                          ]?.constituency_name;
-                        if (assemblyName !== "") {
-                          return (
-                            <option key={index} value={item._id}>
-                              {assemblyName}
-                            </option>
-                          );
-                        } else if (constituencyName !== "") {
-                          return (
-                            <option key={index} value={item._id}>
-                              {constituencyName}
-                            </option>
-                          );
-                        }
-                        return null;
-                      })} */}
                         {options?.constituency?.map((item, index) => {
                           let constituencyName, assemblyName;
 
@@ -555,7 +471,10 @@ const Members = () => {
                                 {assemblyName}
                               </option>
                             );
-                          } else if (search.house === "विधानपरिषद" && constituencyName) {
+                          } else if (
+                            search.house === "विधानपरिषद" &&
+                            constituencyName
+                          ) {
                             return (
                               <option key={index} value={item._id}>
                                 {constituencyName}
@@ -567,8 +486,8 @@ const Members = () => {
                                 {item?.council?.constituency_name !== ""
                                   ? item?.council?.constituency_name
                                   : item?.assembly?.constituency_name !== ""
-                                    ? item?.assembly?.constituency_name
-                                    : item?.assembly?.constituency_name}
+                                  ? item?.assembly?.constituency_name
+                                  : item?.assembly?.constituency_name}
                               </option>
                             );
                           }
@@ -590,21 +509,27 @@ const Members = () => {
                         ))}
                       </select>
 
-                      {search.house === "विधानपरिषद" ? (<> </>) : (<> <label>जिल्हानिहाय</label>
-                        <select
-                          className="secondfilers"
-                          value={search.district}
-                          name="district"
-                          onChange={handleChange}
-                        >
-                          <option hidden>जिल्हानिहाय</option>
-                          {options?.district?.map((item, index) => (
-                            <option key={index} value={item._id}>
-                              {item[checkLang]["district"]}
-                            </option>
-                          ))}
-                        </select></>)}
-
+                      {search.house === "विधानपरिषद" ? (
+                        <> </>
+                      ) : (
+                        <>
+                          {" "}
+                          <label>जिल्हानिहाय</label>
+                          <select
+                            className="secondfilers"
+                            value={search.district}
+                            name="district"
+                            onChange={handleChange}
+                          >
+                            <option hidden>जिल्हानिहाय</option>
+                            {options?.district?.map((item, index) => (
+                              <option key={index} value={item._id}>
+                                {item[checkLang]["district"]}
+                              </option>
+                            ))}
+                          </select>
+                        </>
+                      )}
 
                       <label>लिंगनिहाय</label>
                       <select
@@ -650,8 +575,8 @@ const Members = () => {
                           items={
                             debate.length > 0
                               ? debate.map((item) => {
-                                return { name: item.basic_info.name };
-                              })
+                                  return { name: item.basic_info.name };
+                                })
                               : memberName
                           }
                           placeholder={filterdata[checkLang].find}
@@ -719,8 +644,9 @@ const Members = () => {
                               maxDate={new Date()}
                               onChange={(date) => {
                                 let changeDate = new Date(date);
-                                let newDate = `${changeDate.getDate()}-${changeDate.getMonth() + 1
-                                  }-${changeDate.getFullYear()}`;
+                                let newDate = `${changeDate.getDate()}-${
+                                  changeDate.getMonth() + 1
+                                }-${changeDate.getFullYear()}`;
                                 setSearch((prev) => ({
                                   ...prev,
                                   fromdate: date,
@@ -746,8 +672,9 @@ const Members = () => {
                               maxDate={new Date()}
                               onChange={(date) => {
                                 let changeDate = new Date(date);
-                                let newDate = `${changeDate.getDate()}-${changeDate.getMonth() + 1
-                                  }-${changeDate.getFullYear()}`;
+                                let newDate = `${changeDate.getDate()}-${
+                                  changeDate.getMonth() + 1
+                                }-${changeDate.getFullYear()}`;
                                 setSearch((prev) => ({
                                   ...prev,
                                   todate: date,
@@ -862,8 +789,8 @@ const Members = () => {
                               {item?.council?.constituency_name !== ""
                                 ? item?.council?.constituency_name
                                 : item?.assembly?.constituency_name !== ""
-                                  ? item?.assembly?.constituency_name
-                                  : item?.assembly?.constituency_name}
+                                ? item?.assembly?.constituency_name
+                                : item?.assembly?.constituency_name}
                             </option>
                           );
                         }
@@ -884,23 +811,26 @@ const Members = () => {
                         </option>
                       ))}
                     </select>
-                    {search.house === "विधानपरिषद" ? (<></>)
-                      : (
-                        <>
-                          <label>जिल्हानिहाय</label>
-                          <select
-                            className="secondfilers"
-                            value={search.district}
-                            name="district"
-                            onChange={handleChange}
-                          >
-                            <option hidden>जिल्हानिहाय</option>
-                            {options?.district?.map((item, index) => (
-                              <option key={index} value={item._id}>
-                                {item[checkLang]["district"]}
-                              </option>
-                            ))}
-                          </select> </>)}
+                    {search.house === "विधानपरिषद" ? (
+                      <></>
+                    ) : (
+                      <>
+                        <label>जिल्हानिहाय</label>
+                        <select
+                          className="secondfilers"
+                          value={search.district}
+                          name="district"
+                          onChange={handleChange}
+                        >
+                          <option hidden>जिल्हानिहाय</option>
+                          {options?.district?.map((item, index) => (
+                            <option key={index} value={item._id}>
+                              {item[checkLang]["district"]}
+                            </option>
+                          ))}
+                        </select>{" "}
+                      </>
+                    )}
 
                     <label>लिंगनिहाय</label>
                     <select
@@ -1132,7 +1062,12 @@ const Members = () => {
                               <td>
                                 <Link
                                   to={`/member-details/${item?._id}`}
-                                  state={{ assembly: search.house === "विधानपरिषद" ? false : true }}
+                                  state={{
+                                    assembly:
+                                      search.house === "विधानपरिषद"
+                                        ? false
+                                        : true,
+                                  }}
                                   className="membernamee"
                                 >
                                   <img
@@ -1151,24 +1086,24 @@ const Members = () => {
                               <td>
                                 {item?.basic_info.constituency
                                   ? item?.basic_info?.constituency.council
-                                    ?.constituency_name !== ""
-                                    ? item?.basic_info?.constituency.council
-                                      ?.constituency_name
-                                    : item?.basic_info?.constituency.assembly
                                       ?.constituency_name !== ""
-                                      ? item?.basic_info?.constituency?.assembly
+                                    ? item?.basic_info?.constituency.council
                                         ?.constituency_name
-                                      : item?.basic_info?.constituency?.assembly
+                                    : item?.basic_info?.constituency.assembly
+                                        ?.constituency_name !== ""
+                                    ? item?.basic_info?.constituency?.assembly
+                                        ?.constituency_name
+                                    : item?.basic_info?.constituency?.assembly
                                         ?.constituency_name
                                   : "" + " " + item?.basic_info?.district
-                                    ? item?.basic_info?.district?.checkLang
+                                  ? item?.basic_info?.district?.checkLang
                                       ?.district
-                                    : ""}
+                                  : ""}
                               </td>
                               <td>
                                 {item?.basic_info?.party
                                   ? item?.basic_info?.party[checkLang]
-                                    ?.party_name
+                                      ?.party_name
                                   : ""}
                               </td>
                             </tr>

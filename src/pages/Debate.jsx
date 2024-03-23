@@ -264,9 +264,12 @@ const Debate = () => {
         searchdata.trim()
       )}&members_name=${encodeURIComponent(
         search.members_name.trim()
-      )}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank
-      }&method=${search.method}&method_type=${search.method_type
-      }&method_sub_type=${search.method_sub_type}&ministry=${search.ministry_name
+      )}&house=${house}&session=${session}&volume=${search.volume}&kramank=${
+        search.kramank
+      }&method=${search.method}&method_type=${
+        search.method_type
+      }&method_sub_type=${search.method_sub_type}&ministry=${
+        search.ministry_name
       }&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
     )
       .then((res) => {
@@ -315,7 +318,13 @@ const Debate = () => {
       let house = search.house === "एकत्रित" ? "" : search.house;
 
       await getApi(
-        `debate/dumpOption?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
+        `debate/dumpOption?id=method&topic=${searchdata.trim()}&members_name=${
+          search.members_name
+        }&house=${house}&session=${search.session}&method_type=${
+          search.method_type
+        }&method_sub_type=${search.method_sub_type}&fromdate=${
+          extraDate.fromdate
+        }&todate=${extraDate.todate}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -328,7 +337,13 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_sub_type=${search.method_sub_type}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
+        `debate/dumpOption?id=method_type&topic=${searchdata.trim()}&members_name=${
+          search.members_name
+        }&house=${house}&session=${search.session}&method=${
+          search.method
+        }&method_sub_type=${search.method_sub_type}&fromdate=${
+          extraDate.fromdate
+        }&todate=${extraDate.todate}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -341,7 +356,13 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
+        `debate/dumpOption?id=method_sub_type&topic=${searchdata.trim()}&members_name=${
+          search.members_name
+        }&house=${house}&session=${search.session}&method=${
+          search.method
+        }&method_type=${search.method_type}&fromdate=${
+          extraDate.fromdate
+        }&todate=${extraDate.todate}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -354,7 +375,13 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=volume&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=volume&topic=${searchdata.trim()}&members_name=${
+          search.members_name
+        }&house=${house}&session=${search.session}&method=${
+          search.method
+        }&method_type=${search.method_type}&method_sub_type=${
+          search.method_sub_type
+        }`
       )
         .then((res) => {
           if (res.data.success) {
@@ -367,7 +394,13 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=kramank&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=kramank&topic=${searchdata.trim()}&members_name=${
+          search.members_name
+        }&house=${house}&session=${search.session}&method=${
+          search.method
+        }&method_type=${search.method_type}&method_sub_type=${
+          search.method_sub_type
+        }`
       )
         .then((res) => {
           if (res.data.success) {
@@ -380,7 +413,13 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=ministry&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=ministry&topic=${searchdata.trim()}&members_name=${
+          search.members_name
+        }&house=${house}&session=${search.session}&method=${
+          search.method
+        }&method_type=${search.method_type}&method_sub_type=${
+          search.method_sub_type
+        }`
       )
         .then((res) => {
           if (res.data.success) {
@@ -395,9 +434,10 @@ const Debate = () => {
     };
     fetchData();
   }, [
-    search.session,
-    search.house,
+    searchdata,
     search.members_name,
+    search.house,
+    search.session,
     search.method,
     search.method_type,
     search.method_sub_type,
@@ -411,7 +451,6 @@ const Debate = () => {
 
   return (
     <div>
-      {/* <PopupHome show={modalShow} onHide={() => setModalShow(false)} /> */}
       <Container fluid className="debatepage">
         <Row>
           <Col lg={3} className="d-lg-none mb-3">
@@ -874,8 +913,9 @@ const Debate = () => {
                   <div className="advancdeee">
                     <label>{councilDebate[checkLang].option1}</label>
                     <select
-                      className={`secondfilers ${disabledMethod ? "not-alllowed" : ""
-                        }`}
+                      className={`secondfilers ${
+                        disabledMethod ? "not-alllowed" : ""
+                      }`}
                       name="method"
                       onChange={(e) => {
                         handleChange(e);
@@ -895,8 +935,9 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option2}</label>
                     <select
-                      className={`secondfilers ${disabledMethodType ? "not-alllowed" : ""
-                        }`}
+                      className={`secondfilers ${
+                        disabledMethodType ? "not-alllowed" : ""
+                      }`}
                       name="method_type"
                       onChange={(e) => {
                         handleChange(e);
@@ -918,8 +959,9 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option3}</label>
                     <select
-                      className={`secondfilers ${disabledMethodSubType ? "not-alllowed" : ""
-                        }`}
+                      className={`secondfilers ${
+                        disabledMethodSubType ? "not-alllowed" : ""
+                      }`}
                       name="method_sub_type"
                       onChange={(e) => {
                         handleChange(e);
