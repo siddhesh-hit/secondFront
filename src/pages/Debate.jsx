@@ -162,6 +162,7 @@ const Debate = () => {
         .map((item) => numbers[item])
         .join("");
       let newDate = `${day} ${monthh} ${year1}`;
+      let server = `${day}-${monthh}-${year1}`;
       setSearch((prev) => ({
         ...prev,
         [name]: newDate,
@@ -263,11 +264,13 @@ const Debate = () => {
         searchdata.trim()
       )}&members_name=${encodeURIComponent(
         search.members_name.trim()
-      )}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank
-      }&method=${search.method}&method_type=${search.method_type
-      }&method_sub_type=${search.method_sub_type}&ministry=${search.ministry_name
-      }`
-      // &fromdate=${search.fromdate}&todate=${search.todate}
+      )}&house=${house}&session=${session}&volume=${search.volume}&kramank=${
+        search.kramank
+      }&method=${search.method}&method_type=${
+        search.method_type
+      }&method_sub_type=${search.method_sub_type}&ministry=${
+        search.ministry_name
+      }&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
     )
       .then((res) => {
         if (res.data.success) {
@@ -315,7 +318,7 @@ const Debate = () => {
       let house = search.house === "एकत्रित" ? "" : search.house;
 
       await getApi(
-        `debate/dumpOption?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -328,7 +331,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_sub_type=${search.method_sub_type}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -341,7 +344,7 @@ const Debate = () => {
         .catch((err) => console.log(err));
 
       await getApi(
-        `debate/dumpOption?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}`
+        `debate/dumpOption?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -401,6 +404,8 @@ const Debate = () => {
     search.method,
     search.method_type,
     search.method_sub_type,
+    search.fromdate,
+    search.todate,
   ]);
 
   if (loading) {
@@ -817,6 +822,8 @@ const Debate = () => {
                               className="form-control"
                               type="date"
                               name="fromdate"
+                              min={"1937-01-01"}
+                              max={new Date()}
                               value={extraDate?.fromdate}
                               style={{ padding: "8px 5px" }}
                             />
@@ -828,12 +835,21 @@ const Debate = () => {
                               className="form-control"
                               type="date"
                               name="todate"
+                              min={
+                                extraDate?.fromdate
+                                  ? extraDate?.fromdate
+                                  : "1937-01-01"
+                              }
+                              max={new Date()}
                               value={extraDate?.todate}
                               style={{ padding: "8px 5px" }}
                             />
                           </Col>
                           <Col lg={6}>
-                            <button className="apply1">
+                            <button
+                              className="apply1"
+                              onClick={() => handleSearch()}
+                            >
                               {councilDebate[checkLang].button1}
                             </button>
                           </Col>
@@ -861,8 +877,9 @@ const Debate = () => {
                   <div className="advancdeee">
                     <label>{councilDebate[checkLang].option1}</label>
                     <select
-                      className={`secondfilers ${disabledMethod ? "not-alllowed" : ""
-                        }`}
+                      className={`secondfilers ${
+                        disabledMethod ? "not-alllowed" : ""
+                      }`}
                       name="method"
                       onChange={(e) => {
                         handleChange(e);
@@ -882,8 +899,9 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option2}</label>
                     <select
-                      className={`secondfilers ${disabledMethodType ? "not-alllowed" : ""
-                        }`}
+                      className={`secondfilers ${
+                        disabledMethodType ? "not-alllowed" : ""
+                      }`}
                       name="method_type"
                       onChange={(e) => {
                         handleChange(e);
@@ -905,8 +923,9 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option3}</label>
                     <select
-                      className={`secondfilers ${disabledMethodSubType ? "not-alllowed" : ""
-                        }`}
+                      className={`secondfilers ${
+                        disabledMethodSubType ? "not-alllowed" : ""
+                      }`}
                       name="method_sub_type"
                       onChange={(e) => {
                         handleChange(e);
