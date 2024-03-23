@@ -96,7 +96,6 @@ const MemberAssemblyDetails = () => {
                 <Row>
                   <Col lg={3} className="memberproifleimg">
                     <MemberAssemblyProfile
-                      name={`${current?.basic_info?.surname}  ${current?.basic_info?.name}`}
                       memberprofile={
                         ImageUrl +
                         current?.basic_info?.profile?.destination +
@@ -107,6 +106,7 @@ const MemberAssemblyDetails = () => {
                   </Col>
                   <Col lg={6}>
                     <div className="basic-info-data">
+                      <p>{`${current?.basic_info?.surname}  ${current?.basic_info?.name}`}</p>
                       <p>
                         {memberdetails[checkLang].const} :{" "}
                         <span>

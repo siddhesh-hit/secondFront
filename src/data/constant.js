@@ -2024,8 +2024,8 @@ const searchdetails = {
     searchdetails: `तपशील शोधा`,
     totaldata: `सर्व शोध डेटा`,
     memberprofile: `सदस्य प्रोफाइल`,
-    debatelist: `सभागृहांचे कार्यवृत्त यादी`,
-    debatedetail: `सभागृहांचे कार्यवृत्त तपशील`,
+    debatelist: `सभागृहांचे कार्यवाही वृत्त यादी`,
+    debatedetail: `सभागृहांचे कार्यवाही वृत्त तपशील`,
     memberdetail: `सदस्य तपशील`,
   },
   english: {

@@ -313,9 +313,11 @@ const Debate = () => {
   useEffect(() => {
     const fetchData = async () => {
       let house = search.house === "एकत्रित" ? "" : search.house;
-
       await getApi(
-        `debate/dumpOption?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
+        `debate/dumpOption?id=method&topic=${searchdata.trim()}&members_name=${search.members_name
+        }&house=${house}&session=${search.session}&method_type=${search.method_type
+        }&method_sub_type=${search.method_sub_type}&fromdate=${extraDate.fromdate
+        }&todate=${extraDate.todate}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -326,9 +328,11 @@ const Debate = () => {
           }
         })
         .catch((err) => console.log(err));
-
       await getApi(
-        `debate/dumpOption?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_sub_type=${search.method_sub_type}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
+        `debate/dumpOption?id=method_type&topic=${searchdata.trim()}&members_name=${search.members_name
+        }&house=${house}&session=${search.session}&method=${search.method
+        }&method_sub_type=${search.method_sub_type}&fromdate=${extraDate.fromdate
+        }&todate=${extraDate.todate}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -339,9 +343,11 @@ const Debate = () => {
           }
         })
         .catch((err) => console.log(err));
-
       await getApi(
-        `debate/dumpOption?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
+        `debate/dumpOption?id=method_sub_type&topic=${searchdata.trim()}&members_name=${search.members_name
+        }&house=${house}&session=${search.session}&method=${search.method
+        }&method_type=${search.method_type}&fromdate=${extraDate.fromdate
+        }&todate=${extraDate.todate}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -352,9 +358,11 @@ const Debate = () => {
           }
         })
         .catch((err) => console.log(err));
-
       await getApi(
-        `debate/dumpOption?id=volume&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=volume&topic=${searchdata.trim()}&members_name=${search.members_name
+        }&house=${house}&session=${search.session}&method=${search.method
+        }&method_type=${search.method_type}&method_sub_type=${search.method_sub_type
+        }`
       )
         .then((res) => {
           if (res.data.success) {
@@ -365,9 +373,11 @@ const Debate = () => {
           }
         })
         .catch((err) => console.log(err));
-
       await getApi(
-        `debate/dumpOption?id=kramank&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=kramank&topic=${searchdata.trim()}&members_name=${search.members_name
+        }&house=${house}&session=${search.session}&method=${search.method
+        }&method_type=${search.method_type}&method_sub_type=${search.method_sub_type
+        }`
       )
         .then((res) => {
           if (res.data.success) {
@@ -378,9 +388,11 @@ const Debate = () => {
           }
         })
         .catch((err) => console.log(err));
-
       await getApi(
-        `debate/dumpOption?id=ministry&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
+        `debate/dumpOption?id=ministry&topic=${searchdata.trim()}&members_name=${search.members_name
+        }&house=${house}&session=${search.session}&method=${search.method
+        }&method_type=${search.method_type}&method_sub_type=${search.method_sub_type
+        }`
       )
         .then((res) => {
           if (res.data.success) {
@@ -395,9 +407,10 @@ const Debate = () => {
     };
     fetchData();
   }, [
-    search.session,
-    search.house,
+    searchdata,
     search.members_name,
+    search.house,
+    search.session,
     search.method,
     search.method_type,
     search.method_sub_type,
@@ -694,15 +707,6 @@ const Debate = () => {
             <div className="filters">
               <div className="firstfilter">
                 <h3>{councilDebate[checkLang].filter}</h3>
-                <h4>{councilDebate[checkLang].tableBody.member}</h4>
-                <ReactSearchAutocomplete
-                  items={memberName}
-                  placeholder={councilDebate[checkLang].search1}
-                  onSearch={handleOnSearch}
-                  onSelect={handleOnSelect}
-                  inputSearchString={search.members_name}
-                  closeOnSelect={true}
-                />
                 <Accordion className="filsss" defaultActiveKey={["0"]}>
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>

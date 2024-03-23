@@ -638,29 +638,7 @@ const Members = () => {
             <div className="filters">
               <div className="firstfilter">
                 <h3>{councilMember[checkLang].filter}</h3>
-                <Accordion className="filsss" defaultActiveKey={["0"]}>
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>
-                      {councilMember[checkLang].member}
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      <div className="filtercontent">
-                        <ReactSearchAutocomplete
-                          className="mb-3 mt-2"
-                          items={
-                            debate.length > 0
-                              ? debate.map((item) => {
-                                return { name: item.basic_info.name };
-                              })
-                              : memberName
-                          }
-                          placeholder={filterdata[checkLang].find}
-                          onSearch={handleOnSearch}
-                          onSelect={handleOnSelect}
-                        />
-                      </div>
-                    </Accordion.Body>
-                  </Accordion.Item>
+                <Accordion className="filsss" defaultActiveKey={["1"]}>
                   <Accordion.Item eventKey="1">
                     <Accordion.Header>
                       {councilMember[checkLang].house}
