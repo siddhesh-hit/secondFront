@@ -1414,6 +1414,7 @@ const memberdetails = {
     business: `व्यवसाय`,
     caddress: `पत्ता`,
     oaddress: `इतर पत्ता`,
+    name: `नाव`
   },
   english: {
     title: `Member Details`,
@@ -1451,6 +1452,7 @@ const memberdetails = {
     business: `Business`,
     caddress: `Current address`,
     oaddress: `Other address`,
+    name: `Name`
   },
 };
 

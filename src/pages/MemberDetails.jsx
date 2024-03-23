@@ -108,6 +108,10 @@ const MemberAssemblyDetails = () => {
                   <Col lg={6}>
                     <div className="basic-info-data">
                       <p>
+                        {memberdetails[checkLang].name} :{" "}
+                        <span>{current?.basic_info?.name}</span>
+                      </p>
+                      <p>
                         {memberdetails[checkLang].const} :{" "}
                         <span>
                           {current.basic_info && current.basic_info.constituency
@@ -136,7 +140,9 @@ const MemberAssemblyDetails = () => {
                       </p>
                       <p>
                         {memberdetails[checkLang].dob} :{" "}
-                        <span>{current?.basic_info?.date_of_birth}</span>
+                        <span>{current?.basic_info?.date_of_birth ? new Date(current.basic_info.date_of_birth).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }) : ""}</span>
+
+
                       </p>
                       <p>
                         {memberdetails[checkLang].placeof} :{" "}
