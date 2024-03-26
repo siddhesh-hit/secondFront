@@ -31,7 +31,7 @@ const MemberAssemblyDetails = () => {
 
   const fetchDebateById = async (name) => {
     await getApi(
-      `debate/fields?members_name=${name}&perPage=${currentPage}&perLimit=${pageLimit}`
+      `debate/dumpFields?members_name=${name}&perPage=${currentPage}&perLimit=${pageLimit}`
     )
       .then((res) => setDebate({ data: res.data.data, count: res.data.count }))
       .catch((err) => console.log(err));
