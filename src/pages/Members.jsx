@@ -63,6 +63,8 @@ const Members = () => {
     designation: "",
     position: "",
     officer: "",
+    constituency_types:"",
+    isHouse: "",
 
   });
 
@@ -77,6 +79,7 @@ const Members = () => {
     officer: [],
     designation: [],
     position: [],
+    constituency_types: [],
 
 
   });
@@ -120,6 +123,13 @@ const Members = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if(name==="constituency_types"){
+      let isHouse = e.target.options[e.target.selectedIndex].getAttribute("isHouse");
+      setSearch((prev) => ({
+        ...prev,
+        isHouse: isHouse,
+      }));
+    }
     // if (name === "fromdate" || name === "todate") {
     //   setExtraDate((prev) => ({
     //     ...prev,
@@ -169,6 +179,10 @@ const Members = () => {
       officer: "",
       designation: "",
       position: "",
+      fromdate: "",
+      todate: "",
+      constituency_types: "",
+
     }));
     debateFetch();
   };
@@ -191,6 +205,9 @@ const Members = () => {
       officer: "",
       designation: "",
       position: "",
+      fromdate: "",
+      todate: "",
+      constituency_types: "",
 
     }));
     setText("");
@@ -236,8 +253,9 @@ const Members = () => {
     let assembly_number = search.house === "विधानपरिषद" ? "" : assembly;
     const fromdate = search.fromdate ? new Date(search.fromdate).getFullYear() : "";
     const todate = search.todate ? new Date(search.todate).getFullYear() : "";
+    let constituency_types = search.constituency_types;
     await getApi(
-      `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}&fullname=${searchdata}&fromdate=${fromdate}&todate=${todate}&assembly_number=${assembly_number}&officer=${search.officer}&designation=${search.designation}&position=${search.position}`
+      `member/memberdetails?perPage=${currentPage}&perLimit=${pageLimit}&name=${search.members_name}&house=${house}&party=${search.party}&constituency=${search.constituency}&surname=${search.surname}&district=${search.district}&gender=${search.gender}&fullname=${searchdata}&fromdate=${fromdate}&todate=${todate}&assembly_number=${assembly_number}&presiding=${search.officer}&designation=${search.designation}&legislative_position=${search.position}&constituency_types=${search.constituency_types}`
     )
       .then((res) => {
         setDebate(res.data.data);
@@ -288,10 +306,67 @@ const Members = () => {
       await getApi("constituency/option")
         .then((res) => {
           if (res.data.success) {
+           let seenTypes = new Set(); // Set to store unique constituency_type values
+            let constituencytype = res.data.data.map(item => {
+              let type;
+              if (item.isHouse === "Assembly" ) {
+                type = item.assembly.constituency_type?item.assembly.constituency_type.trim():"General"
+                // return {
+                //   constituency_type: type,
+                //   _id: item._id,
+                //   isHouse: item.isHouse,
+                //   // name:item.basic_info.name
+                // };
+              } else if (item.isHouse === "Council" ) {
+                type = item.council.constituency_type? item.council.constituency_type.trim(): "General";
+                // return {
+                //   constituency_type: type,
+                //   _id: item._id,
+                //   isHouse: item.isHouse,
+                //   // name:item.basic_info.name
+                // };
+              } 
+              
+              // Check if the type is not undefined and not seen before
+              if (type !== undefined && !seenTypes.has(type)) {
+                seenTypes.add(type); // Add the type to the set
+                return {
+                  constituency_type: type,
+                  _id: item._id,
+                  isHouse: item.isHouse
+                };
+              }
+            }).filter(item => item !== undefined);
+            
+            console.log("constituencytype>>>>", constituencytype);
+            
+            // let emptyconstituencytype = res.data.data.map(item => {
+            //   if (item.isHouse === "Assembly" && item.assembly.constituency_type === "") {
+            //     return {
+            //       constituency_type: item.assembly.constituency_type,
+            //       _id: item._id,
+            //       isHouse: item.isHouse,
+            //       name:item.basic_info.name
+            //     };
+            //   } else if(item.isHouse === "Council" && item.council.constituency_type === "") {
+            //     return {
+            //       constituency_type: item.council.constituency_type,
+            //       _id: item._id,
+            //       isHouse: item.isHouse
+            //     };
+            //   }
+            // }).filter(item => item !== undefined);
+            // console.log("emptyconstituencytype>>>>", emptyconstituencytype);
+            
             setOptions((prev) => ({
               ...prev,
               constituency: res.data.data,
-            }));
+              constituency_types: constituencytype,
+            }))
+            // setOptions((prev) => ({
+            //   ...prev,
+            //   constituency_types: res.data.data,
+            // }))
           }
         })
         .catch((err) => console.log(err));
@@ -559,32 +634,6 @@ const Members = () => {
                         onChange={handleChange}
                       >
                         <option hidden>मतदारसंघनिहाय</option>
-                        {/* {options?.constituency?.map((item, index) => {
-                        const constituencyName =
-                          item[
-                            search.house === "विधानपरिषद"
-                              ? "council"
-                              : "assembly"
-                          ]?.constituency_name;
-                        const assemblyName =
-                          item[
-                            search.house === "विधानसभा" ? "assembly" : "council"
-                          ]?.constituency_name;
-                        if (assemblyName !== "") {
-                          return (
-                            <option key={index} value={item._id}>
-                              {assemblyName}
-                            </option>
-                          );
-                        } else if (constituencyName !== "") {
-                          return (
-                            <option key={index} value={item._id}>
-                              {constituencyName}
-                            </option>
-                          );
-                        }
-                        return null;
-                      })} */}
                         {options?.constituency?.map((item, index) => {
                           let constituencyName, assemblyName;
 
@@ -851,32 +900,6 @@ const Members = () => {
                       onChange={handleChange}
                     >
                       <option hidden>मतदारसंघनिहाय</option>
-                      {/* {options?.constituency?.map((item, index) => {
-                        const constituencyName =
-                          item[
-                            search.house === "विधानपरिषद"
-                              ? "council"
-                              : "assembly"
-                          ]?.constituency_name;
-                        const assemblyName =
-                          item[
-                            search.house === "विधानसभा" ? "assembly" : "council"
-                          ]?.constituency_name;
-                        if (assemblyName !== "") {
-                          return (
-                            <option key={index} value={item._id}>
-                              {assemblyName}
-                            </option>
-                          );
-                        } else if (constituencyName !== "") {
-                          return (
-                            <option key={index} value={item._id}>
-                              {constituencyName}
-                            </option>
-                          );
-                        }
-                        return null;
-                      })} */}
                       {options?.constituency?.map((item, index) => {
                         let constituencyName, assemblyName;
 
@@ -913,6 +936,23 @@ const Members = () => {
                           );
                         }
                         return null;
+                      })}
+                    </select>
+                    <label>मतदारसंघनिहाय Type</label>
+                    <select
+                      className="secondfilers"
+                      value={search.constituency_types}
+                      name="constituency_types"
+                      onChange={handleChange}
+                    >
+                      <option hidden>मतदारसंघनिहाय Type </option>
+                      {options?.constituency_types?.map((item, index) => {
+                          return (
+                            <option key={index} value={item._id} isHouse={item.isHouse}>
+                              {item.constituency_type}
+                            </option>
+                          );
+                        
                       })}
                     </select>
                     <label>आडनावानुसार</label>
