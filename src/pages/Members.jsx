@@ -947,14 +947,14 @@ const Members = () => {
                             ))}
                           </select> </>)}
 
-                    <label>लिंगनिहाय</label>
+                    <label>स्त्री/पुरुष</label>
                     <select
                       className="secondfilers"
                       value={search.gender}
                       name="gender"
                       onChange={handleChange}
                     >
-                      <option hidden>लिंगनिहाय</option>
+                      <option hidden>स्त्री/पुरुष</option>
                       {options?.gender?.map((item, index) => (
                         <option key={index} value={item._id}>
                           {item[checkLang]["gender"]}
@@ -962,14 +962,14 @@ const Members = () => {
                       ))}
                     </select>
                     <>
-                      <label>designation</label>
+                      <label>पद</label>
                       <select
                         className="secondfilers"
                         value={search.designation}
                         name="designation"
                         onChange={handleChange}
                       >
-                        <option hidden>designation</option>
+                        <option hidden>पद</option>
                         {options?.designation?.map((item, index) => (
                           <option key={index} value={item._id}>
                             {item["name"]}
@@ -978,14 +978,14 @@ const Members = () => {
                       </select>
                     </>
                     <>
-                      <label>position</label>
+                      <label>स्थिती</label>
                       <select
                         className="secondfilers"
                         value={search.position}
                         name="position"
                         onChange={handleChange}
                       >
-                        <option hidden>position</option>
+                        <option hidden>स्थिती</option>
                         {options?.position?.map((item, index) => (
                           <option key={index} value={item._id}>
                             {item["name"]}
@@ -994,14 +994,14 @@ const Members = () => {
                       </select>
                     </>
                     <>
-                      <label>officer</label>
+                      <label>अधिकारी</label>
                       <select
                         className="secondfilers"
                         value={search.officer}
                         name="officer"
                         onChange={handleChange}
                       >
-                        <option hidden>officer</option>
+                        <option hidden>अधिकारी</option>
                         {options?.officer?.map((item, index) => (
                           <option key={index} value={item._id}>
                             {item["name"]}

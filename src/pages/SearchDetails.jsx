@@ -91,7 +91,8 @@ const SearchDetails = () => {
                                   <h4>
                                     <Link
                                       to={`/member-details/${item?._id}`}
-                                      target="_blank"
+                                      state={{ assembly: search.house === "विधानपरिषद" ? false : true }}
+                                      className="membernamee"
                                     >
                                       {item.basic_info.name +
                                         item.basic_info.surname}
@@ -101,7 +102,8 @@ const SearchDetails = () => {
                                 <span className="demo_list_inner">
                                   <Link
                                     to={`/member-details/${item?._id}`}
-                                    target="_blank"
+                                    state={{ assembly: search.house === "विधानपरिषद" ? false : true }}
+                                    className="membernamee"
                                   >
                                     {searchdetails[checkLang].memberdetail}
                                   </Link>
