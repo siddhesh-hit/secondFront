@@ -264,9 +264,12 @@ const Debate = () => {
         searchdata.trim()
       )}&members_name=${encodeURIComponent(
         search.members_name.trim()
-      )}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank
-      }&method=${search.method}&method_type=${search.method_type
-      }&method_sub_type=${search.method_sub_type}&ministry=${search.ministry_name
+      )}&house=${house}&session=${session}&volume=${search.volume}&kramank=${
+        search.kramank
+      }&method=${search.method}&method_type=${
+        search.method_type
+      }&method_sub_type=${search.method_sub_type}&ministry=${
+        search.ministry_name
       }&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
     )
       .then((res) => {
@@ -874,8 +877,9 @@ const Debate = () => {
                   <div className="advancdeee">
                     <label>{councilDebate[checkLang].option1}</label>
                     <select
-                      className={`secondfilers ${disabledMethod ? "not-alllowed" : ""
-                        }`}
+                      className={`secondfilers ${
+                        disabledMethod ? "not-alllowed" : ""
+                      }`}
                       name="method"
                       onChange={(e) => {
                         handleChange(e);
@@ -895,8 +899,9 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option2}</label>
                     <select
-                      className={`secondfilers ${disabledMethodType ? "not-alllowed" : ""
-                        }`}
+                      className={`secondfilers ${
+                        disabledMethodType ? "not-alllowed" : ""
+                      }`}
                       name="method_type"
                       onChange={(e) => {
                         handleChange(e);
@@ -918,8 +923,9 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option3}</label>
                     <select
-                      className={`secondfilers ${disabledMethodSubType ? "not-alllowed" : ""
-                        }`}
+                      className={`secondfilers ${
+                        disabledMethodSubType ? "not-alllowed" : ""
+                      }`}
                       name="method_sub_type"
                       onChange={(e) => {
                         handleChange(e);
@@ -1239,7 +1245,10 @@ const Debate = () => {
                           </p>
                         </td>
                         <td className="imagee">
-                          <Link to={`/DebateDetails?id=${item._id}`}>
+                          <Link
+                            to={`/DebateDetails?id=${item._id}`}
+                            target="_blank"
+                          >
                             <i className="fa fa-eye" />
                           </Link>
                           <a
