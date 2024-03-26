@@ -1245,7 +1245,10 @@ const Debate = () => {
                           </p>
                         </td>
                         <td className="imagee">
-                          <Link to={`/DebateDetails?id=${item._id}`}>
+                          <Link
+                            to={`/DebateDetails?id=${item._id}`}
+                            target="_blank"
+                          >
                             <i className="fa fa-eye" />
                           </Link>
                           <a
