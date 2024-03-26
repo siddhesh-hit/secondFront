@@ -754,6 +754,16 @@ const Debate = () => {
                     <Accordion.Body>
                       <div className="filtercontent">
                         <div className="datacheck">
+                          <label>{filterdata[checkLang].all}</label>
+                          <Form.Check
+                            aria-label="option 4"
+                            name="session"
+                            checked={search.session === "सर्व"}
+                            value={"सर्व"}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="datacheck">
                           <label>{filterdata[checkLang].budget}</label>
                           <Form.Check
                             aria-label="option 6"
@@ -793,16 +803,6 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "विशेष"}
                             value={"विशेष"}
-                            onChange={handleChange}
-                          />
-                        </div>
-                        <div className="datacheck">
-                          <label>{filterdata[checkLang].all}</label>
-                          <Form.Check
-                            aria-label="option 4"
-                            name="session"
-                            checked={search.session === "सर्व"}
-                            value={"सर्व"}
                             onChange={handleChange}
                           />
                         </div>

@@ -48,13 +48,13 @@ const MemberAssemblyDetails = () => {
       fetchDebateById(current.basic_info.surname.trim() + " " + current.basic_info.name.trim());
   }, [current, currentPage]);
 
-  // console.log(Object.keys(current?.basic_info?.assembly_number).length > 0);
+  console.log(current?.basic_info?.date_of_birth);
 
   return (
     <div className="memberassemdetails">
       <Container fluid>
         <Row>
-          <Col lg={4}>
+          <Col lg={6}>
             <div className="breadcumbsss">
               <div className="countdebate">
                 <Link to="/">
@@ -66,11 +66,12 @@ const MemberAssemblyDetails = () => {
                 </Link>
                 <img src={Arrow} alt="" />
                 <span>{memberdetails[checkLang].title}</span>
+                <img src={Arrow} alt="" />
+                <span><>{state.assembly ? <span>{current?.basic_info?.assembly_number?.assembly_name}</span> : ""}</></span>
               </div>
             </div>
           </Col>
         </Row>
-        <>{state.assembly ? <p>{current?.basic_info?.assembly_number?.assembly_name}</p> : ""}</>
       </Container>
       <Container fluid>
         <div className="memberdetailscontent">
@@ -140,11 +141,31 @@ const MemberAssemblyDetails = () => {
                       </p>
                       <p>
                         {memberdetails[checkLang].dob} :{" "}
-                        <span>{current?.basic_info?.date_of_birth ? new Date(current.basic_info.date_of_birth).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }) : ""}</span>
+                        <>
+                          {
+                            current?.basic_info?.date_of_birth === "0001-01-01" ? (
+                              <>
+                                -
+                              </>
+                            ) : (
+                              <>
+                                <span>{current?.basic_info?.date_of_birth ? new Date(current.basic_info.date_of_birth).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }) : ""}</span>
+                              </>
+                            )
+                          }
+                        </>
                       </p>
                       <p>
                         {memberdetails[checkLang].placeof} :{" "}
                         <span>{current?.basic_info?.place_of_birth}</span>
+                      </p>
+                      <p>
+                        {memberdetails[checkLang].email} :{" "}
+                        <span>{current?.basic_info?.email}</span>
+                      </p>
+                      <p>
+                        {memberdetails[checkLang].mobile} :{" "}
+                        <span>{current?.basic_info?.mobile_number}</span>
                       </p>
                       <p>
                         {memberdetails[checkLang].edu} :{" "}
@@ -187,7 +208,6 @@ const MemberAssemblyDetails = () => {
                 <Row>
                   <Col lg={3} className="memberproifleimg">
                     <MemberAssemblyProfile
-                      name={`${current?.basic_info?.surname}  ${current?.basic_info?.name}`}
                       memberprofile={
                         ImageUrl +
                         current?.basic_info?.profile?.destination +
@@ -198,6 +218,7 @@ const MemberAssemblyDetails = () => {
                   </Col>
                   <Col lg={6}>
                     <div className="basic-info-data">
+                      <p>{`${current?.basic_info?.surname}  ${current?.basic_info?.name}`}</p>
                       <p>
                         {memberdetails[checkLang].const} :{" "}
                         <span>
@@ -236,7 +257,7 @@ const MemberAssemblyDetails = () => {
                                 </>
                               ) : (
                                 <>
-                                  {current?.basic_info?.date_of_birth}
+                                  <span>{current?.basic_info?.date_of_birth ? new Date(current.basic_info.date_of_birth).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }) : ""}</span>
                                 </>
                               )
                             }
@@ -246,6 +267,14 @@ const MemberAssemblyDetails = () => {
                       <p>
                         {memberdetails[checkLang].placeof} :{" "}
                         <span>{current?.basic_info?.place_of_birth}</span>
+                      </p>
+                      <p>
+                        {memberdetails[checkLang].email} :{" "}
+                        <span>{current?.basic_info?.email}</span>
+                      </p>
+                      <p>
+                        {memberdetails[checkLang].mobile} :{" "}
+                        <span>{current?.basic_info?.mobile_number}</span>
                       </p>
                       <p>
                         {memberdetails[checkLang].edu} :{" "}
