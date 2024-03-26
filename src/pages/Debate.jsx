@@ -264,9 +264,12 @@ const Debate = () => {
         searchdata.trim()
       )}&members_name=${encodeURIComponent(
         search.members_name.trim()
-      )}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank
-      }&method=${search.method}&method_type=${search.method_type
-      }&method_sub_type=${search.method_sub_type}&ministry=${search.ministry_name
+      )}&house=${house}&session=${session}&volume=${search.volume}&kramank=${
+        search.kramank
+      }&method=${search.method}&method_type=${
+        search.method_type
+      }&method_sub_type=${search.method_sub_type}&ministry=${
+        search.ministry_name
       }&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
     )
       .then((res) => {
@@ -313,11 +316,9 @@ const Debate = () => {
   useEffect(() => {
     const fetchData = async () => {
       let house = search.house === "एकत्रित" ? "" : search.house;
+
       await getApi(
-        `debate/dumpOption?id=method&topic=${searchdata.trim()}&members_name=${search.members_name
-        }&house=${house}&session=${search.session}&method_type=${search.method_type
-        }&method_sub_type=${search.method_sub_type}&fromdate=${extraDate.fromdate
-        }&todate=${extraDate.todate}`
+        `debate/dumpOption?id=method&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -328,11 +329,9 @@ const Debate = () => {
           }
         })
         .catch((err) => console.log(err));
+
       await getApi(
-        `debate/dumpOption?id=method_type&topic=${searchdata.trim()}&members_name=${search.members_name
-        }&house=${house}&session=${search.session}&method=${search.method
-        }&method_sub_type=${search.method_sub_type}&fromdate=${extraDate.fromdate
-        }&todate=${extraDate.todate}`
+        `debate/dumpOption?id=method_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_sub_type=${search.method_sub_type}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -343,11 +342,9 @@ const Debate = () => {
           }
         })
         .catch((err) => console.log(err));
+
       await getApi(
-        `debate/dumpOption?id=method_sub_type&topic=${searchdata.trim()}&members_name=${search.members_name
-        }&house=${house}&session=${search.session}&method=${search.method
-        }&method_type=${search.method_type}&fromdate=${extraDate.fromdate
-        }&todate=${extraDate.todate}`
+        `debate/dumpOption?id=method_sub_type&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -358,11 +355,9 @@ const Debate = () => {
           }
         })
         .catch((err) => console.log(err));
+
       await getApi(
-        `debate/dumpOption?id=volume&topic=${searchdata.trim()}&members_name=${search.members_name
-        }&house=${house}&session=${search.session}&method=${search.method
-        }&method_type=${search.method_type}&method_sub_type=${search.method_sub_type
-        }`
+        `debate/dumpOption?id=volume&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -373,11 +368,9 @@ const Debate = () => {
           }
         })
         .catch((err) => console.log(err));
+
       await getApi(
-        `debate/dumpOption?id=kramank&topic=${searchdata.trim()}&members_name=${search.members_name
-        }&house=${house}&session=${search.session}&method=${search.method
-        }&method_type=${search.method_type}&method_sub_type=${search.method_sub_type
-        }`
+        `debate/dumpOption?id=kramank&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -388,11 +381,9 @@ const Debate = () => {
           }
         })
         .catch((err) => console.log(err));
+
       await getApi(
-        `debate/dumpOption?id=ministry&topic=${searchdata.trim()}&members_name=${search.members_name
-        }&house=${house}&session=${search.session}&method=${search.method
-        }&method_type=${search.method_type}&method_sub_type=${search.method_sub_type
-        }`
+        `debate/dumpOption?id=ministry&topic=${searchdata}&members_name=${search.members_name}&house=${house}&session=${search.session}&method=${search.method}&method_type=${search.method_type}&method_sub_type=${search.method_sub_type}`
       )
         .then((res) => {
           if (res.data.success) {
@@ -407,10 +398,9 @@ const Debate = () => {
     };
     fetchData();
   }, [
-    searchdata,
-    search.members_name,
-    search.house,
     search.session,
+    search.house,
+    search.members_name,
     search.method,
     search.method_type,
     search.method_sub_type,
@@ -707,6 +697,15 @@ const Debate = () => {
             <div className="filters">
               <div className="firstfilter">
                 <h3>{councilDebate[checkLang].filter}</h3>
+                <h4>{councilDebate[checkLang].tableBody.member}</h4>
+                <ReactSearchAutocomplete
+                  items={memberName}
+                  placeholder={councilDebate[checkLang].search1}
+                  onSearch={handleOnSearch}
+                  onSelect={handleOnSelect}
+                  inputSearchString={search.members_name}
+                  closeOnSelect={true}
+                />
                 <Accordion className="filsss" defaultActiveKey={["0"]}>
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>
@@ -754,16 +753,6 @@ const Debate = () => {
                     <Accordion.Body>
                       <div className="filtercontent">
                         <div className="datacheck">
-                          <label>{filterdata[checkLang].all}</label>
-                          <Form.Check
-                            aria-label="option 4"
-                            name="session"
-                            checked={search.session === "सर्व"}
-                            value={"सर्व"}
-                            onChange={handleChange}
-                          />
-                        </div>
-                        <div className="datacheck">
                           <label>{filterdata[checkLang].budget}</label>
                           <Form.Check
                             aria-label="option 6"
@@ -803,6 +792,16 @@ const Debate = () => {
                             name="session"
                             checked={search.session === "विशेष"}
                             value={"विशेष"}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="datacheck">
+                          <label>{filterdata[checkLang].all}</label>
+                          <Form.Check
+                            aria-label="option 4"
+                            name="session"
+                            checked={search.session === "सर्व"}
+                            value={"सर्व"}
                             onChange={handleChange}
                           />
                         </div>
@@ -878,8 +877,9 @@ const Debate = () => {
                   <div className="advancdeee">
                     <label>{councilDebate[checkLang].option1}</label>
                     <select
-                      className={`secondfilers ${disabledMethod ? "not-alllowed" : ""
-                        }`}
+                      className={`secondfilers ${
+                        disabledMethod ? "not-alllowed" : ""
+                      }`}
                       name="method"
                       onChange={(e) => {
                         handleChange(e);
@@ -899,8 +899,9 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option2}</label>
                     <select
-                      className={`secondfilers ${disabledMethodType ? "not-alllowed" : ""
-                        }`}
+                      className={`secondfilers ${
+                        disabledMethodType ? "not-alllowed" : ""
+                      }`}
                       name="method_type"
                       onChange={(e) => {
                         handleChange(e);
@@ -922,8 +923,9 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option3}</label>
                     <select
-                      className={`secondfilers ${disabledMethodSubType ? "not-alllowed" : ""
-                        }`}
+                      className={`secondfilers ${
+                        disabledMethodSubType ? "not-alllowed" : ""
+                      }`}
                       name="method_sub_type"
                       onChange={(e) => {
                         handleChange(e);
@@ -1243,7 +1245,10 @@ const Debate = () => {
                           </p>
                         </td>
                         <td className="imagee">
-                          <Link to={`/DebateDetails?id=${item._id}`}>
+                          <Link
+                            to={`/DebateDetails?id=${item._id}`}
+                            target="_blank"
+                          >
                             <i className="fa fa-eye" />
                           </Link>
                           <a
