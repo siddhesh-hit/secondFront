@@ -2959,7 +2959,19 @@ p.demophase {
     border-radius: 5px;
 }
 
-.not-alllowed{
+.not-alllowed {
     cursor: not-allowed;
-  pointer-events: all !important;
+    pointer-events: all !important;
+}
+
+.datacheck1 label {
+    font-size: 15px;
+}
+
+.datacheck label {
+    font-size: 15px;
+}
+
+select.secondfilers.not-alllowed {
+    background: #d2d2d2;
 }
