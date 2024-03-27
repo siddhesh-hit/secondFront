@@ -63,6 +63,7 @@ const Pagination = ({ totalCount, perPage, handlePageChange, initialPage }) => {
     }
   };
 
+
   const goToNextPage = () => {
     if (currentPage < numberOfPages - 1) {
       setCurrentPage(currentPage + 1);

@@ -355,7 +355,7 @@ const MemberAssemblyDetails = () => {
                       <ul>
                         {current?.political_journey?.map((item, index) => (
                           <li key={index}>
-                            <b>{item?.date.split("-")[0]}</b> : {item?.title}
+                            <b>{new Date(item?.date).getFullYear()}</b> : {item?.title}
                           </li>
                         ))}
                       </ul>
