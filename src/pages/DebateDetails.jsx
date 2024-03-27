@@ -171,7 +171,7 @@ const DebateDetails = () => {
                           मंत्रालय
                         </td>
                         <td style={{ textAlign: "left" }}>
-                          <span>{debate.ministry_name}</span>
+                          <span>{debate.ministry}</span>
                         </td>
                       </tr>
                       <tr>
