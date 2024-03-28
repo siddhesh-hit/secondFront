@@ -2930,7 +2930,7 @@ p.demophase {
 }
 
 .rotating-squares-loader {
-    position: absolute;
+    /* position: absolute;
     width: 100%;
     top: 0;
     height: 100%;
@@ -2938,7 +2938,12 @@ p.demophase {
     display: flex;
     justify-content: center;
     vertical-align: middle;
-    padding-top: 17%;
+    padding-top: 17%; */
+    height: 90vh;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 @keyframes rotate {
@@ -2974,4 +2979,9 @@ p.demophase {
 
 select.secondfilers.not-alllowed {
     background: #d2d2d2;
+}
+
+
+.react-datepicker-popper {
+    left: 50px !important;
 }

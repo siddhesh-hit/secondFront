@@ -1,6 +1,6 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
-import { postApi } from "../services/axiosInterceptors";
+import { getApi, postApi } from "../services/axiosInterceptors";
 import { userRegisterValidation } from "../validators/UserSchema";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { header, register } from "../data/constant";
 import useLang from "../hooks/useLang";
 
 const Register = () => {
+  const [intrest, seIntrest] = useState([]);
   const { lang, checkLang } = useLang();
   const navigate = useNavigate();
   const eighteenYearsAgo = new Date();
@@ -20,14 +21,21 @@ const Register = () => {
     confirmPassword: "",
     phone_number: "",
     gender: "",
+    intrest_area: "",
     date_of_birth: eighteenYearsAgo,
     designation: "Public",
     user_image: null,
   });
+
+  console.log(userData)
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
   const handleChange = (name, value) => {
+
+    console.log(name, value)
+
     setuserData((prev) => ({
       ...prev,
       [name]: value,
@@ -69,6 +77,24 @@ const Register = () => {
     window.sessionStorage.setItem("lang", newLang);
     window.dispatchEvent(new CustomEvent("langChange"));
   };
+
+
+  const fetchData = async () => {
+    await getApi("/navigation")
+      .then((res) => {
+        if (res.data.success) {
+          seIntrest(res.data.data);
+
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  // console.log(register[checkLang].intrest);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div>
       <div className="container-fluid loginboxpage">
@@ -197,6 +223,31 @@ const Register = () => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label className="form-label">
+                      {register[checkLang].intrest}<span className="required">*</span>
+                    </label>
+                    <div className="mb-4 input-group">
+                      <span className="input-group-text" id="basic-addon1">
+                        <i className="fa fa-user" aria-hidden="true" />
+                      </span>
+                      <select
+                        aria-label="User Type Selection"
+                        name="intrest_area"
+                        // value={userData.intrest_area}
+                        onChange={(e) => handleChange("intrest_area", e.target.value)}
+                        placeholder="लिंग"
+                        className="form-select"
+                      >
+                        <option hidden>{register[checkLang].intrest}</option>
+                        {intrest?.map((item, index) => (
+                          <option key={index} value={item._id}>
+                            {item[checkLang].navigation}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label className="form-label">
                       {register[checkLang].mobile}<span className="required">*</span>
                     </label>
                     <div className="mb-4 input-group">
@@ -239,7 +290,6 @@ const Register = () => {
                         <option value="">{register[checkLang].selectgen}</option>
                         <option value="male">{register[checkLang].male}</option>
                         <option value="female">{register[checkLang].female}</option>
-                        <option value="other">{register[checkLang].others}</option>
                       </select>
                     </div>
                   </div>

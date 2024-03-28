@@ -63,6 +63,7 @@ const Members = () => {
     position: "",
     officer: "",
     constituency_types: "",
+    constituency_types: "",
     isHouse: "",
   });
 
@@ -262,7 +263,9 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              assembly: [defaultAssembly, ...res.data.data],
+              assembly: [defaultAssembly, ...res.data.data].sort(
+                (a, b) => a.assembly_number - b.assembly_number
+              ),
             }));
           }
         })
@@ -273,7 +276,11 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              party: res.data.data,
+              party: res.data.data.sort((a, b) =>
+                a[checkLang]["party_name"].localeCompare(
+                  b[checkLang]["party_name"]
+                )
+              ),
             }));
           }
         })
@@ -366,7 +373,7 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              surname: res.data.data,
+              surname: res.data.data.sort((a, b) => a.localeCompare(b)),
             }));
           }
         })
@@ -377,7 +384,9 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              district: res.data.data,
+              district: res.data.data.sort((a, b) =>
+                a[checkLang]["district"].localeCompare(b[checkLang]["district"])
+              ),
             }));
           }
         })
@@ -388,7 +397,9 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              gender: res.data.data,
+              gender: res.data.data.sort((a, b) =>
+                a[checkLang].gender.localeCompare(b[checkLang].gender)
+              ),
             }));
           }
         })
@@ -398,7 +409,9 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              officer: res.data.data,
+              officer: res.data.data.sort((a, b) =>
+                a.name.localeCompare(b.name)
+              ),
             }));
           }
         })
@@ -408,7 +421,9 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              designation: res.data.data,
+              designation: res.data.data.sort((a, b) =>
+                a.name.localeCompare(b.name)
+              ),
             }));
           }
         })
@@ -418,7 +433,9 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              position: res.data.data,
+              position: res.data.data.sort((a, b) =>
+                a.name.localeCompare(b.name)
+              ),
             }));
           }
         })
@@ -814,6 +831,7 @@ const Members = () => {
                             <DatePicker
                               className="form-control"
                               selected={search.todate}
+                              disabled={search.fromdate ? false : true}
                               showYearPicker
                               placeholderText="To"
                               dateFormat="yyyy"
