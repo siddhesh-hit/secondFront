@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -28,6 +28,7 @@ import { councilDebate, filterdata } from "../data/constant";
 import { ministry } from "../data/ministry";
 import { numbers, numToYears } from "../utils/marathitoenglish";
 import Loader from "../components/common/Loader";
+import ReactDatePicker from "react-datepicker";
 
 const Debate = () => {
   const [debate, setDebate] = useState([]);
@@ -161,13 +162,16 @@ const Debate = () => {
         .split("")
         .map((item) => numbers[item])
         .join("");
-      let newDate = `${day} ${monthh} ${year1}`;
-      let server = `${day}-${monthh}-${year1}`;
+      let newDate = `${year1}-${monthh}-${day}`;
+      // let server = `${day}-${monthh}-${year1}`;
+
+      console.log(newDate)
+
       setSearch((prev) => ({
         ...prev,
         [name]: newDate,
       }));
-      // console.log(newDate)
+
     } else {
       setSearch((prev) => ({
         ...prev,
@@ -195,10 +199,10 @@ const Debate = () => {
     setDisabledMethodType(false);
     setDisabledMethodSubType(false);
 
-    handleSearch();
+    // handleSearch();
   };
 
-  const handleStart = () => {
+  const handleStart = useCallback(() => {
     setSearchdata("");
     setSearch((prev) => ({
       ...prev,
@@ -212,17 +216,17 @@ const Debate = () => {
       method_type: "",
       method_sub_type: "",
       ministry_name: "",
-    }));
+    }))
     setText("");
     setDisabledMethod(false);
     setDisabledMethodType(false);
     setDisabledMethodSubType(false);
 
-    setSearchdata("") &&
-      Promise.resolve().then(() => {
-        handleSearch();
-      });
-  };
+    setSearch((prev) => {
+      handleSearch()
+      return prev
+    })
+  }, [])
 
   const handleSort = () => {
     // console.log(debate)
@@ -264,12 +268,9 @@ const Debate = () => {
         searchdata.trim()
       )}&members_name=${encodeURIComponent(
         search.members_name.trim()
-      )}&house=${house}&session=${session}&volume=${search.volume}&kramank=${
-        search.kramank
-      }&method=${search.method}&method_type=${
-        search.method_type
-      }&method_sub_type=${search.method_sub_type}&ministry=${
-        search.ministry_name
+      )}&house=${house}&session=${session}&volume=${search.volume}&kramank=${search.kramank
+      }&method=${search.method}&method_type=${search.method_type
+      }&method_sub_type=${search.method_sub_type}&ministry=${search.ministry_name
       }&fromdate=${extraDate.fromdate}&todate=${extraDate.todate}`
     )
       .then((res) => {
@@ -697,7 +698,7 @@ const Debate = () => {
             <div className="filters">
               <div className="firstfilter">
                 <h3>{councilDebate[checkLang].filter}</h3>
-                <h4>{councilDebate[checkLang].tableBody.member}</h4>
+                {/* <h4>{councilDebate[checkLang].tableBody.member}</h4>
                 <ReactSearchAutocomplete
                   items={memberName}
                   placeholder={councilDebate[checkLang].search1}
@@ -705,7 +706,7 @@ const Debate = () => {
                   onSelect={handleOnSelect}
                   inputSearchString={search.members_name}
                   closeOnSelect={true}
-                />
+                /> */}
                 <Accordion className="filsss" defaultActiveKey={["0"]}>
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>
@@ -817,33 +818,100 @@ const Debate = () => {
                         <Row className="daterange">
                           <Col lg={6}>
                             <label>{filterdata[checkLang].from}</label>
-                            <input
-                              onChange={handleChange}
+                            {/* <ReactDatePicker
+                              peekNextMonth
+                              showMonthDropdown
+                              showYearDropdown
+                              dropdownMode="select"
+                              placeholderText={'DD/MM/YYYY'}
+                              dateFormat="dd/MM/yyyy"
+                              selected={extraDate.fromdate}
+                              minDate={"1937/01/01"}
+                              maxDate={new Date()}
+                              onChange={(date) => {
+                                console.log(date)
+                                let newDate = new Date(date);
+                                let dd = newDate.getDate();
+                                let mm = newDate.getMonth() + 1;
+                                let yyyy = newDate.getFullYear();
+                                if (dd < 10) {
+                                  dd = `0${dd}`;
+                                }
+                                if (mm < 10) {
+                                  mm = `0${mm}`;
+                                }
+                                let checkDate = `${yyyy}-${mm}-${dd}`;
+
+                                setExtraDate({ ...extraDate, fromdate: checkDate });
+                                setSearch({ ...search, fromdate: checkDate });
+                              }}
                               className="form-control"
+                              style={{ padding: "8px 5px" }}
+                            /> */}
+                            <input
                               type="date"
                               name="fromdate"
+                              value={searchdata?.fromdate}
                               min={"1937-01-01"}
-                              max={new Date()}
-                              value={extraDate?.fromdate}
+                              max={new Date().toISOString().split('T')[0]}
+                              onChange={handleChange}
+                              onKeyDown={e => e.preventDefault()}
+                              className="form-control"
                               style={{ padding: "8px 5px" }}
                             />
                           </Col>
                           <Col lg={6}>
                             <label>{filterdata[checkLang].to}</label>
                             <input
-                              onChange={handleChange}
-                              className="form-control"
                               type="date"
                               name="todate"
+                              value={searchdata?.todate}
                               min={
                                 extraDate?.fromdate
                                   ? extraDate?.fromdate
                                   : "1937-01-01"
                               }
-                              max={new Date()}
-                              value={extraDate?.todate}
+                              max={new Date().toISOString().split('T')[0]}
+                              onChange={handleChange}
+                              onKeyDown={e => e.preventDefault()}
+                              disabled={search.fromdate ? false : true}
+                              className="form-control"
                               style={{ padding: "8px 5px" }}
                             />
+                            {/* <ReactDatePicker
+                              peekNextMonth
+                              showMonthDropdown
+                              showYearDropdown
+                              dropdownMode="select"
+                              placeholderText={'DD/MM/YYYY'}
+                              selected={extraDate.todate}
+                              disabled={search.fromdate ? false : true}
+                              minDate={
+                                extraDate?.fromdate
+                                  ? extraDate?.fromdate
+                                  : "1937-01-01"
+                              }
+                              maxDate={new Date()}
+                              onChange={(date) => {
+                                console.log(date)
+                                let newDate = new Date(date);
+                                let dd = newDate.getDate();
+                                let mm = newDate.getMonth() + 1;
+                                let yyyy = newDate.getFullYear();
+                                if (dd < 10) {
+                                  dd = `0${dd}`;
+                                }
+                                if (mm < 10) {
+                                  mm = `0${mm}`;
+                                }
+                                let checkDate = `${yyyy}-${mm}-${dd}`;
+
+                                setExtraDate({ ...extraDate, todate: checkDate });
+                                setSearch({ ...search, todate: checkDate });
+                              }}
+                              className="form-control"
+                              style={{ padding: "8px 5px" }}
+                            /> */}
                           </Col>
                           <Col lg={6}>
                             <button
@@ -877,9 +945,8 @@ const Debate = () => {
                   <div className="advancdeee">
                     <label>{councilDebate[checkLang].option1}</label>
                     <select
-                      className={`secondfilers ${
-                        disabledMethod ? "not-alllowed" : ""
-                      }`}
+                      className={`secondfilers ${disabledMethod ? "not-alllowed" : ""
+                        }`}
                       name="method"
                       onChange={(e) => {
                         handleChange(e);
@@ -899,9 +966,8 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option2}</label>
                     <select
-                      className={`secondfilers ${
-                        disabledMethodType ? "not-alllowed" : ""
-                      }`}
+                      className={`secondfilers ${disabledMethodType ? "not-alllowed" : ""
+                        }`}
                       name="method_type"
                       onChange={(e) => {
                         handleChange(e);
@@ -923,9 +989,8 @@ const Debate = () => {
                     </select>
                     <label>{councilDebate[checkLang].option3}</label>
                     <select
-                      className={`secondfilers ${
-                        disabledMethodSubType ? "not-alllowed" : ""
-                      }`}
+                      className={`secondfilers ${disabledMethodSubType ? "not-alllowed" : ""
+                        }`}
                       name="method_sub_type"
                       onChange={(e) => {
                         handleChange(e);
@@ -1034,11 +1099,11 @@ const Debate = () => {
                       ? (checkBool = true)
                       : (checkBool = false);
                     return search[key] === "" || key === "todate" ? (
-                      <React.Fragment key={index}></React.Fragment>
+                      <></>
                     ) : (
                       <React.Fragment key={index}>
                         {checkBool ? (
-                          <React.Fragment key={index}>
+                          <>
                             <OverlayTrigger
                               delay={{ hide: 450, show: 300 }}
                               overlay={(props) => (
@@ -1050,7 +1115,9 @@ const Debate = () => {
                             >
                               <li>
                                 <a>
-                                  {search.fromdate} - {search.todate}
+                                  {
+                                    checkLang === "marathi" ? `${search.fromdate} - ${search.todate}` : `${extraDate.fromdate} - ${extraDate.todate}`
+                                  }
                                 </a>
                                 <button
                                   onClick={() => {
@@ -1069,9 +1136,9 @@ const Debate = () => {
                                 ></button>
                               </li>
                             </OverlayTrigger>
-                          </React.Fragment>
+                          </>
                         ) : (
-                          <React.Fragment key={index}>
+                          <>
                             <OverlayTrigger
                               delay={{ hide: 450, show: 300 }}
                               overlay={(props) => (
@@ -1102,7 +1169,7 @@ const Debate = () => {
                                 ></button>
                               </li>
                             </OverlayTrigger>
-                          </React.Fragment>
+                          </>
                         )}
                       </React.Fragment>
                     );
@@ -1120,10 +1187,9 @@ const Debate = () => {
                       <span>{councilDebate[checkLang].title}</span>
                     </div>
                     <p>
-                      {" "}
                       {debate?.count
-                        ? `[${debate?.count} परिणाम]`
-                        : "[0 परिणाम]"}
+                        ? `[${debate?.count} ${checkLang === "marathi" ? "परिणाम" : "Results"}]`
+                        : `[0 ${checkLang === "marathi" ? "परिणाम" : "Results"}]`}
                     </p>
                   </div>
                 </Col>
@@ -1204,53 +1270,65 @@ const Debate = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {debate?.data?.map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>
-                          <HighlightSentence
-                            data={item.topic}
-                            search={search?.topic}
-                          />
-                        </td>
-                        <td>
-                          <HighlightSentence
-                            data={item.house}
-                            search={search?.house}
-                          />
-                        </td>
-                        <td>
-                          <HighlightSentence
-                            data={item.session}
-                            search={search?.session}
-                          />
-                        </td>
-                        <td>
-                          <HighlightSentence
-                            data={item.date}
-                            search={search?.date}
-                          />
-                        </td>
-                        <td>
-                          <p>
-                            <HighlightSentence
-                              data={
-                                // twoEntry
-                                //   ? name[0] + "...."
-                                //   : name[0] + name[1] + "...."
-                                item?.members_name
-                              }
-                              search={search?.members_name}
-                            />
-                          </p>
-                        </td>
-                        <td className="imagee">
+                  {debate?.data?.map((item, index) => (
+                    <tr key={index}>
+                      <td>
+                        <HighlightSentence
+                          data={item.topic}
+                          search={search.topic}
+                        />
+                      </td>
+                      <td>
+                        <HighlightSentence
+                          data={item.house}
+                          search={search.house}
+                        />
+                      </td>
+                      <td>
+                        <HighlightSentence
+                          data={item.session}
+                          search={search.session}
+                        />
+                      </td>
+                      <td>
+                        <HighlightSentence
+                          data={item.date}
+                          search={search.date}
+                        />
+                      </td>
+                      <td>
+                        <HighlightSentence
+                          data={item.members_name}
+                          search={search?.members_name ? search?.members_name : search?.topic}
+                        />
+                      </td>
+                      <td className="imagee">
+                        <OverlayTrigger
+                          delay={{ hide: 450, show: 300 }}
+                          overlay={(props) => (
+                            <Tooltip {...props}>
+                              {councilDebate[checkLang].view}
+                            </Tooltip>
+                          )}
+                          placement="top"
+                        >
                           <Link
                             to={`/DebateDetails?id=${item._id}`}
                             target="_blank"
                           >
                             <i className="fa fa-eye" />
                           </Link>
+                        </OverlayTrigger>
+
+                        <OverlayTrigger
+                          delay={{ hide: 450, show: 300 }}
+                          overlay={(props) => (
+                            <Tooltip {...props}>
+                              {councilDebate[checkLang].pdf}
+                            </Tooltip>
+                          )}
+                          placement="top"
+                        >
                           <a
                             href={"http://103.112.121.109:4000" + item.fileurl}
                             target="_blank"
@@ -1258,10 +1336,10 @@ const Debate = () => {
                           >
                             <img src={PDF} alt="" />
                           </a>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                        </OverlayTrigger>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             ) : (

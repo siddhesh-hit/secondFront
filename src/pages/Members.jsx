@@ -63,7 +63,7 @@ const Members = () => {
     designation: "",
     position: "",
     officer: "",
-    constituency_types:"",
+    constituency_types: "",
     isHouse: "",
 
   });
@@ -123,7 +123,7 @@ const Members = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if(name==="constituency_types"){
+    if (name === "constituency_types") {
       let isHouse = e.target.options[e.target.selectedIndex].getAttribute("isHouse");
       setSearch((prev) => ({
         ...prev,
@@ -286,7 +286,7 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              assembly: [defaultAssembly, ...res.data.data],
+              assembly: [defaultAssembly, ...res.data.data].sort((a, b) => a.assembly_number - b.assembly_number),
             }));
           }
         })
@@ -297,7 +297,7 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              party: res.data.data,
+              party: res.data.data.sort((a, b) => a[checkLang]["party_name"].localeCompare(b[checkLang]["party_name"])),
             }));
           }
         })
@@ -306,27 +306,27 @@ const Members = () => {
       await getApi("constituency/option")
         .then((res) => {
           if (res.data.success) {
-           let seenTypes = new Set(); // Set to store unique constituency_type values
+            let seenTypes = new Set(); // Set to store unique constituency_type values
             let constituencytype = res.data.data.map(item => {
               let type;
-              if (item.isHouse === "Assembly" ) {
-                type = item.assembly.constituency_type?item.assembly.constituency_type.trim():"General"
+              if (item.isHouse === "Assembly") {
+                type = item.assembly.constituency_type ? item.assembly.constituency_type.trim() : "General"
                 // return {
                 //   constituency_type: type,
                 //   _id: item._id,
                 //   isHouse: item.isHouse,
                 //   // name:item.basic_info.name
                 // };
-              } else if (item.isHouse === "Council" ) {
-                type = item.council.constituency_type? item.council.constituency_type.trim(): "General";
+              } else if (item.isHouse === "Council") {
+                type = item.council.constituency_type ? item.council.constituency_type.trim() : "General";
                 // return {
                 //   constituency_type: type,
                 //   _id: item._id,
                 //   isHouse: item.isHouse,
                 //   // name:item.basic_info.name
                 // };
-              } 
-              
+              }
+
               // Check if the type is not undefined and not seen before
               if (type !== undefined && !seenTypes.has(type)) {
                 seenTypes.add(type); // Add the type to the set
@@ -337,9 +337,9 @@ const Members = () => {
                 };
               }
             }).filter(item => item !== undefined);
-            
+
             console.log("constituencytype>>>>", constituencytype);
-            
+
             // let emptyconstituencytype = res.data.data.map(item => {
             //   if (item.isHouse === "Assembly" && item.assembly.constituency_type === "") {
             //     return {
@@ -357,7 +357,7 @@ const Members = () => {
             //   }
             // }).filter(item => item !== undefined);
             // console.log("emptyconstituencytype>>>>", emptyconstituencytype);
-            
+
             setOptions((prev) => ({
               ...prev,
               constituency: res.data.data,
@@ -383,7 +383,7 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              surname: res.data.data,
+              surname: res.data.data.sort((a, b) => a.localeCompare(b)),
             }));
           }
         })
@@ -394,7 +394,7 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              district: res.data.data,
+              district: res.data.data.sort((a, b) => a[checkLang]["district"].localeCompare(b[checkLang]["district"]))
             }));
           }
         })
@@ -405,7 +405,7 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              gender: res.data.data,
+              gender: res.data.data.sort((a, b) => a[checkLang].gender.localeCompare(b[checkLang].gender))
             }));
           }
         })
@@ -415,7 +415,7 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              officer: res.data.data,
+              officer: res.data.data.sort((a, b) => a.name.localeCompare(b.name)),
             }));
           }
         })
@@ -425,7 +425,7 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              designation: res.data.data,
+              designation: res.data.data.sort((a, b) => a.name.localeCompare(b.name)),
             }));
           }
         })
@@ -435,7 +435,7 @@ const Members = () => {
           if (res.data.success) {
             setOptions((prev) => ({
               ...prev,
-              position: res.data.data,
+              position: res.data.data.sort((a, b) => a.name.localeCompare(b.name)),
             }));
           }
         })
@@ -445,12 +445,6 @@ const Members = () => {
     fetchData();
   }, [checkLang, search.house,]);
 
-  // useEffect(() => {
-  //   if (paramsReady) {
-  //     console.log(search.house);
-  //     paramsReady && debateFetch();
-  //   }
-  // }, [paramsReady]);
 
   useEffect(() => {
     for (let key in search) {
@@ -472,7 +466,6 @@ const Members = () => {
     debateFetch();
   }, [currentPage, pageLimit]);
 
-  // console.log(search);
 
   return (
     <div>
@@ -831,6 +824,7 @@ const Members = () => {
                             <DatePicker
                               className="form-control"
                               selected={search.todate}
+                              disabled={search.fromdate ? false : true}
                               showYearPicker
                               placeholderText="To"
                               dateFormat="yyyy"
@@ -947,12 +941,12 @@ const Members = () => {
                     >
                       <option hidden>मतदारसंघनिहाय Type </option>
                       {options?.constituency_types?.map((item, index) => {
-                          return (
-                            <option key={index} value={item._id} isHouse={item.isHouse}>
-                              {item.constituency_type}
-                            </option>
-                          );
-                        
+                        return (
+                          <option key={index} value={item._id} isHouse={item.isHouse}>
+                            {item.constituency_type}
+                          </option>
+                        );
+
                       })}
                     </select>
                     <label>आडनावानुसार</label>

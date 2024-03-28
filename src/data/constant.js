@@ -74,6 +74,7 @@ const register = {
     mobile: `फोन नंबर`,
     entermobile: `फोन नंबर प्रविष्ट करा`,
     gender: `लिंग`,
+    intrest: `स्वारस्य क्षेत्र`,
     selectgen: `लिंग निवडा`,
     male: `पुरुष`,
     female: `स्त्री`,
@@ -103,6 +104,7 @@ const register = {
     entermobile: `Enter Phone Number`,
     gender: `Gender`,
     selectgen: `Select Gender`,
+    intrest: `Interested Area`,
     male: `Male`,
     female: `Female`,
     others: `Other`,
@@ -1746,6 +1748,8 @@ const councilDebate = {
       field9: "डिव्हाइस निवडा",
       field10: "सभागृह निवडा",
     },
+    view: 'सभागृहांचे कार्यवृत्त पहा',
+    pdf: 'पीडीऍफ़ पहा',
   },
   english: {
     home: `Home`,
@@ -1825,6 +1829,8 @@ const councilDebate = {
       field9: "Device",
       field10: "House",
     },
+    view: 'View Debate',
+    pdf: 'View PDF',
   },
 };
 const judgment = {

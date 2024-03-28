@@ -3,14 +3,10 @@ const HighlightSentence = ({ data = "", search = "", }) => {
     return <span>{data}</span>;
   }
 
-  const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  // const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp(`(${search.trim()})`, "gi");
 
-  // Create a regular expression to match the search string globally and case-insensitively
-  const regex = new RegExp(`(${escapedSearch})`, "gi");
-
-  // Split the data into parts using the regex
   const parts = data.split(regex);
-  // console.log(parts);
 
   return (
     <span>

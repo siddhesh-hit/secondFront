@@ -5,6 +5,8 @@ import LoaderComponents from "../components/LoaderComponents";
 import { getApi } from "../services/axiosInterceptors";
 import useLang from "../hooks/useLang";
 import { searchdetails } from "../data/constant";
+import PaginationComponent from "../components/Pagination";
+
 
 const SearchDetails = () => {
   const { lang, checkLang } = useLang();
@@ -12,6 +14,11 @@ const SearchDetails = () => {
   const [memberData, setMemberData] = useState([]);
   const [debateData, setDebateData] = useState([]);
   const [loader, setLoader] = useState(null);
+
+  const [pageOptions, setPageOptions] = useState({
+    page: 0,
+    limit: 10,
+  });
 
   const location = useLocation();
 
@@ -22,7 +29,7 @@ const SearchDetails = () => {
       .then((res) => setMemberData(res.data.data))
       .catch((err) => console.log(err));
 
-    await getApi(`debate/dumpSearch?id=${id}`)
+    await getApi(`debate/dumpFields?perPage=${pageOptions.page}&perLimit=${pageOptions.limit}&topic=${id}`)
       .then((res) => setDebateData(res.data))
       .catch((err) => console.log(err));
 
@@ -41,7 +48,7 @@ const SearchDetails = () => {
     if (search) {
       fetchData(search);
     }
-  }, [search]);
+  }, [search, pageOptions.page]);
 
   if (loader) {
     return <LoaderComponents />;
@@ -160,6 +167,18 @@ const SearchDetails = () => {
                   </>
                 </tbody>
               </table>
+
+              {debateData?.count > 0 && (
+                <PaginationComponent
+                  totalCount={debateData?.count}
+                  perPage={pageOptions.limit}
+                  handlePageChange={(cp) => {
+                    // setCurrentPage(cp);
+                    setPageOptions({ ...pageOptions, page: cp });
+                  }}
+                  initialPage={pageOptions.page}
+                />
+              )}
             </div>
           </div>
         </div>

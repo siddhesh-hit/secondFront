@@ -24,6 +24,8 @@ const MemberAssemblyDetails = () => {
   const { id } = useParams();
   const { state } = useLocation()
 
+  console.log(state)
+
   const fetchDataById = async () => {
     await getApiById("member", id)
       .then((res) => setCurrent(res.data.data))
@@ -48,7 +50,6 @@ const MemberAssemblyDetails = () => {
       fetchDebateById(current.basic_info.surname.trim() + " " + current.basic_info.name.trim());
   }, [current, currentPage]);
 
-  console.log(current?.basic_info?.date_of_birth);
 
   return (
     <div className="memberassemdetails">
@@ -67,7 +68,7 @@ const MemberAssemblyDetails = () => {
                 <img src={Arrow} alt="" />
                 <span>{memberdetails[checkLang].title}</span>
                 <img src={Arrow} alt="" />
-                <span><>{state.assembly ? <span>{current?.basic_info?.assembly_number?.assembly_name}</span> : ""}</></span>
+                <span><>{state?.assembly ? <span>{current?.basic_info?.assembly_number?.assembly_name}</span> : ""}</></span>
               </div>
             </div>
           </Col>
@@ -355,7 +356,7 @@ const MemberAssemblyDetails = () => {
                       <ul>
                         {current?.political_journey?.map((item, index) => (
                           <li key={index}>
-                            <b>{item?.date.split("-")[0]}</b> : {item?.title}
+                            <b>{new Date(item?.date).getFullYear()}</b> : {item?.title}
                           </li>
                         ))}
                       </ul>
@@ -384,7 +385,7 @@ const MemberAssemblyDetails = () => {
                     </Col>
                     <Col lg={9}>
                       <div className="dataofelec">
-                        <h3>{memberdetails[checkLang].electionres}</h3>
+                        <h3>{memberdetails[checkLang].electionres + " :- " + `(${new Date(current?.basic_info?.assembly_number?.start_date).getFullYear()} - ${new Date(current?.basic_info?.assembly_number?.end_date).getFullYear()})`}</h3>
                         <p>
                           {current.election_data &&
                             current.election_data.constituency &&
