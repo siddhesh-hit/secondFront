@@ -1748,6 +1748,8 @@ const councilDebate = {
       field9: "डिव्हाइस निवडा",
       field10: "सभागृह निवडा",
     },
+    view: 'सभागृहांचे कार्यवृत्त पहा',
+    pdf: 'पीडीऍफ़ पहा',
   },
   english: {
     home: `Home`,
@@ -1827,6 +1829,8 @@ const councilDebate = {
       field9: "Device",
       field10: "House",
     },
+    view: 'View Debate',
+    pdf: 'View PDF',
   },
 };
 const judgment = {

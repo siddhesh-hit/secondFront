@@ -1099,11 +1099,11 @@ const Debate = () => {
                       ? (checkBool = true)
                       : (checkBool = false);
                     return search[key] === "" || key === "todate" ? (
-                      <React.Fragment key={index}></React.Fragment>
+                      <></>
                     ) : (
                       <React.Fragment key={index}>
                         {checkBool ? (
-                          <React.Fragment key={index}>
+                          <>
                             <OverlayTrigger
                               delay={{ hide: 450, show: 300 }}
                               overlay={(props) => (
@@ -1136,9 +1136,9 @@ const Debate = () => {
                                 ></button>
                               </li>
                             </OverlayTrigger>
-                          </React.Fragment>
+                          </>
                         ) : (
-                          <React.Fragment key={index}>
+                          <>
                             <OverlayTrigger
                               delay={{ hide: 450, show: 300 }}
                               overlay={(props) => (
@@ -1169,7 +1169,7 @@ const Debate = () => {
                                 ></button>
                               </li>
                             </OverlayTrigger>
-                          </React.Fragment>
+                          </>
                         )}
                       </React.Fragment>
                     );
@@ -1187,7 +1187,6 @@ const Debate = () => {
                       <span>{councilDebate[checkLang].title}</span>
                     </div>
                     <p>
-                      {" "}
                       {debate?.count
                         ? `[${debate?.count} ${checkLang === "marathi" ? "परिणाम" : "Results"}]`
                         : `[0 ${checkLang === "marathi" ? "परिणाम" : "Results"}]`}
@@ -1304,19 +1303,40 @@ const Debate = () => {
                         />
                       </td>
                       <td className="imagee">
-                        <Link
-                          to={`/DebateDetails?id=${item._id}`}
-                          target="_blank"
+                        <OverlayTrigger
+                          delay={{ hide: 450, show: 300 }}
+                          overlay={(props) => (
+                            <Tooltip {...props}>
+                              {councilDebate[checkLang].view}
+                            </Tooltip>
+                          )}
+                          placement="top"
                         >
-                          <i className="fa fa-eye" />
-                        </Link>
-                        <a
-                          href={"http://103.112.121.109:4000" + item.fileurl}
-                          target="_blank"
-                          rel="noreferrer"
+                          <Link
+                            to={`/DebateDetails?id=${item._id}`}
+                            target="_blank"
+                          >
+                            <i className="fa fa-eye" />
+                          </Link>
+                        </OverlayTrigger>
+
+                        <OverlayTrigger
+                          delay={{ hide: 450, show: 300 }}
+                          overlay={(props) => (
+                            <Tooltip {...props}>
+                              {councilDebate[checkLang].pdf}
+                            </Tooltip>
+                          )}
+                          placement="top"
                         >
-                          <img src={PDF} alt="" />
-                        </a>
+                          <a
+                            href={"http://103.112.121.109:4000" + item.fileurl}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <img src={PDF} alt="" />
+                          </a>
+                        </OverlayTrigger>
                       </td>
                     </tr>
                   ))}
